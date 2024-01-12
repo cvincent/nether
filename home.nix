@@ -16,7 +16,9 @@
 
     ./services/xremap/hm.nix
     ./services/dconf
+    ./services/hydroxide
 
+    ./apps/aerc
     ./apps/browsers
     ./apps/kitty
     ./apps/misc
