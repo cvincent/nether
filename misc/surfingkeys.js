@@ -10,7 +10,7 @@
 // api.unmap('<ctrl-i>');
 
 settings.hintAlign = "left";
-settings.tabsThreshold = 9999;
+settings.newTabPosition = "last";
 
 // Tab navigation
 api.map("J", "R")
