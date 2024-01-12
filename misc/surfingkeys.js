@@ -42,8 +42,8 @@ api.map("o", "go")
 api.map("O", "t")
 
 // Open URLs
-api.map("l", ";U")
-api.map("L", ";u")
+api.map("<ctrl-l>", ";U")
+api.map("<ctrl-L>", ";u")
 
 // Yank link URL
 api.map(";y", "ya")
