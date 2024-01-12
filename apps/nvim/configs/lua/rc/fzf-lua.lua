@@ -1,0 +1,11 @@
+-- if packer_plugins["fzf-lua"] then
+  -- vim.keymap.set("n", "<c-p>", ":set nohlsearch<cr>:FzfLua files<cr>:set hlsearch<cr>", {silent = true})
+
+  -- require("fzf-lua").setup({
+  --   winopts = {
+  --     preview = {
+  --       hidden = "hidden"
+  --     }
+  --   }
+  -- })
+-- end

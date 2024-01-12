@@ -1,0 +1,5 @@
+{ ... }:
+
+{
+  imports = [ ./swaylock/system.nix ];
+}

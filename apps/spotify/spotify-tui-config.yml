@@ -1,0 +1,6 @@
+behavior:
+  tick_rate_milliseconds: 32
+
+keybindings:
+  decrease_volume: 9
+  increase_volume: 0
