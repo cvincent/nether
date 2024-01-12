@@ -1,9 +1,25 @@
 { config, pkgs, utils, ... }:
 
 {
-  home.packages = with pkgs; [
-    mpv
-    yt-dlp
-  ];
-  home.file.".config/mpv".source = utils.directSymlink "apps/mpv/configs";
+  nixpkgs.overlays = [(self: super: {
+    mpv = super.mpv.override {
+      scripts = with self.mpvScripts; [
+        uosc
+        thumbfast
+      ];
+    };
+  })];
+
+  home.packages = with pkgs; [ yt-dlp ];
+
+  programs.mpv = {
+    enable = true;
+    config = {
+      keep-open = true;
+      fullscreen = false;
+    };
+    scriptOpts = {
+      thumbfast.network = true;
+    };
+  };
 }
