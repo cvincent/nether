@@ -7,5 +7,6 @@
     libnotify
     pavucontrol
     playerctl
+    alsa-utils
   ];
 }
