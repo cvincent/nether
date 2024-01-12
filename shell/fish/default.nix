@@ -41,6 +41,7 @@
         else
           notify-send -i dialog-error -t 5000 -e 'NixOS Rebuild Failed'
         end
+        aplay ~/dotfiles/misc/notification.wav
       '';
 
       nxhm = ''
@@ -50,6 +51,7 @@
         else
           notify-send -i dialog-error -t 5000 -e 'Home Manager Rebuild Failed'
         end
+        aplay ~/dotfiles/misc/notification.wav
       '';
 
       m = ''
