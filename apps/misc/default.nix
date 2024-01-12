@@ -5,4 +5,6 @@
     webcord
     fractal
   ];
+
+  programs.zathura.enable = true;
 }
