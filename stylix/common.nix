@@ -8,6 +8,8 @@
 
     targets.fish.enable = false;
 
+    opacity.popups = 0.8;
+
     cursor = {
       package = pkgs.nordzy-cursor-theme;
       name = "Nordzy-cursors";

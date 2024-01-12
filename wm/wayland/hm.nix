@@ -29,7 +29,6 @@
   programs.fuzzel = {
     enable = true;
     settings = {
-      colors.background = lib.mkForce "2e3440EE";
       border.width = "5";
     };
   };
