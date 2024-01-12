@@ -7,6 +7,5 @@
     libnotify
     pavucontrol
     playerctl
-    rofi
   ];
 }
