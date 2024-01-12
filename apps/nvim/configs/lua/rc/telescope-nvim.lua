@@ -19,7 +19,6 @@
     require("telescope").load_extension("fzf")
   -- end
 
-
   vim.keymap.set("n", "<c-p>", require("telescope.builtin").find_files)
   vim.keymap.set("n", "<c-f>", require("telescope.builtin").live_grep)
   vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_branches)
