@@ -1,9 +1,7 @@
 { pkgs, myHomeDir, ... }:
 
 {
-  home.packages = with pkgs; [
-    (pkgs.callPackage ./pkg.nix {})
-  ];
+  home.packages = [ (pkgs.callPackage ./pkg.nix {}) ];
 
   home.file."./.config/ytsub/mpv".source = ./mpv;
 
