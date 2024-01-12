@@ -23,6 +23,7 @@
     ./apps/mpv
     ./apps/nvim
     ./apps/slack
+    ./apps/smartcalc-tui
     ./apps/spotify
     ./apps/ytsub
 
