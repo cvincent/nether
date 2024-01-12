@@ -25,4 +25,9 @@
     command = "nvidia-offload kitty --class spotify-tui-scratch -o background_opacity=0.75 spt";
     binding = "SUPER, m";
   }
+  {
+    class = "smartcalc-tui-scratch";
+    command = "nvidia-offload kitty --class smartcalc-tui-scratch -o background_opacity=0.75 smartcalc-slow-start";
+    binding = "SUPER, c";
+  }
 ]
