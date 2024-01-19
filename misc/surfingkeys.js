@@ -11,6 +11,7 @@
 
 settings.hintAlign = "left";
 settings.newTabPosition = "last";
+settings.tabThreshold = 0;
 
 // Tab navigation
 api.map("J", "R")
