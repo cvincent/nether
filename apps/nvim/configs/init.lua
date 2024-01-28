@@ -180,6 +180,9 @@ require("lazy").setup({
   -- Highlight current search match
   "PeterRincker/vim-searchlight",
 
+  -- Easy px to rem conversion
+  { "jsongerber/nvim-px-to-rem", config = true },
+
   -----------
   -- Neorg --
   -----------
