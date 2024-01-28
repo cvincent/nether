@@ -18,6 +18,7 @@
     ./services/dconf/hm.nix
 
     ./apps/browsers/hm.nix
+    ./apps/documents/hm.nix
     ./apps/email/hm.nix
     ./apps/kitty/hm.nix
     ./apps/misc/hm.nix
