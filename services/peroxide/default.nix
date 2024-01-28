@@ -1,0 +1,5 @@
+{ ... }:
+
+{
+  services.peroxide.enable = true;
+}

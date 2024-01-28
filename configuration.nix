@@ -8,6 +8,7 @@
 
   imports =
     [
+      ./apps/email/system.nix
       ./hardware/hardware-configuration.nix
       ./hardware/nvidia.nix
       ./hardware/system76.nix
@@ -17,6 +18,8 @@
       ./fonts/system.nix
       ./stylix/system.nix
       ./wm/hyprland/system.nix
+      ./services/peroxide
+      ./services/printing/system.nix
       ./services/xremap/system.nix
     ];
 

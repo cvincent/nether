@@ -1,5 +1,8 @@
 { ... }:
 
 {
-  imports = [ ./swaylock/system.nix ];
+  imports = [
+    ../essential/system.nix
+    ./swaylock/system.nix
+  ];
 }

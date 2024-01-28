@@ -3,18 +3,16 @@
 
   dap.adapters.mix_task = {
     type = "executable",
-    command = "/home/cvincent/src/estee/elixir-ls/lib/debug_adapter.sh", -- debugger.bat for windows
+    command = "/nix/store/aank5w3p836gw8grkj4dnh339q1yfz6g-elixir-ls-0.18.1/lib/debug_adapter.sh",
     args = {}
   }
 
   dap.configurations.elixir = {
     {
       type = "mix_task",
-      name = "phx.server",
       task = "phx.server",
-      taskArgs = {"--trace"},
+      -- taskArgs = {"--trace"}, this is only for mix test
       request = "launch",
-      projectDir = "${workspaceFolder}"
     },
   }
 

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../essential
+    ../essential/hm.nix
     ./swaylock/hm.nix
     ./swaync
   ];
@@ -24,6 +24,8 @@
 
     swayidle
     waybar
+
+    xwaylandvideobridge
   ];
 
   programs.fuzzel = {
@@ -33,5 +35,12 @@
     };
   };
 
-  services.avizo.enable = true;
+  services.avizo = {
+    enable = true;
+    settings = {
+      default = {
+        time = 0.5;
+      };
+    };
+  };
 }

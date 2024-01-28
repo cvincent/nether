@@ -30,4 +30,9 @@
     command = "nvidia-offload kitty --class smartcalc-tui-scratch -o background_opacity=0.75 smartcalc-slow-start";
     binding = "SUPER, c";
   }
+  {
+    class = "aerc-scratch";
+    command = "nvidia-offload kitty --class aerc-scratch -o background_opacity=0.75 aerc";
+    binding = "SUPER, e";
+  }
 ]
