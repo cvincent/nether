@@ -15,23 +15,23 @@
     ./wm/hyprland/hm.nix
 
     ./services/xremap/hm.nix
-    ./services/dconf
+    ./services/dconf/hm.nix
 
-    ./apps/browsers
+    ./apps/browsers/hm.nix
     ./apps/email/hm.nix
-    ./apps/kitty
-    ./apps/misc
-    ./apps/mpv
-    ./apps/nvim
-    ./apps/slack
-    ./apps/smartcalc-tui
-    ./apps/spotify
-    ./apps/ytsub
+    ./apps/kitty/hm.nix
+    ./apps/misc/hm.nix
+    ./apps/mpv/hm.nix
+    ./apps/nvim/hm.nix
+    ./apps/slack/hm.nix
+    ./apps/smartcalc-tui/hm.nix
+    ./apps/spotify/hm.nix
+    ./apps/ytsub/hm.nix
 
-    ./shell/fish
-    ./shell/jira-cli
-    ./shell/misc
-    ./shell/tmux
+    ./shell/fish/hm.nix
+    ./shell/jira-cli/hm.nix
+    ./shell/misc/hm.nix
+    ./shell/tmux/hm.nix
   ];
 
   programs.home-manager.enable = true;
