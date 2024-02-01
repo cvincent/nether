@@ -76,7 +76,7 @@ zathura ./${business}-rendered.pdf
 read -p "Look good? " -n 1 -r
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-  cat ./email.mail | msmtp --host="127.0.0.1" --port=1025 --auth=plain --user="$from_email" --passwordeval="cat /backup/chris/Invoices/Generate/${business}-pass" --from="$from_email" $from_email
+  cat ./email.mail | msmtp --host="127.0.0.1" --port=1025 --auth=plain --user="$from_email" --passwordeval="cat /backup/chris/Invoices/Generate/${business}-pass" --from="$from_email" $to
   rm ./email.mail
   mv ./${business}-rendered.pdf "../$bill_to/Invoice-${next_invoice_num}.pdf"
   echo $next_invoice_num > ./${business}-last-invoice-num
