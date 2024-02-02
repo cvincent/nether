@@ -32,6 +32,8 @@
           pypr hide $current_scratch
         fi
 
+        hyprctl dispatch focusmonitor 1
+
         if [ "$current_scratch" != $1 ]; then
           pypr show $1
           sleep 0.2
