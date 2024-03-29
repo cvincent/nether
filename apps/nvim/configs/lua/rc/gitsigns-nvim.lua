@@ -12,6 +12,8 @@
       local gs = package.loaded.gitsigns
 
       vim.keymap.set("n", "<leader>gB", gs.toggle_current_line_blame)
+      vim.keymap.set("n", "<leader>gn", gs.next_hunk)
+      vim.keymap.set("n", "<leader>gp", gs.prev_hunk)
     end
   })
 -- end
