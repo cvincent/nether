@@ -7,6 +7,7 @@
     bat
     jq
     fzf
+    unzip
   ];
 
   programs.direnv = {
