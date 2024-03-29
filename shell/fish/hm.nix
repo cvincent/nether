@@ -13,6 +13,7 @@
     shellAliases = {
       mkdir = "mkdir -p";
       ls = "exa";
+      l = "eza -lh --group-directories-first";
       ll = "eza -lha --group-directories-first";
       lt = "eza --tree --group-directories-first";
       cat = "bat";
