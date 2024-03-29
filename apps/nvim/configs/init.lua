@@ -145,6 +145,15 @@ require("lazy").setup({
   -- MISC --
   ----------
 
+  -- Easy scratch buffers
+  {
+    "https://git.sr.ht/~swaits/scratch.nvim",
+    lazy = true,
+    keys = {},
+    cmd = { "Scratch", "ScratchSplit" },
+    opts = {}
+  },
+
   -- Project-wide search with Ripgrep
   "mileszs/ack.vim",
 
