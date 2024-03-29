@@ -37,9 +37,12 @@
         our-elixir-ls
         inputs.our-nodejs.legacyPackages.${system}.nodejs
         inputs.our-postgresql.legacyPackages.${system}.postgresql_14
-        redis
         cockroachdb-bin
         inotify-tools
+        # We run redis-stack-server using an AppImage because nobody has built
+        # the package for NixOS yet :( And I don't feel like doing it
+        # ¯\_(ツ)_/¯
+        appimage-run
       ];
 
       PGDATA="./pgdata";
