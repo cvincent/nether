@@ -16,7 +16,7 @@
   }
   {
     class = "neorg-scratch";
-    command = "nvidia-offload kitty --class neorg-scratch -o background_opacity=0.75 nvim -S /backup/vim-notes/neorg/Session.vim";
+    command = "nvidia-offload kitty --class neorg-scratch -o background_opacity=0.75 nvim --listen /tmp/neorg.pipe -S /backup/vim-notes/neorg/Session.vim";
     binding = "SUPER, o";
     size = "60% 80%";
   }
