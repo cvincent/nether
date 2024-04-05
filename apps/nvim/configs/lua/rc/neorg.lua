@@ -60,6 +60,7 @@ require("neorg").setup({
 vim.api.nvim_create_autocmd("filetype", {
   pattern = "norg",
   callback = function(ev)
+    vim.b[0].delimitMate_expand_space = 0
     vim.api.nvim_command("set textwidth=80")
     vim.api.nvim_command("set breakindent linebreak")
     vim.api.nvim_command("imap <c-cr> <a-cr>")
