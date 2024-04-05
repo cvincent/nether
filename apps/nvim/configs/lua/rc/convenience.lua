@@ -48,3 +48,7 @@ vim.keymap.set("n", "<left>", ":tabprev<cr>")
 -- Copy/paste
 vim.keymap.set("v", "<F13>", '"+y')
 -- vim.keymap.set("n", "<c-s-v>", '"+yp')
+
+-- Ignore jumplist on { and }
+vim.keymap.set("n", "{", ":<c-u>execute 'keepjumps norm! ' . v:count1 . '{'<cr>", {})
+vim.keymap.set("n", "}", ":<c-u>execute 'keepjumps norm! ' . v:count1 . '}'<cr>", {})
