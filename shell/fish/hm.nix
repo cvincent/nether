@@ -11,6 +11,7 @@
     '';
 
     shellAliases = {
+      cd = "z";
       mkdir = "mkdir -p";
       ls = "exa";
       l = "eza -lh --group-directories-first";
