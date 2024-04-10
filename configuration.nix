@@ -8,6 +8,7 @@
 
   imports =
     [
+      ./apps/steam/system.nix
       ./hardware/hardware-configuration.nix
       ./hardware/nvidia.nix
       ./hardware/system76.nix
