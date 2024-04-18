@@ -4,7 +4,7 @@
   imports = [
     ../essential/hm.nix
     ./swaylock/hm.nix
-    ./swaync
+    ./swaync/hm.nix
   ];
 
   home.packages = with pkgs; [
