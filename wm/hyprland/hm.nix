@@ -21,7 +21,6 @@
   in
   {
     packages = with pkgs; [
-      hyprpaper
       pyprland
       hyprpicker-latest
 
@@ -44,7 +43,6 @@
 
     file = {
       "./.config/hypr/hyprland.conf".source = utils.directSymlink "wm/hyprland/configs/hyprland.conf";
-      "./.config/hypr/hyprpaper.conf".source = utils.directSymlink "wm/hyprland/configs/hyprpaper.conf";
       "./.config/hypr/monitors.conf".source = utils.directSymlink "wm/hyprland/configs/monitors.conf";
       "./.config/hypr/workspaces.conf".source = utils.directSymlink "wm/hyprland/configs/workspaces.conf";
       "./.config/hypr/shaders".source = utils.directSymlink "wm/hyprland/configs/shaders";

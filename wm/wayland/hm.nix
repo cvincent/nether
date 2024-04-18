@@ -5,6 +5,7 @@
     ../essential/hm.nix
     ./swaylock/hm.nix
     ./swaync/hm.nix
+    ./wallpapers/hm.nix
   ];
 
   home.packages = with pkgs; [
