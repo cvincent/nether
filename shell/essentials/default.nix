@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    ripgrep
     eza
     bat
     jq
@@ -18,6 +17,13 @@
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
+  };
+
+  programs.ripgrep = {
+    enable = true;
+    arguments = [
+      "--glob=!*.enc"
+    ];
   };
 
   home.sessionVariables = {
