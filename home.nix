@@ -4,6 +4,7 @@
   # Don't change without reading release notes!
   home.stateVersion = "23.11";
   nixpkgs.config.allowUnfree = true;
+  # nixpkgs-latest.config.allowUnfree = true;
 
   home.username = myUsername;
   home.homeDirectory = myHomeDir;
@@ -14,8 +15,9 @@
     ./stylix/hm.nix
     ./wm/hyprland/hm.nix
 
-    ./services/xremap/hm.nix
+    ./services/davmail/hm.nix
     ./services/dconf/hm.nix
+    ./services/xremap/hm.nix
 
     ./apps/browsers/hm.nix
     ./apps/documents/hm.nix
