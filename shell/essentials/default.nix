@@ -2,10 +2,11 @@
 
 {
   home.packages = with pkgs; [
-    eza
     bat
-    jq
+    bottom
+    eza
     fzf
+    jq
     unzip
   ];
 
