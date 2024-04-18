@@ -193,13 +193,23 @@ require("lazy").setup({
   { "jsongerber/nvim-px-to-rem", config = true },
 
   -----------
-  -- Neorg --
+  -- Other --
   -----------
 
   {
     "nvim-neorg/neorg",
     build = ":Neorg sync-parsers",
     dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
+  {
+    "luckasRanarison/nvim-devdocs",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {}
   },
 })
 
