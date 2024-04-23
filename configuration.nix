@@ -21,12 +21,20 @@
       ./services/peroxide/system.nix
       ./services/printing/system.nix
       ./services/xremap/system.nix
+
+      inputs.nix-flatpak.nixosModules.nix-flatpak
     ];
 
   environment.systemPackages = with pkgs; [
     git
     neovim
   ];
+
+  # Flatpak
+  services.flatpak = {
+    enable = true;
+    packages = [ "app.bluebubbles.BlueBubbles" ];
+  };
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;

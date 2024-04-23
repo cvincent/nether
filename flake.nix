@@ -7,7 +7,7 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
 
-    nixpkgs-latest = import inputs.our-discord {
+    nixpkgs-latest = import inputs.nixpkgs-latest {
       inherit system;
       config.allowUnfree = true;
     };
@@ -25,6 +25,7 @@
       mySopsKey = /home/${myUsername}/.config/sops/age/keys.txt;
       myTZ = "America/Chicago";
       myLocale = "en_US.UTF-8";
+      # TODO: These are already available in inputs
       inherit nixpkgs-latest;
       inherit our-discord;
     };
@@ -58,6 +59,8 @@
     nixpkgs-latest.url = "nixpkgs/nixos-23.11";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
     sops-nix.url = "github:Mic92/sops-nix";
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.34.0";
