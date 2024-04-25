@@ -228,6 +228,19 @@ require("lazy").setup({
       vim.g.db_ui_use_nerd_fonts = 1
     end,
   },
+
+  {
+    'pwntester/octo.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function ()
+      require("octo").setup({
+        ssh_aliases = {["github-elc"] = "github.com"}
+      })
+    end
+  },
 })
 
 -- Vim in the browser
