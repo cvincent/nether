@@ -25,6 +25,11 @@
       inputs.nix-flatpak.nixosModules.nix-flatpak
     ];
 
+
+  nixpkgs.overlays = [
+    inputs.neovim-nightly-overlay.overlay
+  ];
+
   environment.systemPackages = with pkgs; [
     git
     neovim
