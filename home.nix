@@ -34,6 +34,7 @@
     ./shell/fish/hm.nix
     ./shell/jira-cli/hm.nix
     ./shell/misc/hm.nix
+    ./shell/ngrok/hm.nix
     ./shell/tmux/hm.nix
   ];
 
