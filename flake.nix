@@ -7,16 +7,6 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
 
-    nixpkgs-latest = import inputs.nixpkgs-latest {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
-    our-discord = import inputs.our-discord {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
     commonArgs = rec {
       inherit inputs;
       myUsername = "cvincent";
@@ -25,9 +15,21 @@
       mySopsKey = /home/${myUsername}/.config/sops/age/keys.txt;
       myTZ = "America/Chicago";
       myLocale = "en_US.UTF-8";
-      # TODO: These are already available in inputs
-      inherit nixpkgs-latest;
-      inherit our-discord;
+
+      nixpkgs-latest = import inputs.nixpkgs-latest {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      nixpkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      our-discord = import inputs.our-discord {
+        inherit system;
+        config.allowUnfree = true;
+      };
     };
   in {
     nixosConfigurations = {
@@ -57,6 +59,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-latest.url = "nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
