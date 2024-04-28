@@ -66,3 +66,5 @@ vim.opt.wrap = false
 -- silent! set scroll=10
 
 vim.opt.signcolumn = "yes"
+
+vim.keymap.set("n", "p", "p=']", { silent = true, remap = true })
