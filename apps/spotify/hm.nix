@@ -1,11 +1,15 @@
-{ config, pkgs, utils, ... }:
+{ config, pkgs, utils, nixpkgs-unstable, ... }:
 
 {
   home.packages = [
     pkgs.spotifyd
     pkgs.spotify-tui
-    pkgs.ncspot
   ];
+
+  programs.ncspot = {
+    enable = true;
+    package = nixpkgs-unstable.ncspot;
+  };
 
   sops.secrets."spotify/username" = {};
   sops.secrets."spotify/password" = {};
