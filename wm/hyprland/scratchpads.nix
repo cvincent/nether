@@ -22,7 +22,7 @@
   }
   {
     class = "spotify-tui-scratch";
-    command = "nvidia-offload kitty --class spotify-tui-scratch -o background_opacity=0.75 spt";
+    command = "nvidia-offload kitty --class spotify-tui-scratch -o background_opacity=0.75 ncspot";
     binding = "SUPER, m";
   }
   {

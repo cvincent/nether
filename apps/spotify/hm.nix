@@ -4,6 +4,7 @@
   home.packages = [
     pkgs.spotifyd
     pkgs.spotify-tui
+    pkgs.ncspot
   ];
 
   sops.secrets."spotify/username" = {};
