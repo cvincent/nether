@@ -106,6 +106,9 @@ require("lazy").setup({
   -- Git integration
   "tpope/vim-fugitive",
 
+  -- GBrowse
+  "tpope/vim-rhubarb",
+
   -- Easier session management
   "tpope/vim-obsession",
 
