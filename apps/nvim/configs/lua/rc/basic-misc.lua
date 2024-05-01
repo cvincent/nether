@@ -61,10 +61,12 @@ vim.opt.gdefault = true
 -- Don't wrap long lines by default
 vim.opt.wrap = false
 
--- Might not want this with smooth scroll plugin
--- Scroll 10 lines with CTRL-U/D
--- silent! set scroll=10
+-- But do automatically hard-wrap comments
+vim.opt.formatoptions:append("c")
+vim.opt.textwidth = 80
 
-vim.opt.signcolumn = "yes"
-
+-- Auto-indent after pasting
 vim.keymap.set("n", "p", "p=']", { silent = true, remap = true })
+
+-- Always draw the signcolumn
+vim.opt.signcolumn = "yes"
