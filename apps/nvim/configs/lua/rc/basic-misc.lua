@@ -66,7 +66,8 @@ vim.opt.formatoptions:append("c")
 vim.opt.textwidth = 80
 
 -- Auto-indent after pasting
-vim.keymap.set("n", "p", "p=']", { silent = true, remap = true })
+-- This is nice but it moves the cursor; figure out something better
+-- vim.keymap.set("n", "p", "p=']", { silent = true, remap = true })
 
 -- Always draw the signcolumn
 vim.opt.signcolumn = "yes"
