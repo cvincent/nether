@@ -14,8 +14,8 @@ let
     # now="2024-04-16 09:59 AM"
 
     (
-      ${pkgs.khal}/bin/khal list --notstarted --format "{uid}|{title}|{start-time}|{duration}|{location}|15m" "$now" "15m" --day-format "" &
-      ${pkgs.khal}/bin/khal list --notstarted --format "{uid}|{title}|{start-time}|{duration}|{location}|1m" "$now" "1m" --day-format ""
+      ${pkgs.khal}/bin/khal list --notstarted --format "{uid}|{title}|{start-time}|{duration}|{location}|15m" "$now" "15m" --day-format "" 2> /dev/null &
+      ${pkgs.khal}/bin/khal list --notstarted --format "{uid}|{title}|{start-time}|{duration}|{location}|1m" "$now" "1m" --day-format "" 2> /dev/null
     ) | while read event
     do
       uid=$(echo $event | cut -d"|" -f1)
