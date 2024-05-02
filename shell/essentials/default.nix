@@ -8,6 +8,7 @@
     fzf
     jq
     unzip
+    magic-wormhole
   ];
 
   programs.direnv = {
