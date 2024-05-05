@@ -5,6 +5,11 @@
     enable = true;
     package = nixpkgs-unstable.ncspot;
     settings = {
+      keybindings = {
+        "Esc" = "back";
+        "Backspace" = "noop";
+        "q" = "noop";
+      };
       theme = {
         background = "default";
         primary = "#D8DEE9";
