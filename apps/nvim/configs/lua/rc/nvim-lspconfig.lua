@@ -76,3 +76,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     })
   end
 })
+
+-- Remove this weird default
+vim.api.nvim_command("vunmap crr")
