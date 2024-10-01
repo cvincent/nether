@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ nixpkgs-unstable, ... }:
 
 {
-  home.packages = with pkgs; [
+  home.packages = with nixpkgs-unstable; [
     chromium
     brave
   ];

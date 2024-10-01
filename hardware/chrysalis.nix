@@ -1,6 +1,6 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, nixpkgs-unstable, modulesPath, ... }:
 
 {
-  environment.systemPackages = [ pkgs.chrysalis ];
-  services.udev.packages = [ pkgs.chrysalis ];
+  environment.systemPackages = [ nixpkgs-unstable.chrysalis ];
+  services.udev.packages = [ nixpkgs-unstable.chrysalis ];
 }
