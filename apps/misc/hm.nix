@@ -6,6 +6,8 @@
     our-discord.discord
     fractal
     showmethekey
+    libreoffice
+    gnome.nautilus
   ];
 
   programs.zathura.enable = true;
