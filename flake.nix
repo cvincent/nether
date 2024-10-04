@@ -71,5 +71,6 @@
     stylix.url = "github:danth/stylix";
     our-discord.url = "github:nixos/nixpkgs/080a4a27f206d07724b88da096e27ef63401a504";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    nixpkgs-zoom.url = "github:NixOS/nixpkgs/06031e8a5d9d5293c725a50acf01242193635022";
   };
 }
