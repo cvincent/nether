@@ -31,6 +31,7 @@
     ./apps/smartcalc-tui/hm.nix
     ./apps/spotify/hm.nix
     ./apps/ytsub/hm.nix
+    ./apps/zoom/hm.nix
 
     ./shell/fish/hm.nix
     ./shell/jira-cli/hm.nix
