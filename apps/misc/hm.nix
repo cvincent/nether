@@ -1,13 +1,13 @@
-{ pkgs, our-discord, ... }:
+{ pkgs, nixpkgs-latest, nixpkgs-unstable, our-discord, ... }:
 
 {
   home.packages = with pkgs; [
-    webcord
+    pkgs.webcord
     our-discord.discord
-    fractal
-    showmethekey
-    libreoffice
-    gnome.nautilus
+    pkgs.fractal
+    pkgs.showmethekey
+    pkgs.libreoffice
+    pkgs.gnome.nautilus
   ];
 
   programs.zathura.enable = true;
