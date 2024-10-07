@@ -1,8 +1,9 @@
-{ nixpkgs-unstable, ... }:
+{ pkgs, ... }:
 
 {
-  home.packages = with nixpkgs-unstable; [
+  home.packages = with pkgs; [
     chromium
     brave
+    firefox
   ];
 }
