@@ -91,7 +91,7 @@
   fileSystems."/backup" = {
     device = "192.168.1.128:/storage/smb";
     fsType = "nfs";
-    options = [ "nfsvers=4.2" "noatime" ];
+    options = [ "nfsvers=4.2" "noatime" "x-systemd.automount" "noauto" ];
   };
 
   security.pam.services.login.enableGnomeKeyring = true;
