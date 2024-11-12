@@ -5,6 +5,9 @@
   # crashed" on boot in native Wayland
   boot.initrd.kernelModules = [ "i915" ];
 
+  # Prevent issues on wake from DPMS
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -24,7 +27,7 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = false;
