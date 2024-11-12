@@ -12,6 +12,13 @@
         width = 0.6;
         height = 0.6;
       }
+    },
+    pickers = {
+      git_branches = {
+        mappings = {
+          i = { ["<cr>"] = require("telescope.actions").git_switch_branch }
+        }
+      }
     }
   }
 
