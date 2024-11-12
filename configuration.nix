@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, myUsername, myHostname, myTZ, myLocale, ... }:
+{ pkgs, inputs, myUsername, myHostname, myTZ, myLocale, ... }:
 
 {
   # Don't change without reading the documentation!
@@ -18,6 +18,7 @@
       ./fonts/system.nix
       ./stylix/system.nix
       ./wm/hyprland/system.nix
+      ./services/misc/system.nix
       ./services/peroxide/system.nix
       ./services/printing/system.nix
       ./services/xremap/system.nix
@@ -35,12 +36,6 @@
     neovim
   ];
 
-  # Flatpak
-  services.flatpak = {
-    enable = true;
-    packages = [ "app.bluebubbles.BlueBubbles" ];
-  };
-
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,9 +46,6 @@
 
   # Disable firewall.
   networking.firewall.enable = false;
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
 
   # Set your time zone
   time.timeZone = myTZ;
@@ -80,29 +72,26 @@
     xkbVariant = "";
   };
 
-  # Define a user account.
+  # Define a user account
   users.users."${myUsername}" = {
     isNormalUser = true;
     description = myUsername;
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # Mount filesystems.
+  # Mount filesystems
   fileSystems."/backup" = {
     device = "192.168.1.128:/storage/smb";
     fsType = "nfs";
-    options = [ "nfsvers=4.2" "noatime" "x-systemd.automount" "noauto" ];
+    options = [ "nfsvers=4.2" "noatime" ];
   };
 
-  security.pam.services.login.enableGnomeKeyring = true;
-  services.gnome.gnome-keyring.enable = true;
-
-  # Display manager.
+  # Display manager; should be moved
   services.xserver.displayManager.gdm = {
     enable = true;
     wayland = true;
   };
 
-  # Kill user processes on logout.
+  # Kill user processes on logout
   services.logind.killUserProcesses = true;
 }
