@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, nixpkgs-unstable, ... }:
 
 {
   imports = [
@@ -26,7 +26,7 @@
     swayidle
     waybar
 
-    xwaylandvideobridge
+    nixpkgs-unstable.xwaylandvideobridge
   ];
 
   programs.fuzzel = {

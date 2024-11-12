@@ -66,7 +66,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
     sops-nix.url = "github:Mic92/sops-nix";
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.34.0";
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.45.0";
     xremap-flake.url = "github:xremap/nix-flake";
     stylix.url = "github:danth/stylix";
     our-discord.url = "github:nixos/nixpkgs/080a4a27f206d07724b88da096e27ef63401a504";

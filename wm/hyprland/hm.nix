@@ -1,4 +1,4 @@
-{ config, pkgs, utils, nixpkgs-latest, ... }:
+{ config, pkgs, utils, nixpkgs-unstable, ... }:
 
 {
   nixpkgs.overlays = [(self: super: {
@@ -21,7 +21,7 @@
   in
   {
     packages = with pkgs; [
-      nixpkgs-latest.pyprland
+      pyprland
       hyprpicker-latest
 
       (pkgs.writeShellScriptBin "switch-scratchpad" ''
