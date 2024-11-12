@@ -1,9 +1,10 @@
-{ pkgs, nixpkgs-latest, nixpkgs-unstable, our-discord, ... }:
+{ pkgs, nixpkgs-latest, nixpkgs-unstable, ... }:
 
 {
   home.packages = with pkgs; [
-    pkgs.webcord
     nixpkgs-unstable.discord
+    nixpkgs-unstable.slack
+    nixpkgs-unstable.zoom-us
     pkgs.fractal
     pkgs.showmethekey
     pkgs.libreoffice
