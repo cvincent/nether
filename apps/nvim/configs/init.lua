@@ -252,6 +252,9 @@ require("lazy").setup({
       })
     end
   },
+
+  -- TODO: Set this up at some point
+  -- "n0v1c3/vira",
 })
 
 -- Vim in the browser
