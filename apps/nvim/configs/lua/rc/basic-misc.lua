@@ -62,7 +62,8 @@ vim.opt.gdefault = true
 vim.opt.wrap = false
 
 -- But do automatically hard-wrap comments
-vim.opt.formatoptions:append("c")
+vim.opt.formatoptions:append("c") -- Autowrap comments
+vim.opt.formatoptions:remove("t") -- Do not autowrap other text
 vim.opt.textwidth = 80
 
 -- Auto-indent after pasting
