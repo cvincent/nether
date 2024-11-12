@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     pkgs.webcord
-    our-discord.discord
+    nixpkgs-unstable.discord
     pkgs.fractal
     pkgs.showmethekey
     pkgs.libreoffice
