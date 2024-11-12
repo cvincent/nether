@@ -8,7 +8,7 @@
     pkgs.showmethekey
     pkgs.libreoffice
     pkgs.gnome.nautilus
-    pkgs.spotify
+    nixpkgs-unstable.spotify
   ];
 
   programs.zathura.enable = true;
