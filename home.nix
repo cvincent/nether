@@ -27,11 +27,9 @@
     ./apps/misc/hm.nix
     ./apps/mpv/hm.nix
     ./apps/nvim/hm.nix
-    ./apps/slack/hm.nix
     ./apps/smartcalc-tui/hm.nix
     ./apps/spotify/hm.nix
     ./apps/ytsub/hm.nix
-    ./apps/zoom/hm.nix
 
     ./shell/fish/hm.nix
     ./shell/jira-cli/hm.nix
