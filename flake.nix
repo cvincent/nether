@@ -25,6 +25,11 @@
         inherit system;
         config.allowUnfree = true;
       };
+
+      nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest {
+        inherit system;
+        config.allowUnfree = true;
+      };
     };
   in {
     nixosConfigurations = {
@@ -55,6 +60,7 @@
     nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-latest.url = "nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs-unstable-latest.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 

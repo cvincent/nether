@@ -1,4 +1,4 @@
-{ config, pkgs, utils, nixpkgs-latest, ... }:
+{ config, pkgs, utils, nixpkgs-unstable-latest, ... }:
 
 {
   nixpkgs.overlays = [(self: super: {
@@ -10,7 +10,7 @@
     };
   })];
 
-  home.packages = with pkgs; [ nixpkgs-latest.yt-dlp ];
+  home.packages = with pkgs; [ nixpkgs-unstable-latest.yt-dlp ];
 
   programs.mpv = {
     enable = true;

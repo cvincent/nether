@@ -817,6 +817,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-unstable-latest": {
+      "locked": {
+        "lastModified": 1731319897,
+        "narHash": "sha256-PbABj4tnbWFMfBp6OcUK5iGy1QY+/Z96ZcLpooIbuEI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dc460ec76cbff0e66e269457d7b728432263166c",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-zoom": {
       "locked": {
         "lastModified": 1714011188,
@@ -993,6 +1008,7 @@
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-latest": "nixpkgs-latest",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-unstable-latest": "nixpkgs-unstable-latest",
         "nixpkgs-zoom": "nixpkgs-zoom",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
