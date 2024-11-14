@@ -13,4 +13,10 @@
   ];
 
   programs.zathura.enable = true;
+
+  dconf.settings = {
+    "org/gnome/desktop/privacy" = {
+      remember-recent-files = false;
+    };
+  };
 }
