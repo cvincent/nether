@@ -8,7 +8,7 @@ in {
   ];
 
   systemd.user.services.ha-notifier = {
-    Install.WantedBy = [ "network.target" ];
+    Install.WantedBy = [ "graphical.target" ];
 
     Service = {
       ExecStart = "${home-assistant-desktop-receiver}/bin/home-assistant-desktop-receiver";
