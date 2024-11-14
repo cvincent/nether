@@ -10,7 +10,7 @@
 // api.unmap('<ctrl-i>');
 
 settings.hintAlign = "left";
-settings.newTabPosition = "last";
+settings.newTabPosition = "right";
 settings.tabsThreshold = 0;
 
 // Tab navigation
