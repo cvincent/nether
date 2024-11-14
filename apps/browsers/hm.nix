@@ -1,15 +1,15 @@
-{ pkgs, nixpkgs-unstable, ... }:
+{ pkgs, browser-pkgs, ... }:
 
 {
   home.packages = with pkgs; [
-    (nixpkgs-unstable.chromium.override {
+    (browser-pkgs.chromium.override {
       commandLineArgs = [
         "--enable-features=VaapiVideoEncoder"
         "--ignore-gpu-blocklist"
         "--enable-zero-copy"
       ];
     })
-    (nixpkgs-unstable.brave.override {
+    (browser-pkgs.brave.override {
       commandLineArgs = [
         "--enable-features=VaapiVideoEncoder"
         "--ignore-gpu-blocklist"
