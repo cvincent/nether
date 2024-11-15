@@ -63,6 +63,7 @@ vim.api.nvim_create_autocmd("filetype", {
     vim.b[0].delimitMate_expand_space = 0
     vim.api.nvim_command("set textwidth=80")
     vim.api.nvim_command("set breakindent linebreak")
+    vim.api.nvim_command("set spell")
     vim.api.nvim_command("imap <c-cr> <a-cr>")
     vim.api.nvim_create_user_command('CopyWorkNotes', function()
       -- Use pcall to swallow error if there's only one "-"; the e flag doesn't
