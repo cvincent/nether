@@ -1,7 +1,7 @@
 [
   {
     class = "kitty-scratch";
-    command = "nvidia-offload kitty --class kitty-scratch -o background_opacity=0.75";
+    command = "nvidia-offload kitty --class kitty-scratch";
     binding = "SUPER, t";
   }
   {
@@ -11,28 +11,28 @@
   }
   {
     class = "ytsub-scratch";
-    command = "nvidia-offload kitty --class ytsub-scratch -o background_opacity=0.75 ytsub";
+    command = "nvidia-offload kitty --class ytsub-scratch ytsub";
     binding = "SUPER, y";
   }
   {
     class = "neorg-scratch";
-    command = "nvidia-offload kitty --class neorg-scratch -o background_opacity=0.75 nvim --listen /tmp/neorg.pipe -S /backup/vim-notes/neorg/Session.vim";
+    command = "nvidia-offload kitty --class neorg-scratch nvim --listen /tmp/neorg.pipe -S /backup/vim-notes/neorg/Session.vim";
     binding = "SUPER, o";
     size = "80% 80%";
   }
   {
     class = "spotify-tui-scratch";
-    command = "nvidia-offload kitty --class spotify-tui-scratch -o background_opacity=0.75 ncspot";
+    command = "nvidia-offload kitty --class spotify-tui-scratch ncspot";
     binding = "SUPER, m";
   }
   {
     class = "smartcalc-tui-scratch";
-    command = "nvidia-offload kitty --class smartcalc-tui-scratch -o background_opacity=0.75 smartcalc-slow-start";
+    command = "nvidia-offload kitty --class smartcalc-tui-scratch smartcalc-slow-start";
     binding = "SUPER, c";
   }
   {
     class = "aerc-scratch";
-    command = "nvidia-offload kitty --class aerc-scratch -o background_opacity=0.75 aerc";
+    command = "nvidia-offload kitty --class aerc-scratch aerc";
     binding = "SUPER, e";
   }
 ]
