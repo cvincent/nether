@@ -15,43 +15,55 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      system = system;
-      config.allowUnfree = true;
-    };
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        system = system;
+        config.allowUnfree = true;
+      };
 
-    elixir = inputs.our-elixir.legacyPackages.${system}.elixir_1_15;
-    beamPkg = pkgs.beam.packagesWith inputs.our-erlang.legacyPackages.${system}.erlangR25;
-    our-elixir-ls = pkgs.elixir-ls.override {
-      inherit elixir;
-      mixRelease = beamPkg.mixRelease.override { inherit elixir; };
-    };
-  in
-  {
-    devShells.${system}.default = pkgs.mkShell {
-      buildInputs = with pkgs; [
-        inputs.our-erlang.legacyPackages.${system}.erlangR25
-        inputs.our-elixir.legacyPackages.${system}.elixir_1_15
-        our-elixir-ls
-        inputs.our-nodejs.legacyPackages.${system}.nodejs
-        inputs.our-postgresql.legacyPackages.${system}.postgresql_14
-        cockroachdb-bin
-        inotify-tools
-        # We run redis-stack-server using an AppImage because nobody has built
-        # the package for NixOS yet :( And I don't feel like doing it
-        # ¯\_(ツ)_/¯
-        appimage-run
-      ];
+      elixir = inputs.our-elixir.legacyPackages.${system}.elixir_1_15;
+      beamPkg = pkgs.beam.packagesWith inputs.our-erlang.legacyPackages.${system}.erlangR25;
+      our-elixir-ls = pkgs.elixir-ls.override {
+        inherit elixir;
+        mixRelease = beamPkg.mixRelease.override { inherit elixir; };
+      };
 
-      PGDATA="./pgdata";
+      # our-cockroachdb-bin = pkgs.cockroachdb-bin.overrideAttrs (oldAttrs: rec {
+      #   version = "22.1.22";
+      #   srcs = {
+      #     x86_64-linux = pkgs.fetchzip {
+      #       url = "https://binaries.cockroachdb.com/cockroach-v${version}.linux-amd64.tgz";
+      #       hash = "";
+      #     };
+      #   };
+      # });
+    in
+      {
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          inputs.our-erlang.legacyPackages.${system}.erlangR25
+          inputs.our-elixir.legacyPackages.${system}.elixir_1_15
+          our-elixir-ls
+          inputs.our-nodejs.legacyPackages.${system}.nodejs
+          inputs.our-postgresql.legacyPackages.${system}.postgresql_14
+          inotify-tools
+          # We run redis-stack-server using an AppImage because nobody has built
+          # the package for NixOS yet :( And I don't feel like doing it
+          # ¯\_(ツ)_/¯
+          appimage-run
+          # TODO: Figure out how to properly override the nixpkgs version and do
+          # this correctly. Or just wait until we dump this shitty software.
+          (pkgs.callPackage ./cockroachdb.nix {})
+        ];
 
-      # On first time:
-      # initdb in base dir
-      # createuser -s postgres -h localhost
+        PGDATA="./pgdata";
 
-      shellHook = ''
+        # On first time:
+        # initdb in base dir
+        # createuser -s postgres -h localhost
+
+        shellHook = ''
         echo "$(elixir --version | tr -s '\n')"
         echo "Node $(node --version)"
         echo "PostgreSQL $(psql --version | cut -d' ' -f3)"
@@ -59,7 +71,7 @@
         echo "CockroachDB $(cockroachdb --version | grep 'Build Tag' | tr -s ' ' | cut -d' ' -f3)"
         echo ""
         echo "LFG."
-      '';
+        '';
+      };
     };
-  };
 }
