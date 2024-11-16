@@ -10,7 +10,8 @@
 // api.unmap('<ctrl-i>');
 
 settings.hintAlign = "left";
-settings.newTabPosition = "right";
+settings.newTabPosition = "default";
+settings.newTabPositionOmnibar = "last";
 settings.tabsThreshold = 0;
 
 // Tab navigation
