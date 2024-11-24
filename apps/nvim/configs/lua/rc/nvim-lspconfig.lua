@@ -29,6 +29,20 @@
     on_attach = on_attach,
     capabilities = capabilities
   })
+
+  lspconfig.nixd.setup({
+    cmd = { "nixd" },
+    settings = {
+      nixd = {
+        nixpkgs = { expr = "import (builtins.getFlake \"/home/cvincent/dotfiles\").inputs.nixpkgs { }" },
+        formatting = { "nixfmt" },
+        options = {
+          nixos = { expr = "(builtins.getFlake \"/home/cvincent/dotfiles\").nixosConfigurations.nether.options { }" },
+          home_manager = { expr = "(builtins.getFlake \"/home/cvincent/dotfiles\").homeConfigurations.nether.options { }" }
+        }
+      }
+    }
+  })
 -- end
 
 -- Always apply LSP keybindings
