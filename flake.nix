@@ -75,7 +75,7 @@
     xremap-flake.url = "github:xremap/nix-flake";
     stylix.url = "github:danth/stylix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nixpkgs-slack.url = "github:NixOS/nixpkgs/d4f247e89f6e10120f911e2e2d2254a050d0f732";
+    nixpkgs-slack.url = "nixpkgs/nixos-unstable";
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/06031e8a5d9d5293c725a50acf01242193635022";
     ha-notifier.url = "github:cvincent/ha-notifier";
   };
