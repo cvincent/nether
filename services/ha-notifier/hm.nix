@@ -1,18 +1,6 @@
-{ pkgs, ... }:
+{ inputs, ... }:
 
-let
-  home-assistant-desktop-receiver = (pkgs.callPackage ./pkg.nix {});
-in {
-  home.packages = [
-    home-assistant-desktop-receiver
-  ];
-
-  systemd.user.services.ha-notifier = {
-    Install.WantedBy = [ "graphical.target" ];
-
-    Service = {
-      ExecStart = "${home-assistant-desktop-receiver}/bin/home-assistant-desktop-receiver";
-      Restart = "on-failure";
-    };
-  };
+{
+  imports = [ inputs.ha-notifier.homeManagerModules.default ];
+  services.ha-notifier.enable = true;
 }

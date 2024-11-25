@@ -1,65 +1,72 @@
 {
   description = "My dotfiles Flake";
 
-  outputs = inputs@{ nixpkgs, nixpkgs-latest, home-manager, ... }:
-  let
-    inherit (nixpkgs) lib;
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+  outputs =
+    inputs@{
+      nixpkgs,
+      home-manager,
+      ...
+    }:
+    let
+      inherit (nixpkgs) lib;
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
 
-    commonArgs = rec {
-      inherit inputs;
-      myUsername = "cvincent";
-      myHomeDir = "/home/${myUsername}";
-      myHostname = "nether";
-      mySopsKey = /home/${myUsername}/.config/sops/age/keys.txt;
-      myTZ = "America/Chicago";
-      myLocale = "en_US.UTF-8";
+      commonArgs = rec {
+        inherit inputs;
+        myUsername = "cvincent";
+        myHomeDir = "/home/${myUsername}";
+        myHostname = "nether";
+        mySopsKey = /home/${myUsername}/.config/sops/age/keys.txt;
+        mySystem = system;
+        myTZ = "America/Chicago";
+        myLocale = "en_US.UTF-8";
 
-      nixpkgs-latest = import inputs.nixpkgs-latest {
-        inherit system;
-        config.allowUnfree = true;
+        nixpkgs-latest = import inputs.nixpkgs-latest {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        nixpkgs-unstable = import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        browser-pkgs = import inputs.browser-pkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      };
+    in
+    {
+      nixosConfigurations = {
+        "${commonArgs.myHostname}" = lib.nixosSystem {
+          inherit system;
+          specialArgs = commonArgs;
+
+          modules = [
+            ./configuration.nix
+          ];
+        };
       };
 
-      nixpkgs-unstable = import inputs.nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      homeConfigurations = {
+        "${commonArgs.myUsername}" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = commonArgs;
 
-      nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-      browser-pkgs = import inputs.browser-pkgs {
-        inherit system;
-        config.allowUnfree = true;
+          modules = [
+            ./utils.nix
+            ./home.nix
+          ];
+        };
       };
     };
-  in {
-    nixosConfigurations = {
-      "${commonArgs.myHostname}" = lib.nixosSystem {
-        inherit system;
-        specialArgs = commonArgs;
-
-        modules = [
-          ./configuration.nix
-        ];
-      };
-    };
-
-    homeConfigurations = {
-      "${commonArgs.myUsername}" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = commonArgs;
-
-        modules = [
-          ./utils.nix
-          ./home.nix
-        ];
-      };
-    };
-  };
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.11";
@@ -78,5 +85,6 @@
     stylix.url = "github:danth/stylix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/06031e8a5d9d5293c725a50acf01242193635022";
+    ha-notifier.url = "github:cvincent/ha-notifier";
   };
 }
