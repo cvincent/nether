@@ -1,5 +1,5 @@
 {
-  nixpkgs-unstable-latest,
+  nixpkgs-yt-dlp,
   ...
 }:
 
@@ -15,7 +15,7 @@
     })
   ];
 
-  home.packages = [ nixpkgs-unstable-latest.yt-dlp ];
+  home.packages = [ nixpkgs-yt-dlp.yt-dlp ];
 
   programs.mpv = {
     enable = true;
