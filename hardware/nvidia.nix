@@ -65,10 +65,6 @@
     VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     __GL_VRR_ALLOWED = "1";
     __GL_GSYNC_ALLOWED = "1";
-    # Not setting this to "nvidia" seems to crash Zoom tabs. Slack screensharing
-    # is inconsistent, but seems to never crash if I start it via Terminal vs
-    # Rofi. Looking forward to this shit being fully solved in Wayland on
-    # Nvidia, someday...
     LIBVA_DRIVER_NAME = "nvidia";
     # Uncertain if this is needed, iirc "direct" is the default
     NVD_BACKEND = "direct";
