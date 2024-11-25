@@ -1,4 +1,8 @@
-{ config, lib, pkgs, modulesPath, inputs, nixpkgs-unstable, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   # Load i915 module early to prevent Chromium/Electron apps from "GPU process
@@ -23,7 +27,7 @@
     ];
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -61,7 +65,11 @@
     VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     __GL_VRR_ALLOWED = "1";
     __GL_GSYNC_ALLOWED = "1";
-    LIBVA_DRIVER_NAME = "iHD";
+    # Not setting this to "nvidia" seems to crash Zoom tabs. Slack screensharing
+    # is inconsistent, but seems to never crash if I start it via Terminal vs
+    # Rofi. Looking forward to this shit being fully solved in Wayland on
+    # Nvidia, someday...
+    LIBVA_DRIVER_NAME = "nvidia";
     # Uncertain if this is needed, iirc "direct" is the default
     NVD_BACKEND = "direct";
   };
