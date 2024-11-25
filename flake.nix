@@ -22,25 +22,16 @@
         myTZ = "America/Chicago";
         myLocale = "en_US.UTF-8";
 
-        nixpkgs-latest = import inputs.nixpkgs-latest {
+        importAttrs = {
           inherit system;
           config.allowUnfree = true;
         };
 
-        nixpkgs-unstable = import inputs.nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
-
-        nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest {
-          inherit system;
-          config.allowUnfree = true;
-        };
-
-        browser-pkgs = import inputs.browser-pkgs {
-          inherit system;
-          config.allowUnfree = true;
-        };
+        nixpkgs-latest = import inputs.nixpkgs-latest importAttrs;
+        nixpkgs-unstable = import inputs.nixpkgs-unstable importAttrs;
+        nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest importAttrs;
+        browser-pkgs = import inputs.browser-pkgs importAttrs;
+        nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
       };
     in
     {
@@ -84,6 +75,7 @@
     xremap-flake.url = "github:xremap/nix-flake";
     stylix.url = "github:danth/stylix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    nixpkgs-slack.url = "github:NixOS/nixpkgs/d4f247e89f6e10120f911e2e2d2254a050d0f732";
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/06031e8a5d9d5293c725a50acf01242193635022";
     ha-notifier.url = "github:cvincent/ha-notifier";
   };

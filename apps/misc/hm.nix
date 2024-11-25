@@ -1,14 +1,19 @@
-{ pkgs, nixpkgs-latest, nixpkgs-unstable, ... }:
+{
+  pkgs,
+  nixpkgs-slack,
+  nixpkgs-unstable,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
+    fractal
+    showmethekey
+    libreoffice
+    gnome.nautilus
     nixpkgs-unstable.discord
-    nixpkgs-unstable.slack
+    nixpkgs-slack.slack
     nixpkgs-unstable.zoom-us
-    pkgs.fractal
-    pkgs.showmethekey
-    pkgs.libreoffice
-    pkgs.gnome.nautilus
     nixpkgs-unstable.spotify
   ];
 
