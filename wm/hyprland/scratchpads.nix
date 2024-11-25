@@ -18,7 +18,7 @@
     class = "neorg-scratch";
     command = "nvidia-offload kitty --class neorg-scratch nvim --listen /tmp/neorg.pipe -S /backup/vim-notes/neorg/Session.vim";
     binding = "SUPER, o";
-    size = "80% 80%";
+    size = "90% 90%";
   }
   {
     class = "spotify-tui-scratch";
