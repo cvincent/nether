@@ -33,6 +33,7 @@
         browser-pkgs = import inputs.browser-pkgs importAttrs;
         nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
         nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
+        nixpkgs-zoom = import inputs.nixpkgs-yt-dlp importAttrs;
       };
     in
     {
@@ -77,7 +78,7 @@
     stylix.url = "github:danth/stylix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixpkgs-slack.url = "nixpkgs/nixos-unstable";
-    nixpkgs-zoom.url = "github:NixOS/nixpkgs/06031e8a5d9d5293c725a50acf01242193635022";
+    nixpkgs-zoom.url = "github:NixOS/nixpkgs/18536bf04cd71abd345f9579158841376fdd0c5a";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
   };

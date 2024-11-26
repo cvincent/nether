@@ -2,6 +2,7 @@
   pkgs,
   nixpkgs-slack,
   nixpkgs-unstable,
+  nixpkgs-zoom,
   ...
 }:
 
@@ -13,7 +14,7 @@
     gnome.nautilus
     nixpkgs-unstable.discord
     nixpkgs-slack.slack
-    nixpkgs-unstable.zoom-us
+    nixpkgs-zoom.zoom-us
     nixpkgs-unstable.spotify
   ];
 
