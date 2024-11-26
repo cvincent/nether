@@ -27,6 +27,8 @@
     ];
   };
 
+  environment.systemPackages = [ pkgs.nvtop-intel ];
+
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
