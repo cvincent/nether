@@ -33,7 +33,7 @@
         browser-pkgs = import inputs.browser-pkgs importAttrs;
         nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
         nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
-        nixpkgs-zoom = import inputs.nixpkgs-yt-dlp importAttrs;
+        nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
       };
     in
     {
