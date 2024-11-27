@@ -2,13 +2,20 @@
 
 {
   home.packages = with pkgs; [
-    bat
-    bottom
-    eza
+    bat # `cat` alternative
+    bottom # `top` alternative
+
+    # `du`-like alternatives
+    du-dust
+    dua
+    duf
+
+    eza # `ls` alternative
+    fd # `find` alternative
     fzf
     jq
-    unzip
     magic-wormhole
+    unzip
   ];
 
   programs.direnv = {
