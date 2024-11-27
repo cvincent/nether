@@ -16,7 +16,7 @@
   }
   {
     class = "neorg-scratch";
-    command = "nvidia-offload kitty --class neorg-scratch nvim --listen /tmp/neorg.pipe -S /backup/vim-notes/neorg/Session.vim";
+    command = "nvidia-offload kitty --class neorg-scratch env NEORG=1 nvim --listen /tmp/neorg.pipe -S /backup/vim-notes/neorg/Session.vim";
     binding = "SUPER, o";
     size = "90% 90%";
   }
