@@ -79,12 +79,6 @@ require("lazy").setup({
     -- Basic LSP config
     "neovim/nvim-lspconfig",
 
-    -- Snippets (nvim-cmp requires a snippet engine for some reason)
-    "L3MON4D3/LuaSnip",
-
-    -- Snippets collection
-    "honza/vim-snippets",
-
     -- Completion
     "hrsh7th/nvim-cmp",
 
