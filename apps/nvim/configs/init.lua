@@ -34,220 +34,228 @@
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({"git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath})
+
+  if vim.v..shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." }
+    })
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Space as leader; apparently needs to be set before Lazy init
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 require("lazy").setup({
-  ----------
-  -- CORE --
-  ----------
+  spec = {
+    ----------
+    -- CORE --
+    ----------
 
-  -- Fast syntax stuff
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-  "nvim-treesitter/playground",
+    -- Fast syntax stuff
+    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+    "nvim-treesitter/playground",
 
-  -- Nord colors why not
-  "shaunsingh/nord.nvim",
+    -- Nord colors why not
+    "shaunsingh/nord.nvim",
 
-  ------------------
-  -- DEPENDENCIES --
-  ------------------
+    ------------------
+    -- DEPENDENCIES --
+    ------------------
 
-  -- Needed by gitsigns.nvim and nvim-telescope, maybe useful more generally
-  -- TODO: Make this a Lazy dependency where needed?
-  "nvim-lua/plenary.nvim",
+    -- Needed by gitsigns.nvim and nvim-telescope, maybe useful more generally
+    -- TODO: Make this a Lazy dependency where needed?
+    "nvim-lua/plenary.nvim",
 
-  ------------------------
-  -- LSP AND COMPLETION --
-  ------------------------
+    ------------------------
+    -- LSP AND COMPLETION --
+    ------------------------
 
-  -- Basic LSP config
-  "neovim/nvim-lspconfig",
+    -- Basic LSP config
+    "neovim/nvim-lspconfig",
 
-  -- Snippets (nvim-cmp requires a snippet engine for some reason)
-  "L3MON4D3/LuaSnip",
+    -- Snippets (nvim-cmp requires a snippet engine for some reason)
+    "L3MON4D3/LuaSnip",
 
-  -- Snippets collection
-  "honza/vim-snippets",
+    -- Snippets collection
+    "honza/vim-snippets",
 
-  -- Completion
-  "hrsh7th/nvim-cmp",
+    -- Completion
+    "hrsh7th/nvim-cmp",
 
-  -- Buffer words completion source
-  "hrsh7th/cmp-buffer",
+    -- Buffer words completion source
+    "hrsh7th/cmp-buffer",
 
-  -- LSP completion source
-  "hrsh7th/cmp-nvim-lsp",
+    -- LSP completion source
+    "hrsh7th/cmp-nvim-lsp",
 
-  -- In-editor debugging??
-  "mfussenegger/nvim-dap",
+    -- In-editor debugging??
+    "mfussenegger/nvim-dap",
 
-  -----------
-  -- TPOPE --
-  -----------
+    -----------
+    -- TPOPE --
+    -----------
 
-  -- Sick search/replace with smart_caseRecognitions
-  "tpope/vim-abolish",
+    -- Sick search/replace with smart_caseRecognitions
+    "tpope/vim-abolish",
 
-  -- Commenting with motions
-  "tpope/vim-commentary",
+    -- Commenting with motions
+    "tpope/vim-commentary",
 
-  -- Unix commands
-  "tpope/vim-eunuch",
+    -- Unix commands
+    "tpope/vim-eunuch",
 
-  -- Git integration
-  "tpope/vim-fugitive",
+    -- Git integration
+    "tpope/vim-fugitive",
 
-  -- GBrowse
-  "tpope/vim-rhubarb",
+    -- GBrowse
+    "tpope/vim-rhubarb",
 
-  -- Easier session management
-  "tpope/vim-obsession",
+    -- Easier session management
+    "tpope/vim-obsession",
 
-  -- Dot repeat support for various plugins
-  "tpope/vim-repeat",
+    -- Dot repeat support for various plugins
+    "tpope/vim-repeat",
 
-  -- Automatically detect a file's tab settings
-  "tpope/vim-sleuth",
+    -- Automatically detect a file's tab settings
+    "tpope/vim-sleuth",
 
-  -- Surrounding characters, should just be part of default Vim
-  "tpope/vim-surround",
+    -- Surrounding characters, should just be part of default Vim
+    "tpope/vim-surround",
 
-  -- Various handy bracket mappings
-  "tpope/vim-unimpaired",
+    -- Various handy bracket mappings
+    "tpope/vim-unimpaired",
 
-  -- Better netrw
-  "tpope/vim-vinegar",
+    -- Better netrw
+    "tpope/vim-vinegar",
 
-  -- Shortcuts for HTML
-  "tpope/vim-ragtag",
+    -- Shortcuts for HTML
+    "tpope/vim-ragtag",
 
-  -- Projections
-  "tpope/vim-projectionist",
-  "andyl/vim-projectionist-elixir",
+    -- Projections
+    "tpope/vim-projectionist",
+    "andyl/vim-projectionist-elixir",
 
-  -- Fluid testing
-  "vim-test/vim-test",
+    -- Fluid testing
+    "vim-test/vim-test",
 
-  -----------------------
-  -- LANGUAGE SPECIFIC --
-  -----------------------
+    -----------------------
+    -- LANGUAGE SPECIFIC --
+    -----------------------
 
-  "LnL7/vim-nix",
-  "elixir-editors/vim-elixir",
+    "LnL7/vim-nix",
+    "elixir-editors/vim-elixir",
 
-  ----------
-  -- MISC --
-  ----------
+    ----------
+    -- MISC --
+    ----------
 
-  -- Easy scratch buffers
-  {
-    "https://git.sr.ht/~swaits/scratch.nvim",
-    lazy = true,
-    keys = {},
-    cmd = { "Scratch", "ScratchSplit" },
-    opts = {}
-  },
+    -- Easy scratch buffers
+    {
+      "https://git.sr.ht/~swaits/scratch.nvim",
+      lazy = true,
+      keys = {},
+      cmd = { "Scratch", "ScratchSplit" },
+      opts = {}
+    },
 
-  -- Project-wide search with Ripgrep
-  "mileszs/ack.vim",
+    -- Project-wide search with Ripgrep
+    "mileszs/ack.vim",
 
-  -- Auto-close pairs
-  "Raimondi/delimitMate",
+    -- Auto-close pairs
+    "Raimondi/delimitMate",
 
-  -- Fuzzy finders
-  {
-    "nvim-telescope/telescope.nvim",
-    branch = "0.1.x"
-  },
-
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    build = "make"
-  },
-
-  -- Git change signs and virtual text blame
-  "lewis6991/gitsigns.nvim",
-
-  -- Fast global status line
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "kyazdani42/nvim-web-devicons", lazy = true }
-  },
-
-  -- Smooth scroll
-  "karb94/neoscroll.nvim",
-
-  -- Disable search highlight after moving cursor
-  "romainl/vim-cool",
-
-  -- Highlight current search match
-  "PeterRincker/vim-searchlight",
-
-  -- Easy px to rem conversion
-  { "jsongerber/nvim-px-to-rem", config = true },
-
-  -----------
-  -- Other --
-  -----------
-
-  {
-    "nvim-neorg/neorg",
-    dependencies = { "luarocks.nvim" },
-    lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-    cond = vim.env.NEORG == "1"
-  },
-
-  {
-    "luckasRanarison/nvim-devdocs",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
+    -- Fuzzy finders
+    {
       "nvim-telescope/telescope.nvim",
-      "nvim-treesitter/nvim-treesitter",
+      branch = "0.1.x"
     },
-    opts = {}
-  },
 
-  {
-    "kristijanhusak/vim-dadbod-ui",
-    dependencies = {
-      { "tpope/vim-dadbod", lazy = true },
-      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make"
     },
-    cmd = {
-      "DBUI",
-      "DBUIToggle",
-      "DBUIAddConnection",
-      "DBUIFindBuffer",
-    },
-    init = function()
-      vim.g.db_ui_use_nerd_fonts = 1
-    end,
-  },
 
-  {
-    "pwntester/octo.nvim",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function ()
-      require("octo").setup({
-        ssh_aliases = {["github-elc"] = "github.com"}
-      })
-    end
-  },
+    -- Git change signs and virtual text blame
+    "lewis6991/gitsigns.nvim",
 
-  -- TODO: Set this up at some point
-  -- "n0v1c3/vira",
+    -- Fast global status line
+    {
+      "nvim-lualine/lualine.nvim",
+      dependencies = { "kyazdani42/nvim-web-devicons", lazy = true }
+    },
+
+    -- Smooth scroll
+    "karb94/neoscroll.nvim",
+
+    -- Disable search highlight after moving cursor
+    "romainl/vim-cool",
+
+    -- Highlight current search match
+    "PeterRincker/vim-searchlight",
+
+    -- Easy px to rem conversion
+    { "jsongerber/nvim-px-to-rem", config = true },
+
+    -----------
+    -- Other --
+    -----------
+
+    {
+      "nvim-neorg/neorg",
+      dependencies = { "luarocks.nvim" },
+      lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+      cond = vim.env.NEORG == "1"
+    },
+
+    {
+      "luckasRanarison/nvim-devdocs",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+        "nvim-treesitter/nvim-treesitter",
+      },
+      opts = {}
+    },
+
+    {
+      "kristijanhusak/vim-dadbod-ui",
+      dependencies = {
+        { "tpope/vim-dadbod", lazy = true },
+        { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+      },
+      cmd = {
+        "DBUI",
+        "DBUIToggle",
+        "DBUIAddConnection",
+        "DBUIFindBuffer",
+      },
+      init = function()
+        vim.g.db_ui_use_nerd_fonts = 1
+      end,
+    },
+
+    {
+      "pwntester/octo.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
+      },
+      config = function ()
+        require("octo").setup({
+          ssh_aliases = {["github-elc"] = "github.com"}
+        })
+      end
+    },
+
+    -- TODO: Set this up at some point
+    -- "n0v1c3/vira",
+  }
 })
 
 -- Vim in the browser
@@ -261,9 +269,5 @@ require("lazy").setup({
 --   pattern = ".*",
 --   command = "setfiletype elixir"
 -- })
-
--- Space as leader; apparently needs to be set before other mappings
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 
 require("rc")
