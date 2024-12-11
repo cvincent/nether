@@ -155,15 +155,6 @@ require("lazy").setup({
     -- MISC --
     ----------
 
-    -- Easy scratch buffers
-    {
-      "https://git.sr.ht/~swaits/scratch.nvim",
-      lazy = true,
-      keys = {},
-      cmd = { "Scratch", "ScratchSplit" },
-      opts = {}
-    },
-
     -- Project-wide search with Ripgrep
     "mileszs/ack.vim",
 
@@ -202,60 +193,11 @@ require("lazy").setup({
     -- Easy px to rem conversion
     { "jsongerber/nvim-px-to-rem", config = true },
 
-    -----------
-    -- Other --
-    -----------
-
-    {
-      "nvim-neorg/neorg",
-      dependencies = { "luarocks.nvim" },
-      lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
-      cond = vim.env.NEORG == "1"
-    },
-
-    {
-      "luckasRanarison/nvim-devdocs",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
-        "nvim-treesitter/nvim-treesitter",
-      },
-      opts = {}
-    },
-
-    {
-      "kristijanhusak/vim-dadbod-ui",
-      dependencies = {
-        { "tpope/vim-dadbod", lazy = true },
-        { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
-      },
-      cmd = {
-        "DBUI",
-        "DBUIToggle",
-        "DBUIAddConnection",
-        "DBUIFindBuffer",
-      },
-      init = function()
-        vim.g.db_ui_use_nerd_fonts = 1
-      end,
-    },
-
-    {
-      "pwntester/octo.nvim",
-      requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons",
-      },
-      config = function ()
-        require("octo").setup({
-          ssh_aliases = {["github-elc"] = "github.com"}
-        })
-      end
-    },
-
     -- TODO: Set this up at some point
     -- "n0v1c3/vira",
-  }
+
+    { import = "plugins" },
+  },
 })
 
 -- Vim in the browser
