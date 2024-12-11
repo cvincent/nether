@@ -42,7 +42,7 @@ if not vim.loop.fs_stat(lazypath) then
       { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
       { out, "WarningMsg" },
       { "\nPress any key to exit..." }
-    })
+    }, true, {})
   end
 end
 vim.opt.rtp:prepend(lazypath)
