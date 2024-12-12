@@ -123,10 +123,6 @@ require("lazy").setup({
     -- MISC --
     ----------
 
-    -- Fuzzy finders
-    { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-
     -- Disable search highlight after moving cursor
     "romainl/vim-cool",
 
