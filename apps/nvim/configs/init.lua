@@ -150,9 +150,6 @@ require("lazy").setup({
     { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
-    -- Smooth scroll
-    "karb94/neoscroll.nvim",
-
     -- Disable search highlight after moving cursor
     "romainl/vim-cool",
 
