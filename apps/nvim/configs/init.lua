@@ -53,14 +53,6 @@ vim.g.maplocalleader = " "
 
 require("lazy").setup({
   spec = {
-    ----------
-    -- CORE --
-    ----------
-
-    -- Fast syntax stuff
-    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-    "nvim-treesitter/playground",
-
     ------------------
     -- DEPENDENCIES --
     ------------------
