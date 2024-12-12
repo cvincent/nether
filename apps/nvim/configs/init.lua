@@ -61,9 +61,6 @@ require("lazy").setup({
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     "nvim-treesitter/playground",
 
-    -- Nord colors why not
-    "shaunsingh/nord.nvim",
-
     ------------------
     -- DEPENDENCIES --
     ------------------
