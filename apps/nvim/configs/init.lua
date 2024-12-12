@@ -149,9 +149,6 @@ require("lazy").setup({
     -- MISC --
     ----------
 
-    -- Project-wide search with Ripgrep
-    "mileszs/ack.vim",
-
     -- Auto-close pairs
     "Raimondi/delimitMate",
 
