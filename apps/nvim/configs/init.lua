@@ -78,9 +78,6 @@ require("lazy").setup({
     -- Commenting with motions
     "tpope/vim-commentary",
 
-    -- Unix commands
-    "tpope/vim-eunuch",
-
     -- Git integration
     "tpope/vim-fugitive",
 
