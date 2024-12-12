@@ -156,15 +156,8 @@ require("lazy").setup({
     "Raimondi/delimitMate",
 
     -- Fuzzy finders
-    {
-      "nvim-telescope/telescope.nvim",
-      branch = "0.1.x"
-    },
-
-    {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      build = "make"
-    },
+    { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
     -- Git change signs and virtual text blame
     "lewis6991/gitsigns.nvim",
