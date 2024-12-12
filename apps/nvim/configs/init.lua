@@ -150,12 +150,6 @@ require("lazy").setup({
     { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
-    -- Fast global status line
-    {
-      "nvim-lualine/lualine.nvim",
-      dependencies = { "kyazdani42/nvim-web-devicons", lazy = true }
-    },
-
     -- Smooth scroll
     "karb94/neoscroll.nvim",
 

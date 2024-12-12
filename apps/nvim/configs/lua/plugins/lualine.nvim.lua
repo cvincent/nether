@@ -1,5 +1,7 @@
--- if packer_plugins["lualine.nvim"] then
-  require("lualine").setup( {
+return {
+  "nvim-lualine/lualine.nvim",
+  dependencies = { "kyazdani42/nvim-web-devicons", lazy = true },
+  opts = {
     options = {
       globalstatus = false,
 
@@ -22,11 +24,11 @@
           "filename",
           path = 1,
           shorting_target = 2
-        }
+        },
       },
       lualine_x = {},
       lualine_y = { "diagnostics" },
-      lualine_z = { "location" }
+      lualine_z = { "location" },
     },
 
     inactive_sections = {
@@ -42,6 +44,6 @@
       lualine_x = {},
       lualine_y = {},
       lualine_z = {},
-    }
-  })
--- end
+    },
+  },
+}
