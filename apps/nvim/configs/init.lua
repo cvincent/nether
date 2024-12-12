@@ -76,9 +76,6 @@ require("lazy").setup({
     -- Basic LSP config
     "neovim/nvim-lspconfig",
 
-    -- In-editor debugging??
-    "mfussenegger/nvim-dap",
-
     -----------
     -- TPOPE --
     -----------
