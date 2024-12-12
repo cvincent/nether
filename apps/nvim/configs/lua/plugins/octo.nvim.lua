@@ -4,9 +4,7 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
   },
-  config = function ()
-    require("octo").setup({
-      ssh_aliases = {["github-elc"] = "github.com"}
-    })
-  end
+  opts = {
+    ssh_aliases = {["github-elc"] = "github.com"}
+  },
 }
