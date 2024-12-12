@@ -76,15 +76,6 @@ require("lazy").setup({
     -- Basic LSP config
     "neovim/nvim-lspconfig",
 
-    -- Completion
-    "hrsh7th/nvim-cmp",
-
-    -- Buffer words completion source
-    "hrsh7th/cmp-buffer",
-
-    -- LSP completion source
-    "hrsh7th/cmp-nvim-lsp",
-
     -- In-editor debugging??
     "mfussenegger/nvim-dap",
 
