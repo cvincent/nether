@@ -105,9 +105,6 @@ require("lazy").setup({
     -- Better netrw
     "tpope/vim-vinegar",
 
-    -- Shortcuts for HTML
-    "tpope/vim-ragtag",
-
     -- Projections
     "tpope/vim-projectionist",
     "andyl/vim-projectionist-elixir",
