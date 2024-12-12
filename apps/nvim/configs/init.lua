@@ -169,16 +169,4 @@ require("lazy").setup({
   },
 })
 
--- Vim in the browser
--- use {
---   'glacambre/firenvim',
---   run = function() vim.fn['firenvim#install'](0) end
--- }
--- use "subnut/nvim-ghost.nvim"
--- vim.g.nvim_ghost_server_port = 4005
--- vim.api.nvim_create_autocmd("User", {
---   pattern = ".*",
---   command = "setfiletype elixir"
--- })
-
 require("rc")
