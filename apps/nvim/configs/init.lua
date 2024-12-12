@@ -146,9 +146,6 @@ require("lazy").setup({
     -- MISC --
     ----------
 
-    -- Auto-close pairs
-    "Raimondi/delimitMate",
-
     -- Fuzzy finders
     { "nvim-telescope/telescope.nvim", branch = "0.1.x" },
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
