@@ -102,12 +102,6 @@
     ];
   };
 
-  # Display manager; should be moved
-  services.xserver.displayManager.gdm = {
-    # enable = true;
-    # wayland = true;
-  };
-
   # Kill user processes on logout
   services.logind.killUserProcesses = true;
 }
