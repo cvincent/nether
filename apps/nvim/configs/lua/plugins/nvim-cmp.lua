@@ -54,12 +54,11 @@ return {
           }
         ),
       })
-    end
+    end,
+
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp", -- LSP completion source
+      "hrsh7th/cmp-buffer", -- Buffer words completion source
+    },
   },
-
-  -- Buffer words completion source
-  "hrsh7th/cmp-buffer",
-
-  -- LSP completion source
-  "hrsh7th/cmp-nvim-lsp",
 }
