@@ -85,9 +85,6 @@ require("lazy").setup({
     -- Automatically detect a file's tab settings
     "tpope/vim-sleuth",
 
-    -- Surrounding characters, should just be part of default Vim
-    "tpope/vim-surround",
-
     -- Various handy bracket mappings
     "tpope/vim-unimpaired",
 
