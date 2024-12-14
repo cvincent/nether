@@ -1,37 +1,3 @@
--- TODO:
--- x Color settings (rc/colors.vim)
--- x Arrow newlines are unimpaired + rc/unimpaired.vim
--- x vim-obsession
--- x Some autoclose thing, hopefully one that doesn't suck
--- x Highlight current search match...using vim-searchlight before
--- x Some hlsearch thing...we were using vim-cool before I think
--- x Smooth scroll
--- x Some better notes plugin, or maybe a custom solution
--- x Fugitive and shortcuts, of course
--- x Signify or similar for sign column diffs (rc/vim-signify.vim)
--- x Fast, modern statusline
--- x Port in numberline config
--- x Modern snippets, maybe LSP integration?
--- x Smart case isn't working for */#; I guess that's always been the case, oh well
--- x Completion; was using nvim-cmp before
--- x Figured out why fzf window sometimes pops in and out, it's while vim-cool is highlighting I think
--- x Bring back fzf/telescope for git checkout
--- x Look into Telescope alternative to fzf-lua
--- x QFEnter maybe? (see rc); might not need, we use ]q and [q these days
--- x sessionopts localoptions saves winfixwidth but also causes all <buffer>
---   mappings to be saved...this fucks shit up in all kinds of ways, like when
---   switching plugins around and such. If we could just delete every line
---   starting with a mapping command from Session.vim, that would fix it I think.
---   Edit: We're just not using winfixwidth anymore.
--- * Maybe bring back matchup (see rc); do we really need it?
--- * Look at nvim-dap; built-in LSP debugger, supports Elixir!
--- * Indent lines?
--- * Some kind of Slime-like, maybe actually tpope's Dispatch
--- * Do we need FixCursorHold? Fixes perf issues in some plugins using cursor move aucmds
--- * Will inevitably, eventually need vim-rails and rc again, along with rspec and ruby
--- * Inspiration:
---   * https://github.com/NvChad/NvChad
-
 require("helpers")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
