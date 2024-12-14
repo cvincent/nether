@@ -17,7 +17,7 @@ return {
     local lspconfig = require("lspconfig")
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    if is_plugin_installed("cmp-nvim-lsp") then
+    if IsPluginInstalled("cmp-nvim-lsp") then
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
     end
 
