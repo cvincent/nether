@@ -13,6 +13,7 @@
     # 5.1. It also wants make.
     lua5_1
     lua51Packages.luarocks
+    lua-language-server
     gnumake
     # Nix formatter
     nixpkgs-unstable-latest.nixfmt-rfc-style

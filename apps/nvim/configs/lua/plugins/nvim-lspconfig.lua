@@ -1,5 +1,18 @@
 return {
   "neovim/nvim-lspconfig",
+
+  dependencies = {
+    -- Automatically handle making the current project's dependencies available
+    -- to the Lua LSP; gives us vim api completions!
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+
   init = function()
     local lspconfig = require("lspconfig")
 
@@ -13,6 +26,8 @@ return {
       on_attach = on_attach,
       capabilities = capabilities
     })
+
+    lspconfig.lua_ls.setup({})
 
     lspconfig.nixd.setup({
       cmd = { "nixd" },
@@ -67,7 +82,7 @@ return {
         vim.api.nvim_create_autocmd("BufWritePre", {
           buffer = args.buf,
           callback = function()
-            vim.lsp.buf.format {async = false, id = args.data.client_id }
+            vim.lsp.buf.format { async = false, id = args.data.client_id }
           end,
         })
       end
