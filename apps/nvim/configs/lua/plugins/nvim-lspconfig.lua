@@ -8,8 +8,6 @@ return {
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
     end
 
-    vim.print({"nvim-cmp-lsp installed?", cmp_nvim_lsp_installed})
-
     lspconfig.elixirls.setup({
       cmd = { "elixir-ls" },
       on_attach = on_attach,
