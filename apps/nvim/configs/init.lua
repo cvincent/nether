@@ -85,9 +85,6 @@ require("lazy").setup({
     -- Automatically detect a file's tab settings
     "tpope/vim-sleuth",
 
-    -- Various handy bracket mappings
-    "tpope/vim-unimpaired",
-
     -- Better netrw
     "tpope/vim-vinegar",
 
