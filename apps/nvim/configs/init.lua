@@ -63,13 +63,6 @@ require("lazy").setup({
     -- TODO: Make this a Lazy dependency where needed?
     "nvim-lua/plenary.nvim",
 
-    ------------------------
-    -- LSP AND COMPLETION --
-    ------------------------
-
-    -- Basic LSP config
-    "neovim/nvim-lspconfig",
-
     -----------
     -- TPOPE --
     -----------
