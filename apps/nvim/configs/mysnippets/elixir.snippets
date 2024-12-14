@@ -1,0 +1,77 @@
+snippet def "def func(args) do" b!
+def ${1:func}${2:(${3:args})}${4: when $5} do
+	$0
+end
+endsnippet
+
+snippet defs "def func(args), do: ret" b!
+def ${1:func}${2:(${3:args})}${4: when $5}, do: $0
+endsnippet
+
+snippet defp "defp func(args) do" b!
+defp ${1:func}${2:(${3:args})}${4: when $5} do
+	$0
+end
+endsnippet
+
+snippet defps "def func(args), do: ret" b!
+defp ${1:func}${2:(${3:args})}${4: when $5}, do: $0
+endsnippet
+
+snippet db "dbg(something)" b!
+dbg($0)
+endsnippet
+
+snippet dbi "|> dbg()"
+|> dbg()
+endsnippet
+
+snippet io "IO.inspect(data, label)" b!
+IO.inspect(${1:data}${2:, label: "${3:poiu}"})
+endsnippet
+
+snippet iop "|> IO.inspect(label)" i!
+|> IO.inspect(label: "${1:poiu}")
+endsnippet
+
+snippet div
+<div>
+	$0
+</div>
+endsnippet
+
+snippet divc
+<div class="$1">
+	$0
+</div>
+endsnippet
+
+snippet =
+<%= $0 %>
+endsnippet
+
+snippet -
+<% $0 %>
+endsnippet
+
+snippet fc
+<.$1 />$0
+endsnippet
+
+snippet ~H
+~H"""
+$0
+"""
+endsnippet
+
+snippet test "test 'test', %{} do" b!
+test "${1:test}"${2:, ${3:%\{$4\}}} do
+	$0
+end
+endsnippet
+
+snippet desc "describe '' do" b!
+describe "$1" do
+	$0
+end
+endsnippet

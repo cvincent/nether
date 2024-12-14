@@ -8,12 +8,6 @@ return {
       local cmp = require("cmp")
 
       cmp.setup({
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end,
-        },
-
         window = {
           -- completion = cmp.config.window.bordered(),
           -- documentation = cmp.config.window.bordered(),
@@ -35,11 +29,11 @@ return {
           {
             { name = "nvim_px_to_rem" },
             { name = "nvim_lsp" },
-            { name = "luasnip" },
+            { name = "ultisnips" },
           },
           {
             {
-              name = 'buffer',
+              name = "buffer",
               option = {
                 -- Complete from all visible buffers
                 get_bufnrs = function()
@@ -58,6 +52,7 @@ return {
 
     dependencies = {
       "hrsh7th/cmp-nvim-lsp", -- LSP completion source
+      "quangnguyen30192/cmp-nvim-ultisnips", -- Snippet completion
       "hrsh7th/cmp-buffer", -- Buffer words completion source
     },
   },
