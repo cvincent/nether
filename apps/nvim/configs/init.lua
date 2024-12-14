@@ -95,9 +95,6 @@ require("lazy").setup({
     "tpope/vim-projectionist",
     "andyl/vim-projectionist-elixir",
 
-    -- Fluid testing
-    "vim-test/vim-test",
-
     -----------------------
     -- LANGUAGE SPECIFIC --
     -----------------------
