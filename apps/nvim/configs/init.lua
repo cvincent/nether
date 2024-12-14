@@ -53,54 +53,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-require("lazy").setup({
-  spec = {
-    -----------
-    -- TPOPE --
-    -----------
-
-    -- Sick search/replace with smart_caseRecognitions
-    "tpope/vim-abolish",
-
-    -- Commenting with motions
-    "tpope/vim-commentary",
-
-    -- GBrowse
-    "tpope/vim-rhubarb",
-
-    -- Easier session management
-    "tpope/vim-obsession",
-
-    -- Dot repeat support for various plugins
-    "tpope/vim-repeat",
-
-    -- Automatically detect a file's tab settings
-    "tpope/vim-sleuth",
-
-    -- Better netrw
-    "tpope/vim-vinegar",
-
-    -- Projections
-    "tpope/vim-projectionist",
-
-    ----------
-    -- MISC --
-    ----------
-
-    -- Disable search highlight after moving cursor
-    "romainl/vim-cool",
-
-    -- Highlight current search match
-    "PeterRincker/vim-searchlight",
-
-    -- Easy px to rem conversion
-    { "jsongerber/nvim-px-to-rem", config = true },
-
-    -- TODO: Set this up at some point
-    -- "n0v1c3/vira",
-
-    { import = "plugins" },
-  },
+require("lazy").setup("plugins", {
+  change_detection = { notify = false },
 })
 
 require("rc")
