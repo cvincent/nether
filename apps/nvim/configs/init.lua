@@ -73,9 +73,6 @@ require("lazy").setup({
     -- Commenting with motions
     "tpope/vim-commentary",
 
-    -- Git integration
-    "tpope/vim-fugitive",
-
     -- GBrowse
     "tpope/vim-rhubarb",
 
