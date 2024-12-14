@@ -55,14 +55,6 @@ vim.g.maplocalleader = " "
 
 require("lazy").setup({
   spec = {
-    ------------------
-    -- DEPENDENCIES --
-    ------------------
-
-    -- Needed by gitsigns.nvim and nvim-telescope, maybe useful more generally
-    -- TODO: Make this a Lazy dependency where needed?
-    "nvim-lua/plenary.nvim",
-
     -----------
     -- TPOPE --
     -----------

@@ -1,5 +1,6 @@
 return {
   "lewis6991/gitsigns.nvim",
+
   opts = {
     signs = {
       add          = { text = "+" },
@@ -24,5 +25,9 @@ return {
       vim.keymap.set("n", "<leader>gn", gs.next_hunk)
       vim.keymap.set("n", "<leader>gp", gs.prev_hunk)
     end,
-  }
+  },
+
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
 }

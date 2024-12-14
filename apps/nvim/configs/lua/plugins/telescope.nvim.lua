@@ -16,13 +16,13 @@ return {
           height = 0.6;
         }
       },
-    pickers = {
-      git_branches = {
-        mappings = {
-          i = { ["<cr>"] = require("telescope.actions").git_switch_branch }
+      pickers = {
+        git_branches = {
+          mappings = {
+            i = { ["<cr>"] = require("telescope.actions").git_switch_branch }
+          }
         }
       }
-    }
     },
 
     init = function()
@@ -32,7 +32,10 @@ return {
       vim.keymap.set("n", "<c-f>", require("telescope.builtin").live_grep)
       vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_branches)
     end,
-  },
 
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+  },
 }
