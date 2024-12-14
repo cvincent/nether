@@ -1,7 +1,15 @@
 return {
   "nvim-neorg/neorg",
-  dependencies = { "luarocks.nvim" },
-  lazy = false, -- Disable lazy loading as some `lazy.nvim` distributions set `lazy = true` by default
+  dependencies = {
+    "luarocks.nvim",
+    -- Lazy now supports luarocks out of the box, but maybe requires further
+    -- configuration, or maybe I need to update it. Something about my recent
+    -- config changes ended up forcing me to add these dependencies here
+    -- explicitly.
+    "nvim-neorg/lua-utils.nvim",
+    "pysan3/pathlib.nvim",
+    "nvim-neotest/nvim-nio",
+  },
   cond = vim.env.NEORG == "1",
 
   opts = {
