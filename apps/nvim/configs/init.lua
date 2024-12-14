@@ -82,14 +82,6 @@ require("lazy").setup({
 
     -- Projections
     "tpope/vim-projectionist",
-    "andyl/vim-projectionist-elixir",
-
-    -----------------------
-    -- LANGUAGE SPECIFIC --
-    -----------------------
-
-    "LnL7/vim-nix",
-    "elixir-editors/vim-elixir",
 
     ----------
     -- MISC --
