@@ -78,7 +78,7 @@
     stylix.url = "github:danth/stylix";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixpkgs-slack.url = "nixpkgs/nixos-unstable";
-    nixpkgs-zoom.url = "github:NixOS/nixpkgs/8edf06bea5bcbee082df1b7369ff973b91618b8d";
+    nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
   };
