@@ -1,4 +1,8 @@
-{ pkgs, lib, nixpkgs-unstable, ... }:
+{
+  pkgs,
+  nixpkgs-unstable,
+  ...
+}:
 
 {
   imports = [
