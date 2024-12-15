@@ -10,6 +10,11 @@ return {
     "pysan3/pathlib.nvim",
     "nvim-neotest/nvim-nio",
   },
+
+  -- Neorg unfortunately comes with some funk, like a longstanding bug that
+  -- randomly errors out when dropping into vim-vinegar. But there's no reason to
+  -- load Neorg outside my designated Neorg window, so we don't have to
+  -- encounter these bugs on code projects.
   cond = vim.env.NEORG == "1",
 
   opts = {
