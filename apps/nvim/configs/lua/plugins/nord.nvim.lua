@@ -18,6 +18,7 @@ return {
     vim.api.nvim_command("hi! GitSignsDelete        guifg=" .. colors.nord11_gui)
     vim.api.nvim_command("hi! GitSignsStagedDelete  guifg=" .. colors.nord11_gui)
 
+    vim.api.nvim_command("hi! WinSeparator          guifg=" .. colors.nord1_gui)
     vim.api.nvim_command("hi! CursorLine            guibg=" .. colors.nord0_gui)
 
     vim.api.nvim_command("hi! link NonText Comment")
