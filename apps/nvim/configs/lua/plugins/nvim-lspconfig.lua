@@ -70,10 +70,6 @@ return {
     -- Refactor rename...not supported in Elixir LS yet :(
     vim.api.nvim_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
-    -- Format buffer
-    vim.api.nvim_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", opts)
-    vim.api.nvim_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", opts)
-
     -- Format on save
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("lsp", { clear = true }),
