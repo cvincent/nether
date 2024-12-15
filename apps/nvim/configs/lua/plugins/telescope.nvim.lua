@@ -21,6 +21,9 @@ return {
         cache_picker = { num_pickers = -1 },
       },
       pickers = {
+        lsp_document_symbols = {
+          theme = "ivy",
+        },
         find_files = {
           theme = "ivy",
         },
@@ -42,10 +45,16 @@ return {
     init = function()
       require("telescope").load_extension("fzf")
 
+      vim.keymap.set("n", "<leader>fs", require("telescope.builtin").lsp_document_symbols)
+      vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
+      vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
+      vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
+
+      vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_branches)
+
+      -- Deprecate these, get used to the new keymaps above
       vim.keymap.set("n", "<c-p>", require("telescope.builtin").find_files)
       vim.keymap.set("n", "<c-f>", require("telescope.builtin").live_grep)
-      vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_branches)
-      vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
     end,
 
     dependencies = {
