@@ -2,6 +2,13 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
+
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-symbols.nvim",
+    },
+
     opts = {
       defaults = {
         mappings = {
@@ -21,23 +28,16 @@ return {
         cache_picker = { num_pickers = -1 },
       },
       pickers = {
-        lsp_document_symbols = {
-          theme = "ivy",
-        },
-        find_files = {
-          theme = "ivy",
-        },
-        live_grep = {
-          theme = "ivy",
-        },
+        lsp_document_symbols = { theme = "ivy", },
+        find_files = { theme = "ivy", },
+        live_grep = { theme = "ivy", },
+        help_tags = { theme = "ivy", },
+        symbols = { theme = "ivy", },
         git_branches = {
           theme = "ivy",
           mappings = {
             i = { ["<cr>"] = require("telescope.actions").git_switch_branch }
           },
-        },
-        help_tags = {
-          theme = "ivy",
         },
       },
     },
@@ -49,6 +49,7 @@ return {
       vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
       vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
       vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
+      vim.keymap.set("n", "<leader>fe", require("telescope.builtin").symbols)
 
       vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_branches)
 
@@ -56,10 +57,5 @@ return {
       vim.keymap.set("n", "<c-p>", require("telescope.builtin").find_files)
       vim.keymap.set("n", "<c-f>", require("telescope.builtin").live_grep)
     end,
-
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    },
   },
 }
