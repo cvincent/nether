@@ -7,6 +7,7 @@ return {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-telescope/telescope-symbols.nvim",
+      { "anekos/tailiscope.nvim",                   branch = "fix/support-case-sensitive-filesystems" },
     },
 
     opts = {
@@ -19,6 +20,7 @@ return {
             ["<c-up>"] = require('telescope.actions').cycle_history_prev,
           }
         },
+
         winblend = 28,
         theme = "ivy",
         prompt_prefix = "❯ ",
@@ -27,6 +29,7 @@ return {
         results_title = false,
         cache_picker = { num_pickers = -1 },
       },
+
       pickers = {
         lsp_document_symbols = { theme = "ivy", },
         find_files = { theme = "ivy", },
@@ -38,6 +41,12 @@ return {
           mappings = {
             i = { ["<cr>"] = require("telescope.actions").git_switch_branch }
           },
+        },
+      },
+
+      extensions = {
+        tailiscope = {
+          register = "c",
         },
       },
     },
@@ -56,6 +65,8 @@ return {
       -- Deprecate these, get used to the new keymaps above
       vim.keymap.set("n", "<c-p>", require("telescope.builtin").find_files)
       vim.keymap.set("n", "<c-f>", require("telescope.builtin").live_grep)
+
+      require("telescope").load_extension("tailiscope")
     end,
   },
 }
