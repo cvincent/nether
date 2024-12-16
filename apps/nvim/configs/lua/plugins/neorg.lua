@@ -1,6 +1,7 @@
 return {
   "nvim-neorg/neorg",
   dependencies = {
+    "nvim-neorg/neorg-telescope",
     "luarocks.nvim",
     -- Lazy now supports luarocks out of the box, but maybe requires further
     -- configuration, or maybe I need to update it. Something about my recent
@@ -20,15 +21,7 @@ return {
   opts = {
     load = {
       ["core.defaults"] = {},
-      ["core.keybinds"] = {
-        config = {
-          hook = function(keybinds)
-            -- None of this does anything right now for some reason
-            keybinds.unmap("norg", "n", "<cr>")
-            keybinds.remap_key("norg", "n", "<cr>", "<c-cr>")
-          end,
-        },
-      },
+      ["core.keybinds"] = {},
       ["core.concealer"] = {
         config = {
           icons = {
@@ -73,6 +66,7 @@ return {
           default_workspace = "notes",
         },
       },
+      ["core.integrations.telescope"] = {},
     }
   },
 
@@ -97,6 +91,15 @@ return {
           pcall(function() vim.api.nvim_command("normal! }{jt-okdV}k:s/\n[^-]//e<cr>") end)
           vim.api.nvim_command('normal! {jV}kv$h"+yu')
         end, {})
+
+        vim.api.nvim_create_autocmd("Filetype", {
+          pattern = "norg",
+          callback = function()
+            vim.keymap.set("n", "<leader>flf", "<Plug>(neorg.telescope.insert_file_link)", { buffer = true })
+            vim.keymap.set("n", "<leader>fll", "<Plug>(neorg.telescope.insert_link)", { buffer = true })
+            vim.keymap.set("n", "<c-cr>", "<Plug>(neorg.esupports.hop.hop-link)", { buffer = true })
+          end,
+        })
       end,
     })
   end
