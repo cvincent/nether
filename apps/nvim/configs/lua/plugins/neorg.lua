@@ -118,8 +118,8 @@ return {
             vim.keymap.set("i", "<c-,>", "<Plug>(neorg.promo.demote.nested)")
 
             -- Easily insert current date or time
-            vim.keymap.set("i", "<c-t>", "<c-r>=substitute(tolower(strftime('%I:%M%p')), '^0', '', '')<cr>. ")
             vim.keymap.set("i", "<c-d>", "<c-r>=strftime('%D')<cr>. ")
+            vim.keymap.set("i", "<c-t>", "<c-r>=substitute(tolower(strftime('%I:%M%p')), '^0', '', '')<cr>. ")
           end,
         })
       end,
