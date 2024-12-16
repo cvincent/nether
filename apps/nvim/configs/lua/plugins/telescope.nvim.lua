@@ -11,33 +11,29 @@ return {
     },
 
     opts = {
-      defaults = {
-        mappings = {
-          i = {
-            ["<c-bs>"] = { "<c-s-w>", type = "command" },
-            ["<esc>"] = require('telescope.actions').close,
-            ["<c-down>"] = require('telescope.actions').cycle_history_next,
-            ["<c-up>"] = require('telescope.actions').cycle_history_prev,
-          }
-        },
+      defaults = vim.tbl_extend(
+        "force",
+        require("telescope.themes").get_ivy(),
+        {
+          mappings = {
+            i = {
+              ["<c-bs>"] = { "<c-s-w>", type = "command" },
+              ["<esc>"] = require('telescope.actions').close,
+              ["<c-down>"] = require('telescope.actions').cycle_history_next,
+              ["<c-up>"] = require('telescope.actions').cycle_history_prev,
+            }
+          },
 
-        winblend = 28,
-        theme = "ivy",
-        prompt_prefix = "❯ ",
-        selection_caret = "→ ",
-        dynamic_preview_title = true,
-        results_title = false,
-        cache_picker = { num_pickers = -1 },
-      },
+          winblend = 28,
+          prompt_prefix = "❯ ",
+          selection_caret = "→ ",
+          dynamic_preview_title = true,
+          results_title = false,
+          cache_picker = { num_pickers = -1 },
+        }),
 
       pickers = {
-        lsp_document_symbols = { theme = "ivy", },
-        find_files = { theme = "ivy", },
-        live_grep = { theme = "ivy", },
-        help_tags = { theme = "ivy", },
-        symbols = { theme = "ivy", },
         git_branches = {
-          theme = "ivy",
           mappings = {
             i = { ["<cr>"] = require("telescope.actions").git_switch_branch }
           },
