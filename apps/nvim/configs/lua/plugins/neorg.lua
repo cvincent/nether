@@ -105,9 +105,10 @@ return {
             vim.keymap.set("n", "<leader>fll", "<Plug>(neorg.telescope.insert_link)", { buffer = true })
             vim.keymap.set("n", "<c-cr>", "<Plug>(neorg.esupports.hop.hop-link)", { buffer = true })
 
-            -- These work okay, but only if you're on the same line as the bullet...
+            -- These work okay, but only if you're on the same line as the
+            -- bullet...likely fine enough for my use case.
+            vim.keymap.set("i", "<c-.>", "<c-o>mp<c-o>I -<esc>A")
             vim.keymap.set("i", "<c-,>", "<Plug>(neorg.promo.demote.nested)")
-            vim.keymap.set("i", "<c-.>", "<Plug>(neorg.promo.promote.nested)")
           end,
         })
       end,
