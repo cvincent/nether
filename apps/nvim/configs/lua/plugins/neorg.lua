@@ -114,8 +114,8 @@ return {
 
             -- These work okay, but only if you're on the same line as the
             -- bullet...likely fine enough for my use case.
-            vim.keymap.set("i", "<c-.>", "<c-o>mp<c-o>I -<esc>A", { buffer = true })
-            vim.keymap.set("i", "<c-,>", "<Plug>(neorg.promo.demote.nested)", { buffer = true })
+            vim.keymap.set("i", "<c-.>", "<c-o>I -<esc>A", { buffer = true })
+            vim.keymap.set("i", "<c-,>", "<c-o>:s/ -/<cr><esc>A", { buffer = true })
 
             -- Easily insert current date or time
             vim.keymap.set("i", "<c-d>", "<c-r>=strftime('%D')<cr>. ", { buffer = true })
