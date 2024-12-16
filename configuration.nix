@@ -102,6 +102,12 @@
     ];
   };
 
+  # Periodically optimize the store to save disk
+  nix.optimise = {
+    automatic = true;
+    dates = [ "03:45" ];
+  };
+
   # Kill user processes on logout
   services.logind.killUserProcesses = true;
 }
