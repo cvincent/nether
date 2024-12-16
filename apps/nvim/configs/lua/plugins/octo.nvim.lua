@@ -5,6 +5,6 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   opts = {
-    ssh_aliases = {["github-elc"] = "github.com"}
+    ssh_aliases = { ["github%-elc"] = "github.com" }
   },
 }
