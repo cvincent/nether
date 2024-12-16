@@ -37,6 +37,7 @@ vim.opt.scrolloff = 3
 -- set nobackup
 -- set nowritebackup
 -- set noswapfile
+vim.opt.swapfile = false
 
 -- Show bad whitespace
 vim.opt.list = true
