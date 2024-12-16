@@ -109,12 +109,16 @@ return {
           callback = function()
             vim.keymap.set("n", "<leader>flf", "<Plug>(neorg.telescope.insert_file_link)", { buffer = true })
             vim.keymap.set("n", "<leader>fll", "<Plug>(neorg.telescope.insert_link)", { buffer = true })
+
             vim.keymap.set("n", "<c-cr>", "<Plug>(neorg.esupports.hop.hop-link)", { buffer = true })
 
             -- These work okay, but only if you're on the same line as the
             -- bullet...likely fine enough for my use case.
             vim.keymap.set("i", "<c-.>", "<c-o>mp<c-o>I -<esc>A")
             vim.keymap.set("i", "<c-,>", "<Plug>(neorg.promo.demote.nested)")
+
+            vim.keymap.set("i", "<c-t>", "<c-r>=substitute(tolower(strftime('%I:%M%p')), '^0', '', '')<cr>. ")
+            vim.keymap.set("i", "<c-d>", "<c-r>=strftime('%D')<cr>. ")
           end,
         })
       end,
