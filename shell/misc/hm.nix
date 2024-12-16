@@ -1,14 +1,13 @@
-{ pkgs, ... }:
+{ pkgs, nixpkgs-unstable-latest, ... }:
 
 {
   imports = [
     ./lf/hm.nix
   ];
 
-  programs.gh.enable = true;
-
   home.packages = with pkgs; [
     neofetch
     bitwarden-cli
+    nixpkgs-unstable-latest.gh
   ];
 }
