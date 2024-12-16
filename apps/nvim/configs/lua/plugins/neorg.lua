@@ -117,6 +117,9 @@ return {
             vim.keymap.set("i", "<c-.>", "<c-o>I -<esc>A", { buffer = true })
             vim.keymap.set("i", "<c-,>", "<c-o>:s/ -/<cr><esc>A", { buffer = true })
 
+            -- Easily start a new todo *above* the current todo
+            vim.keymap.set("i", "<s-cr>", "<c-o>yy<c-o>P<c-o>f)<c-o>2l<c-o>D<esc>A", { buffer = true })
+
             -- Easily insert current date or time
             vim.keymap.set("i", "<c-d>", "<c-r>=strftime('%D')<cr>. ", { buffer = true })
             vim.keymap.set(
