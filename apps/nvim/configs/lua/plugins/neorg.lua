@@ -85,7 +85,7 @@ return {
   init = function()
     vim.api.nvim_create_autocmd("filetype", {
       pattern = "norg",
-      callback = function(ev)
+      callback = function()
         vim.opt.formatoptions:append("t") -- Autowrap all text
 
         if require("lazy.core.config").plugins["delimitMate"] then
