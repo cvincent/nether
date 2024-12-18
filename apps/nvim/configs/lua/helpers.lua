@@ -11,3 +11,5 @@ function DisableFormatOnWrite(pattern)
     end,
   })
 end
+
+IconsPlugin = "nvim-tree/nvim-web-devicons"
