@@ -23,4 +23,10 @@ require("lazy").setup("plugins", {
   change_detection = { notify = false },
 })
 
+if IsPluginInstalled("oil.nvim") then
+  -- This is unorthodox, but for some reason you have to explicitly require
+  -- oil.nvim
+  require("oil").setup({})
+end
+
 require("rc")

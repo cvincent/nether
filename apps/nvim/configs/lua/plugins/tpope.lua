@@ -17,8 +17,8 @@ return {
   -- Automatically detect a file's tab settings
   "tpope/vim-sleuth",
 
-  -- Better netrw
-  "tpope/vim-vinegar",
+  -- Better netrw, but trying out oil.nvim...
+  { "tpope/vim-vinegar", cond = false },
 
   -- Projections
   "tpope/vim-projectionist",
