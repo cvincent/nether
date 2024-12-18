@@ -20,11 +20,7 @@ return {
     if IsPluginInstalled("cmp-nvim-lsp") then
       capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
     end
-
-    lspconfig.elixirls.setup({
-      cmd = { "elixir-ls" },
-      capabilities = capabilities
-    })
+    capabilities.textDocument.completion.completionItem.snippetSupport = true;
 
     lspconfig.lua_ls.setup({})
 
@@ -40,6 +36,11 @@ return {
           }
         }
       }
+    })
+
+    lspconfig.elixirls.setup({
+      cmd = { "elixir-ls" },
+      capabilities = capabilities
     })
 
     -- Remove this weird default
