@@ -13,10 +13,13 @@
     # 5.1. It also wants make.
     lua5_1
     lua51Packages.luarocks
-    lua-language-server
     gnumake
     # Nix formatter
     nixpkgs-unstable-latest.nixfmt-rfc-style
+
+    # Language servers I want at all times
+    lua-language-server # The language of NeoVim
+    vscode-langservers-extracted # Provides VS Code's LSPs for HTML, CSS, JSON, and ESLint
   ];
 
   home.file."./.config/nvim".source = utils.directSymlink "apps/nvim/configs";
