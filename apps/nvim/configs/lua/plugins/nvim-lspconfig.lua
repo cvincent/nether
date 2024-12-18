@@ -24,9 +24,9 @@ return {
 
     lspconfig.lua_ls.setup({})
 
-    require("lspconfig").cssls.setup({
-      capabilities = capabilities,
-    })
+    require("lspconfig").cssls.setup({ capabilities = capabilities })
+
+    lspconfig.ts_ls.setup({})
 
     lspconfig.nixd.setup({
       cmd = { "nixd" },
