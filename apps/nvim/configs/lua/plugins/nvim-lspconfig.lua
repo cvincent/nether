@@ -72,8 +72,8 @@ return {
     vim.api.nvim_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
     -- Format on save
+    local format_group = vim.api.nvim_create_augroup("lsp-format-on-write", { clear = true })
     vim.api.nvim_create_autocmd("LspAttach", {
-      group = vim.api.nvim_create_augroup("lsp", { clear = true }),
       callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if not client then return end
@@ -81,6 +81,7 @@ return {
         if client.supports_method("textDocument/formatting") then
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = args.buf,
+            group = format_group,
             callback = function()
               vim.lsp.buf.format { async = false, id = args.data.client_id }
             end,
