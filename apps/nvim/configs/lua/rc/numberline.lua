@@ -1,7 +1,7 @@
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.api.nvim_command([[
+vim.api.nvim_exec2([[
   function! NumberToggle()
     if(&relativenumber == 1)
       set number
@@ -21,4 +21,4 @@ vim.api.nvim_command([[
   au WinLeave * if index(blacklist, &ft) < 0 | set number
   au WinLeave * if index(blacklist, &ft) < 0 | set norelativenumber
   au WinEnter * if index(blacklist, &ft) < 0 | set relativenumber
-]])
+]], {})
