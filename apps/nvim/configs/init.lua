@@ -25,8 +25,13 @@ require("lazy").setup("plugins", {
 
 if IsPluginInstalled("oil.nvim") then
   -- This is unorthodox, but for some reason you have to explicitly require
-  -- oil.nvim
-  require("oil").setup({})
+  -- oil.nvim, along with its opts. Maybe ask them to fix this.
+  require("oil").setup({
+    keymaps = {
+      ["<C-l>"] = false,
+      ["<C-h>"] = false,
+    },
+  })
 end
 
 require("rc")
