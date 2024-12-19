@@ -23,13 +23,21 @@ return {
               ["<c-up>"] = require('telescope.actions').cycle_history_prev,
             }
           },
-
           winblend = 28,
           prompt_prefix = "❯ ",
           selection_caret = "→ ",
           dynamic_preview_title = true,
           results_title = false,
           cache_picker = { num_pickers = -1 },
+          layout_config = {
+            anchor = "S",
+            prompt_position = "top",
+            height = 0.4,
+            width = 0.99,
+            mirror = true,
+            preview_width = 0.5,
+          },
+          layout_strategy = "horizontal",
         }),
 
       pickers = {
