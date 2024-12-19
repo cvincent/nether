@@ -54,7 +54,7 @@ return {
       pattern = "gitcommit",
       callback = function(ev)
         local wins = vim.api.nvim_list_wins()
-        for i, win in ipairs(wins) do
+        for _i, win in ipairs(wins) do
           if vim.api.nvim_win_get_config(win).relative == "editor" then
             vim.api.nvim_win_set_buf(win, ev.buf)
             vim.api.nvim_win_hide(0)
