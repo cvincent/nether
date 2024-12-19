@@ -1,11 +1,13 @@
-{ lib
-, stdenv
-, fetchzip
-, buildFHSEnv
+{
+  lib,
+  stdenv,
+  fetchzip,
+  buildFHSEnv,
+  version,
+  version-hash,
 }:
 
 let
-  version = "22.1.22";
   name = "cockroachdb";
 
   # For several reasons building cockroach from source has become
@@ -15,16 +17,13 @@ let
   # You can generate the hashes with
   # nix flake prefetch <url>
   srcs = {
-    aarch64-linux = fetchzip {
-      url = "https://binaries.cockroachdb.com/cockroach-v${version}.linux-arm64.tgz";
-      hash = "";
-    };
     x86_64-linux = fetchzip {
       url = "https://binaries.cockroachdb.com/cockroach-v${version}.linux-amd64.tgz";
-      hash = "sha256-sAiUKeWaeW6knegkW5a9w2oqtWhpYf5rylBl5zB5gy4=";
+      hash = version-hash;
     };
   };
-  src = srcs.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
+  src =
+    srcs.${stdenv.hostPlatform.system} or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 
 in
 buildFHSEnv {
@@ -36,7 +35,14 @@ buildFHSEnv {
     homepage = "https://www.cockroachlabs.com";
     description = "A scalable, survivable, strongly-consistent SQL database";
     license = licenses.bsl11;
-    platforms = [ "aarch64-linux" "x86_64-linux" ];
-    maintainers = with maintainers; [ rushmorem thoughtpolice neosimsim ];
+    platforms = [
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
+    maintainers = with maintainers; [
+      rushmorem
+      thoughtpolice
+      neosimsim
+    ];
   };
 }

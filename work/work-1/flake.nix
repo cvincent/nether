@@ -16,7 +16,8 @@
     our-postgresql.url = "github:nixos/nixpkgs/f5c27c6136db4d76c30e533c20517df6864c46ee";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -31,17 +32,17 @@
         mixRelease = beamPkg.mixRelease.override { inherit elixir; };
       };
 
-      # our-cockroachdb-bin = pkgs.cockroachdb-bin.overrideAttrs (oldAttrs: rec {
-      #   version = "22.1.22";
-      #   srcs = {
-      #     x86_64-linux = pkgs.fetchzip {
-      #       url = "https://binaries.cockroachdb.com/cockroach-v${version}.linux-amd64.tgz";
-      #       hash = "";
-      #     };
-      #   };
-      # });
     in
-      {
+    # our-cockroachdb-bin = pkgs.cockroachdb-bin.overrideAttrs (oldAttrs: rec {
+    #   version = "22.1.22";
+    #   srcs = {
+    #     x86_64-linux = pkgs.fetchzip {
+    #       url = "https://binaries.cockroachdb.com/cockroach-v${version}.linux-amd64.tgz";
+    #       hash = "";
+    #     };
+    #   };
+    # });
+    {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           inputs.our-erlang.legacyPackages.${system}.erlangR25
@@ -57,23 +58,26 @@
           appimage-run
           # TODO: Figure out how to properly override the nixpkgs version and do
           # this correctly. Or just wait until we dump this shitty software.
-          (pkgs.callPackage ./cockroachdb.nix {})
+          (pkgs.callPackage ./cockroachdb.nix {
+            version = "23.1.30";
+            version-hash = "sha256-LCvwb3+BKhP8PMo/WatN20zvMMaCA3Z6JUVxoJKqNKs=";
+          })
         ];
+        # change
 
-        PGDATA="./pgdata";
+        PGDATA = "./pgdata";
 
         # On first time:
         # initdb in base dir
         # createuser -s postgres -h localhost
 
         shellHook = ''
-        echo "$(elixir --version | tr -s '\n')"
-        echo "Node $(node --version)"
-        echo "PostgreSQL $(psql --version | cut -d' ' -f3)"
-        echo $(redis-server --version)
-        echo "CockroachDB $(cockroachdb --version | grep 'Build Tag' | tr -s ' ' | cut -d' ' -f3)"
-        echo ""
-        echo "LFG."
+          echo "$(elixir --version | tr -s '\n')"
+          echo "Node $(node --version)"
+          echo "PostgreSQL $(psql --version | cut -d' ' -f3)"
+          echo "CockroachDB $(cockroachdb --version | grep 'Build Tag' | tr -s ' ' | cut -d' ' -f3)"
+          echo ""
+          echo "LFG."
         '';
       };
     };
