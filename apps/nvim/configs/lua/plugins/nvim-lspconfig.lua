@@ -43,8 +43,8 @@ return {
     })
 
     lspconfig.elixirls.setup({
-      capabilities = capabilities
-      cmd = { "elixir-ls" },
+      capabilities = capabilities,
+      cmd = { "elixir-ls" }
     })
 
     -- Remove this weird default
