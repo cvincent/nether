@@ -14,7 +14,7 @@ vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true, remap = true })
 
 -- Focus floating window, if any
 local function focus_floating()
-  local wins = vim.print(vim.api.nvim_list_wins())
+  local wins = vim.api.nvim_list_wins()
   for i, win in ipairs(wins) do
     if vim.api.nvim_win_get_config(win).relative == "editor" then
       vim.api.nvim_set_current_win(win)
