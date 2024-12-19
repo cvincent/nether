@@ -12,6 +12,19 @@ vim.keymap.set("n", "<c-j>", "<c-w>j", { silent = true, remap = true })
 vim.keymap.set("n", "<c-k>", "<c-w>k", { silent = true, remap = true })
 vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true, remap = true })
 
+-- Focus floating window, if any
+local function focus_floating()
+  local wins = vim.print(vim.api.nvim_list_wins())
+  for i, win in ipairs(wins) do
+    if vim.api.nvim_win_get_config(win).relative == "editor" then
+      vim.api.nvim_set_current_win(win)
+      break
+    end
+  end
+end
+
+vim.keymap.set("n", "<c-space>", focus_floating, {})
+
 -- Tab navigation
 vim.keymap.set("n", "<c-a-left>", ":tabp<cr>")
 vim.keymap.set("i", "<c-a-left>", "<esc>:tabp<cr>i")
