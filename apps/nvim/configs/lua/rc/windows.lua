@@ -19,19 +19,19 @@ vim.keymap.set("n", "<c-a-right>", ":tabn<cr>")
 vim.keymap.set("i", "<c-a-right>", "<esc>:tabn<cr>i")
 
 -- Wrap split navigation
-local function GoToNextWindow(direction, count)
+local function go_to_next_window(direction, count)
   prev_winnr = vim.api.nvim_eval("winnr()")
   vim.api.nvim_command(count .. "wincmd " .. direction)
   return not (vim.api.nvim_eval("winnr()") == prev_winnr)
 end
 
-local function JumpWithWrap(direction, opposite)
-  if not GoToNextWindow(direction, 1) then
-    GoToNextWindow(opposite, 99)
+local function jump_with_wrap(direction, opposite)
+  if not go_to_next_window(direction, 1) then
+    go_to_next_window(opposite, 99)
   end
 end
 
-vim.keymap.set("n", "<c-w>h", function() JumpWithWrap("h", "l") end, { silent = true })
-vim.keymap.set("n", "<c-w>j", function() JumpWithWrap("j", "k") end, { silent = true })
-vim.keymap.set("n", "<c-w>k", function() JumpWithWrap("k", "j") end, { silent = true })
-vim.keymap.set("n", "<c-w>l", function() JumpWithWrap("l", "h") end, { silent = true })
+vim.keymap.set("n", "<c-w>h", function() jump_with_wrap("h", "l") end, { silent = true })
+vim.keymap.set("n", "<c-w>j", function() jump_with_wrap("j", "k") end, { silent = true })
+vim.keymap.set("n", "<c-w>k", function() jump_with_wrap("k", "j") end, { silent = true })
+vim.keymap.set("n", "<c-w>l", function() jump_with_wrap("l", "h") end, { silent = true })
