@@ -38,6 +38,7 @@ return {
             mirror = true,
             preview_width = 0.5,
           },
+          -- TODO: Make the theme look like our git fugitive window in progress
         }),
 
       pickers = {
