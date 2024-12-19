@@ -29,6 +29,7 @@ return {
           dynamic_preview_title = true,
           results_title = false,
           cache_picker = { num_pickers = -1 },
+          layout_strategy = "horizontal",
           layout_config = {
             anchor = "S",
             prompt_position = "top",
@@ -37,7 +38,6 @@ return {
             mirror = true,
             preview_width = 0.5,
           },
-          layout_strategy = "horizontal",
         }),
 
       pickers = {
