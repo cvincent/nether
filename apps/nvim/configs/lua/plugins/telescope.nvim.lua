@@ -33,7 +33,7 @@ return {
             anchor = "S",
             prompt_position = "top",
             height = 0.4,
-            width = 0.99,
+            width = 9999,
             mirror = true,
             preview_width = 0.5,
           },
