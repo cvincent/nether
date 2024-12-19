@@ -22,13 +22,13 @@ return {
     end
     capabilities.textDocument.completion.completionItem.snippetSupport = true;
 
-    lspconfig.lua_ls.setup({})
-
-    require("lspconfig").cssls.setup({ capabilities = capabilities })
-
-    lspconfig.ts_ls.setup({})
+    lspconfig.lua_ls.setup({ capabilities = capabilities })
+    lspconfig.cssls.setup({ capabilities = capabilities })
+    lspconfig.tailwindcss.setup({ capabilities = capabilities })
+    lspconfig.ts_ls.setup({ capabilities = capabilities })
 
     lspconfig.nixd.setup({
+      capabilities = capabilities,
       cmd = { "nixd" },
       settings = {
         nixd = {
@@ -43,8 +43,8 @@ return {
     })
 
     lspconfig.elixirls.setup({
-      cmd = { "elixir-ls" },
       capabilities = capabilities
+      cmd = { "elixir-ls" },
     })
 
     -- Remove this weird default
