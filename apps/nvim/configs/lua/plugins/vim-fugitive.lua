@@ -28,9 +28,10 @@ return {
         col = 0,
         width = ui.width,
         height = math.floor(ui.height * 0.33),
-        border = { "", "―", "", "", "", "", "", "" }
+        border = { "", "―", "", "", "", "", "", "" },
       })
 
+      vim.api.nvim_command("set winblend=15")
       vim.api.nvim_command("normal )")
 
       -- TODO: Set some buffer-local keymaps for resizing the window vertically

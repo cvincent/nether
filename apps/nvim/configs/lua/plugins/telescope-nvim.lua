@@ -1,7 +1,7 @@
 return {
   {
     "nvim-telescope/telescope.nvim",
-    branch = "0.1.x",
+    branch = "master",
 
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -23,7 +23,7 @@ return {
               ["<c-up>"] = require('telescope.actions').cycle_history_prev,
             }
           },
-          winblend = 28,
+          winblend = 15,
           prompt_prefix = "❯ ",
           selection_caret = "→ ",
           dynamic_preview_title = true,
@@ -32,6 +32,7 @@ return {
           layout_strategy = "horizontal",
           layout_config = {
             anchor = "S",
+            anchor_padding = 0,
             prompt_position = "top",
             height = 0.4,
             width = 9999,

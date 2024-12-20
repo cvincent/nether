@@ -22,10 +22,11 @@ return {
     vim.api.nvim_command("hi! CursorLine    guibg=" .. colors.nord0_gui)
 
 
-    vim.api.nvim_command("hi! TelescopeTitle          guifg=" .. colors.nord13_gui .. " guibg=NONE")
-    vim.api.nvim_command("hi! TelescopePreviewBorder  guifg=" .. colors.nord1_gui .. " guibg=NONE")
-    vim.api.nvim_command("hi! TelescopePromptBorder   guifg=" .. colors.nord1_gui .. " guibg=NONE")
-    vim.api.nvim_command("hi! TelescopeResultsBorder  guifg=" .. colors.nord1_gui .. " guibg=NONE")
+    vim.api.nvim_command("hi! TelescopeTitle          guifg=" .. colors.nord13_gui .. " guibg=" .. colors.nord0_gui)
+    vim.api.nvim_command("hi! TelescopePreviewBorder  guifg=" .. colors.nord1_gui .. "  guibg=" .. colors.nord0_gui)
+    vim.api.nvim_command("hi! TelescopePromptBorder   guifg=" .. colors.nord1_gui .. "  guibg=" .. colors.nord0_gui)
+    vim.api.nvim_command("hi! TelescopeResultsBorder  guifg=" .. colors.nord1_gui .. "  guibg=" .. colors.nord0_gui)
+    vim.api.nvim_command("hi! TelescopeNormal                                           guibg=" .. colors.nord0_gui)
 
     vim.api.nvim_command("hi! link NonText Comment")
   end
