@@ -20,7 +20,7 @@ return {
 
     vim.api.nvim_command("hi! WinSeparator  guifg=" .. colors.nord1_gui)
     vim.api.nvim_command("hi! CursorLine    guibg=" .. colors.nord0_gui)
-
+    vim.api.nvim_command("hi! FloatBorder   guifg=" .. colors.nord1_gui .. "  guibg=" .. colors.nord0_gui)
 
     vim.api.nvim_command("hi! TelescopeTitle          guifg=" .. colors.nord13_gui .. " guibg=" .. colors.nord0_gui)
     vim.api.nvim_command("hi! TelescopePreviewBorder  guifg=" .. colors.nord1_gui .. "  guibg=" .. colors.nord0_gui)
