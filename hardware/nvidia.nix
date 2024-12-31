@@ -5,10 +5,6 @@
 }:
 
 {
-  # Load i915 module early to prevent Chromium/Electron apps from "GPU process
-  # crashed" on boot in native Wayland
-  boot.initrd.kernelModules = [ "i915" ];
-
   # Prevent issues on wake from DPMS
   boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 
@@ -27,7 +23,7 @@
     ];
   };
 
-  environment.systemPackages = [ pkgs.nvtop-intel ];
+  environment.systemPackages = [ pkgs.nvtop-amd ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -38,14 +34,14 @@
     open = false;
     nvidiaSettings = false;
 
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
+    # prime = {
+    #   offload = {
+    #     enable = true;
+    #     enableOffloadCmd = true;
+    #   };
+    #   intelBusId = "PCI:0:2:0";
+    #   nvidiaBusId = "PCI:1:0:0";
+    # };
 
     # Use the freshest of fresh closed Nvidia driver
     package = config.boot.kernelPackages.nvidiaPackages.mkDriver {

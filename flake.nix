@@ -16,7 +16,7 @@
         inherit inputs;
         myUsername = "cvincent";
         myHomeDir = "/home/${myUsername}";
-        myHostname = "nether";
+        myHostname = "revachol";
         mySopsKey = /home/${myUsername}/.config/sops/age/keys.txt;
         mySystem = system;
         myTZ = "America/Chicago";
