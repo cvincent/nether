@@ -10,7 +10,7 @@
 
 {
   # Don't change without reading the documentation!
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.11";
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
     "nix-command"
@@ -22,7 +22,6 @@
     ./apps/steam/system.nix
     ./hardware/hardware-configuration.nix
     ./hardware/nvidia.nix
-    ./hardware/system76.nix
     ./hardware/audio.nix
     ./hardware/chrysalis.nix
     ./sops/system.nix
