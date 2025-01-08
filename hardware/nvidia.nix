@@ -10,20 +10,16 @@
 
   hardware.opengl = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
     # TODO: Revisit these and ensure we're using everything we need but nothing
     # more. See: {https://nixos.wiki/wiki/Accelerated_Video_Playback}
     extraPackages = with pkgs; [
       vaapiVdpau
       nvidia-vaapi-driver
-      intel-vaapi-driver
-      intel-media-driver
       libvdpau-va-gl
     ];
   };
 
-  environment.systemPackages = [ pkgs.nvtop-amd ];
+  environment.systemPackages = [ pkgs.nvtop ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -51,9 +47,6 @@
       openSha256 = "";
       settingsSha256 = "";
       persistencedSha256 = "";
-
-      # Copied from the NixOS Wiki, uncertain what it's for
-      # patches = [ rcu_patch ];
     };
   };
 
