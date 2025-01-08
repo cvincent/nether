@@ -1,0 +1,49 @@
+# Notes for installation on new machines
+
+Some notes I've taken from my first experience deploying my config to new
+hardware. Each of these headings represents some suckage we should seek to
+eliminate, and get as close as possible to `nxrb` and `nxhm` resulting in a
+complete, working system. Practice on a VM or even the ThinkPad!
+
+## SOPS
+
+The SOPS key apparently must now be visible to the repo, which makes little
+sense. We need to figure out a way around this. For now I've just staged it and
+will avoid checking it in until I figure out a better way or migrate to a
+different solution to secrets and encrypted files. But do still create a copy in
+the expected location at `~/.config/sops/age/keys.txt`, as this will be needed
+to `nix-shell -p sops --run "sops ~/dotfiles/sops/secrets/secrets.yml"`.
+
+## Davmail
+
+Either copy over an existing `~/.davmail-token.properties` or you'll need to
+temporarily change `davmail.mode` to `O365Interactive` and run the Davmail GUI
+to generate a new one. We can't just throw this into SOPS secrets, IIRC, because
+Davmail will not function if it cannot write to this file (even if it doesn't
+actuall change it).
+
+## Peroxide
+
+This one is more annoying. `sudo chown -R peroxide:peroxide /var/lib/peroxide`,
+`sudo peroxide-cfg -action login-account -account-name "<email>"`, then restart
+the service with `systmctl restart peroxide`.
+
+## mbsync
+
+You should now be able to `mbsync` for each account successfully. These will
+take a while! Or copy the `~/mail` dir from a previous machine to greatly speed
+up the initial sync.
+
+## Vdirsyncer
+
+You should now also be able to `systemctl restart --user vdirsyncer`
+
+## Browsers
+
+Extensions and extension settings are imperative. Copying the
+`.config/<browser>` directories over from a previous computer works fine, and
+brings history and tabs with it, which is nice.
+
+## Git config and work-related SSH config
+
+As it says. We can probably just throw these into SOPS and call it a day.
