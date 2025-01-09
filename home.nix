@@ -29,6 +29,7 @@
     ./services/davmail/hm.nix
     ./services/dconf/hm.nix
     ./services/ha-notifier/hm.nix
+    ./services/windows-vm/hm.nix
     ./services/xremap/hm.nix
 
     ./apps/browsers/hm.nix

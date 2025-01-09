@@ -34,6 +34,7 @@
     ./services/misc/system.nix
     ./services/peroxide/system.nix
     ./services/printing/system.nix
+    ./services/windows-vm/system.nix
     ./services/xremap/system.nix
 
     inputs.nix-flatpak.nixosModules.nix-flatpak
