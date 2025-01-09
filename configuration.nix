@@ -30,6 +30,7 @@
     ./fonts/system.nix
     ./stylix/system.nix
     ./wm/hyprland/system.nix
+    ./services/ios/system.nix
     ./services/misc/system.nix
     ./services/peroxide/system.nix
     ./services/printing/system.nix
