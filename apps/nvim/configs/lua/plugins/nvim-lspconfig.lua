@@ -47,9 +47,6 @@ return {
       cmd = { "elixir-ls" }
     })
 
-    -- Remove this weird default
-    vim.api.nvim_command("vunmap crr")
-
     local opts = { noremap = true, silent = true }
 
     -- Navigate diagnostics
