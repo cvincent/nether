@@ -1,18 +1,23 @@
+# General information
+
+## SOPS
+
+The SOPS key needs to be installed at `~/.config/sops/age/keys.txt`.
+
+## Fonts
+
+We used to decrypt our fonts from this repo using SOPS and then derive packages
+from them, but it seems that little trick had relied on a bug that has since
+been patched (the build environment was no longer able to see the SOPS key at
+its absolute path). We now serve these fonts from a simple Nginx server running
+in our homelab.
+
 # Notes for installation on new machines
 
 Some notes I've taken from my first experience deploying my config to new
 hardware. Each of these headings represents some suckage we should seek to
 eliminate, and get as close as possible to `nxrb` and `nxhm` resulting in a
 complete, working system. Practice on a VM or even the ThinkPad!
-
-## SOPS
-
-The SOPS key apparently must now be visible to the repo, which makes little
-sense. We need to figure out a way around this. For now I've just staged it and
-will avoid checking it in until I figure out a better way or migrate to a
-different solution to secrets and encrypted files. But do still create a copy in
-the expected location at `~/.config/sops/age/keys.txt`, as this will be needed
-to `nix-shell -p sops --run "sops ~/dotfiles/sops/secrets/secrets.yml"`.
 
 ## Davmail
 

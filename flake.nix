@@ -14,10 +14,12 @@
 
       commonArgs = rec {
         inherit inputs;
+
         myUsername = "cvincent";
         myHomeDir = "/home/${myUsername}";
         myHostname = "revachol";
-        mySopsKey = /home/${myUsername}/.config/sops/age/keys.txt;
+        mySopsKey = "/home/${myUsername}/.config/sops/age/keys.txt";
+        myFontServer = "http://192.168.1.114";
         mySystem = system;
         myTZ = "America/Chicago";
         myLocale = "en_US.UTF-8";

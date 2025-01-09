@@ -3,5 +3,5 @@
 {
   sops.defaultSopsFile = ./secrets/secrets.yml;
   sops.defaultSopsFormat = "yaml";
-  sops.age.keyFile = "${mySopsKey}";
+  sops.age.keyFile = mySopsKey;
 }
