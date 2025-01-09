@@ -1,4 +1,9 @@
-{ inputs, myHomeDir, ... }:
+{
+  pkgs,
+  inputs,
+  myHomeDir,
+  ...
+}:
 
 {
   imports = [
@@ -9,6 +14,10 @@
   sops.defaultSymlinkPath = "${myHomeDir}/.config/sops/secrets";
   sops.defaultSecretsMountPoint = "${myHomeDir}/.config/sops/secrets.d";
 
-  sops.secrets."ssh/public_key" = { path = "${myHomeDir}/.ssh/id_rsa.pub"; };
-  sops.secrets."ssh/private_key" = { path = "${myHomeDir}/.ssh/id_rsa"; };
+  sops.secrets."ssh/public_key" = {
+    path = "${myHomeDir}/.ssh/id_rsa.pub";
+  };
+  sops.secrets."ssh/private_key" = {
+    path = "${myHomeDir}/.ssh/id_rsa";
+  };
 }

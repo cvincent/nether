@@ -7,7 +7,7 @@
   # Waybar and Pyprland that don't require me to fix their configs, until I'm
   # ready and/or replace Waybar with Astal or something
   environment.systemPackages = [
-    (pkgs.runCommand "tmp-hypr-symlink" {} ''
+    (pkgs.runCommand "tmp-hypr-symlink" { } ''
       ln -s /run/user/1000/hypr /tmp/hypr
       mkdir $out
     '')
@@ -16,8 +16,8 @@
   # Seems to me I'm always rebuilding binaries, maybe due to pinning the
   # Hyprland version in my flake. Either way, declaring this doesn't hurt
   nix.settings = {
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
 
   programs.hyprland = {
@@ -63,7 +63,9 @@
   };
 
   hardware.opengl = {
-    package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
-    package32 = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgsi686Linux.mesa.drivers;
+    package =
+      inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
+    package32 =
+      inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.pkgsi686Linux.mesa.drivers;
   };
 }

@@ -1,4 +1,10 @@
-{ pkgs, lib, myUsername, myHomeDir, ... }:
+{
+  pkgs,
+  lib,
+  myUsername,
+  myHomeDir,
+  ...
+}:
 
 {
   # Don't change without reading release notes!

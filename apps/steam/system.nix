@@ -2,5 +2,7 @@
 
 {
   programs.steam.enable = true;
-  environment.systemPackages = [ nixpkgs-unstable-latest.protontricks ];
+  environment.systemPackages = [
+    nixpkgs-unstable-latest.protontricks
+  ];
 }
