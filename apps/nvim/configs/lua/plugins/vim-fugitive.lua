@@ -34,8 +34,8 @@ return {
       vim.api.nvim_command("set winblend=15")
       vim.api.nvim_command("normal )")
 
-      -- TODO: Set some buffer-local keymaps for resizing the window vertically
-      -- while keeping it anchored to the bottom
+      vim.keymap.set("n", "<c-=>", "40<c-w>+", { buffer = true })
+      vim.keymap.set("n", "<c-->", "40<c-w>-", { buffer = true })
     end
 
     vim.keymap.set("n", "<leader>gpl", function() pull_from_current_branch() end)
