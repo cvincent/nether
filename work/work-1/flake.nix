@@ -59,8 +59,8 @@
           # TODO: Figure out how to properly override the nixpkgs version and do
           # this correctly. Or just wait until we dump this shitty software.
           (pkgs.callPackage ./cockroachdb.nix {
-            version = "23.1.30";
-            version-hash = "sha256-LCvwb3+BKhP8PMo/WatN20zvMMaCA3Z6JUVxoJKqNKs=";
+            version = "22.2.19";
+            version-hash = "sha256-AUkFMaCfWNirtdAy9GhNPzeAuRaklCfW35GPt8h9KPM=";
           })
         ];
         # change
