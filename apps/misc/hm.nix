@@ -37,6 +37,7 @@ in
     showmethekey
     libreoffice
     nautilus
+    bambu-studio
     nixpkgs-unstable.discord
     nixpkgs-slack.slack
     nixpkgs-zoom.zoom-us
