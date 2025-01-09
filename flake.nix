@@ -78,7 +78,6 @@
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.45.0";
     xremap-flake.url = "github:xremap/nix-flake";
     stylix.url = "github:danth/stylix";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     nixpkgs-slack.url = "nixpkgs/nixos-unstable";
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
