@@ -10,25 +10,12 @@ let
   );
 in
 {
-  nixpkgs.overlays = [
-    (self: super: {
-      # Bring in latest which is patched to actually launch
-      hyprpicker-latest = super.hyprpicker.overrideAttrs (old: {
-        src = super.fetchFromGitHub {
-          owner = "hyprwm";
-          repo = "hyprpicker";
-          rev = "b6130e3901ed5c6d423f168705929e555608d870";
-          sha256 = "sha256-x+6yy526dR75HBmTJvbrzN+sXINVL26yN5TY75Dgpwk=";
-        };
-      });
-    })
-  ];
-
   imports = [ ../wayland/hm.nix ];
 
   home = {
     packages = with pkgs; [
       pyprland
+      hyprpicker
     ];
 
     file = {
