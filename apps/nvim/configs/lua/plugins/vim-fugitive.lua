@@ -42,11 +42,8 @@ return {
     vim.keymap.set("n", "<leader>gpu", function() push_to_current_branch() end)
 
     vim.keymap.set("n", "<leader>gs", floating_summary, { silent = true })
-    -- vim.keymap.set("n", "<leader>gs", ":Git<cr>)", { silent = true })
     vim.keymap.set("n", "<leader>gd", ":tab Gdiff<cr>", { silent = true })
-    -- vim.keymap.set("n", "<leader>gc", ":Git checkout ")
     vim.keymap.set("n", "<leader>gb", ":Git checkout -b ")
-    -- vim.keymap.set("n", "<leader>gm", ":Git merge ")
 
     -- Don't use terminal emulator for git output
     _G.fugitive_force_bang_command = 1
