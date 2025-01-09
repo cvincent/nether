@@ -11,6 +11,8 @@
     ./sops.nix
   ];
 
+  home.packages = [ pkgs.sops ];
+
   sops.defaultSymlinkPath = "${myHomeDir}/.config/sops/secrets";
   sops.defaultSecretsMountPoint = "${myHomeDir}/.config/sops/secrets.d";
 
