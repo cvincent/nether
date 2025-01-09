@@ -68,9 +68,6 @@ return {
 
       vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_branches)
 
-      -- Deprecate these, get used to the new keymaps above
-      vim.keymap.set("n", "<c-p>", require("telescope.builtin").find_files)
-      vim.keymap.set("n", "<c-f>", require("telescope.builtin").live_grep)
 
       require("telescope").load_extension("tailiscope")
     end,
