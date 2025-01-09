@@ -4,7 +4,7 @@
 
 @define-color noti-border-color rgba(255, 255, 255, 0.15);
 @define-color noti-bg #2E3440;
-@define-color noti-bg-alt rgba(56, 62, 74, 0.9);
+@define-color noti-bg-alt rgba(56, 62, 74, 0.6);
 @define-color noti-fg #E5E9F0;
 @define-color noti-bg-hover #81A1C1;
 @define-color noti-bg-focus #A3BE8C;
@@ -14,7 +14,7 @@
 
 @define-color bg-selected rgb(0, 128, 255);
 
-*{
+* {
   color: @noti-fg;
   font-family: PragmataPro;
 }
@@ -278,7 +278,7 @@
   border-radius: 0;
 }
 
-.power-buttons{
+.power-buttons {
   background-color: @noti-bg;
   padding: 8px;
   margin: 8px;
@@ -295,24 +295,24 @@
   background: @noti-bg-hover;
 }
 
-.widget-menubar>box>.menu-button-bar>button{
+.widget-menubar>box>.menu-button-bar>button {
   border: none;
   background: transparent;
 }
 
-.topbar-buttons>button{
+.topbar-buttons>button {
   border: none;
   background: transparent;
 }
 
-.widget-buttons-grid{
+.widget-buttons-grid {
   padding: 8px;
   margin: 8px;
   border-radius: 12px;
   background-color: @noti-bg;
 }
 
-.widget-buttons-grid>flowbox>flowboxchild>button{
+.widget-buttons-grid>flowbox>flowboxchild>button {
   background: @noti-bg;
   border-radius: 12px;
 }
@@ -321,7 +321,7 @@
   background: @noti-bg-hover;
 }
 
-.powermode-buttons{
+.powermode-buttons {
   background-color: @noti-bg;
   padding: 8px;
   margin: 8px;
