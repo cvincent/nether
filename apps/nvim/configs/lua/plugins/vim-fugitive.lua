@@ -60,9 +60,7 @@ return {
             vim.api.nvim_win_set_buf(win, ev.buf)
             vim.api.nvim_win_hide(0)
             vim.api.nvim_set_current_win(win)
-            -- TODO: Figure out how to put ourselves into insert mode
-            -- here...we've wanted to do this for like 10 years lol
-            vim.api.nvim_command("normal i")
+            vim.api.nvim_command("startinsert")
             break
           end
         end
