@@ -9,6 +9,11 @@
   home.username = myUsername;
   home.homeDirectory = myHomeDir;
 
+  programs.nix-index = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
   imports = [
     ./sops/hm.nix
     ./fonts/hm.nix
