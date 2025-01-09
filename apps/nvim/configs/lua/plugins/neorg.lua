@@ -2,7 +2,6 @@ return {
   "nvim-neorg/neorg",
   dependencies = {
     "nvim-neorg/neorg-telescope",
-    "luarocks.nvim",
     -- Lazy now supports luarocks out of the box, but maybe requires further
     -- configuration, or maybe I need to update it. Something about my recent
     -- config changes ended up forcing me to add these dependencies here
