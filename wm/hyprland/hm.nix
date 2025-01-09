@@ -75,6 +75,7 @@ in
       (map ({ class, ... }: "pkill --full ${class}") scratchpads)
       ++ [
         "pkill --full pyprland"
+        "rm /run/user/1000/hypr/*/.pyprland.sock"
         "pypr & disown"
       ]
     );
