@@ -5,9 +5,6 @@
 }:
 let
   scratchpads = import ./scratchpads.nix;
-  scratchpads-classes = builtins.concatStringsSep "," (
-    map ({ class, ... }: "\"${class}\"") scratchpads
-  );
 in
 {
   imports = [ ../wayland/hm.nix ];
