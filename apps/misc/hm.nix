@@ -42,6 +42,7 @@ in
     nixpkgs-slack.slack
     nixpkgs-zoom.zoom-us
     xwayland-spotify
+    transmission_4-gtk
     nixpkgs-unstable.ryujinx
     latest-shadps4
   ];
