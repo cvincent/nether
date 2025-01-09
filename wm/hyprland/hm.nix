@@ -29,23 +29,6 @@ in
   home = {
     packages = with pkgs; [
       pyprland
-      hyprpicker-latest
-
-      (pkgs.writeShellScriptBin "switch-scratchpad" ''
-        current_scratch=$(hyprctl clients -j | jq -r 'map({class, at}) | map(select(.class | IN(${scratchpads-classes}))) | map(select(.at[1] > -400)) | .[].class')
-
-        if [ "$current_scratch" ]; then
-          pypr hide $current_scratch
-        fi
-
-        hyprctl dispatch focusmonitor 1
-
-        if [ "$current_scratch" != $1 ]; then
-          pypr show $1
-          sleep 0.2
-          hyprctl dispatch alterzorder top, $1
-        fi
-      '')
     ];
 
     file = {
@@ -62,9 +45,14 @@ in
           ''
         ]
         ++ map (
-          { class, command, ... }:
+          {
+            class,
+            name ? class,
+            command,
+            ...
+          }:
           ''
-            [scratchpads.${class}]
+            [scratchpads.${name}]
             command = "${command}"
             animation = "fromTop"
             unfocus = "hide"
@@ -77,12 +65,14 @@ in
         map (
           {
             class,
+            name ? class,
             binding,
             size ? "60% 60%",
             ...
           }:
           ''
-            bind = ${binding}, exec, switch-scratchpad ${class}
+            bind = ${binding}, focusmonitor, DP-1
+            bind = ${binding}, exec, pypr toggle ${name}
             windowrule = float, ^(${class})$
             windowrule = size ${size}, ^(${class})$
             windowrule = move 30% -200%, ^(${class})$

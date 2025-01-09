@@ -5,7 +5,8 @@
     binding = "SUPER, t";
   }
   {
-    class = "pavucontrol";
+    name = "pavucontrol";
+    class = "org.pulseaudio.pavucontrol";
     command = "pavucontrol";
     binding = "SUPER SHIFT, M";
   }
