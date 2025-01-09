@@ -75,6 +75,7 @@
   # Configure keymap in X11
   services.xserver = {
     enable = true;
+    displayManager.gdm.enable = true;
     layout = "us";
     xkbVariant = "";
   };
