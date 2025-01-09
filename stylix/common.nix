@@ -1,7 +1,12 @@
-{ config, lib, pkgs, inputs, stylix, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   stylix = {
+    enable = true;
     image = ../wallpapers/nord-irithyll.png;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
     polarity = "dark";
