@@ -6,6 +6,17 @@
   ...
 }:
 
+let
+  xwayland-spotify = (
+    nixpkgs-unstable.spotify.overrideAttrs (
+      final: prev: {
+        postInstall = ''
+          sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL spotify %U:" "$out/share/applications/spotify.desktop"
+        '';
+      }
+    )
+  );
+in
 {
   home.packages = with pkgs; [
     fractal
@@ -15,7 +26,7 @@
     nixpkgs-unstable.discord
     nixpkgs-slack.slack
     nixpkgs-zoom.zoom-us
-    nixpkgs-unstable.spotify
+    xwayland-spotify
   ];
 
   programs.zathura.enable = true;
