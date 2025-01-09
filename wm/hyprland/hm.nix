@@ -44,6 +44,7 @@ in
             animation = "fromTop"
             unfocus = "hide"
             margin = 50
+            offset = "500%"
           ''
         ) scratchpads
       );
@@ -62,7 +63,7 @@ in
             bind = ${binding}, exec, pypr toggle ${name}
             windowrule = float, ^(${class})$
             windowrule = size ${size}, ^(${class})$
-            windowrule = move 30% -200%, ^(${class})$
+            windowrule = move 30% -1000%, ^(${class})$
           ''
         ) scratchpads
       );
