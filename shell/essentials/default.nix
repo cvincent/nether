@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     bat # `cat` alternative
-    bottom # `top` alternative
+    btop # `top` alternative
 
     # `du`-like alternatives
     du-dust
