@@ -10,6 +10,7 @@
     ./swaylock/hm.nix
     ./swaync/hm.nix
     ./wallpapers/hm.nix
+    ./waybar/hm.nix
   ];
 
   home.packages = with pkgs; [
@@ -28,7 +29,6 @@
     wlr-randr # required by nwg-displays
 
     swayidle
-    waybar
 
     nixpkgs-unstable.xwaylandvideobridge
   ];
