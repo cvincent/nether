@@ -50,14 +50,10 @@
   # Networking
   networking.hostName = myHostname; # Define your hostname.
   networking.networkmanager.enable = true;
-
-  # Disable firewall.
   networking.firewall.enable = false;
 
-  # Set your time zone
+  # Time and locale
   time.timeZone = myTZ;
-
-  # Select internationalisation properties
   i18n.defaultLocale = myLocale;
 
   i18n.extraLocaleSettings = {
