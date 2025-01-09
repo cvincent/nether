@@ -22,6 +22,7 @@
     config = {
       keep-open = true;
       fullscreen = false;
+      hwdec = "auto";
     };
     scriptOpts = {
       thumbfast.network = true;
