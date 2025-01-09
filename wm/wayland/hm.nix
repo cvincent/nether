@@ -36,6 +36,7 @@
   programs.fuzzel = {
     enable = true;
     settings = {
+      main.output = "DP-1";
       border.width = "5";
     };
   };
