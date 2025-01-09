@@ -17,6 +17,8 @@
     "flakes"
   ];
 
+  boot.kernelPackages = pkgs.linuxPackages_6_11;
+
   imports = [
     ./apps/nvim/system.nix
     ./apps/steam/system.nix
