@@ -22,7 +22,7 @@ in
     fractal
     showmethekey
     libreoffice
-    gnome.nautilus
+    nautilus
     nixpkgs-unstable.discord
     nixpkgs-slack.slack
     nixpkgs-zoom.zoom-us
