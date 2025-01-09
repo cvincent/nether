@@ -68,6 +68,17 @@ return {
 
       vim.keymap.set("n", "<leader>gc", require("telescope.builtin").git_branches)
 
+      vim.keymap.set(
+        "n", "<leader>gm",
+        function()
+          require("telescope.builtin").git_branches({
+            attach_mappings = function(_, map)
+              map("i", "<cr>", require("telescope.actions").git_merge_branch)
+              return true
+            end
+          })
+        end
+      )
 
       require("telescope").load_extension("tailiscope")
     end,
