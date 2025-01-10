@@ -30,9 +30,10 @@ vim.keymap.set("n", "Y", "y$")
 vim.keymap.set("n", "'", "`")
 vim.keymap.set("n", "`", "'")
 
--- Quick hashrocket and assign operator
+-- Quick hashrocket, assign, and pipe operators
 vim.keymap.set("i", "<c-l>", "<space>=><space>")
 vim.keymap.set("i", "<c-e>", "<space>=<space>")
+vim.keymap.set("i", "<c-i>", "|><space>")
 
 -- Center horizontally on long lines
 vim.keymap.set("n", "zh", "zszHhl")
