@@ -1,6 +1,10 @@
 -- Alt-t to open a new tab
 vim.keymap.set("n", "<a-t>", ":tabnew<cr>")
 
+-- Navigate tabs with arrows
+vim.keymap.set("n", "<right>", ":tabnext<cr>")
+vim.keymap.set("n", "<left>", ":tabprev<cr>")
+
 -- Spaces, not tabs
 vim.opt.expandtab = true
 

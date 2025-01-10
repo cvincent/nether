@@ -42,10 +42,6 @@ vim.keymap.set("n", "zh", "zszHhl")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
 
--- Navigate tabs with arrows
-vim.keymap.set("n", "<right>", ":tabnext<cr>")
-vim.keymap.set("n", "<left>", ":tabprev<cr>")
-
 -- Copy/paste
 vim.keymap.set("v", "<F13>", '"+y')
 -- vim.keymap.set("n", "<c-s-v>", '"+yp')
