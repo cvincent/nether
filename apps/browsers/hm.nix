@@ -18,4 +18,6 @@
     })
     firefox
   ];
+
+  imports = [ ./qutebrowser/hm.nix ];
 }
