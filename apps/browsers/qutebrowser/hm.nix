@@ -77,6 +77,9 @@
 
         # Same as normal browsers
         "<ctrl-l>" = "edit-url";
+
+        # BitWarden
+        "<ctrl-shift-l>" = "spawn --userscript ~/.nix-profile/bin/bitwarden-qutebrowser";
       };
     };
   };

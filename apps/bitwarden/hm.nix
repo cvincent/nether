@@ -12,6 +12,7 @@
       builtins.readFile ./bitwarden-search-vault.bash
     ))
     (pkgs.writeShellScriptBin "bitwarden-fuzzel" (builtins.readFile ./bitwarden-fuzzel.bash))
+    (pkgs.writeShellScriptBin "bitwarden-edit" (builtins.readFile ./bitwarden-edit.bash))
   ];
 
   sops.secrets."bitwarden/client_id" = {

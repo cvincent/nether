@@ -24,7 +24,7 @@ case $num_results in
 
   *)
     >&2 echo 'Multiple results...'
-    choice=$(echo $result | jq -r '.[].name' | fuzzel -d | tr -cd '[:alnum:][:punct:]')
+    choice=$(echo $result | jq -r '.[].name' | fuzzel --prompt='Vault ❯ ' -d | tr -cd '[:alnum:][:punct:]')
     if [[ -n "$choice" ]]; then
       >&2 echo "Chose $choice!"
       item=$(echo $result | jq -a --arg choice '.[]|select(.name=="$choice")')

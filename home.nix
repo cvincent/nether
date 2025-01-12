@@ -32,6 +32,7 @@
     ./services/windows-vm/hm.nix
     ./services/xremap/hm.nix
 
+    ./apps/bitwarden/hm.nix
     ./apps/browsers/hm.nix
     ./apps/documents/hm.nix
     ./apps/email/hm.nix
