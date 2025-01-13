@@ -5,6 +5,9 @@
 }:
 let
   scratchpads = import ./scratchpads.nix;
+  scratchpads-classes = builtins.concatStringsSep "," (
+    map ({ class, ... }: "\"${class}\"") scratchpads
+  );
 in
 {
   imports = [ ../wayland/hm.nix ];
@@ -13,6 +16,14 @@ in
     packages = with pkgs; [
       pyprland
       hyprpicker
+
+      (pkgs.writeShellScriptBin "hide-scratchpad" ''
+        current_scratch=$(hyprctl clients -j | jq -r 'map({class, at}) | map(select(.class | IN(${scratchpads-classes}))) | map(select(.at[1] > -400)) | .[].class')
+
+        if [ "$current_scratch" ]; then
+          pypr hide $current_scratch
+        fi
+      '')
     ];
 
     file = {
