@@ -19,10 +19,16 @@ echo "$changed" | jq empty > /dev/null 2>&1
 
 if [[ $? -eq 0 ]]; then
   >&2 echo 'Valid!'
-  notify-send -i lock -e "Edit saved!"
-  session=$(bitwarden-ensure-session)
-  echo "$changed" | bw encode | bw edit item $item_id --session $session
-  bitwarden-cache-vault
+  confirm=$(echo $'No\nYes\n' | fuzzel --prompt='Save? ❯ ' -d)
+
+  if [[ "$confirm" == 'Yes' ]]; then
+    notify-send -i lock -e "Edit saved!"
+    session=$(bitwarden-ensure-session)
+    echo "$changed" | bw encode | bw edit item $item_id --session $session
+    bitwarden-cache-vault
+  else
+    >&2 echo 'Cancelled!'
+  fi
 else
   notify-send -i error -e "Invalid edit!"
 fi
