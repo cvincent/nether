@@ -54,6 +54,7 @@ in
             margin = 50
             offset = "500%"
             force_monitor = "DP-1"
+            exclude = "*"
           ''
         ) scratchpads
       );
