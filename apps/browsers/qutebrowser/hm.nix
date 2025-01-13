@@ -80,6 +80,7 @@
 
         # BitWarden
         "<ctrl-shift-l>" = "spawn --userscript ~/.nix-profile/bin/bitwarden-qutebrowser";
+        "bc" = "spawn --userscript ~/.nix-profile/bin/bitwarden-create login {url}";
       };
     };
   };
