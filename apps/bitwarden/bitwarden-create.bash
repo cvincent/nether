@@ -30,9 +30,9 @@ if [[ $? -eq 0 ]]; then
 
   if [[ "$confirm" == 'Yes' ]]; then
     >&2 echo 'Saving!'
+    session=$(bitwarden-ensure-session)
     echo "$json" | bw encode | bw create item --session $session
     notify-send -i lock -e "Saved!"
-    session=$(bitwarden-ensure-session)
     bitwarden-cache-vault
   else
     >&2 echo 'Cancelled!'
