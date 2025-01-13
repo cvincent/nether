@@ -22,9 +22,9 @@ if [[ $? -eq 0 ]]; then
   confirm=$(echo $'No\nYes\n' | fuzzel --prompt='Save? ❯ ' -d)
 
   if [[ "$confirm" == 'Yes' ]]; then
-    notify-send -i lock -e "Edit saved!"
     session=$(bitwarden-ensure-session)
     echo "$changed" | bw encode | bw edit item $item_id --session $session
+    notify-send -i lock -e "Edit saved!"
     bitwarden-cache-vault
   else
     >&2 echo 'Cancelled!'
