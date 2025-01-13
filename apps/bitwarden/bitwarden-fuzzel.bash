@@ -64,8 +64,9 @@ action=$(echo $'Copy\nShow\n' | fuzzel --placeholder="$choice $field" --prompt='
 case $action in
   'Copy')
     wl-copy "${fields[$field]}"
+    sleep 1
     cliphist delete-query "${fields[$field]}"
-    sleep 10
+    sleep 9
     wl-copy --clear
     ;;
 

@@ -13,7 +13,6 @@ trap 'rm -f -- "$tmp"' EXIT
 
 echo "$item" > $tmp
 kitty --class=tmp-edit nvim $tmp
-echo $(cat $tmp)
 changed=$(cat $tmp)
 
 echo "$changed" | jq empty > /dev/null 2>&1

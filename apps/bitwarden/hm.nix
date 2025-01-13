@@ -1,4 +1,9 @@
-{ pkgs, myHomeDir, ... }:
+{
+  pkgs,
+  myHomeDir,
+  utils,
+  ...
+}:
 
 {
   home.packages = [
@@ -12,7 +17,11 @@
       builtins.readFile ./bitwarden-search-vault.bash
     ))
     (pkgs.writeShellScriptBin "bitwarden-fuzzel" (builtins.readFile ./bitwarden-fuzzel.bash))
+    (pkgs.writeShellScriptBin "bitwarden-fuzzel-create" (
+      builtins.readFile ./bitwarden-fuzzel-create.bash
+    ))
     (pkgs.writeShellScriptBin "bitwarden-edit" (builtins.readFile ./bitwarden-edit.bash))
+    (pkgs.writeShellScriptBin "bitwarden-create" (builtins.readFile ./bitwarden-create.bash))
   ];
 
   sops.secrets."bitwarden/client_id" = {
@@ -24,4 +33,6 @@
   sops.secrets."bitwarden/password" = {
     path = "${myHomeDir}/.local/share/bitwarden/password";
   };
+
+  home.file."./.local/share/bitwarden/templates".source = utils.directSymlink "apps/bitwarden/templates";
 }
