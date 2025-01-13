@@ -53,6 +53,7 @@ in
             unfocus = "hide"
             margin = 50
             offset = "500%"
+            force_monitor = "DP-1"
           ''
         ) scratchpads
       );
@@ -67,7 +68,6 @@ in
             ...
           }:
           ''
-            bind = ${binding}, focusmonitor, DP-1
             bind = ${binding}, exec, pypr toggle ${name}
             windowrule = float, ^(${class})$
             windowrule = size ${size}, ^(${class})$
