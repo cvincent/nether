@@ -5,14 +5,14 @@ start-menu() {
   choice=$(jq -r '.[].name' $vault_cache | fuzzel --prompt='Vault ❯ ' -d)
 }
 
+if [[ ! -f "$vault_cache" ]]; then bitwarden-cache-vault; fi
+
 if [[ $1 == '--previous' ]]; then
   choice=$(cat $last_item)
-elif [[ -f "$vault_cache" ]]; then
-  start-menu
+elif [[ -n "$1" ]]; then
+  choice=$1
 else
-  >&2 echo 'Populating cache...'
-  bitwarden-cache-vault
-  start-menu
+  choice=$(jq -r '.[].name' $vault_cache | fuzzel --prompt='Vault ❯ ' -d)
 fi
 
 if [[ -z "$choice" ]]; then exit 0; fi
