@@ -48,6 +48,7 @@ if [[ ${fields['Expiration Year']} != 'null' ]]; then choices+=$'Expiration Year
 if [[ ${fields['Brand']} != 'null' ]]; then choices+=$'Brand\n'; fi
 if [[ ${fields['Name on Card']} != 'null' ]]; then choices+=$'Name on Card\n'; fi
 choices+=$'Edit\n'
+choices+=$'Delete\n'
 
 field=$(echo "$choices" | fuzzel --placeholder="$choice" --prompt='❯ ' -d)
 
@@ -56,6 +57,19 @@ if [[ -z "$field" ]]; then exit 0; fi
 if [[ "$field" == 'Edit' ]]; then
   item_id=$(echo "$item" | jq -r '.id')
   bitwarden-edit $item_id
+  exit 0
+elif [[ "$field" == 'Delete' ]]; then
+  item_id=$(echo "$item" | jq -r '.id')
+  confirm=$(echo $'No\nYes\n' | fuzzel --prompt="Delete $choice? ❯ " -d)
+
+  if [[ "$confirm" == 'Yes' ]]; then
+    notify-send -i lock -e "Deleted!"
+    session=$(bitwarden-ensure-session)
+    bw delete item $item_id --session $session
+    bitwarden-cache-vault
+  else
+    >&2 echo 'Cancelled!'
+  fi
   exit 0
 fi
 
