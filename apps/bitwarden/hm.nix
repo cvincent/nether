@@ -29,15 +29,9 @@ in
     (pkgs.writeShellScriptBin "bitwarden-create" (builtins.readFile ./bitwarden-create.bash))
   ];
 
-  sops.secrets."bitwarden/client_id" = {
-    path = "${myHomeDir}/.local/share/bitwarden/client_id";
-  };
-  sops.secrets."bitwarden/client_secret" = {
-    path = "${myHomeDir}/.local/share/bitwarden/client_secret";
-  };
-  sops.secrets."bitwarden/password" = {
-    path = "${myHomeDir}/.local/share/bitwarden/password";
-  };
+  sops.secrets."bitwarden/client_id".path = "${myHomeDir}/.local/share/bitwarden/client_id";
+  sops.secrets."bitwarden/client_secret".path = "${myHomeDir}/.local/share/bitwarden/client_secret";
+  sops.secrets."bitwarden/password".path = "${myHomeDir}/.local/share/bitwarden/password";
 
   home.file."./.local/share/bitwarden/templates".source = utils.directSymlink "apps/bitwarden/templates";
 
