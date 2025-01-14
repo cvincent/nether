@@ -101,6 +101,11 @@ in
         "<space>bf" = "spawn --userscript ~/.nix-profile/bin/bitwarden-fuzzel {url:host}";
       };
     };
+
+    searchEngines = {
+      am = "https://www.amazon.com/s?k={}";
+      yt = "https://www.youtube.com/results?search_query={}";
+    };
   };
 
   home.file."./.config/qutebrowser/work.py".source = ./work.py;
