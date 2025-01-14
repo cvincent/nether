@@ -85,7 +85,9 @@ in
 
         # Videos
         "<space>fv" = "hint links spawn mpv --force-window=immediate --no-terminal --keep-open=yes {hint-url}";
+        "<space>fV" = "hint links spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {hint-url}";
         "yv" = "spawn mpv --force-window=immediate --no-terminal --keep-open=yes {url}";
+        "yV" = "spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {url}";
 
         # Downloads
         "<space>dc" = "download-clear";
