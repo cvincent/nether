@@ -34,6 +34,7 @@ fields['Number']=$(echo "$item" | jq -r '.card?.number')
 fields['Expiration']=$(echo "$item" | jq -r '.card?.expMonth + "/" + .card?.expYear')
 fields['Expiration Month']=$(echo "$item" | jq -r '.card?.expMonth')
 fields['Expiration Year']=$(echo "$item" | jq -r '.card?.expYear')
+fields['Code']=$(echo "$item" | jq -r '.card?.code')
 fields['Brand']=$(echo "$item" | jq -r '.card?.brand')
 fields['Name on Card']=$(echo "$item" | jq -r '.card?.cardholderName')
 
@@ -47,6 +48,7 @@ if [[ ${fields['Number']} != 'null' ]]; then choices+=$'Number\n'; fi
 if [[ ${fields['Expiration']} != '/' ]]; then choices+=$'Expiration\n'; fi
 if [[ ${fields['Expiration Month']} != 'null' ]]; then choices+=$'Expiration Month\n'; fi
 if [[ ${fields['Expiration Year']} != 'null' ]]; then choices+=$'Expiration Year\n'; fi
+if [[ ${fields['Code']} != 'null' ]]; then choices+=$'Code\n'; fi
 if [[ ${fields['Brand']} != 'null' ]]; then choices+=$'Brand\n'; fi
 if [[ ${fields['Name on Card']} != 'null' ]]; then choices+=$'Name on Card\n'; fi
 choices+=$'Edit\n'
