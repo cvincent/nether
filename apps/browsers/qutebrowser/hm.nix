@@ -27,7 +27,7 @@
 
       editor.command = [
         "kitty"
-        "--class=qb-edit"
+        "--class=tmp-edit"
         "nvim"
         "{}"
       ];
