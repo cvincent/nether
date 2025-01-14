@@ -80,8 +80,8 @@
 
         # BitWarden
         "<ctrl-shift-l>" = "spawn --userscript ~/.nix-profile/bin/bitwarden-qutebrowser";
-        "bc" = "spawn --userscript ~/.nix-profile/bin/bitwarden-create login {url}";
-        "bf" = "spawn --userscript ~/.nix-profile/bin/bitwarden-fuzzel {url:host}";
+        "<space>bc" = "spawn --userscript ~/.nix-profile/bin/bitwarden-create login {url}";
+        "<space>bf" = "spawn --userscript ~/.nix-profile/bin/bitwarden-fuzzel {url:host}";
       };
     };
   };
