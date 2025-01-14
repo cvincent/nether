@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   nixpkgs-latest,
@@ -85,4 +86,32 @@
       };
     };
   };
+
+  home.file."./.config/qutebrowser/work.py".source = ./work.py;
+
+  home.packages = [
+    pkgs.socat
+
+    (pkgs.writeShellScriptBin "qutebrowser-fuzzel" ''
+      if [[ -n "$1" ]]; then
+        profile="$1"
+      else
+        mkdir -p ~/.local/qutebrowsers
+        profiles=$(find ~/.local/qutebrowsers -maxdepth 1 -type d | xargs basename -a | grep -v qutebrowsers)
+        profile=$(echo "$profiles" | fuzzel --prompt='Qutebrowser ❯ ' -d)
+      fi
+
+      if [[ -z "$profile" ]]; then exit 0; fi
+
+      config=~/.config/qutebrowser/$profile.py
+      if [[ ! -f "$config" ]]; then config=~/.config/qutebrowser/config.py; fi
+
+      qutebrowser -C $config --basedir ~/.local/qutebrowsers/$profile --desktop-file-name qute-$profile -r default
+    '')
+
+    (pkgs.writeShellScriptBin "qutebrowser-open" ''
+      ipc=$(find ~/.local/qutebrowsers/''\$1/runtime | grep '/ipc-' | xargs basename)
+      echo "{\"args\": [\"$2\"], \"target_arg\": \"\", \"protocol_version\":1}" | socat - UNIX-CONNECT:"/home/cvincent/.local/qutebrowsers/$1/runtime/$ipc"
+    '')
+  ];
 }
