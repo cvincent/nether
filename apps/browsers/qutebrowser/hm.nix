@@ -75,7 +75,8 @@ in
         "<ctrl-right>" = "tab-move +";
         "<ctrl-left>" = "tab-move -";
         x = "config-cycle tabs.position top right";
-        "<space>ft" = "cmd-set-text -s :tab-select"; # TODO: This doesn't seem to work like before, see what's up
+        "<space>ft" = "cmd-set-text -s :tab-select";
+        T = "cmd-set-text -s :tab-select";
 
         # Easy esc in normal mode
         e = "fake-key <esc>";
