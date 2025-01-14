@@ -3,9 +3,23 @@
   config,
   lib,
   nixpkgs-latest,
+  myHomeDir,
   ...
 }:
 
+let
+  qutebrowser-route = (
+    pkgs.writeShellScriptBin "qutebrowser-route" ''
+      instance=$(jq --arg url "$1" -r '. | map(. as $item | select($url | test($item.regex))) | .[0].instance' ~/.config/qutebrowser/routes.json)
+
+      if [[ $instance != 'null' ]]; then
+        qutebrowser-open "$instance" "$1"
+      else
+        qutebrowser-open personal "$1"
+      fi
+    ''
+  );
+in
 {
   programs.qutebrowser = {
     enable = true;
@@ -88,6 +102,7 @@
   };
 
   home.file."./.config/qutebrowser/work.py".source = ./work.py;
+  sops.secrets."qutebrowser_routes".path = "${myHomeDir}/.config/qutebrowser/routes.json";
 
   home.packages = [
     pkgs.socat
@@ -113,5 +128,23 @@
       ipc=$(find ~/.local/qutebrowsers/''\$1/runtime | grep '/ipc-' | xargs basename)
       echo "{\"args\": [\"$2\"], \"target_arg\": \"\", \"protocol_version\":1}" | socat - UNIX-CONNECT:"/home/cvincent/.local/qutebrowsers/$1/runtime/$ipc"
     '')
+
+    (pkgs.makeDesktopItem {
+      name = "qutebrowser-route";
+      desktopName = "qutebrowser-route";
+      exec = "${qutebrowser-route}/bin/qutebrowser-route %U";
+    })
   ];
+
+  xdg.mimeApps = {
+    enable = true;
+
+    defaultApplications = {
+      "text/html" = "qutebrowser-route.desktop";
+      "x-scheme-handler/http" = "qutebrowser-route.desktop";
+      "x-scheme-handler/https" = "qutebrowser-route.desktop";
+      "x-scheme-handler/about" = "qutebrowser-route.desktop";
+      "x-scheme-handler/unknown" = "qutebrowser-route.desktop";
+    };
+  };
 }
