@@ -13,6 +13,8 @@ in
 {
   home.packages = [
     pkgs.bitwarden-cli
+    pkgs.oath-toolkit
+
     bitwarden-cache-vault
     (pkgs.writeShellScriptBin "bitwarden-ensure-session" (
       builtins.readFile ./bitwarden-ensure-session.bash

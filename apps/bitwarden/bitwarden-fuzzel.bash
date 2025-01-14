@@ -27,6 +27,7 @@ choices=''
 # Login fields
 fields['Username']=$(echo "$item" | jq -r '.login?.username')
 fields['Password']=$(echo "$item" | jq -r '.login?.password')
+fields['TOTP']=$(echo "$item" | jq -r '.login?.totp')
 
 # Credit card fields
 fields['Number']=$(echo "$item" | jq -r '.card?.number')
@@ -39,6 +40,7 @@ fields['Name on Card']=$(echo "$item" | jq -r '.card?.cardholderName')
 # Login fields
 if [[ ${fields['Username']} != 'null' ]]; then choices+=$'Username\n'; fi
 if [[ ${fields['Password']} != 'null' ]]; then choices+=$'Password\n'; fi
+if [[ ${fields['TOTP']} != 'null' ]]; then choices+=$'TOTP\n'; fi
 
 # Credit card fields
 if [[ ${fields['Number']} != 'null' ]]; then choices+=$'Number\n'; fi
@@ -73,13 +75,20 @@ elif [[ "$field" == 'Delete' ]]; then
   exit 0
 fi
 
+if [[ "$field" == "TOTP" ]]; then
+  secret=$(echo "$value" | sed -r 's/.*secret=([[:alnum:]]*).*/\1/')
+  value=$(oathtool -b --totp "$secret")
+else
+  value="${fields[$field]}"
+fi
+
 action=$(echo $'Copy\nShow\n' | fuzzel --placeholder="$choice $field" --prompt='❯ ' -d)
 
 case $action in
   'Copy')
-    wl-copy "${fields[$field]}"
+    wl-copy "$value"
     sleep 1
-    cliphist delete-query "${fields[$field]}"
+    cliphist delete-query "$value"
     sleep 9
     wl-copy --clear
     ;;
