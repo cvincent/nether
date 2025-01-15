@@ -30,6 +30,8 @@ in
       session.lazy_restore = true;
       spellcheck.languages = [ "en-US" ];
       colors.webpage.preferred_color_scheme = "dark";
+      input.media_keys = false;
+
       tabs.position = "right";
       tabs.select_on_remove = "last-used";
 
