@@ -23,6 +23,7 @@
       keep-open = true;
       fullscreen = false;
       hwdec = "auto";
+      save-position-on-quit = true;
     };
     scriptOpts = {
       thumbfast.network = true;
