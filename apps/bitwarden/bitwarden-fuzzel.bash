@@ -78,6 +78,7 @@ elif [[ "$field" == 'Delete' ]]; then
 fi
 
 if [[ "$field" == "TOTP" ]]; then
+  value="${fields[$field]}"
   secret=$(echo "$value" | sed -r 's/.*secret=([[:alnum:]]*).*/\1/')
   value=$(oathtool -b --totp "$secret")
 else
@@ -96,6 +97,6 @@ case $action in
     ;;
 
   'Show')
-    notify-send -i lock -e "${fields[$field]}"
+    notify-send -i lock -e "$value"
     ;;
 esac
