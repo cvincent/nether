@@ -12,7 +12,9 @@ let
     pkgs.writeShellScriptBin "qutebrowser-route" ''
       instance=$(jq --arg url "$1" -r '. | map(. as $item | select($url | test($item.regex))) | .[0].instance' ~/.config/qutebrowser/routes.json)
 
-      if [[ $instance != 'null' ]]; then
+      if [[ $instance == 'mpv' ]]; then
+        mpv "$1" --force-window=immediate
+      elif [[ $instance != 'null' ]]; then
         qutebrowser-open "$instance" "$1"
       else
         qutebrowser-open personal "$1"
@@ -138,6 +140,8 @@ in
       ipc=$(find ~/.local/qutebrowsers/''\$1/runtime | grep '/ipc-' | xargs basename)
       echo "{\"args\": [\"$2\"], \"target_arg\": \"\", \"protocol_version\":1}" | socat - UNIX-CONNECT:"/home/cvincent/.local/qutebrowsers/$1/runtime/$ipc"
     '')
+
+    qutebrowser-route
 
     (pkgs.makeDesktopItem {
       name = "qutebrowser-route";

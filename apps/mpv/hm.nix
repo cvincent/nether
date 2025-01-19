@@ -1,21 +1,14 @@
 {
+  pkgs,
   nixpkgs-yt-dlp,
   ...
 }:
 
+let
+  yt-dlp = nixpkgs-yt-dlp.yt-dlp;
+in
 {
-  nixpkgs.overlays = [
-    (self: super: {
-      mpv = super.mpv.override {
-        scripts = with self.mpvScripts; [
-          uosc
-          thumbfast
-        ];
-      };
-    })
-  ];
-
-  home.packages = [ nixpkgs-yt-dlp.yt-dlp ];
+  home.packages = [ yt-dlp ];
 
   programs.mpv = {
     enable = true;
@@ -27,6 +20,11 @@
     };
     scriptOpts = {
       thumbfast.network = true;
+      ytdl_hook.ytdl_path = "${yt-dlp.outPath}/bin/yt-dlp";
     };
+    scripts = with pkgs.mpvScripts; [
+      uosc
+      thumbfast
+    ];
   };
 }
