@@ -25,7 +25,7 @@ Either copy over an existing `~/.davmail-token.properties` or you'll need to
 temporarily change `davmail.mode` to `O365Interactive` and run the Davmail GUI
 to generate a new one. We can't just throw this into SOPS secrets, IIRC, because
 Davmail will not function if it cannot write to this file (even if it doesn't
-actuall change it).
+actually change it).
 
 ## Peroxide
 
