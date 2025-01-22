@@ -70,8 +70,8 @@ in
       bind -n S-Right next-window
 
       # Ctrl arrow to move windows
-      bind -n C-Left  swap-window -d -t -1
-      bind -n C-Right swap-window -d -t +1
+      # bind -n C-Left  swap-window -d -t -1
+      # bind -n C-Right swap-window -d -t +1
 
       # Navigate panes like Vim
       # We can't just C-h because that's ctrl-backspace...
