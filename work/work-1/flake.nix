@@ -17,7 +17,7 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    { nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -33,15 +33,6 @@
       };
 
     in
-    # our-cockroachdb-bin = pkgs.cockroachdb-bin.overrideAttrs (oldAttrs: rec {
-    #   version = "22.1.22";
-    #   srcs = {
-    #     x86_64-linux = pkgs.fetchzip {
-    #       url = "https://binaries.cockroachdb.com/cockroach-v${version}.linux-amd64.tgz";
-    #       hash = "";
-    #     };
-    #   };
-    # });
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
@@ -63,7 +54,6 @@
             version-hash = "sha256-AUkFMaCfWNirtdAy9GhNPzeAuRaklCfW35GPt8h9KPM=";
           })
         ];
-        # change
 
         PGDATA = "./pgdata";
 
