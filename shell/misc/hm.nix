@@ -9,5 +9,12 @@
     neofetch
     bitwarden-cli
     nixpkgs-unstable-latest.gh
+
+    (pkgs.writeShellScriptBin "wait-for-port" ''
+      echo "Waiting for port $1..."
+      while ! nc -z localhost $1; do
+        sleep 0.1
+      done
+    '')
   ];
 }
