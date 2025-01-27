@@ -80,15 +80,24 @@ return {
         if not client then return end
 
         if client.supports_method("textDocument/formatting") then
+          vim.api.nvim_buf_set_var(args.buf, "autoformat", true)
+
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = args.buf,
             group = format_group,
             callback = function()
-              vim.lsp.buf.format { async = false, id = args.data.client_id }
+              if vim.api.nvim_buf_get_var(args.buf, "autoformat") then
+                vim.lsp.buf.format { async = false, id = args.data.client_id }
+              end
             end,
           })
         end
       end
     })
+
+    vim.api.nvim_create_user_command("AutoformatToggle", function()
+      local new_val = not vim.api.nvim_buf_get_var(0, "autoformat")
+      vim.api.nvim_buf_set_var(0, "autoformat", new_val)
+    end, {})
   end
 }
