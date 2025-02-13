@@ -4,10 +4,12 @@
   # Find package versions at nixhub.io
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.11";
-    # Erlang 25.1.2
-    our-erlang.url = "github:nixos/nixpkgs/80c24eeb9ff46aa99617844d0c4168659e35175f";
-    # Elixir 1.15.7
-    our-elixir.url = "github:nixos/nixpkgs/90e85bc7c1a6fc0760a94ace129d3a1c61c3d035";
+    # Erlang 26.2.1
+    our-erlang.url = "github:nixos/nixpkgs/f8e2ebd66d097614d51a56a755450d4ae1632df1";
+    # Elixir 1.16.0
+    our-elixir.url = "github:nixos/nixpkgs/160b762eda6d139ac10ae081f8f78d640dd523eb";
+    # ElixirLS 0.25.0
+    our-elixir-ls.url = "github:nixos/nixpkgs/7cc0bff31a3a705d3ac4fdceb030a17239412210";
     # NodeJS 18.14.1
     our-nodejs.url = "github:nixos/nixpkgs/06365ba4549654b7ce58c33365c1282800e83a9e";
     # Yarn 1.22.22
@@ -25,9 +27,9 @@
         config.allowUnfree = true;
       };
 
-      elixir = inputs.our-elixir.legacyPackages.${system}.elixir_1_15;
-      beamPkg = pkgs.beam.packagesWith inputs.our-erlang.legacyPackages.${system}.erlangR25;
-      our-elixir-ls = pkgs.elixir-ls.override {
+      elixir = inputs.our-elixir.legacyPackages.${system}.elixir_1_16;
+      beamPkg = pkgs.beam.packagesWith inputs.our-erlang.legacyPackages.${system}.erlang_26;
+      our-elixir-ls = inputs.our-elixir-ls.legacyPackages.${system}.elixir-ls.override {
         inherit elixir;
         mixRelease = beamPkg.mixRelease.override { inherit elixir; };
       };
@@ -36,8 +38,8 @@
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          inputs.our-erlang.legacyPackages.${system}.erlangR25
-          inputs.our-elixir.legacyPackages.${system}.elixir_1_15
+          inputs.our-erlang.legacyPackages.${system}.erlang_26
+          inputs.our-elixir.legacyPackages.${system}.elixir_1_16
           our-elixir-ls
           inputs.our-nodejs.legacyPackages.${system}.nodejs
           inputs.our-yarn.legacyPackages.${system}.yarn
