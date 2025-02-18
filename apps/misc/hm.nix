@@ -17,6 +17,16 @@ let
     )
   );
 
+  xwayland-obsidian = (
+    nixpkgs-unstable.obsidian.overrideAttrs (
+      final: prev: {
+        postInstall = ''
+          sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL obsidian %u:" "$out/share/applications/obsidian.desktop"
+        '';
+      }
+    )
+  );
+
   latest-shadps4 = (
     nixpkgs-unstable.shadps4.overrideAttrs (
       final: prev: {
@@ -45,6 +55,7 @@ in
     transmission_4-gtk
     nixpkgs-unstable.ryujinx
     latest-shadps4
+    xwayland-obsidian
   ];
 
   programs.zathura.enable = true;
