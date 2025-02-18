@@ -18,7 +18,7 @@ return {
           ['<c-d>'] = cmp.mapping.scroll_docs(4),
           ["<tab>"] = cmp.mapping.select_next_item(),
           ["<s-tab>"] = cmp.mapping.select_prev_item(),
-          ['<c-space>'] = cmp.mapping.complete(),
+          ['<c-space>'] = cmp.mapping.confirm({ select = false }),
           ['<c-e>'] = function(fallback)
             fallback()
           end
@@ -51,9 +51,9 @@ return {
     end,
 
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp", -- LSP completion source
+      "hrsh7th/cmp-nvim-lsp",                -- LSP completion source
       "quangnguyen30192/cmp-nvim-ultisnips", -- Snippet completion
-      "hrsh7th/cmp-buffer", -- Buffer words completion source
+      "hrsh7th/cmp-buffer",                  -- Buffer words completion source
     },
   },
 }
