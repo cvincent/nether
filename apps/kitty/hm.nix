@@ -1,4 +1,4 @@
-{ config, pkgs, utils, ... }:
+{ pkgs, utils, ... }:
 
 {
   home.packages = [ pkgs.kitty ];
