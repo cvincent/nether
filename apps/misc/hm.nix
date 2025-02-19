@@ -65,4 +65,6 @@ in
       remember-recent-files = false;
     };
   };
+
+  home.sessionVariables.OBSIDIAN_REST_API_KEY = "7570f5f498c2e466a338d90afe43337a4c2299bfc8fc92e271aed013159ef61f";
 }

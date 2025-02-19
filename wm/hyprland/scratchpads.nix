@@ -16,8 +16,8 @@
     binding = "SUPER, y";
   }
   {
-    class = "neorg-scratch";
-    command = "kitty --class neorg-scratch env NEORG=1 nvim --listen /tmp/neorg.pipe -S /backup/vim-notes/neorg/Session.vim";
+    class = "obsidian-scratch";
+    command = "kitty --class obsidian-scratch env nvim --listen /tmp/obsidian.pipe -S /backup/second-brain/Session.vim";
     binding = "SUPER, o";
     size = "90% 90%";
   }
