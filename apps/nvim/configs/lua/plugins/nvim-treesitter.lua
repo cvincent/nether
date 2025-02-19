@@ -6,7 +6,7 @@ return {
       local opts = {
         auto_install = true,
 
-        ensure_installed = {"elixir", "heex"},
+        ensure_installed = { "elixir", "heex" },
 
         highlight = {
           enable = true,
@@ -24,7 +24,9 @@ return {
         },
 
         indent = {
-          enable = true
+          enable = true,
+          -- Treesitter indent doesn't handle list continuations well
+          disable = { "markdown" }
         },
       }
 
