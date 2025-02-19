@@ -6,8 +6,8 @@
     nixpkgs.url = "nixpkgs/nixos-23.11";
     # Erlang 26.2.1
     our-erlang.url = "github:nixos/nixpkgs/f8e2ebd66d097614d51a56a755450d4ae1632df1";
-    # Elixir 1.16.0
-    our-elixir.url = "github:nixos/nixpkgs/160b762eda6d139ac10ae081f8f78d640dd523eb";
+    # Elixir 1.17.2
+    our-elixir.url = "github:nixos/nixpkgs/5ed627539ac84809c78b2dd6d26a5cebeb5ae269";
     # ElixirLS 0.25.0
     our-elixir-ls.url = "github:nixos/nixpkgs/7cc0bff31a3a705d3ac4fdceb030a17239412210";
     # NodeJS 18.14.1
@@ -27,7 +27,7 @@
         config.allowUnfree = true;
       };
 
-      elixir = inputs.our-elixir.legacyPackages.${system}.elixir_1_16;
+      elixir = inputs.our-elixir.legacyPackages.${system}.elixir_1_17;
       beamPkg = pkgs.beam.packagesWith inputs.our-erlang.legacyPackages.${system}.erlang_26;
       our-elixir-ls = inputs.our-elixir-ls.legacyPackages.${system}.elixir-ls.override {
         inherit elixir;
@@ -39,7 +39,7 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           inputs.our-erlang.legacyPackages.${system}.erlang_26
-          inputs.our-elixir.legacyPackages.${system}.elixir_1_16
+          inputs.our-elixir.legacyPackages.${system}.elixir_1_17
           our-elixir-ls
           inputs.our-nodejs.legacyPackages.${system}.nodejs
           inputs.our-yarn.legacyPackages.${system}.yarn
