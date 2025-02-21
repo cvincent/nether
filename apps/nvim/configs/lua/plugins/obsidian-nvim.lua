@@ -100,7 +100,7 @@ return {
         -- back to 0 here because the hardcoded conceal behavior around checkbox
         -- lists is ugly as hell, and I'll need to fork the repo to change it.
         -- This workaround is fine for now.
-        vim.opt_local.conceallevel = 0
+        -- vim.opt_local.conceallevel = 0
 
         vim.keymap.set("n", ">>", "<Plug>(bullets-demote)", { buffer = true })
         vim.keymap.set("n", "<<", "<Plug>(bullets-promote)", { buffer = true })
