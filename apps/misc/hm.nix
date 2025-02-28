@@ -27,6 +27,16 @@ let
     )
   );
 
+  xwayland-signal-desktop = (
+    nixpkgs-unstable.signal-desktop.overrideAttrs (
+      final: prev: {
+        postInstall = ''
+          sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL /opt/Signal/signal-desktop --no-sandbox %u:" "$out/share/applications/signal-desktop.desktop"
+        '';
+      }
+    )
+  );
+
   latest-shadps4 = (
     nixpkgs-unstable.shadps4.overrideAttrs (
       final: prev: {
@@ -51,6 +61,7 @@ in
     nixpkgs-unstable.discord
     nixpkgs-slack.slack
     nixpkgs-zoom.zoom-us
+    xwayland-signal-desktop
     xwayland-spotify
     transmission_4-gtk
     nixpkgs-unstable.ryujinx
