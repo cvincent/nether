@@ -22,6 +22,9 @@
     tailwindcss-language-server
     nodePackages.typescript-language-server # TypeScript is a superset of JavaScript
     vscode-langservers-extracted # Provides VS Code's LSPs for HTML, CSS, JSON, and ESLint
+
+    # Image support
+    imagemagick
   ];
 
   home.file."./.config/nvim".source = utils.directSymlink "apps/nvim/configs";
