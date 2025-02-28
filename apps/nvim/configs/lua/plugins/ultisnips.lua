@@ -2,6 +2,8 @@ return {
   {
     "SirVer/ultisnips",
 
+    enabled = false,
+
     dependencies = {
       "honza/vim-snippets", -- Collection of predefined snippets
     },
@@ -15,7 +17,7 @@ return {
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "UltiSnipsEnterFirstSnippet",
-        callback = function ()
+        callback = function()
           -- Some plugin, maybe vim-surround, sets a select-mode mapping for "s"
           -- that we don't actually use, but which screws up our snippet
           -- replacements if we start with an "s"; here we disable that mapping,

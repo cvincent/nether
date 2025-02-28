@@ -1,0 +1,72 @@
+snippet def "def func(args) do" b!
+	def ${1:func}${2:(${3:args})}${4: when $5} do
+		$0
+	end
+
+snippet defs "def func(args), do: ret" b!
+	def ${1:func}${2:(${3:args})}${4: when $5}, do: $0
+
+snippet defp "defp func(args) do" b!
+	defp ${1:func}${2:(${3:args})}${4: when $5} do
+		$0
+	end
+
+snippet defps "def func(args), do: ret" b!
+	defp ${1:func}${2:(${3:args})}${4: when $5}, do: $0
+
+snippet db "dbg(something)" b!
+	dbg($0)
+
+snippet dbi "|> dbg()"
+	|> dbg()
+
+snippet io "IO.inspect(data, label)" b!
+	IO.inspect(${1:data}${2:, label: "${3:poiu}"})
+
+snippet iop "|> IO.inspect(label)" i!
+	|> IO.inspect(label: "${1:poiu}")
+
+snippet div
+	<div>
+		$0
+	</div>
+
+snippet divc
+	<div class="$1">
+		$0
+	</div>
+
+snippet =
+	<%= $0 %>
+
+snippet -
+	<% $0 %>
+
+snippet #
+	<%# $0 %>
+
+snippet attr
+	attr :${1:name}, :${2:string}${3:, required: true}
+	endsnippet
+
+snippet slot
+	slot :${1:name}${3:, required: true}
+	endsnippet
+
+snippet fc
+	<.$1 />$0
+
+snippet ~H
+	~H"""
+	$0
+	"""
+
+snippet test "test 'test', %{} do" b!
+	test "${1:test}"${2:, ${3:ctx}} do
+		$0
+	end
+
+snippet desc "describe '' do" b!
+	describe "$1" do
+		$0
+	end
