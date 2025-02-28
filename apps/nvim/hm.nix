@@ -23,6 +23,9 @@
     nodePackages.typescript-language-server # TypeScript is a superset of JavaScript
     vscode-langservers-extracted # Provides VS Code's LSPs for HTML, CSS, JSON, and ESLint
 
+    # Script NeoVim
+    neovim-remote
+
     # Image support
     imagemagick
   ];
