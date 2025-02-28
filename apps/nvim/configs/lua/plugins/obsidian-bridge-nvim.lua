@@ -1,6 +1,7 @@
 return {
   "oflisback/obsidian-bridge.nvim",
   dependencies = { "nvim-telescope/telescope.nvim" },
+  enabled = false,
   opts = {
     obsidian_server_address = "http://localhost:27123",
     scroll_sync = true, -- See "Sync of buffer scrolling" section below
