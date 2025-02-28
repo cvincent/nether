@@ -114,6 +114,8 @@ return {
           { buffer = true }
         )
 
+        vim.keymap.set("n", "<leader>ft", ":ObsidianTags<cr>")
+
         -- Keymappings for checkbox states
         -- This helper allows us to set vim.go.operatorfunc to a given Lua
         -- function, which in turn enables dot-repeat for that function when
@@ -139,6 +141,110 @@ return {
         vim.keymap.set("n", "<leader>tu", checkbox_op("s/- \\[.\\]/- [ ]/"), { expr = true })
         vim.keymap.set("n", "<leader>tp", checkbox_op("s/- \\[.\\]/- [-]/"), { expr = true })
         vim.keymap.set("n", "<leader>tc", checkbox_op("s/- \\[.\\]/- [_]/"), { expr = true })
+
+        -- Set up custom integrations leveraging the Local REST API and Advanced URIs plugins
+        local obs_root = "/backup/second-brain"
+        local obs_token = vim.env.OBSIDIAN_REST_API_KEY
+
+        local obs_get = function(endpoint)
+          local resp = vim.system(
+            {
+              "curl", "http://localhost:27123/" .. endpoint,
+              "-H", "Authorization: Bearer " .. obs_token,
+              "-H", "Accept: application/vnd.olrapi.note+json"
+            }, { text = true }):wait()
+          return vim.json.decode(resp.stdout)
+        end
+        _G.obs_get = obs_get
+
+        local obs_eval_async = function(script)
+          return vim.system(
+            { "xdg-open", "obsidian://adv-uri?vault=second-brain&eval=" .. script },
+            { text = true }
+          )
+        end
+        _G.obs_eval_async = obs_eval_async
+
+        local obs_eval = function(script)
+          local resp = vim.system(
+            {
+              "curl", "-XPOST", "-d", script,
+              "http://localhost:27123/eval",
+              "-H", "Authorization: Bearer " .. obs_token,
+              "-H", "Accept: application/vnd.olrapi.note+json",
+              "-H", "Content-Type: text/plain"
+            }, { text = true }):wait()
+
+          return vim.json.decode(resp.stdout)
+        end
+        _G.obs_eval = obs_eval
+
+        local obs_open_active = function()
+          local filename = obs_root .. "/" .. obs_get("active").path
+          vim.cmd("e " .. filename)
+        end
+
+        vim.api.nvim_create_user_command("OActive", obs_open_active, {})
+
+        local obs_journal_cmd = function(journal, cmd)
+          return function()
+            local eval =
+                'app.plugins.plugins.journals.manager.journals.get("' .. journal .. '")' ..
+                '.execCommand("' .. cmd .. '")'
+            obs_eval(eval)
+            obs_open_active()
+          end
+        end
+
+        vim.api.nvim_create_user_command("OPersonalToday", obs_journal_cmd("personal", "calendar:open-day"), {})
+        vim.api.nvim_create_user_command("OPersonalYesterday", obs_journal_cmd("personal", "calendar:open-prev-day"), {})
+        vim.api.nvim_create_user_command("OPersonalTomorrow", obs_journal_cmd("personal", "calendar:open-next-day"), {})
+        vim.api.nvim_create_user_command("OPersonalWeekly", obs_journal_cmd("personal", "calendar:open-week"), {})
+
+        vim.api.nvim_create_user_command("OWorkToday", obs_journal_cmd("work", "calendar:open-day"), {})
+        vim.api.nvim_create_user_command("OWorkYesterday", obs_journal_cmd("work", "calendar:open-prev-day"), {})
+        vim.api.nvim_create_user_command("OWorkTomorrow", obs_journal_cmd("work", "calendar:open-next-day"), {})
+        vim.api.nvim_create_user_command("OWorkWeekly", obs_journal_cmd("work", "calendar:open-week"), {})
+
+        local jot = function(args)
+          -- obs_eval('app.commands.commands["zk-prefixer"].callback()')
+          local title = vim.json.encode(args.args)
+
+          local eval = [[
+            let templater = app.plugins.plugins["templater-obsidian"].templater
+            let file = templater.functions_generator.internal_functions.modules_array.find((m) => m.name == 'file')
+            let create_new = file.static_functions.get("create_new")
+            let find_tfile = file.static_functions.get("find_tfile")
+
+            create_new(find_tfile("unique-note-templater"), $title, true);
+          ]]
+
+          obs_eval(eval:gsub("$(%w+)", { title = title }))
+          obs_eval("app.workspace.getActiveFileView().setMode(app.workspace.getActiveFileView().previewMode)")
+
+          local ui = vim.api.nvim_list_uis()[1]
+          local filename = obs_root .. "/" .. obs_get("active").path
+          local buf = vim.fn.bufadd(filename)
+
+          vim.api.nvim_open_win(buf, true, {
+            relative = "editor",
+            row = ui.height * 0.33,
+            col = ui.width * 0.33,
+            width = math.floor(ui.width * 0.33),
+            height = math.floor(ui.height * 0.33),
+            border = "rounded",
+          })
+
+          vim.api.nvim_command("set winblend=10")
+          vim.api.nvim_command("normal GA")
+          vim.api.nvim_command("startinsert")
+          vim.keymap.set("n", "<leader>w", function()
+            vim.keymap.del("n", "<leader>w", { buffer = true })
+            vim.api.nvim_command("wq!")
+          end, { buffer = true })
+        end
+
+        vim.api.nvim_create_user_command("OJot", jot, { nargs = 1 })
       end
     },
 
@@ -153,7 +259,7 @@ return {
         end
       end
 
-      local out = { id = note.id, tags = note.tags }
+      local out = { tags = note.tags }
 
       -- `note.metadata` contains any manually added fields in the frontmatter.
       -- So here we just make sure those fields are kept in the frontmatter.
