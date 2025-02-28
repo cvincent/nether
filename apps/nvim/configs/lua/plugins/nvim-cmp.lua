@@ -6,6 +6,9 @@ return {
       vim.api.nvim_command("set completeopt=menu,menuone,noselect")
 
       local cmp = require("cmp")
+      local luasnip = require("luasnip")
+
+      require("luasnip.loaders.from_snipmate").lazy_load()
 
       cmp.setup({
         window = {
@@ -16,20 +19,62 @@ return {
         mapping = cmp.mapping.preset.insert({
           ['<c-u>'] = cmp.mapping.scroll_docs(-4),
           ['<c-d>'] = cmp.mapping.scroll_docs(4),
-          ["<tab>"] = cmp.mapping.select_next_item(),
-          ["<s-tab>"] = cmp.mapping.select_prev_item(),
-          ['<c-space>'] = cmp.mapping.confirm({ select = false }),
+
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.locally_jumpable(1) then
+              luasnip.jump(1)
+            elseif luasnip.choice_active() then
+              luasnip.change_choice(1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
+            elseif luasnip.choice_active() then
+              luasnip.change_choice(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
+          ['<c-space>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if luasnip.expandable() then
+                luasnip.expand()
+              else
+                cmp.confirm({
+                  select = false,
+                })
+              end
+            else
+              fallback()
+            end
+          end),
+
           ['<c-e>'] = function(fallback)
             fallback()
           end
           -- ['<cr>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
 
+        snippet = {
+          expand = function(args)
+            require 'luasnip'.lsp_expand(args.body)
+          end
+        },
+
         sources = cmp.config.sources(
           {
             { name = "nvim_px_to_rem" },
             { name = "nvim_lsp" },
-            { name = "ultisnips" },
+            { name = "luasnip" },
           },
           {
             {
@@ -51,9 +96,10 @@ return {
     end,
 
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",                -- LSP completion source
-      "quangnguyen30192/cmp-nvim-ultisnips", -- Snippet completion
-      "hrsh7th/cmp-buffer",                  -- Buffer words completion source
+      "hrsh7th/cmp-nvim-lsp", -- LSP completion source
+      -- "quangnguyen30192/cmp-nvim-ultisnips", -- Snippet completion
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-buffer", -- Buffer words completion source
     },
   },
 }
