@@ -71,6 +71,10 @@ in
 
   programs.zathura.enable = true;
 
+  xdg.mimeApps = {
+    defaultApplications."application/pdf" = "org.pwmt.zathura-cb.desktop";
+  };
+
   dconf.settings = {
     "org/gnome/desktop/privacy" = {
       remember-recent-files = false;
