@@ -206,9 +206,12 @@ return {
         vim.api.nvim_create_user_command("OWorkTomorrow", obs_journal_cmd("work", "calendar:open-next-day"), {})
         vim.api.nvim_create_user_command("OWorkWeekly", obs_journal_cmd("work", "calendar:open-week"), {})
 
-        local jot = function(args)
+        local jot = function(args, template, startinsert_bang)
+          startinsert_bang = startinsert_bang or ""
+
           -- obs_eval('app.commands.commands["zk-prefixer"].callback()')
           local title = vim.json.encode(args.args)
+          local template = vim.json.encode(template)
 
           local eval = [[
             let templater = app.plugins.plugins["templater-obsidian"].templater
@@ -216,10 +219,10 @@ return {
             let create_new = file.static_functions.get("create_new")
             let find_tfile = file.static_functions.get("find_tfile")
 
-            create_new(find_tfile("unique-note-templater"), $title, true);
+            create_new(find_tfile($template), $title, true);
           ]]
 
-          obs_eval(eval:gsub("$(%w+)", { title = title }))
+          obs_eval(eval:gsub("$(%w+)", { title = title, template = template }))
           obs_eval("app.workspace.getActiveFileView().setMode(app.workspace.getActiveFileView().previewMode)")
 
           local ui = vim.api.nvim_list_uis()[1]
@@ -237,14 +240,24 @@ return {
 
           vim.api.nvim_command("set winblend=10")
           vim.api.nvim_command("normal GA")
-          vim.api.nvim_command("startinsert")
+          vim.api.nvim_command("startinsert" .. startinsert_bang)
           vim.keymap.set("n", "<leader>w", function()
             vim.keymap.del("n", "<leader>w", { buffer = true })
             vim.api.nvim_command("wq!")
           end, { buffer = true })
         end
 
-        vim.api.nvim_create_user_command("OJot", jot, { nargs = 1 })
+        vim.api.nvim_create_user_command("OJot", function(args)
+          jot(args, "unique-note-templater")
+        end, { nargs = 1 })
+
+        vim.api.nvim_create_user_command("OJotTask", function(args)
+          jot(args, "unique-note-task-templater", "!")
+        end, { nargs = 1 })
+
+        vim.api.nvim_create_user_command("OJotSticky", function(args)
+          jot(args, "unique-note-sticky-templater")
+        end, { nargs = 1 })
       end
     },
 
