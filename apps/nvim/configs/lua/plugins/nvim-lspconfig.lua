@@ -47,6 +47,8 @@ return {
       cmd = { "elixir-ls" }
     })
 
+    lspconfig.gleam.setup({})
+
     local opts = { noremap = true, silent = true }
 
     -- Navigate diagnostics
