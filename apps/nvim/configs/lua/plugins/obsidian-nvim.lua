@@ -240,7 +240,7 @@ return {
 
           vim.api.nvim_command("set winblend=10")
           vim.api.nvim_command("normal GA")
-          vim.api.nvim_command("startinsert" .. startinsert_bang)
+          -- vim.api.nvim_command("startinsert" .. startinsert_bang)
           vim.keymap.set("n", "<leader>w", function()
             vim.keymap.del("n", "<leader>w", { buffer = true })
             vim.api.nvim_command("wq!")
