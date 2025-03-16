@@ -59,7 +59,7 @@ in
     libreoffice
     nautilus
     bambu-studio
-    nixpkgs-unstable.discord
+    nixpkgs-unstable-latest.discord-canary
     nixpkgs-slack.slack
     nixpkgs-zoom.zoom-us
     xwayland-signal-desktop
