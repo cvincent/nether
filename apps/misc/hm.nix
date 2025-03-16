@@ -2,6 +2,7 @@
   pkgs,
   nixpkgs-slack,
   nixpkgs-unstable,
+  nixpkgs-unstable-latest,
   nixpkgs-zoom,
   ...
 }:
@@ -28,7 +29,7 @@ let
   );
 
   xwayland-signal-desktop = (
-    nixpkgs-unstable.signal-desktop.overrideAttrs (
+    nixpkgs-unstable-latest.signal-desktop.overrideAttrs (
       final: prev: {
         postInstall = ''
           sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL /opt/Signal/signal-desktop --no-sandbox %u:" "$out/share/applications/signal-desktop.desktop"
