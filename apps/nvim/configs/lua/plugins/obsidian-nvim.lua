@@ -157,7 +157,7 @@ return {
           local path = vim.fn.expand("%:.")
           local line = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1]
           local eval =
-              'app.plugins.plugins["cvincent-task-additions"].setCheckboxAtPathLine("' ..
+              'app.plugins.plugins["obsidian-task-additions"].setCheckboxAtPathLine("' ..
               path .. '", ' .. line .. ', "' .. mark .. '")'
 
           obs_eval(eval)
