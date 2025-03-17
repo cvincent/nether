@@ -154,6 +154,11 @@ return {
         _G.obs_eval = obs_eval
 
         local checkbox_op = function(mark)
+          if vim.api.nvim_get_option_value("modified", { buf = 0 }) then
+            vim.cmd("w")
+            vim.loop.sleep(750)
+          end
+
           local path = vim.fn.expand("%:.")
           local line = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1]
           local eval =
