@@ -153,27 +153,44 @@ return {
         end
         _G.obs_eval = obs_eval
 
+        -- Keymappings for checkbox states
+        -- This helper allows us to set vim.go.operatorfunc to a given Lua
+        -- function, which in turn enables dot-repeat for that function when
+        -- `g@l` is run. Black magic to me, but it works.
+        local set_opfunc = vim.fn[vim.api.nvim_exec([[
+          func s:set_opfunc(val)
+            let &opfunc = a:val
+          endfunc
+          echon get(function('s:set_opfunc'), 'name')
+        ]], true)]
+
         local checkbox_op = function(mark)
-          if vim.api.nvim_get_option_value("modified", { buf = 0 }) then
-            vim.cmd("w")
-            vim.loop.sleep(750)
+          return function()
+            set_opfunc(function()
+              if vim.api.nvim_get_option_value("modified", { buf = 0 }) then
+                vim.cmd("w")
+                vim.loop.sleep(750)
+              end
+
+              local path = vim.fn.expand("%:.")
+              local line = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1]
+              local eval =
+                  'app.plugins.plugins["obsidian-task-additions"].setCheckboxAtPathLine("' ..
+                  path .. '", ' .. line .. ', "' .. mark .. '")'
+
+              obs_eval(eval)
+              vim.loop.sleep(250)
+              vim.cmd("checktime")
+            end)
+
+            vim.api.nvim_feedkeys("g@l", "n", false)
           end
-
-          local path = vim.fn.expand("%:.")
-          local line = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())[1]
-          local eval =
-              'app.plugins.plugins["obsidian-task-additions"].setCheckboxAtPathLine("' ..
-              path .. '", ' .. line .. ', "' .. mark .. '")'
-
-          obs_eval(eval)
-          vim.loop.sleep(250)
-          vim.cmd("checktime")
         end
 
-        vim.keymap.set("n", "<leader>td", function() checkbox_op("x") end, { buffer = true })
-        vim.keymap.set("n", "<leader>tu", function() checkbox_op(" ") end, { buffer = true })
-        vim.keymap.set("n", "<leader>tp", function() checkbox_op("-") end, { buffer = true })
-        vim.keymap.set("n", "<leader>tc", function() checkbox_op("_") end, { buffer = true })
+        vim.keymap.set("n", "<leader>td", checkbox_op("x"))
+        vim.keymap.set("n", "<leader>tu", checkbox_op(" "))
+        vim.keymap.set("n", "<leader>tp", checkbox_op("-"))
+        vim.keymap.set("n", "<leader>tc", checkbox_op("_"))
 
         local obs_open_active = function()
           local filename = obs_root .. "/" .. obs_get("active").path
