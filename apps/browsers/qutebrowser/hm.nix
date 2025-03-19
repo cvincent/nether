@@ -79,7 +79,7 @@ in
         "<ctrl-left>" = "tab-move -";
         x = "config-cycle tabs.position top right";
         "<space>ft" = "cmd-set-text -s :tab-select";
-        T = "cmd-set-text -s :tab-select";
+        T = "tab-focus";
 
         # Easy esc in normal mode
         e = "fake-key <esc>";
@@ -88,10 +88,13 @@ in
         "<return>" = "cmd-set-text :";
 
         # Videos
-        "<space>fv" = "hint links spawn mpv --force-window=immediate --no-terminal --keep-open=yes {hint-url}";
-        "<space>fV" = "hint links spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {hint-url}";
+        "<space>fv" =
+          "hint links spawn mpv --force-window=immediate --no-terminal --keep-open=yes {hint-url}";
+        "<space>fV" =
+          "hint links spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {hint-url}";
         "yv" = "spawn mpv --force-window=immediate --no-terminal --keep-open=yes {url}";
-        "yV" = "spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {url}";
+        "yV" =
+          "spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {url}";
 
         # Downloads
         "<space>dc" = "download-clear";
