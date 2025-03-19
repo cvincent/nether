@@ -1,18 +1,18 @@
 snippet def "def func(args) do" b!
-	def ${1:func}${2:(${3:args})}${4: when $5} do
+	def ${1:func}(${2:args})$3 do
 		$0
 	end
 
 snippet defs "def func(args), do: ret" b!
-	def ${1:func}${2:(${3:args})}${4: when $5}, do: $0
+	def ${1:func}(${2:args})$3, do: $0
 
 snippet defp "defp func(args) do" b!
-	defp ${1:func}${2:(${3:args})}${4: when $5} do
+	defp ${1:func}(${2:args})$3 do
 		$0
 	end
 
 snippet defps "def func(args), do: ret" b!
-	defp ${1:func}${2:(${3:args})}${4: when $5}, do: $0
+	defp ${1:func}(${2:args})$3, do: $0
 
 snippet db "dbg(something)" b!
 	dbg($0)
