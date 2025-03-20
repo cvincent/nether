@@ -73,33 +73,5 @@ return {
 
     -- Refactor rename...not supported in Elixir LS yet :(
     vim.api.nvim_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-
-    -- Format on save
-    local format_group = vim.api.nvim_create_augroup("lsp-format-on-write", { clear = true })
-    vim.api.nvim_create_autocmd("LspAttach", {
-      callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if not client then return end
-
-        if client.supports_method("textDocument/formatting") then
-          vim.api.nvim_buf_set_var(args.buf, "autoformat", true)
-
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = args.buf,
-            group = format_group,
-            callback = function()
-              if vim.api.nvim_buf_get_var(args.buf, "autoformat") then
-                vim.lsp.buf.format { async = false, id = args.data.client_id }
-              end
-            end,
-          })
-        end
-      end
-    })
-
-    vim.api.nvim_create_user_command("AutoformatToggle", function()
-      local new_val = not vim.api.nvim_buf_get_var(0, "autoformat")
-      vim.api.nvim_buf_set_var(0, "autoformat", new_val)
-    end, {})
   end
 }
