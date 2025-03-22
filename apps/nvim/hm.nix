@@ -14,8 +14,11 @@
     lua5_1
     lua51Packages.luarocks
     gnumake
-    # Nix formatter
+    nodePackages.prettier
+
+    # Formatters
     nixpkgs-unstable-latest.nixfmt-rfc-style
+    pgformatter
 
     # Language servers I want at all times
     lua-language-server # The language of NeoVim
