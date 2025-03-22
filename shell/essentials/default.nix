@@ -13,6 +13,7 @@
     eza # `ls` alternative
     fd # `find` alternative
     fzf
+    zf
     jq
     magic-wormhole
     unzip

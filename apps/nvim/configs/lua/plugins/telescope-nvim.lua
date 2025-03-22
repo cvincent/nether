@@ -5,9 +5,10 @@ return {
 
     dependencies = {
       "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      { "natecraddock/telescope-zf-native.nvim" },
       "nvim-telescope/telescope-symbols.nvim",
-      { "anekos/tailiscope.nvim",                   branch = "fix/support-case-sensitive-filesystems" },
+      { "anekos/tailiscope.nvim",               branch = "fix/support-case-sensitive-filesystems" },
     },
 
     opts = {
@@ -58,7 +59,8 @@ return {
     },
 
     init = function()
-      require("telescope").load_extension("fzf")
+      -- require("telescope").load_extension("fzf")
+      require("telescope").load_extension("zf-native")
 
       vim.keymap.set("n", "<leader>fs", require("telescope.builtin").lsp_document_symbols)
       vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
