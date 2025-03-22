@@ -15,6 +15,7 @@
     fzf
     zf
     jq
+    fx
     magic-wormhole
     unzip
   ];
