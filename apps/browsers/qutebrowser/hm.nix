@@ -39,9 +39,17 @@ in
       downloads.location.directory = "~/Downloads";
       downloads.location.prompt = false;
 
-      content.autoplay = false;
-      content.cookies.accept = "no-3rdparty";
-      content.geolocation = false;
+      content = {
+        autoplay = false;
+        cookies.accept = "no-3rdparty";
+        geolocation = false;
+        notifications.enabled = false;
+        register_protocol_handler = false;
+
+        javascript = {
+          clipboard = "access-paste";
+        };
+      };
 
       editor.command = [
         "kitty"
@@ -57,6 +65,11 @@ in
         tabs.pinned.even.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
       };
     };
+
+    extraConfig = ''
+      config.set("content.media.audio_capture", True, "https://app.zoom.us")
+      config.set("content.media.audio_video_capture", True, "https://app.zoom.us")
+    '';
 
     keyBindings = {
       normal = {
