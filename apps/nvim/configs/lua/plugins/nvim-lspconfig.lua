@@ -73,5 +73,8 @@ return {
 
     -- Refactor rename...not supported in Elixir LS yet :(
     vim.api.nvim_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+
+    -- Code actions...whatever they are!
+    vim.api.nvim_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   end
 }
