@@ -18,6 +18,23 @@
     fx
     magic-wormhole
     unzip
+
+    (pkgs.writeShellScriptBin "jq-preview" ''
+      #!/usr/bin/env bash
+      if [[ -z $1 ]] || [[ $1 == "-" ]]; then
+        input=$(mktemp)
+        trap "rm -f $input" EXIT
+        cat /dev/stdin > $input
+      else
+        input=$1
+      fi
+
+      echo "" | fzf \
+        --phony \
+        --preview-window='up:90%' \
+        --print-query \
+        --preview "jq --color-output -r {q} $input"
+    '')
   ];
 
   programs.direnv = {
