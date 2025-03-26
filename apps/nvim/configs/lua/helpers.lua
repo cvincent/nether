@@ -13,3 +13,8 @@ function DisableFormatOnWrite(pattern)
 end
 
 IconsPlugin = "nvim-tree/nvim-web-devicons"
+
+function CallPlugMapping(name)
+  local t = function(keycode) return vim.api.nvim_replace_termcodes(keycode, true, false, true) end
+  vim.api.nvim_feedkeys(t "<Plug>" .. name, "v", true)
+end
