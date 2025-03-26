@@ -59,6 +59,7 @@ in
       ];
 
       colors = {
+        webpage.darkmode.enabled = false;
         tabs.odd.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
         tabs.even.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
         tabs.pinned.odd.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
@@ -102,12 +103,12 @@ in
 
         # Videos
         "<space>fv" =
-          "hint links spawn mpv --force-window=immediate --no-terminal --keep-open=yes {hint-url}";
+          "hint links spawn mpv --force-window=immediate --no-terminal --keep-open=yes --ytdl-raw-options='proxy=http://192.168.1.114:8888' {hint-url}";
         "<space>fV" =
-          "hint links spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {hint-url}";
+          "hint links spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' --proxy http://192.168.1.114:8888 {hint-url}";
         "yv" = "spawn mpv --force-window=immediate --no-terminal --keep-open=yes {url}";
         "yV" =
-          "spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' {url}";
+          "spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' --proxy http://192.168.1.114:8888 {url}";
 
         # Downloads
         "<space>dc" = "download-clear";
