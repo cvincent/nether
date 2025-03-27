@@ -16,6 +16,7 @@
   (tuple)
   (data_constructor_arguments)
   (function_parameters)
+  (arguments)
   (block)
 ] @indent.begin
 
