@@ -4,6 +4,10 @@ return {
   enabled = true,
   build = "make install_jsregexp",
 
+  opts = {
+    store_selection_keys = "<Tab>",
+  },
+
   init = function()
     ls = require("luasnip")
 
