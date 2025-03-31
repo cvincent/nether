@@ -49,12 +49,40 @@ return {
 
     lspconfig.gleam.setup({})
 
+    local default_diagnostic_config = {
+      virtual_text = { current_line = true },
+      virtual_lines = false
+    }
+    vim.diagnostic.config(default_diagnostic_config)
+
+    local diagnostics_augroup = vim.api.nvim_create_augroup("lsp.diagnostics", {})
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      group = diagnostics_augroup,
+      callback = function()
+        vim.diagnostic.config(default_diagnostic_config)
+        vim.b.diagnostic_detail = false
+      end
+    })
+
+    -- `d`iagnostic `d`etail
+    vim.keymap.set("n", "<leader>dd", function()
+      if vim.b.diagnostic_detail then
+        vim.diagnostic.config(default_diagnostic_config)
+        vim.b.diagnostic_detail = false
+      else
+        vim.diagnostic.config({
+          virtual_text = false,
+          virtual_lines = { current_line = true }
+        })
+        vim.b.diagnostic_detail = true
+      end
+    end)
+
     local opts = { noremap = true, silent = true }
 
     -- Navigate diagnostics
-    vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "<space>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    vim.api.nvim_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev({ float = false })<CR>", opts)
+    vim.api.nvim_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next({ float = false })<CR>", opts)
 
     -- Not sure what this does, conflicts with existing binding
     -- vim.api.nvim_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
@@ -63,18 +91,18 @@ return {
     vim.api.nvim_set_keymap("n", "gf", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
     -- Quickfix references
-    vim.api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+    -- vim.api.nvim_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 
     -- Hover
-    vim.api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+    -- vim.api.nvim_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
 
     -- Signature info
-    vim.api.nvim_set_keymap("n", "gK", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+    -- vim.api.nvim_set_keymap("n", "gK", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 
     -- Refactor rename...not supported in Elixir LS yet :(
-    vim.api.nvim_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+    -- vim.api.nvim_set_keymap("n", "<space>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
     -- Code actions...whatever they are!
-    vim.api.nvim_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+    -- vim.api.nvim_set_keymap("n", "<space>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   end
 }
