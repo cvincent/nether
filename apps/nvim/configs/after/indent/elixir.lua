@@ -1,1 +1,1 @@
-vim.opt_local.indentkeys:remove({ ">", "=do", "0{" })
+vim.opt_local.indentkeys:remove({ ">", "=do", "0{", "=->" })
