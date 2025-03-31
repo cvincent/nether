@@ -11,7 +11,7 @@ return {
   init = function()
     ls = require("luasnip")
 
-    vim.keymap.set({ "i" }, "<C-K>", function()
+    vim.keymap.set("i", "<C-K>", function()
       if ls.expandable() then
         ls.expand()
       elseif ls.jumpable(1) then
@@ -19,16 +19,18 @@ return {
       end
     end, { silent = true })
 
-    vim.keymap.set({ "s" }, "<C-K>", function()
+    vim.keymap.set("s", "<C-K>", function()
       if ls.jumpable(1) then
         ls.jump(1)
       end
     end)
 
-    vim.keymap.set({ "s" }, "<C-S-K>", function()
+    vim.keymap.set("s", "<C-S-K>", function()
       if ls.jumpable(-1) then
         ls.jump(-1)
       end
     end)
+
+    vim.keymap.set("s", "<bs>", "<c-o>s", { noremap = true })
   end
 }
