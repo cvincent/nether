@@ -12,25 +12,6 @@ vim.keymap.set("n", "<c-j>", "<c-w>j", { silent = true, remap = true })
 vim.keymap.set("n", "<c-k>", "<c-w>k", { silent = true, remap = true })
 vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true, remap = true })
 
--- Focus floating window, if any
-local function focus_floating()
-  local wins = vim.api.nvim_list_wins()
-  for i, win in ipairs(wins) do
-    if vim.api.nvim_win_get_config(win).relative == "editor" then
-      vim.api.nvim_set_current_win(win)
-      break
-    end
-  end
-end
-
-vim.keymap.set("n", "<c-space>", focus_floating, {})
-
--- Tab navigation
-vim.keymap.set("n", "<c-a-left>", ":tabp<cr>")
-vim.keymap.set("i", "<c-a-left>", "<esc>:tabp<cr>i")
-vim.keymap.set("n", "<c-a-right>", ":tabn<cr>")
-vim.keymap.set("i", "<c-a-right>", "<esc>:tabn<cr>i")
-
 -- Wrap split navigation
 local function go_to_next_window(direction, count)
   prev_winnr = vim.api.nvim_eval("winnr()")
@@ -48,3 +29,34 @@ vim.keymap.set("n", "<c-w>h", function() jump_with_wrap("h", "l") end, { silent 
 vim.keymap.set("n", "<c-w>j", function() jump_with_wrap("j", "k") end, { silent = true })
 vim.keymap.set("n", "<c-w>k", function() jump_with_wrap("k", "j") end, { silent = true })
 vim.keymap.set("n", "<c-w>l", function() jump_with_wrap("l", "h") end, { silent = true })
+
+-- Alt-t to open a new tab
+vim.keymap.set("n", "<a-t>", ":tabnew<cr>")
+
+-- Navigate tabs with arrows
+vim.keymap.set("n", "<right>", ":tabnext<cr>")
+vim.keymap.set("n", "<left>", ":tabprev<cr>")
+
+-- Move tabs with ctrl-arrows
+vim.keymap.set("n", "<c-right>", ":tabmove +1<cr>")
+vim.keymap.set("n", "<c-left>", ":tabmove -1<cr>")
+
+-- Go to previous tab when closing a tab
+local tabs_navigation_augroup = vim.api.nvim_create_augroup("tabs.navigation", {})
+vim.api.nvim_create_autocmd("TabClosed", {
+  group = tabs_navigation_augroup,
+  callback = function()
+    vim.cmd("tabprevious")
+  end
+})
+
+-- Focus floating window, if any
+function _G.focus_floating()
+  local wins = vim.api.nvim_list_wins()
+  for i, win in ipairs(wins) do
+    if vim.api.nvim_win_get_config(win).relative == "editor" then
+      vim.api.nvim_set_current_win(win)
+      break
+    end
+  end
+end
