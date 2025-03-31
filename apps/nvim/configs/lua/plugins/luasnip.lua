@@ -9,7 +9,7 @@ return {
   },
 
   init = function()
-    ls = require("luasnip")
+    local ls = require("luasnip")
 
     vim.keymap.set("i", "<C-K>", function()
       if ls.expandable() then
