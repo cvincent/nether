@@ -1,5 +1,6 @@
 {
   pkgs,
+  nixpkgs-neovim,
   inputs,
   myUsername,
   myHostname,
@@ -42,7 +43,7 @@
 
   environment.systemPackages = with pkgs; [
     git
-    neovim
+    nixpkgs-neovim.neovim
     sshfs
   ];
 

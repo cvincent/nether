@@ -32,7 +32,9 @@
         nixpkgs-latest = import inputs.nixpkgs-latest importAttrs;
         nixpkgs-unstable = import inputs.nixpkgs-unstable importAttrs;
         nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest importAttrs;
+
         browser-pkgs = import inputs.browser-pkgs importAttrs;
+        nixpkgs-neovim = import inputs.nixpkgs-neovim importAttrs;
         nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
         nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
         nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
@@ -68,6 +70,7 @@
     nixpkgs-latest.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable-latest.url = "nixpkgs/nixos-unstable";
+    nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
     browser-pkgs.url = "nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
