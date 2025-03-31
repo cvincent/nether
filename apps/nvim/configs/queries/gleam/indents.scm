@@ -2,8 +2,9 @@
 [
   (anonymous_function)
   (assert)
+  (let_assert)
   (case)
-  (case_clause)
+  (record_pattern_arguments)
   (constant)
   (external_function)
   (import)
