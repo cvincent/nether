@@ -6,6 +6,6 @@ return {
     "nvim-treesitter/nvim-treesitter",
   },
   init = function()
-    vim.keymap.set("n", "<leader>dd", ":DevdocsOpenCurrentFloat<cr>")
+    -- vim.keymap.set("n", "<leader>dd", ":DevdocsOpenCurrentFloat<cr>")
   end
 }
