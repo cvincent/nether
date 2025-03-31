@@ -8,6 +8,8 @@ return {
 
     require("nord").set()
 
+    vim.api.nvim_command("hi! Pmenu blend=15")
+
     vim.api.nvim_command("hi! Searchlight guibg=" .. colors.nord13_gui .. " guifg=" .. colors.nord0_gui)
     vim.api.nvim_command("hi! IncSearch   guibg=" .. colors.nord13_gui .. " guifg=" .. colors.nord0_gui)
 
