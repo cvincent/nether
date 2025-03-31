@@ -14,7 +14,7 @@ vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true, remap = true })
 
 -- Wrap split navigation
 local function go_to_next_window(direction, count)
-  prev_winnr = vim.api.nvim_eval("winnr()")
+  local prev_winnr = vim.api.nvim_eval("winnr()")
   vim.api.nvim_command(count .. "wincmd " .. direction)
   return not (vim.api.nvim_eval("winnr()") == prev_winnr)
 end
@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd("TabClosed", {
 -- Focus floating window, if any
 function _G.focus_floating()
   local wins = vim.api.nvim_list_wins()
-  for i, win in ipairs(wins) do
+  for _, win in ipairs(wins) do
     if vim.api.nvim_win_get_config(win).relative == "editor" then
       vim.api.nvim_set_current_win(win)
       break
