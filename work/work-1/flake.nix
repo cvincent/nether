@@ -5,7 +5,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     # Erlang 26.2.1
-    our-erlang.url = "github:nixos/nixpkgs/f8e2ebd66d097614d51a56a755450d4ae1632df1";
+    our-erlang.url = "github:nixos/nixpkgs/16e046229f3b4f53257973a5532bcbb72457d2f2";
     # NodeJS 18.14.1
     our-nodejs.url = "github:nixos/nixpkgs/06365ba4549654b7ce58c33365c1282800e83a9e";
     # Yarn 1.22.22
@@ -26,10 +26,10 @@
       beamPkg = pkgs.beam.packagesWith inputs.our-erlang.legacyPackages.${system}.erlang_26;
 
       our-elixir = beamPkg.elixir.overrideAttrs (old: {
-        name = "elixir-1.17.2";
+        name = "elixir-1.18.1";
         src = pkgs.fetchFromGitHub {
-          rev = "v1.17.2";
-          sha256 = "sha256-8rb2f4CvJzio3QgoxvCv1iz8HooXze0tWUJ4Sc13dxg=";
+          rev = "v1.18.1";
+          sha256 = "sha256-zJNAoyqSj/KdJ1Cqau90QCJihjwHA+HO7nnD1Ugd768=";
           owner = "elixir-lang";
           repo = "elixir";
         };
