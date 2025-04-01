@@ -44,7 +44,13 @@ return {
 
     lspconfig.elixirls.setup({
       capabilities = capabilities,
-      cmd = { "elixir-ls" }
+      cmd = { "elixir-ls" },
+      settings = {
+        dialyzerEnabled = true,
+        incrementalDialyzer = true,
+        suggestSpecs = true,
+        signatureAfterComplete = true,
+      },
     })
 
     lspconfig.gleam.setup({})
