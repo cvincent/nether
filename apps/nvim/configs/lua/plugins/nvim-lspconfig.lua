@@ -16,19 +16,17 @@ return {
   init = function()
     local lspconfig = require("lspconfig")
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    if IsPluginInstalled("cmp-nvim-lsp") then
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-    end
-    capabilities.textDocument.completion.completionItem.snippetSupport = true;
+    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- if IsPluginInstalled("cmp-nvim-lsp") then
+    --   -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+    -- end
 
-    lspconfig.lua_ls.setup({ capabilities = capabilities })
-    lspconfig.cssls.setup({ capabilities = capabilities })
-    lspconfig.tailwindcss.setup({ capabilities = capabilities })
-    lspconfig.ts_ls.setup({ capabilities = capabilities })
+    lspconfig.lua_ls.setup({})
+    lspconfig.cssls.setup({})
+    lspconfig.tailwindcss.setup({})
+    lspconfig.ts_ls.setup({})
 
     lspconfig.nixd.setup({
-      capabilities = capabilities,
       cmd = { "nixd" },
       settings = {
         nixd = {
@@ -42,17 +40,16 @@ return {
       }
     })
 
-    -- lspconfig.elixirls.setup({
-    --   capabilities = capabilities,
-    --   cmd = { "elixir-ls" },
-    --   settings = {
-    --     dialyzerEnabled = true,
-    --     incrementalDialyzer = true,
-    --     suggestSpecs = true,
-    --     signatureAfterComplete = true,
-    --     enableTestLenses = true
-    --   },
-    -- })
+    lspconfig.elixirls.setup({
+      cmd = { "elixir-ls" },
+      settings = {
+        dialyzerEnabled = true,
+        incrementalDialyzer = true,
+        suggestSpecs = true,
+        signatureAfterComplete = true,
+        enableTestLenses = true
+      },
+    })
 
     lspconfig.nextls.setup({
       cmd = { "nextls", "--stdio" },
