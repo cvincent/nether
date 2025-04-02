@@ -16,11 +16,6 @@ return {
   init = function()
     local lspconfig = require("lspconfig")
 
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- if IsPluginInstalled("cmp-nvim-lsp") then
-    --   -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-    -- end
-
     lspconfig.lua_ls.setup({})
     lspconfig.cssls.setup({})
     lspconfig.tailwindcss.setup({})
@@ -49,6 +44,10 @@ return {
         signatureAfterComplete = true,
         enableTestLenses = true
       },
+      on_attach = function(client)
+        client.server_capabilities.definitionProvider = false
+        client.server_capabilities.referencesProvider = false
+      end
     })
 
     lspconfig.nextls.setup({
