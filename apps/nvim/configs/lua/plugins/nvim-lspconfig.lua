@@ -45,7 +45,7 @@ return {
         enableTestLenses = true
       },
       on_attach = function(client)
-        client.server_capabilities.definitionProvider = false
+        -- client.server_capabilities.definitionProvider = false
         client.server_capabilities.referencesProvider = false
       end
     })
@@ -59,7 +59,11 @@ return {
         experimental = {
           completions = { enable = true }
         }
-      }
+      },
+      on_attach = function(client)
+        client.server_capabilities.definitionProvider = false
+        -- client.server_capabilities.referencesProvider = false
+      end
     })
 
     lspconfig.gleam.setup({})
