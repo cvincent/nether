@@ -12,8 +12,8 @@ return {
 
       cmp.setup({
         window = {
-          -- completion = cmp.config.window.bordered(),
-          -- documentation = cmp.config.window.bordered(),
+          completion = { winblend = 15 },
+          documentation = { winblend = 15 }
         },
 
         mapping = cmp.mapping.preset.insert({
