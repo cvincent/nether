@@ -14,6 +14,7 @@ return {
           "--ignore-checks", "Credo.Check.Warning.WrongTestFileExtension",
           "$FILENAME",
         },
+        method = nls.methods.DIAGNOSTICS_ON_SAVE,
       }),
     })
   end,
