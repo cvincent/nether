@@ -42,15 +42,28 @@ return {
       }
     })
 
-    lspconfig.elixirls.setup({
-      capabilities = capabilities,
-      cmd = { "elixir-ls" },
-      settings = {
-        dialyzerEnabled = true,
-        incrementalDialyzer = true,
-        suggestSpecs = true,
-        signatureAfterComplete = true,
-      },
+    -- lspconfig.elixirls.setup({
+    --   capabilities = capabilities,
+    --   cmd = { "elixir-ls" },
+    --   settings = {
+    --     dialyzerEnabled = true,
+    --     incrementalDialyzer = true,
+    --     suggestSpecs = true,
+    --     signatureAfterComplete = true,
+    --     enableTestLenses = true
+    --   },
+    -- })
+
+    lspconfig.nextls.setup({
+      cmd = { "nextls", "--stdio" },
+      init_options = {
+        extensions = {
+          credo = { enable = true }
+        },
+        experimental = {
+          completions = { enable = true }
+        }
+      }
     })
 
     lspconfig.gleam.setup({})

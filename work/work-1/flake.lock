@@ -1,6 +1,41 @@
 {
   "nodes": {
+    "next-ls": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "zigpkgs": "zigpkgs"
+      },
+      "locked": {
+        "lastModified": 1741487841,
+        "narHash": "sha256-Zb7x+SY+D10V3TclNu39w3qEdZC1YGB/9Po+zGFUfUU=",
+        "owner": "elixir-tools",
+        "repo": "next-ls",
+        "rev": "67a4a03963e435c43c7456d14908a846c9264805",
+        "type": "github"
+      },
+      "original": {
+        "owner": "elixir-tools",
+        "repo": "next-ls",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1735471104,
+        "narHash": "sha256-0q9NGQySwDQc7RhAV2ukfnu7Gxa5/ybJ2ANT8DQrQrs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "88195a94f390381c6afcdaa933c2f6ff93959cb4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1740828860,
         "narHash": "sha256-cjbHI+zUzK5CPsQZqMhE3npTyYFt9tJ3+ohcfaOF/WM=",
@@ -81,11 +116,28 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
+        "next-ls": "next-ls",
+        "nixpkgs": "nixpkgs_2",
         "our-erlang": "our-erlang",
         "our-nodejs": "our-nodejs",
         "our-postgresql": "our-postgresql",
         "our-yarn": "our-yarn"
+      }
+    },
+    "zigpkgs": {
+      "locked": {
+        "lastModified": 1704057613,
+        "narHash": "sha256-5tPUpZlCpgqDQVUDlmhDhKn1h0A68jba8/DYie+yNC4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "592a779f3c5e7bce1a02027abe11b7996816223f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "592a779f3c5e7bce1a02027abe11b7996816223f",
+        "type": "github"
       }
     }
   },

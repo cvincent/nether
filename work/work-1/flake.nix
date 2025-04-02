@@ -12,6 +12,8 @@
     our-yarn.url = "github:nixos/nixpkgs/4ae2e647537bcdbb82265469442713d066675275";
     # PostgreSQL 14.10
     our-postgresql.url = "github:nixos/nixpkgs/f5c27c6136db4d76c30e533c20517df6864c46ee";
+
+    next-ls.url = "github:elixir-tools/next-ls";
   };
 
   outputs =
@@ -40,6 +42,7 @@
     {
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
+          inputs.next-ls.packages.${system}.default
           inputs.our-erlang.legacyPackages.${system}.erlang_26
           our-elixir
           our-elixir-ls
