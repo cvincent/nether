@@ -97,6 +97,13 @@ return {
       end
     end)
 
+    -- `d`iagnostic `f`loat
+    vim.keymap.set("n", "<leader>df", function()
+      vim.diagnostic.open_float()
+      vim.diagnostic.config(default_diagnostic_config)
+      vim.b.diagnostic_detail = false
+    end)
+
     local opts = { noremap = true, silent = true }
 
     -- Navigate diagnostics
