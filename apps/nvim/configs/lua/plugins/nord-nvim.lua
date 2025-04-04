@@ -34,8 +34,14 @@ return {
 
     vim.api.nvim_command("hi! link NonText Comment")
     vim.api.nvim_command("hi! @comment guifg=" .. colors.nord9_gui)
-    vim.api.nvim_command("hi! @module guifg=" .. colors.nord10_gui)
-    vim.api.nvim_command("hi! @type guifg=" .. colors.nord10_gui)
-    vim.api.nvim_command("hi! @constructor guifg=" .. colors.nord10_gui)
+
+    vim.api.nvim_command("hi! @module guifg=" .. colors.nord13_gui)
+    vim.api.nvim_command("hi! @type guifg=" .. colors.nord13_gui)
+    vim.api.nvim_command("hi! @constructor guifg=" .. colors.nord13_gui)
+    vim.api.nvim_command("hi! @string.special.symbol guifg=" .. colors.nord7_gui)
+
+    vim.api.nvim_command("hi! link @keyword.function @keyword")
+
+    vim.api.nvim_command("hi! MatchParen gui=underline")
   end
 }
