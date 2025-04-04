@@ -16,6 +16,19 @@ return {
           documentation = { winblend = 15 }
         },
 
+        formatting = {
+          fields = { "abbr", "kind", "menu" },
+          expandable_indicator = true,
+          format = function(_, vim_item)
+            local label = vim_item.abbr or ""
+            local truncated_label = vim.fn.strcharpart(label, 0, 80)
+            if truncated_label ~= label then
+              vim_item.abbr = truncated_label .. "…"
+            end
+            return vim_item
+          end,
+        },
+
         mapping = cmp.mapping.preset.insert({
           ['<c-u>'] = cmp.mapping.scroll_docs(-4),
           ['<c-d>'] = cmp.mapping.scroll_docs(4),
@@ -85,7 +98,8 @@ return {
                     bufs[vim.api.nvim_win_get_buf(win)] = true
                   end
                   return vim.tbl_keys(bufs)
-                end
+                end,
+                keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)]]
               }
             },
           }
