@@ -204,6 +204,8 @@ return {
             local eval =
                 'app.plugins.plugins.journals.manager.journals.get("' .. journal .. '")' ..
                 '.execCommand("' .. cmd .. '")'
+            -- This will fail with an unhelpful error if Obsidian is not open.
+            -- We should do something about that.
             obs_eval(eval)
             obs_open_active()
           end
