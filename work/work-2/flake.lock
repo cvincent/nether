@@ -98,6 +98,22 @@
         "type": "github"
       }
     },
+    "our-rabbitmq": {
+      "locked": {
+        "lastModified": 1742923925,
+        "narHash": "sha256-biPjLws6FiBVUUDHEMFq5pUQL84Wf7PntPYdo3oKkFw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "25d1b84f5c90632a623c48d83a2faf156451e6b1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "25d1b84f5c90632a623c48d83a2faf156451e6b1",
+        "type": "github"
+      }
+    },
     "our-yarn": {
       "locked": {
         "lastModified": 1730643484,
@@ -121,6 +137,7 @@
         "our-erlang": "our-erlang",
         "our-nodejs": "our-nodejs",
         "our-postgresql": "our-postgresql",
+        "our-rabbitmq": "our-rabbitmq",
         "our-yarn": "our-yarn"
       }
     },

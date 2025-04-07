@@ -12,6 +12,8 @@
     our-yarn.url = "github:nixos/nixpkgs/4ae2e647537bcdbb82265469442713d066675275";
     # PostgreSQL 14.10
     our-postgresql.url = "github:nixos/nixpkgs/f5c27c6136db4d76c30e533c20517df6864c46ee";
+    # RabbitMQ 4.0.7
+    our-rabbitmq.url = "github:nixos/nixpkgs/25d1b84f5c90632a623c48d83a2faf156451e6b1";
 
     next-ls.url = "github:elixir-tools/next-ls";
   };
@@ -49,6 +51,7 @@
           inputs.our-nodejs.legacyPackages.${system}.nodejs
           inputs.our-yarn.legacyPackages.${system}.yarn
           inputs.our-postgresql.legacyPackages.${system}.postgresql_14
+          inputs.our-rabbitmq.legacyPackages.${system}.rabbitmq-server
           inotify-tools
           # We run redis-stack-server using an AppImage because nobody has built
           # the package for NixOS yet :( And I don't feel like doing it
@@ -72,6 +75,7 @@
           echo "$(elixir --version | tr -s '\n')"
           echo "Node $(node --version)"
           echo "PostgreSQL $(psql --version | cut -d' ' -f3)"
+          echo "CockroachDB $(cockroachdb --version | grep 'Build Tag' | tr -s ' ' | cut -d' ' -f3)"
           echo ""
           echo "LFG."
         '';
