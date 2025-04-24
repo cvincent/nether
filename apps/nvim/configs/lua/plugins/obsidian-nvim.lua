@@ -179,7 +179,7 @@ return {
                   path .. '", ' .. line .. ', "' .. mark .. '")'
 
               obs_eval(eval)
-              vim.loop.sleep(250)
+              vim.loop.sleep(500)
               vim.cmd("checktime")
             end)
 
@@ -196,30 +196,30 @@ return {
           local filename = obs_root .. "/" .. obs_get("active").path
           vim.cmd("e " .. filename)
         end
+        _G.obs_open_active = obs_open_active
 
         vim.api.nvim_create_user_command("OActive", obs_open_active, {})
 
-        local obs_journal_cmd = function(journal, cmd)
+        local obs_journal_cmd = function(journal, when)
           return function()
-            local eval =
-                'app.plugins.plugins.journals.manager.journals.get("' .. journal .. '")' ..
-                '.execCommand("' .. cmd .. '")'
+            local eval = 'window.customJS.Helpers.openJournal("' .. journal .. '", "' .. when .. '")'
             -- This will fail with an unhelpful error if Obsidian is not open.
             -- We should do something about that.
             obs_eval(eval)
+            vim.loop.sleep(250)
             obs_open_active()
           end
         end
 
-        vim.api.nvim_create_user_command("OPersonalToday", obs_journal_cmd("personal", "calendar:open-day"), {})
-        vim.api.nvim_create_user_command("OPersonalYesterday", obs_journal_cmd("personal", "calendar:open-prev-day"), {})
-        vim.api.nvim_create_user_command("OPersonalTomorrow", obs_journal_cmd("personal", "calendar:open-next-day"), {})
-        vim.api.nvim_create_user_command("OPersonalWeekly", obs_journal_cmd("personal", "calendar:open-week"), {})
+        vim.api.nvim_create_user_command("OPersonalToday", obs_journal_cmd("Personal daily", "today"), {})
+        vim.api.nvim_create_user_command("OPersonalYesterday", obs_journal_cmd("Personal daily", "yesterday"), {})
+        vim.api.nvim_create_user_command("OPersonalTomorrow", obs_journal_cmd("Personal daily", "tomorrow"), {})
+        -- vim.api.nvim_create_user_command("OPersonalWeekly", obs_journal_cmd("Personal weekly", "calendar:open-week"), {})
 
-        vim.api.nvim_create_user_command("OWorkToday", obs_journal_cmd("work", "calendar:open-day"), {})
-        vim.api.nvim_create_user_command("OWorkYesterday", obs_journal_cmd("work", "calendar:open-prev-day"), {})
-        vim.api.nvim_create_user_command("OWorkTomorrow", obs_journal_cmd("work", "calendar:open-next-day"), {})
-        vim.api.nvim_create_user_command("OWorkWeekly", obs_journal_cmd("work", "calendar:open-week"), {})
+        vim.api.nvim_create_user_command("OWorkToday", obs_journal_cmd("Work", "today"), {})
+        vim.api.nvim_create_user_command("OWorkYesterday", obs_journal_cmd("Work", "yesterday"), {})
+        vim.api.nvim_create_user_command("OWorkTomorrow", obs_journal_cmd("Work", "tomorrow"), {})
+        -- vim.api.nvim_create_user_command("OWorkWeekly", obs_journal_cmd("work", "calendar:open-week"), {})
 
         local jot = function(args, template, startinsert_bang)
           startinsert_bang = startinsert_bang or ""
