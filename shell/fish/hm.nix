@@ -28,11 +28,11 @@
     functions = {
       fish_greeting = ''
         echo (
-          set_color red; echo ;
-          set_color yellow; echo " ";
+          set_color red; echo "";
+          set_color yellow; echo "";
           set_color normal; echo LFG;
-          set_color yellow; echo ;
-          set_color red; echo ; set_color normal
+          set_color yellow; echo "";
+          set_color red; echo ""; set_color normal
         )
       '';
       fish_prompt = builtins.readFile ./fish_prompt.fish;
