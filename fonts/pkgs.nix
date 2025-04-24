@@ -15,7 +15,7 @@
       };
       fonts.PragmataPro = super.pkgs.callPackage ./private-font.nix {
         fontName = "PragmataPro";
-        hash = "sha256-puMoYv0vXfng2BayzMxXMahfbZQxBWgOKuGetZyq420=";
+        hash = "sha256-Y/7MwHpYror9kbZijm/rtCMYu2wqaYVmMvqCCrDeYEM=";
         server = myFontServer;
       };
     };
