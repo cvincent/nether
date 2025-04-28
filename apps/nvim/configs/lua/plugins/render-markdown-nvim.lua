@@ -25,6 +25,12 @@ return {
           highlight = "RenderMarkdownTodo",
           scope_highlight = nil,
         },
+        cancelled = {
+          raw = "[_]",
+          rendered = "  []",
+          highlight = "RenderMarkdownTodo",
+          scope_highlight = nil,
+        },
       },
     },
 
