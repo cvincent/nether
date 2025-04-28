@@ -221,27 +221,21 @@ return {
         vim.api.nvim_create_user_command("OWorkTomorrow", obs_journal_cmd("Work", "tomorrow"), {})
         -- vim.api.nvim_create_user_command("OWorkWeekly", obs_journal_cmd("work", "calendar:open-week"), {})
 
-        local jot = function(args, template, startinsert_bang)
+        local jot = function(args, template, tags, startinsert_bang)
           startinsert_bang = startinsert_bang or ""
 
-          -- obs_eval('app.commands.commands["zk-prefixer"].callback()')
-          local title = vim.json.encode(args.args)
-          local template = vim.json.encode(template)
+          template = vim.json.encode(template)
 
-          local eval = [[
-            let templater = app.plugins.plugins["templater-obsidian"].templater
-            let file = templater.functions_generator.internal_functions.modules_array.find((m) => m.name == 'file')
-            let create_new = file.static_functions.get("create_new")
-            let find_tfile = file.static_functions.get("find_tfile")
+          local eval = ([[window.customJS.Helpers.jot($title, $template, $tags)]]):gsub("$(%w+)", {
+            title = vim.json.encode(args.args),
+            template = template,
+            tags = vim.json.encode(tags)
+          })
 
-            create_new(find_tfile($template), $title, true);
-          ]]
+          vim.print(eval)
 
-          obs_eval(eval:gsub("$(%w+)", { title = title, template = template }))
-          obs_eval("app.workspace.getActiveFileView().setMode(app.workspace.getActiveFileView().previewMode)")
-
+          local filename = obs_eval(eval)
           local ui = vim.api.nvim_list_uis()[1]
-          local filename = obs_root .. "/" .. obs_get("active").path
           local buf = vim.fn.bufadd(filename)
 
           vim.api.nvim_open_win(buf, true, {
@@ -263,15 +257,15 @@ return {
         end
 
         vim.api.nvim_create_user_command("OJot", function(args)
-          jot(args, "unique-note-templater")
+          jot(args, "templates/unique-note-custom.md", { "inbox", "resources/notes" })
         end, { nargs = 1 })
 
         vim.api.nvim_create_user_command("OJotTask", function(args)
-          jot(args, "unique-note-task-templater", "!")
+          jot(args, "templates/unique-note-custom.md", { "inbox", "projects" })
         end, { nargs = 1 })
 
         vim.api.nvim_create_user_command("OJotSticky", function(args)
-          jot(args, "unique-note-sticky-templater")
+          jot(args, "templates/sticky-custom.md", { "stickies/personal" })
         end, { nargs = 1 })
       end
     },
