@@ -38,6 +38,7 @@
         nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
         nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
         nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
+        nixpkgs-kitty = import inputs.nixpkgs-kitty importAttrs;
       };
     in
     {
@@ -85,5 +86,6 @@
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
+    nixpkgs-kitty.url = "nixpkgs/nixos-unstable";
   };
 }
