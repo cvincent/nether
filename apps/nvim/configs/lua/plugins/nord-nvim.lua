@@ -32,6 +32,8 @@ return {
     vim.api.nvim_command("hi! TelescopeResultsBorder  guifg=" .. colors.nord1_gui .. "  guibg=" .. colors.nord0_gui)
     vim.api.nvim_command("hi! TelescopeNormal                                           guibg=" .. colors.nord0_gui)
 
+    vim.api.nvim_command("hi! RenderMarkdownTableFill guibg=NONE")
+
     vim.api.nvim_command("hi! link NonText Comment")
     vim.api.nvim_command("hi! @comment guifg=" .. colors.nord9_gui)
 
