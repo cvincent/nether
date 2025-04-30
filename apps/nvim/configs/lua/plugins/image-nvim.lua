@@ -1,5 +1,8 @@
 return {
   "3rd/image.nvim",
+  enabled = function()
+    return vim.env.TMUX == nil
+  end,
   opts = {
     processor = "magick_cli",
     window_overlap_clear_enabled = true,
