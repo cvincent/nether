@@ -129,10 +129,10 @@ in
         "<space>fv" =
           "hint links spawn mpv --force-window=immediate --no-terminal --keep-open=yes --ytdl-raw-options='proxy=http://192.168.1.114:8888' {hint-url}";
         "<space>fV" =
-          "hint links spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' --proxy http://192.168.1.114:8888 {hint-url}";
+          "hint links spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' --embed-chapters --proxy http://192.168.1.114:8888 {hint-url}";
         "yv" = "spawn mpv --force-window=immediate --no-terminal --keep-open=yes {url}";
         "yV" =
-          "spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' --proxy http://192.168.1.114:8888 {url}";
+          "spawn yt-dlp -P home:~/youtube/ -P temp:~/youtube/.tmp/ -o '%(duration)s - %(title)s.%(ext)s' --embed-chapters --proxy http://192.168.1.114:8888 {url}";
 
         # Downloads
         "<space>dc" = "download-clear";
