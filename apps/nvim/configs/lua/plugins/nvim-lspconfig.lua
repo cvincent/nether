@@ -112,7 +112,7 @@ return {
 
     -- Go to definition
     vim.api.nvim_set_keymap("n", "gf", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-    vim.api.nvim_set_keymap("n", "gv", "<c-w>vgf", { noremap = false, silent = true })
+    vim.api.nvim_set_keymap("n", "gV", "<c-w>vgf", { noremap = false, silent = true })
     vim.api.nvim_set_keymap("n", "gs", "<c-w>sgf", { noremap = false, silent = true })
   end
 }
