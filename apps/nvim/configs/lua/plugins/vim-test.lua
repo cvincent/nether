@@ -18,15 +18,10 @@ return {
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "*",
       callback = function()
-        -- Don't conflict with Neorg
-        if vim.bo.filetype == "norg" then
-          return
-        else
-          vim.keymap.set("n", "<leader>tt", ":TestLast<cr>")
-          vim.keymap.set("n", "<leader>tn", ":TestNearest<cr>")
-          vim.keymap.set("n", "<leader>tf", ":TestFile<cr>")
-          vim.keymap.set("n", "<leader>ta", ":TestSuite<cr>")
-        end
+        vim.keymap.set("n", "<leader>tt", ":TestLast<cr>")
+        vim.keymap.set("n", "<leader>tn", ":TestNearest<cr>")
+        vim.keymap.set("n", "<leader>tf", ":TestFile<cr>")
+        vim.keymap.set("n", "<leader>ta", ":TestSuite<cr>")
       end,
     })
   end
