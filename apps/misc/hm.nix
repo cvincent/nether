@@ -85,6 +85,7 @@ in
 
   xdg.mimeApps = {
     defaultApplications."application/pdf" = "org.pwmt.zathura-cb.desktop";
+    defaultApplications."x-scheme-handler/magnet" = "userapp-transmission-gtk-SLUX52.desktop";
   };
 
   dconf.settings = {
