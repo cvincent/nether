@@ -52,3 +52,9 @@ brings history and tabs with it, which is nice.
 ## Git config and work-related SSH config
 
 As it says. We can probably just throw these into SOPS and call it a day.
+
+## Jira CLI
+
+We have the `JIRA_AUTH_TOKEN` in our secrets, but still have to do `jira init`
+to set everything up. This almost certainly just generates a config file
+somewhere which we should toss into SOPS as well.
