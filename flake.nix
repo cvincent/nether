@@ -35,6 +35,7 @@
 
         browser-pkgs = import inputs.browser-pkgs importAttrs;
         nixpkgs-neovim = import inputs.nixpkgs-neovim importAttrs;
+        nixpkgs-signal = import inputs.nixpkgs-signal importAttrs;
         nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
         nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
         nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
@@ -82,6 +83,7 @@
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.45.0";
     xremap-flake.url = "github:xremap/nix-flake";
     stylix.url = "github:danth/stylix";
+    nixpkgs-signal.url = "nixpkgs/nixos-unstable";
     nixpkgs-slack.url = "nixpkgs/nixos-unstable";
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";

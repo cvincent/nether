@@ -693,6 +693,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-signal": {
+      "locked": {
+        "lastModified": 1748026106,
+        "narHash": "sha256-6m1Y3/4pVw1RWTsrkAK2VMYSzG4MMIj7sqUy7o8th1o=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "063f43f2dbdef86376cc29ad646c45c46e93234c",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-slack": {
       "locked": {
         "lastModified": 1732014248,
@@ -963,6 +978,7 @@
         "nixpkgs-kitty": "nixpkgs-kitty",
         "nixpkgs-latest": "nixpkgs-latest",
         "nixpkgs-neovim": "nixpkgs-neovim",
+        "nixpkgs-signal": "nixpkgs-signal",
         "nixpkgs-slack": "nixpkgs-slack",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-unstable-latest": "nixpkgs-unstable-latest",
