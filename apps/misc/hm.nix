@@ -2,6 +2,7 @@
   pkgs,
   nixpkgs-signal,
   nixpkgs-slack,
+  nixpkgs-spotify,
   nixpkgs-unstable,
   nixpkgs-unstable-latest,
   nixpkgs-zoom,
@@ -10,7 +11,7 @@
 
 let
   xwayland-spotify = (
-    nixpkgs-unstable.spotify.overrideAttrs (
+    nixpkgs-spotify.spotify.overrideAttrs (
       final: prev: {
         postInstall = ''
           sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL spotify %U:" "$out/share/applications/spotify.desktop"
