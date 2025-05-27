@@ -10,11 +10,11 @@
 }:
 
 let
-  xwayland-spotify = (
+  wayland-spotify = (
     nixpkgs-spotify.spotify.overrideAttrs (
       final: prev: {
         postInstall = ''
-          sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL spotify %U:" "$out/share/applications/spotify.desktop"
+          sed -i "s:^Exec=.*:Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U:" "$out/share/applications/spotify.desktop"
         '';
       }
     )
@@ -65,7 +65,7 @@ in
     nixpkgs-slack.slack
     nixpkgs-zoom.zoom-us
     xwayland-signal-desktop
-    xwayland-spotify
+    wayland-spotify
     transmission_4-gtk
     nixpkgs-unstable.ryujinx
     latest-shadps4
