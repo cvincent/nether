@@ -20,7 +20,7 @@
       cat = "bat";
       grep = "rg";
       # Put this one in mpv config
-      lfhh = "mpv --no-resume-playback --force-window=immediate --volume=50 'https://www.youtube.com/watch?v=jfKfPfyJRdk'";
+      lfhh = "mpv --no-resume-playback --force-window=immediate 'https://www.youtube.com/watch?v=jfKfPfyJRdk'";
       mux = "tmuxinator start --suppress-tmux-version-warning=SUPPRESS-TMUX-VERSION-WARNING";
       nvs = "nvim -S Session.vim";
     };
