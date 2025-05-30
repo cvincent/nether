@@ -58,3 +58,18 @@ As it says. We can probably just throw these into SOPS and call it a day.
 We have the `JIRA_AUTH_TOKEN` in our secrets, but still have to do `jira init`
 to set everything up. This almost certainly just generates a config file
 somewhere which we should toss into SOPS as well.
+
+## Qutebrowser spellcheck
+
+Dictionaries must be installed in each individual Qutebrowser data directory. To
+download English:
+
+```bash
+$(find $(nix-store --query --outputs $(which qutebrowser)) -name 'dictcli.py' | head -1) install en-US
+```
+
+Then copy this into each Qutebrowser data directory, e.g.:
+
+```sh
+cp -R ~/.local/share/qutebrowser/qtwebengine_dictionaries ~/.local/qutebrowsers/personal/qtwebengine_dictionaries
+```
