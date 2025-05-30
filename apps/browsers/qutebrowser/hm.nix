@@ -144,6 +144,9 @@ in
         "<ctrl-shift-l>" = "spawn --userscript ~/.nix-profile/bin/bitwarden-qutebrowser";
         "<space>bc" = "spawn --userscript ~/.nix-profile/bin/bitwarden-create login {url}";
         "<space>bf" = "spawn --userscript ~/.nix-profile/bin/bitwarden-fuzzel {url:host}";
+
+        # Other
+        "<space>wi" = "devtools";
       };
     };
 
