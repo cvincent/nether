@@ -18,7 +18,7 @@ return {
 
     lspconfig.lua_ls.setup({})
     lspconfig.cssls.setup({})
-    lspconfig.tailwindcss.setup({})
+    -- lspconfig.tailwindcss.setup({})
     lspconfig.ts_ls.setup({})
 
     lspconfig.nixd.setup({
