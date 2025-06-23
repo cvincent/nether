@@ -118,7 +118,8 @@ return {
 
         -- Set up custom integrations leveraging the Local REST API and Advanced URIs plugins
         local obs_root = "/backup/second-brain"
-        local obs_token = vim.env.OBSIDIAN_REST_API_KEY
+        local obs_token = "7570f5f498c2e466a338d90afe43337a4c2299bfc8fc92e271aed013159ef61f"
+        -- local obs_token = vim.env.OBSIDIAN_REST_API_KEY
 
         local obs_get = function(endpoint)
           local resp = vim.system(
