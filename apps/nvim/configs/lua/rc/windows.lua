@@ -62,3 +62,34 @@ vim.api.nvim_create_autocmd("TabClosed", {
     vim.cmd("tabprevious")
   end
 })
+
+_G.tab_focus = {}
+
+function _G.focus_split(tab, win)
+  local focus_width = math.floor(vim.api.nvim_list_uis()[1].width * 0.33)
+  vim.api.nvim_win_set_width(win, focus_width)
+  vim.wo[win].winfixwidth = true
+  _G.tab_focus[tab] = win
+  vim.cmd("wincmd =")
+end
+
+function _G.unfocus_split(tab, win)
+  vim.wo[win].winfixwidth = false
+  _G.tab_focus[tab] = nil
+  vim.cmd("wincmd =")
+end
+
+-- Toggle focusing current split, making it the widest split on the current tab
+vim.keymap.set("n", "<c-f>", function()
+  local tab = vim.api.nvim_get_current_tabpage()
+  local win = vim.api.nvim_get_current_win()
+
+  if not _G.tab_focus[tab] then
+    _G.focus_split(tab, win)
+  elseif _G.tab_focus[tab] == win then
+    _G.unfocus_split(tab, win)
+  else
+    _G.unfocus_split(tab, _G.tab_focus[tab])
+    _G.focus_split(tab, win)
+  end
+end)
