@@ -50,7 +50,8 @@ vim.opt.shortmess = "atIOc"
 vim.opt.undofile = true
 
 -- Include winfixwidth in sessions
-vim.opt.sessionoptions = vim.opt.sessionoptions + "resize"
+vim.opt.sessionoptions:append("resize")
+vim.opt.sessionoptions:remove("folds")
 
 -- Per-project .vimrc files; safe commands only
 vim.opt.exrc = true
