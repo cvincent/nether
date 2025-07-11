@@ -1,4 +1,10 @@
-{ pkgs, myHomeDir, utils, ... }:
+{
+  pkgs,
+  myHomeDir,
+  utils,
+  myTestSecret,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
