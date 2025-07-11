@@ -982,6 +982,22 @@
         "type": "github"
       }
     },
+    "private-nethers": {
+      "locked": {
+        "lastModified": 1752194705,
+        "narHash": "sha256-NEv7/UPvbY/lqVE1E6Y6md2kpV9CP9r25tnx/lVPimI=",
+        "ref": "main",
+        "rev": "60dfee3ad223e933e0a26ae6e50b96351898c27f",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/cvincent/private-nethers.git"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/cvincent/private-nethers.git"
+      }
+    },
     "root": {
       "inputs": {
         "browser-pkgs": "browser-pkgs",
@@ -1000,6 +1016,7 @@
         "nixpkgs-unstable-latest": "nixpkgs-unstable-latest",
         "nixpkgs-yt-dlp": "nixpkgs-yt-dlp",
         "nixpkgs-zoom": "nixpkgs-zoom",
+        "private-nethers": "private-nethers",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "xremap-flake": "xremap-flake"

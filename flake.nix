@@ -23,6 +23,7 @@
         mySystem = system;
         myTZ = "America/Chicago";
         myLocale = "en_US.UTF-8";
+        myTestSecret = inputs.private-nethers.my-secrets.hi;
 
         importAttrs = {
           inherit system;
@@ -91,5 +92,7 @@
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
     nixpkgs-kitty.url = "nixpkgs/nixos-unstable";
+
+    private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
   };
 }
