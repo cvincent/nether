@@ -1,5 +1,5 @@
 {
-  description = "My dotfiles Flake";
+  description = "My dotfiles flake.";
 
   outputs =
     inputs@{
