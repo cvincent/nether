@@ -20,7 +20,6 @@
         myHostname = "revachol";
         mySopsKey = "/home/${myUsername}/.config/sops/age/keys.txt";
         myFontServer = "http://192.168.1.114";
-        mySystem = system;
         myTZ = "America/Chicago";
         myLocale = "en_US.UTF-8";
         myTestSecret = inputs.private-nethers.my-secrets.hi;
@@ -47,11 +46,11 @@
     {
       nixosConfigurations = {
         "${commonArgs.myHostname}" = lib.nixosSystem {
-          inherit system;
           specialArgs = commonArgs;
 
           modules = [
             ./configuration.nix
+            { nixpkgs.hostPlatform = system; }
           ];
         };
       };
