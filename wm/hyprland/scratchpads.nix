@@ -17,7 +17,7 @@
   }
   {
     class = "obsidian-scratch";
-    command = "kitty --class obsidian-scratch nvim --listen /tmp/obsidian.pipe -S /backup/second-brain/Session.vim";
+    command = "kitty --class obsidian-scratch nvim --listen /tmp/obsidian.pipe -S /home/cvincent/synthesis/second-brain/Session.vim";
     binding = "SUPER, o";
     size = "90% 90%";
   }
