@@ -5,70 +5,97 @@
     inputs@{
       nixpkgs,
       home-manager,
+      flake-parts,
       ...
     }:
-    let
-      inherit (nixpkgs) lib;
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      let
+        inherit (nixpkgs) lib;
+        system = "x86_64-linux";
+        pkgs = nixpkgs.legacyPackages.${system};
 
-      commonArgs = rec {
-        inherit inputs;
+        commonArgs = rec {
+          inherit inputs;
 
-        myUsername = "cvincent";
-        myHomeDir = "/home/${myUsername}";
-        myHostname = "revachol";
-        mySopsKey = "/home/${myUsername}/.config/sops/age/keys.txt";
-        myFontServer = "http://192.168.1.114";
-        myTZ = "America/Chicago";
-        myLocale = "en_US.UTF-8";
-        myTestSecret = inputs.private-nethers.my-secrets.hi;
+          myUsername = "cvincent";
+          myHomeDir = "/home/${myUsername}";
+          myHostname = "revachol";
+          mySopsKey = "/home/${myUsername}/.config/sops/age/keys.txt";
+          myFontServer = "http://192.168.1.114";
+          myTZ = "America/Chicago";
+          myLocale = "en_US.UTF-8";
+          myTestSecret = inputs.private-nethers.my-secrets.hi;
 
-        importAttrs = {
-          inherit system;
-          config.allowUnfree = true;
+          importAttrs = {
+            inherit system;
+            config.allowUnfree = true;
+          };
+
+          nixpkgs-latest = import inputs.nixpkgs-latest importAttrs;
+          nixpkgs-unstable = import inputs.nixpkgs-unstable importAttrs;
+          nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest importAttrs;
+
+          browser-pkgs = import inputs.browser-pkgs importAttrs;
+          nixpkgs-neovim = import inputs.nixpkgs-neovim importAttrs;
+          nixpkgs-signal = import inputs.nixpkgs-signal importAttrs;
+          nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
+          nixpkgs-spotify = import inputs.nixpkgs-spotify importAttrs;
+          nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
+          nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
+          nixpkgs-kitty = import inputs.nixpkgs-kitty importAttrs;
         };
+      in
+      {
+        imports = [ ];
 
-        nixpkgs-latest = import inputs.nixpkgs-latest importAttrs;
-        nixpkgs-unstable = import inputs.nixpkgs-unstable importAttrs;
-        nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest importAttrs;
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "x86_64-darwin"
+          "aarch64-darwin"
+        ];
 
-        browser-pkgs = import inputs.browser-pkgs importAttrs;
-        nixpkgs-neovim = import inputs.nixpkgs-neovim importAttrs;
-        nixpkgs-signal = import inputs.nixpkgs-signal importAttrs;
-        nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
-        nixpkgs-spotify = import inputs.nixpkgs-spotify importAttrs;
-        nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
-        nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
-        nixpkgs-kitty = import inputs.nixpkgs-kitty importAttrs;
-      };
-    in
-    {
-      nixosConfigurations = {
-        "${commonArgs.myHostname}" = lib.nixosSystem {
-          specialArgs = commonArgs;
+        perSystem =
+          {
+            config,
+            self',
+            inputs',
+            pkgs,
+            system,
+            ...
+          }:
+          { };
 
-          modules = [
-            ./configuration.nix
-            { nixpkgs.hostPlatform = system; }
-          ];
+        flake = {
+          nixosConfigurations = {
+            "${commonArgs.myHostname}" = lib.nixosSystem {
+              specialArgs = commonArgs;
+
+              modules = [
+                ./configuration.nix
+                { nixpkgs.hostPlatform = system; }
+              ];
+            };
+          };
+
+          homeConfigurations = {
+            "${commonArgs.myUsername}" = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              extraSpecialArgs = commonArgs;
+
+              modules = [
+                ./utils.nix
+                ./home.nix
+              ];
+            };
+          };
         };
-      };
-
-      homeConfigurations = {
-        "${commonArgs.myUsername}" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = commonArgs;
-
-          modules = [
-            ./utils.nix
-            ./home.nix
-          ];
-        };
-      };
-    };
+      }
+    );
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-latest.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
