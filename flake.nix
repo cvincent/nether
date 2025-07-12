@@ -73,25 +73,26 @@
     nixpkgs-latest.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable-latest.url = "nixpkgs/nixos-unstable";
-    nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
-    browser-pkgs.url = "nixpkgs/nixos-unstable";
+
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
+    sops-nix.url = "github:Mic92/sops-nix";
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
-    sops-nix.url = "github:Mic92/sops-nix";
+    browser-pkgs.url = "nixpkgs/nixos-unstable";
+    ha-notifier.url = "github:cvincent/ha-notifier";
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.45.0";
-    xremap-flake.url = "github:xremap/nix-flake";
-    stylix.url = "github:danth/stylix";
+    nixpkgs-kitty.url = "nixpkgs/nixos-unstable";
+    nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
     nixpkgs-signal.url = "nixpkgs/nixos-unstable";
     nixpkgs-slack.url = "nixpkgs/nixos-unstable";
     nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
-    nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
-    ha-notifier.url = "github:cvincent/ha-notifier";
-    nixpkgs-kitty.url = "nixpkgs/nixos-unstable";
-
-    private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
+    nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
+    stylix.url = "github:danth/stylix";
+    xremap-flake.url = "github:xremap/nix-flake";
   };
 }
