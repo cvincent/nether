@@ -8,7 +8,7 @@
   # Prevent issues on wake from DPMS
   boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     # TODO: Revisit these and ensure we're using everything we need but nothing
     # more. See: {https://nixos.wiki/wiki/Accelerated_Video_Playback}
@@ -19,7 +19,7 @@
     ];
   };
 
-  environment.systemPackages = [ pkgs.nvtop ];
+  environment.systemPackages = [ pkgs.nvtopPackages.full ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
 

@@ -62,7 +62,7 @@
     AQ_DRM_DEVICES = "/dev/dri/card1";
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     package =
       inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
     package32 =

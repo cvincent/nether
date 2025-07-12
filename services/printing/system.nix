@@ -23,7 +23,7 @@
   # Supports pretty much any "Apple compatible" printer, without drivers
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 
@@ -33,5 +33,8 @@
     extraBackends = [ pkgs.hplipWithPlugin ];
   };
 
-  users.users."${myUsername}".extraGroups = ["scanner" "lp"];
+  users.users."${myUsername}".extraGroups = [
+    "scanner"
+    "lp"
+  ];
 }
