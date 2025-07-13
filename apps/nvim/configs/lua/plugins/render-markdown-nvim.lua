@@ -14,6 +14,11 @@ return {
       preset = "round",
     },
 
+    code = {
+      disable_background = true,
+      border = "thick"
+    },
+
     checkbox = {
       right_pad = 1,
       unchecked = { icon = "  [ ]" },
