@@ -101,8 +101,10 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable-latest.url = "nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
     sops-nix.url = "github:Mic92/sops-nix";
