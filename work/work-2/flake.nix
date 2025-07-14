@@ -63,9 +63,13 @@
             version = "22.2.19";
             version-hash = "sha256-AUkFMaCfWNirtdAy9GhNPzeAuRaklCfW35GPt8h9KPM=";
           })
+          openssl
+          pkg-config
+          (pkgs.callPackage ./jarvis.nix { })
         ];
 
         PGDATA = "./pgdata";
+        PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
 
         # On first time:
         # initdb in base dir

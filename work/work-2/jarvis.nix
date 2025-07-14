@@ -1,26 +1,19 @@
 {
-  lib,
-  fetchFromGitHub,
+  pkgs,
   rustPlatform,
 }:
 
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "elco";
-  version = "2024.10.15-1";
+  name = "elco";
 
-  src = fetchFromGitHub {
-    owner = "elc-online";
-    repo = pname;
-    rev = version;
-    hash = "";
+  src = fetchGit {
+    url = "file:///home/cvincent/src/estee/jarvis";
+    rev = "aedd2249d2cb0e295650016618bade97666ed6d4";
   };
 
-  cargoHash = "";
+  nativeBuildInputs = [ pkgs.pkg-config ];
+  buildInputs = [ pkgs.openssl ];
 
-  meta = with lib; {
-    description = "Elco tool";
-    homepage = "https://github.com/elc-online/jarvis";
-    license = licenses.unlicense;
-    maintainers = [ ];
-  };
+  cargoHash = "sha256-xfLdOVzONa93d/2ouZ2OxAOlUZUS45TRJ+VF3U/vjMM=";
 }
