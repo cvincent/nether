@@ -22,6 +22,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Kill user processes on logout
+  services.logind.killUserProcesses = true;
+
   fileSystems."/steam" = {
     device = "/dev/disk/by-uuid/2749d5f5-c6c6-4a62-abe2-8ebcfb0bc68a";
     fsType = "ext4";
