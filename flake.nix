@@ -52,6 +52,7 @@
               modules = lib.attrsets.attrValues flake.config.flake.nixosModules ++ [
                 ./hosts/${host}
                 { nether.hostname = host; }
+
                 home-manager.nixosModules.home-manager
                 (
                   system@{ ... }:
