@@ -33,7 +33,7 @@
             pgformatter
 
             # Language servers I want at all times
-            nixd
+            inputs'.nixpkgs-unstable-latest.legacyPackages.nixd
             lua-language-server # The language of NeoVim
             tailwindcss-language-server
             nodePackages.typescript-language-server # TypeScript is a superset of JavaScript
