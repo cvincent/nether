@@ -6,6 +6,7 @@
       nixpkgs,
       home-manager,
       flake-parts,
+      self,
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
@@ -22,6 +23,16 @@
       in
       flake@{ lib, ... }:
       {
+        perSystem =
+          { ... }:
+          {
+            _module.args.pkgs = import self.inputs.nixpkgs { config.allowUnfree = true; };
+
+            _module.args.pkgInputs = builtins.mapAttrs (
+              _: input: import input { config.allowUnfree = true; }
+            ) self.inputs;
+          };
+
         imports = [
           home-manager.flakeModules.home-manager
           ./flake-modules
