@@ -21,6 +21,8 @@
       neovim.enable = true;
       default = "neovim";
     };
+
+    steam.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;

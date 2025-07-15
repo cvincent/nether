@@ -2,7 +2,7 @@
 { lib, moduleWithSystem, ... }:
 {
   flake.nixosModules."${name}" = moduleWithSystem (
-    { inputs' }:
+    { pkgInputs }:
     { config, ... }:
     {
       options = {
@@ -11,9 +11,10 @@
 
       config = lib.mkIf config.nether.steam.enable {
         programs.steam.enable = true;
+        programs.steam.package = pkgInputs.nixpkgs-unstable-latest.steam;
         environment.systemPackages = [
-          inputs'.nixpkgs-unstable-latest.legacyPackages.protonup-qt
-          inputs'.nixpkgs-unstable-latest.legacyPackages.protontricks
+          pkgInputs.nixpkgs-unstable-latest.protonup-qt
+          pkgInputs.nixpkgs-unstable-latest.protontricks
         ];
       };
     }
