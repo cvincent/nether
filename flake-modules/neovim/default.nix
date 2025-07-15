@@ -10,29 +10,13 @@
   # For now, I am simply porting over what I already have, to get through the
   # porting process.
 
-  flake.nixosModules."${name}" = {
-    options = {
-      nether.editors = {
-        neovim.enable = lib.mkEnableOption "NeoVim - the greatest editor";
-
-        default = lib.mkOption {
-          type = lib.types.enum [
-            null
-            "neovim"
-          ];
-          default = null;
-        };
-      };
-    };
-  };
-
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs, inputs' }:
     { osConfig, utils, ... }:
     lib.mkIf osConfig.nether.editors.neovim.enable (
       lib.mkMerge [
         {
-          home.file."./.config/nvim".source = utils.directSymlink "apps/nvim/configs";
+          home.file."./.config/nvim".source = utils.directSymlink "flake-modules/neovim/configs";
 
           home.packages = with pkgs; [
             # Treesitter wants a C compiler

@@ -1,0 +1,105 @@
+snippet def "def func(args) do" b!
+	def ${1:func}(${2:args})$3 do
+		$0
+	end
+
+snippet defs "def func(args), do: ret" b!
+	def ${1:func}(${2:args})$3, do: $0
+
+snippet defp "defp func(args) do" b!
+	defp ${1:func}(${2:args})$3 do
+		$0
+	end
+
+snippet defps "def func(args), do: ret" b!
+	defp ${1:func}(${2:args})$3, do: $0
+
+snippet db "dbg(something)" b!
+	dbg($0)
+
+snippet dbi "|> dbg()"
+	|> dbg()
+
+snippet io "IO.inspect(data, label)" b!
+	IO.inspect(${1:data}${2:, label: "${3:poiu}"})
+
+snippet iop "|> IO.inspect(label)" i!
+	|> IO.inspect(label: "${1:poiu}")
+
+snippet div
+	<div>
+		$0
+	</div>
+
+snippet divc
+	<div class="$1">
+		$0
+	</div>
+
+snippet =
+	<%= $0 %>
+
+snippet -
+	<% $0 %>
+
+snippet #
+	<%# $0 %>
+
+snippet -!
+	<%!-- $0${VISUAL} --%>
+
+snippet attr
+	attr :${1:name}, :${2:string}${3:, required: true}
+
+snippet slot
+	slot :${1:name}${3:, required: true}
+
+snippet fc
+	<.$1 />$0
+
+snippet ~H
+	~H"""
+	$0
+	"""
+
+snippet test "test 'test', %{} do" b!
+	test "${1:test}"${2:, ${3:ctx}} do
+		$0
+	end
+
+snippet desc "describe '' do" b!
+	describe "$1" do
+		$0
+	end
+
+snippet fn
+	fn ${1:args} -> $0 end
+
+snippet case
+	case ${1:term} do
+		${2:cond} ->
+			$0
+	end
+
+snippet do
+	do
+		${VISUAL}$0
+	end
+
+snippet kv
+	${1:key}: $1
+
+snippet each
+	Enum.each(${1:list}, fn ${2:arg} ->
+		${VISUAL}$0
+	end)
+
+snippet if
+	if ${1:cond} do
+		${VISUAL}$0
+	end
+
+snippet for
+	for ${2:match} <- ${1:enum} do
+		${VISUAL}$0
+	end
