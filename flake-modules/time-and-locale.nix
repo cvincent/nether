@@ -14,6 +14,16 @@
           type = lib.types.str;
           default = "en_US.UTF-8";
         };
+
+        nether.keyboard.layout = lib.mkOption {
+          type = lib.types.str;
+          default = "us";
+        };
+
+        nether.keyboard.variant = lib.mkOption {
+          type = lib.types.str;
+          default = "";
+        };
       };
 
       config = {
@@ -31,6 +41,8 @@
           LC_TELEPHONE = config.nether.locale;
           LC_TIME = config.nether.locale;
         };
+
+        services.xserver.xkb = config.nether.keyboard;
       };
     };
 }
