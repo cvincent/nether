@@ -11,6 +11,11 @@
 
     networkmanager.enable = true;
     tor.enable = true;
+
+    graphicalEnv = {
+      enable = true;
+      displayManager = "gdm";
+    };
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;
