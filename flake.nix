@@ -11,32 +11,7 @@
     flake-parts.lib.mkFlake { inherit inputs; } (
       let
         # commonArgs = rec {
-        #   inherit inputs;
-
-        #   myUsername = "cvincent";
-        #   myHomeDir = "/home/${myUsername}";
-        #   myHostname = "revachol";
-        #   mySopsKey = "/home/${myUsername}/.config/sops/age/keys.txt";
-        #   myFontServer = "http://192.168.1.114";
-        #   myTZ = "America/Chicago";
-        #   myLocale = "en_US.UTF-8";
         #   myTestSecret = inputs.private-nethers.my-secrets.hi;
-
-        #   importAttrs = {
-        #     system = "x86_64-linux";
-        #     config.allowUnfree = true;
-        #   };
-        #   nixpkgs-latest = import inputs.nixpkgs-latest importAttrs;
-        #   nixpkgs-unstable = import inputs.nixpkgs-unstable importAttrs;
-        #   nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest importAttrs;
-        #   browser-pkgs = import inputs.browser-pkgs importAttrs;
-        #   nixpkgs-neovim = import inputs.nixpkgs-neovim importAttrs;
-        #   nixpkgs-signal = import inputs.nixpkgs-signal importAttrs;
-        #   nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
-        #   nixpkgs-spotify = import inputs.nixpkgs-spotify importAttrs;
-        #   nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
-        #   nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
-        #   nixpkgs-kitty = import inputs.nixpkgs-kitty importAttrs;
         # };
 
         hosts =
@@ -44,7 +19,6 @@
           |> builtins.readDir
           |> (nixpkgs.lib.attrsets.filterAttrs (_k: v: v == "directory"))
           |> nixpkgs.lib.attrsets.attrNames;
-
       in
       flake@{ lib, ... }:
       {
