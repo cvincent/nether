@@ -83,6 +83,14 @@
                       # Automatically import any homeModules that were defined
                       imports = nixpkgs.lib.attrsets.attrValues flake.config.flake.homeModules ++ [
                         { programs.home-manager.enable = true; }
+                        (
+                          hm@{ ... }:
+                          {
+                            _module.args.utils.directSymlink = (
+                              path: hm.config.lib.file.mkOutOfStoreSymlink "${hm.config.home.homeDirectory}/dotfiles/${path}"
+                            );
+                          }
+                        )
                       ];
                     };
                   }
