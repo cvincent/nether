@@ -10,43 +10,48 @@
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       let
-        inherit (nixpkgs) lib;
-        system = "x86_64-linux";
-        pkgs = nixpkgs.legacyPackages.${system};
+        # commonArgs = rec {
+        #   inherit inputs;
 
-        commonArgs = rec {
-          inherit inputs;
+        #   myUsername = "cvincent";
+        #   myHomeDir = "/home/${myUsername}";
+        #   myHostname = "revachol";
+        #   mySopsKey = "/home/${myUsername}/.config/sops/age/keys.txt";
+        #   myFontServer = "http://192.168.1.114";
+        #   myTZ = "America/Chicago";
+        #   myLocale = "en_US.UTF-8";
+        #   myTestSecret = inputs.private-nethers.my-secrets.hi;
 
-          myUsername = "cvincent";
-          myHomeDir = "/home/${myUsername}";
-          myHostname = "revachol";
-          mySopsKey = "/home/${myUsername}/.config/sops/age/keys.txt";
-          myFontServer = "http://192.168.1.114";
-          myTZ = "America/Chicago";
-          myLocale = "en_US.UTF-8";
-          myTestSecret = inputs.private-nethers.my-secrets.hi;
+        #   importAttrs = {
+        #     system = "x86_64-linux";
+        #     config.allowUnfree = true;
+        #   };
+        #   nixpkgs-latest = import inputs.nixpkgs-latest importAttrs;
+        #   nixpkgs-unstable = import inputs.nixpkgs-unstable importAttrs;
+        #   nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest importAttrs;
+        #   browser-pkgs = import inputs.browser-pkgs importAttrs;
+        #   nixpkgs-neovim = import inputs.nixpkgs-neovim importAttrs;
+        #   nixpkgs-signal = import inputs.nixpkgs-signal importAttrs;
+        #   nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
+        #   nixpkgs-spotify = import inputs.nixpkgs-spotify importAttrs;
+        #   nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
+        #   nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
+        #   nixpkgs-kitty = import inputs.nixpkgs-kitty importAttrs;
+        # };
 
-          importAttrs = {
-            inherit system;
-            config.allowUnfree = true;
-          };
+        hosts =
+          ./hosts
+          |> builtins.readDir
+          |> (nixpkgs.lib.attrsets.filterAttrs (_k: v: v == "directory"))
+          |> nixpkgs.lib.attrsets.attrNames;
 
-          nixpkgs-latest = import inputs.nixpkgs-latest importAttrs;
-          nixpkgs-unstable = import inputs.nixpkgs-unstable importAttrs;
-          nixpkgs-unstable-latest = import inputs.nixpkgs-unstable-latest importAttrs;
-
-          browser-pkgs = import inputs.browser-pkgs importAttrs;
-          nixpkgs-neovim = import inputs.nixpkgs-neovim importAttrs;
-          nixpkgs-signal = import inputs.nixpkgs-signal importAttrs;
-          nixpkgs-slack = import inputs.nixpkgs-slack importAttrs;
-          nixpkgs-spotify = import inputs.nixpkgs-spotify importAttrs;
-          nixpkgs-yt-dlp = import inputs.nixpkgs-yt-dlp importAttrs;
-          nixpkgs-zoom = import inputs.nixpkgs-zoom importAttrs;
-          nixpkgs-kitty = import inputs.nixpkgs-kitty importAttrs;
-        };
       in
+      flake@{ lib, ... }:
       {
-        imports = [ ];
+        imports = [
+          home-manager.flakeModules.home-manager
+          ./flake-modules
+        ];
 
         systems = [
           "x86_64-linux"
@@ -55,40 +60,34 @@
           "aarch64-darwin"
         ];
 
-        perSystem =
-          {
-            config,
-            self',
-            inputs',
-            pkgs,
-            system,
-            ...
-          }:
-          { };
-
         flake = {
-          nixosConfigurations = {
-            "${commonArgs.myHostname}" = lib.nixosSystem {
-              specialArgs = commonArgs;
+          nixosConfigurations = nixpkgs.lib.attrsets.genAttrs hosts (
+            host:
+            (nixpkgs.lib.nixosSystem {
+              modules = lib.attrsets.attrValues flake.config.flake.nixosModules ++ [
+                ./hosts/${host}
 
-              modules = [
-                ./configuration.nix
-                { nixpkgs.hostPlatform = system; }
+                home-manager.nixosModules.home-manager
+                (
+                  system@{ ... }:
+                  {
+                    # Use same pkgs for HM as system; saves eval, adds
+                    # consistency, and removes dependency on NIX_PATH
+                    home-manager.useGlobalPkgs = true;
+
+                    # Install to /etc/profiles instead of ~/.nix-profile. Needed
+                    # for `nixos-rebuild build-vm` to work
+                    home-manager.useUserPackages = true;
+
+                    home-manager.users."${system.config.nether.username}" = {
+                      # Automatically import any homeModules that were defined
+                      imports = nixpkgs.lib.attrsets.attrValues flake.config.flake.homeModules;
+                    };
+                  }
+                )
               ];
-            };
-          };
-
-          homeConfigurations = {
-            "${commonArgs.myUsername}" = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              extraSpecialArgs = commonArgs;
-
-              modules = [
-                ./utils.nix
-                ./home.nix
-              ];
-            };
-          };
+            })
+          );
         };
       }
     );
