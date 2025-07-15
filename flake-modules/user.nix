@@ -11,10 +11,7 @@
       config = {
         users.users."${config.nether.username}" = {
           isNormalUser = true;
-          extraGroups = [
-            "networkmanager"
-            "wheel"
-          ];
+          extraGroups = [ "wheel" ];
         };
       };
     };
