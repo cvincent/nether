@@ -1,5 +1,5 @@
 { name }:
-{ lib, ... }:
+{ lib, inputs, ... }:
 {
   flake.nixosModules."${name}" = {
     options = {
@@ -9,6 +9,8 @@
 
     config = {
       nix = {
+        nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+
         settings.experimental-features = [
           "nix-command"
           "flakes"
