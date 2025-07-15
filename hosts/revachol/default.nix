@@ -16,6 +16,11 @@
       enable = true;
       displayManager = "gdm";
     };
+
+    editors = {
+      neovim.enable = true;
+      default = "neovim";
+    };
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;
