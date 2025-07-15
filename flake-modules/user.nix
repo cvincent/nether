@@ -15,4 +15,11 @@
         };
       };
     };
+
+  flake.homeModules."${name}" =
+    { osConfig, ... }:
+    {
+      home.username = osConfig.nether.username;
+      home.homeDirectory = "/home/${osConfig.nether.username}";
+    };
 }
