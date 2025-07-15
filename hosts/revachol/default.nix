@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./hardware.nix
@@ -10,6 +10,7 @@
     home.stateVersion = "23.11";
   };
 
+  boot.kernelPackages = pkgs.linuxPackages_6_11;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 }
