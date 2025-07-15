@@ -1,6 +1,7 @@
+{ name }:
 { ... }:
 {
-  flake.nixosModules.nix = {
+  flake.nixosModules."${name}" = {
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"

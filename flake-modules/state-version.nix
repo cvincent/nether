@@ -1,6 +1,7 @@
+{ name }:
 { lib, ... }:
 {
-  flake.nixosModules.stateVersion =
+  flake.nixosModules."${name}" =
     { config, ... }:
     {
       options = {
@@ -13,7 +14,7 @@
       };
     };
 
-  flake.homeModules.stateVersion =
+  flake.homeModules."${name}" =
     { osConfig, ... }:
     {
       home.stateVersion = osConfig.nether.home.stateVersion;

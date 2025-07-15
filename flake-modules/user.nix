@@ -1,6 +1,7 @@
+{ name }:
 { lib, ... }:
 {
-  flake.nixosModules.user =
+  flake.nixosModules."${name}" =
     { config, ... }:
     {
       options = {
