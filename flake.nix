@@ -81,7 +81,9 @@
 
                     home-manager.users."${system.config.nether.username}" = {
                       # Automatically import any homeModules that were defined
-                      imports = nixpkgs.lib.attrsets.attrValues flake.config.flake.homeModules;
+                      imports = nixpkgs.lib.attrsets.attrValues flake.config.flake.homeModules ++ [
+                        { programs.home-manager.enable = true; }
+                      ];
                     };
                   }
                 )
