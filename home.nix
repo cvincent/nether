@@ -37,6 +37,7 @@
     ./apps/ytsub/hm.nix # skipping, we don't use it
 
     ./shell/fish/hm.nix
+    # separate shell "essentials" next
     ./shell/jira-cli/hm.nix
     ./shell/misc/hm.nix
     ./shell/ngrok/hm.nix
