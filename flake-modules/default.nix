@@ -12,6 +12,7 @@ in
   # TODO: Decide on a consistent way to handle subdirectories; with NeoVim we
   # have editors.nix pulling it in
   imports = (lib.map (mod: (import ./${mod}.nix { name = mod; })) modules) ++ [
+    (import ./bitwarden { name = "bitwarden"; })
     (import ./windows-vm { name = "windows-vm"; })
   ];
 }

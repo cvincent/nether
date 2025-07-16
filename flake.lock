@@ -1017,11 +1017,11 @@
     },
     "private-nethers": {
       "locked": {
-        "lastModified": 1752194705,
-        "narHash": "sha256-NEv7/UPvbY/lqVE1E6Y6md2kpV9CP9r25tnx/lVPimI=",
+        "lastModified": 1752700504,
+        "narHash": "sha256-pfHht0AsMbQ8qWQ61PXZCU6v+488AtJ1Edgbbu0uGJk=",
         "ref": "main",
-        "rev": "60dfee3ad223e933e0a26ae6e50b96351898c27f",
-        "revCount": 1,
+        "rev": "b82ef0552a892797969a963f5586a5ff833b4c96",
+        "revCount": 3,
         "type": "git",
         "url": "ssh://git@github.com/cvincent/private-nethers.git"
       },

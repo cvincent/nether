@@ -32,6 +32,7 @@
       nvidia.enable = true;
     };
 
+    bitwarden.enable = true;
     flatpak.enable = true;
     homeAssistant.enable = true;
     ios.enable = true;
