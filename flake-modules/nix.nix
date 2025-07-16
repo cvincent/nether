@@ -2,11 +2,6 @@
 { lib, inputs, ... }:
 {
   flake.nixosModules."${name}" = {
-    options = {
-      # TODO: Move this to the fish module when we get there
-      nether.shells.fish.enable = lib.mkEnableOption "fish shell";
-    };
-
     config = {
       nix = {
         nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];

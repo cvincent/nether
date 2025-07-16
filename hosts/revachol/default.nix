@@ -21,6 +21,11 @@
       tor.enable = true;
     };
 
+    shells = {
+      fish.enable = true;
+      default = "fish";
+    };
+
     terminals = {
       kitty.enable = true;
       default = "kitty";
