@@ -1,6 +1,8 @@
 { name }:
 { lib, ... }:
 {
+  imports = [ (import ./kitty { name = "kitty"; }) ];
+
   flake.nixosModules."${name}" = {
     options = {
       nether.terminals = {
@@ -17,6 +19,4 @@
       };
     };
   };
-
-  imports = [ (import ./kitty { name = "kitty"; }) ];
 }

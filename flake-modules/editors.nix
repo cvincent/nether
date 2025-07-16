@@ -1,6 +1,8 @@
 { name }:
 { lib, ... }:
 {
+  imports = [ (import ./neovim { name = "neovim"; }) ];
+
   flake.nixosModules."${name}" = {
     options = {
       nether.editors = {
@@ -16,6 +18,4 @@
       };
     };
   };
-
-  imports = [ (import ./neovim { name = "neovim"; }) ];
 }
