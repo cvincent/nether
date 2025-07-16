@@ -62,7 +62,7 @@
 
                 {
                   nixpkgs.config.allowUnfree = true;
-                  nether.hostname = host;
+                  nether.networking.hostname = host;
                 }
 
                 home-manager.nixosModules.home-manager

@@ -9,9 +9,11 @@
     system.stateVersion = "24.11";
     home.stateVersion = "23.11";
 
-    networkmanager.enable = true;
-    openssh.enable = true;
-    tor.enable = true;
+    networking = {
+      networkmanager.enable = true;
+      openssh.enable = true;
+      tor.enable = true;
+    };
 
     graphicalEnv = {
       enable = true;

@@ -4,25 +4,25 @@
   flake.nixosModules."${name}" =
     { config, ... }:
     {
-      options = {
-        nether.hostname = lib.mkOption { type = lib.types.str; };
+      options.nether.networking = {
+        hostname = lib.mkOption { type = lib.types.str; };
 
-        nether.networkmanager.enable = lib.mkEnableOption "NetworkManager";
-        nether.firewall.enable = lib.mkEnableOption "Linux firewall";
+        networkmanager.enable = lib.mkEnableOption "NetworkManager";
+        firewall.enable = lib.mkEnableOption "Linux firewall";
 
-        nether.openssh.enable = lib.mkEnableOption "OpenSSH";
-        nether.tor.enable = lib.mkEnableOption "Tor";
+        openssh.enable = lib.mkEnableOption "OpenSSH";
+        tor.enable = lib.mkEnableOption "Tor";
       };
 
       config = {
-        networking.hostName = config.nether.hostname;
-        networking.networkmanager.enable = config.nether.networkmanager.enable;
-        networking.firewall.enable = config.nether.firewall.enable;
+        networking.hostName = config.nether.networking.hostname;
+        networking.networkmanager.enable = config.nether.networking.networkmanager.enable;
+        networking.firewall.enable = config.nether.networking.firewall.enable;
 
-        services.openssh.enable = config.nether.openssh.enable;
-        services.tor.client.enable = config.nether.tor.enable;
+        services.openssh.enable = config.nether.networking.openssh.enable;
+        services.tor.client.enable = config.nether.networking.tor.enable;
 
-        users.users."${config.nether.username}" = lib.mkIf config.nether.networkmanager.enable {
+        users.users."${config.nether.username}" = lib.mkIf config.nether.networking.networkmanager.enable {
           extraGroups = [ "networkmanager" ];
         };
       };
