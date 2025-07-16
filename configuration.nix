@@ -28,15 +28,17 @@
     ./hardware/audio.nix
     ./hardware/chrysalis.nix
     ./sops/system.nix
-    ./fonts/system.nix
-    ./stylix/system.nix
-    ./wm/hyprland/system.nix
     ./services/ios/system.nix
     ./services/misc/system.nix
     ./services/peroxide/system.nix
     ./services/printing/system.nix
     ./services/windows-vm/system.nix
     ./services/xremap/system.nix
+
+    # Coming back to these later
+    ./fonts/system.nix
+    ./stylix/system.nix
+    ./wm/hyprland/system.nix
 
     inputs.nix-flatpak.nixosModules.nix-flatpak
   ];
