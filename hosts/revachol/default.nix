@@ -25,6 +25,7 @@
     steam.enable = true;
 
     hardware = {
+      audio.enable = true;
       nvidia.enable = true;
     };
   };
