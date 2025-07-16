@@ -24,12 +24,19 @@
       flake@{ lib, ... }:
       {
         perSystem =
-          { ... }:
+          { system, ... }:
           {
-            _module.args.pkgs = import self.inputs.nixpkgs { config.allowUnfree = true; };
+            _module.args.pkgs = import self.inputs.nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
 
             _module.args.pkgInputs = builtins.mapAttrs (
-              _: input: import input { config.allowUnfree = true; }
+              _: input:
+              import input {
+                inherit system;
+                config.allowUnfree = true;
+              }
             ) self.inputs;
           };
 
