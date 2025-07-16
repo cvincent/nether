@@ -104,6 +104,8 @@
     );
 
   inputs = {
+    # TODO: Pinned versions of things should be passed in as options from the
+    # host
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "nixpkgs/nixos-24.11";
