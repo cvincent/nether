@@ -33,6 +33,7 @@
     };
 
     flatpak.enable = true;
+    homeAssistant.enable = true;
     ios.enable = true;
     mail.enable = true;
     printing2D.enable = true;
