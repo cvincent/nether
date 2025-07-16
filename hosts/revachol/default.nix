@@ -34,6 +34,7 @@
 
     flatpak.enable = true;
     ios.enable = true;
+    mail.enable = true;
     steam.enable = true;
   };
 
