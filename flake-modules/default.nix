@@ -14,6 +14,7 @@ in
   imports = (lib.map (mod: (import ./${mod}.nix { name = mod; })) modules) ++ [
     (import ./bitwarden { name = "bitwarden"; })
     (import ./invoice-generator { name = "invoice-generator"; })
+    (import ./lf { name = "lf"; })
     (import ./windows-vm { name = "windows-vm"; })
   ];
 }
