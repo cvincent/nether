@@ -21,7 +21,6 @@
   };
 
   imports = [
-
     ./services/davmail/hm.nix
     ./services/dconf/hm.nix
     ./services/ha-notifier/hm.nix
