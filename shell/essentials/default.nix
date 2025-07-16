@@ -58,4 +58,9 @@
     ERL_AFLAGS = "-kernel shell_history enabled";
     FZF_DEFAULT_OPTS = "--bind=ctrl-h:backward-kill-word";
   };
+
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+  };
 }
