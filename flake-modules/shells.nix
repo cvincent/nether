@@ -23,7 +23,7 @@
 
   # TODO: Make this more modular
   flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs }:
+    { pkgs, pkgInputs }:
     { osConfig, ... }:
     {
       config = lib.mkIf osConfig.nether.shells.extraUtils.enable {
@@ -44,6 +44,16 @@
           fx
           magic-wormhole
           unzip
+
+          neofetch
+          pkgInputs.nixpkgs-unstable-latest.gh
+
+          (pkgs.writeShellScriptBin "wait-for-port" ''
+            echo "Waiting for port $1..."
+            while ! nc -z localhost $1; do
+              sleep 0.1
+            done
+          '')
 
           (pkgs.writeShellScriptBin "jq-preview" ''
             #!/usr/bin/env bash
