@@ -48,7 +48,7 @@
     ./wm/hyprland/hm.nix
     ./sops/hm.nix
     ./fonts/hm.nix
-    ./stylix/hm.nix
+    ./stylix/hm.nix # We'll want to re-enable Qutebrowser configs that use this
   ];
 
   programs.home-manager.enable = true;
