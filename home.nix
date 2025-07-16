@@ -21,9 +21,6 @@
   };
 
   imports = [
-    ./sops/hm.nix
-    ./fonts/hm.nix
-    ./stylix/hm.nix
     ./wm/hyprland/hm.nix
 
     ./services/davmail/hm.nix
@@ -49,6 +46,10 @@
     ./shell/misc/hm.nix
     ./shell/ngrok/hm.nix
     ./shell/tmux/hm.nix
+
+    ./sops/hm.nix
+    ./fonts/hm.nix
+    ./stylix/hm.nix
   ];
 
   programs.home-manager.enable = true;
