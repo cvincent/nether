@@ -22,13 +22,14 @@
       default = "neovim";
     };
 
-    steam.enable = true;
-
     hardware = {
       audio.enable = true;
       chrysalis.enable = true;
       nvidia.enable = true;
     };
+
+    ios.enable = true;
+    steam.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;
