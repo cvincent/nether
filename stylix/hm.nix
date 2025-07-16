@@ -6,6 +6,16 @@
     ./common.nix
   ];
 
+  # We want this here when we get back to Stylix/theming
+  # dconf = {
+  #   enable = true;
+  #   settings = {
+  #     "org/gnome/desktop/interface" = {
+  #       color-scheme = "prefer-dark";
+  #     };
+  #   };
+  # };
+
   gtk = {
     enable = true;
     iconTheme = {
