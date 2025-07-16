@@ -33,7 +33,7 @@
     ./apps/kitty/hm.nix
     ./apps/mpv/hm.nix
     ./apps/nvim/hm.nix
-    ./apps/spotify/hm.nix
+    ./apps/spotify/hm.nix # skipping, this is ncspot which we don't use anymore
     ./apps/ytsub/hm.nix # skipping, we don't use it
 
     ./shell/fish/hm.nix
