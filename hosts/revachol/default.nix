@@ -21,6 +21,11 @@
       tor.enable = true;
     };
 
+    terminals = {
+      kitty.enable = true;
+      default = "kitty";
+    };
+
     editors = {
       neovim.enable = true;
       default = "neovim";
