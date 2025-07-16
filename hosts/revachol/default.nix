@@ -26,6 +26,7 @@
 
     hardware = {
       audio.enable = true;
+      chrysalis.enable = true;
       nvidia.enable = true;
     };
   };
