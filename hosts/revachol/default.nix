@@ -17,6 +17,7 @@
 
     graphicalEnv = {
       enable = true;
+      enableGnomeKeyring = true;
       displayManager = "gdm";
     };
 
