@@ -55,6 +55,8 @@ let
   );
 in
 {
+  # Add in nixosModule:
+  # services.flatpak.packages = [ "app.bluebubbles.BlueBubbles" ];
   home.packages = with pkgs; [
     fractal
     showmethekey
