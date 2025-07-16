@@ -10,7 +10,7 @@
         nether.hardware.nvidia.enable = lib.mkEnableOption "Nvidia";
       };
 
-      config = lib.mkIf config.nether.nvidia.enable {
+      config = lib.mkIf config.nether.hardware.nvidia.enable {
         # Prevent issues on wake from DPMS
         boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 

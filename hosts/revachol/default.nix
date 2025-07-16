@@ -23,6 +23,10 @@
     };
 
     steam.enable = true;
+
+    hardware = {
+      nvidia.enable = true;
+    };
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;
