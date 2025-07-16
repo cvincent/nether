@@ -10,6 +10,7 @@
         nether.networkmanager.enable = lib.mkEnableOption "NetworkManager";
         nether.firewall.enable = lib.mkEnableOption "Linux firewall";
 
+        nether.openssh.enable = lib.mkEnableOption "OpenSSH";
         nether.tor.enable = lib.mkEnableOption "Tor";
       };
 
@@ -18,6 +19,7 @@
         networking.networkmanager.enable = config.nether.networkmanager.enable;
         networking.firewall.enable = config.nether.firewall.enable;
 
+        services.openssh.enable = config.nether.openssh.enable;
         services.tor.client.enable = config.nether.tor.enable;
 
         users.users."${config.nether.username}" = lib.mkIf config.nether.networkmanager.enable {
