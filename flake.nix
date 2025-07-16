@@ -52,7 +52,11 @@
               # Automatically import any nixosModules that were defined
               modules = lib.attrsets.attrValues flake.config.flake.nixosModules ++ [
                 ./hosts/${host}
-                { nether.hostname = host; }
+
+                {
+                  nixpkgs.config.allowUnfree = true;
+                  nether.hostname = host;
+                }
 
                 home-manager.nixosModules.home-manager
                 (
