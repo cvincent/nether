@@ -60,7 +60,7 @@
 
                 home-manager.nixosModules.home-manager
                 (
-                  system@{ ... }:
+                  osConfig@{ ... }:
                   {
                     # Use same pkgs for HM as system; saves eval, adds
                     # consistency, and removes dependency on NIX_PATH
@@ -70,7 +70,7 @@
                     # for `nixos-rebuild build-vm` to work
                     home-manager.useUserPackages = true;
 
-                    home-manager.users."${system.config.nether.username}" = {
+                    home-manager.users."${osConfig.config.nether.username}" = {
                       # Automatically import any homeModules that were defined
                       imports = nixpkgs.lib.attrsets.attrValues flake.config.flake.homeModules ++ [
                         { programs.home-manager.enable = true; }
