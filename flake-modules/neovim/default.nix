@@ -26,7 +26,7 @@
     lib.mkIf osConfig.nether.editors.neovim.enable (
       lib.mkMerge [
         {
-          home.file."./.config/nvim".source = utils.directSymlink "flake-modules/neovim/configs";
+          home.file."./.config/nvim".source = utils.directSymlink ./configs;
 
           home.packages = with pkgs; [
             # Treesitter wants a C compiler

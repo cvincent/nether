@@ -89,9 +89,7 @@
                         (
                           hm@{ ... }:
                           {
-                            _module.args.utils.directSymlink = (
-                              path: hm.config.lib.file.mkOutOfStoreSymlink "${hm.config.home.homeDirectory}/dotfiles/${path}"
-                            );
+                            _module.args.utils.directSymlink = (path: hm.config.lib.file.mkOutOfStoreSymlink (toString path));
                           }
                         )
                       ];
