@@ -32,6 +32,7 @@
       nvidia.enable = true;
     };
 
+    flatpak.enable = true;
     ios.enable = true;
     steam.enable = true;
   };
