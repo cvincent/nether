@@ -37,6 +37,7 @@
     mail.enable = true;
     printing2D.enable = true;
     steam.enable = true;
+    windowsVM.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;
