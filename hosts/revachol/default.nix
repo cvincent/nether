@@ -38,6 +38,7 @@
     printing2D.enable = true;
     steam.enable = true;
     windowsVM.enable = true;
+    xremap = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;

@@ -80,6 +80,9 @@
                     home-manager.users."${osConfig.config.nether.username}" = {
                       # Automatically import any homeModules that were defined
                       imports = nixpkgs.lib.attrsets.attrValues flake.config.flake.homeModules ++ [
+                        # Attempting to import this in xremap.nix causes
+                        # infinite recursion
+                        inputs.xremap-flake.homeManagerModules.default
                         { programs.home-manager.enable = true; }
                         (
                           hm@{ ... }:
