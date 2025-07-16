@@ -23,6 +23,7 @@
 
     shells = {
       fish.enable = true;
+      extraUtils.enable = true;
       default = "fish";
     };
 
