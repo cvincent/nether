@@ -10,6 +10,16 @@
   # For now, I am simply porting over what I already have, to get through the
   # porting process.
 
+  flake.nixosModules."${name}" = moduleWithSystem (
+    { pkgInputs }:
+    { config, ... }:
+    {
+      config = lib.mkIf config.nether.editors.neovim.enable {
+        environment.systemPackages = [ pkgInputs.nixpkgs-neovim.neovim ];
+      };
+    }
+  );
+
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs, inputs' }:
     { osConfig, utils, ... }:
