@@ -33,7 +33,6 @@
     ./apps/kitty/hm.nix
     ./apps/mpv/hm.nix
     ./apps/nvim/hm.nix
-    ./apps/smartcalc-tui/hm.nix
     ./apps/spotify/hm.nix
     ./apps/ytsub/hm.nix # skipping, we don't use it
 
@@ -43,6 +42,7 @@
     ./shell/ngrok/hm.nix
     ./shell/tmux/hm.nix
 
+    ./apps/smartcalc-tui/hm.nix # Come back to this, let's figure out how we want to do custom packages
     ./apps/misc/hm.nix
     ./apps/email/hm.nix
     ./wm/hyprland/hm.nix
