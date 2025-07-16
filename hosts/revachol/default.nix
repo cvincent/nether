@@ -9,16 +9,16 @@
     system.stateVersion = "24.11";
     home.stateVersion = "23.11";
 
+    hardware = {
+      audio.enable = true;
+      chrysalis.enable = true;
+      nvidia.enable = true;
+    };
+
     networking = {
       networkmanager.enable = true;
       openssh.enable = true;
       tor.enable = true;
-    };
-
-    graphicalEnv = {
-      enable = true;
-      enableGnomeKeyring = true;
-      displayManager = "gdm";
     };
 
     editors = {
@@ -26,10 +26,10 @@
       default = "neovim";
     };
 
-    hardware = {
-      audio.enable = true;
-      chrysalis.enable = true;
-      nvidia.enable = true;
+    graphicalEnv = {
+      enable = true;
+      enableGnomeKeyring = true;
+      displayManager = "gdm";
     };
 
     bitwarden.enable = true;
