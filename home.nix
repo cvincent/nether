@@ -35,7 +35,7 @@
     ./apps/nvim/hm.nix
     ./apps/smartcalc-tui/hm.nix
     ./apps/spotify/hm.nix
-    ./apps/ytsub/hm.nix
+    ./apps/ytsub/hm.nix # skipping, we don't use it
 
     ./shell/fish/hm.nix
     ./shell/jira-cli/hm.nix
