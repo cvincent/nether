@@ -37,6 +37,11 @@
       displayManager = "gdm";
     };
 
+    media = {
+      mpv.enable = true;
+      ytDlp.enable = true;
+    };
+
     bitwarden.enable = true;
     browsers.enable = true;
     flatpak.enable = true;
