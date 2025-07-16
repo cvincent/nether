@@ -42,6 +42,8 @@
     steam.enable = true;
     windowsVM.enable = true;
     xremap = true;
+
+    scripts.invoiceGenerator.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_6_11;
