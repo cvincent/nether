@@ -21,7 +21,6 @@
   };
 
   imports = [
-    ./wm/hyprland/hm.nix
 
     ./services/davmail/hm.nix
     ./services/dconf/hm.nix
@@ -47,6 +46,7 @@
     ./shell/ngrok/hm.nix
     ./shell/tmux/hm.nix
 
+    ./wm/hyprland/hm.nix
     ./sops/hm.nix
     ./fonts/hm.nix
     ./stylix/hm.nix
