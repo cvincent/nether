@@ -24,7 +24,7 @@
       flake@{ lib, ... }:
       {
         perSystem =
-          { system, ... }:
+          { system, pkgs, ... }:
           {
             _module.args.pkgs = import self.inputs.nixpkgs {
               inherit system;
@@ -38,6 +38,8 @@
                 config.allowUnfree = true;
               }
             ) self.inputs;
+
+            packages.smartcalc-tui = pkgs.callPackage ./packages/smartcalc-tui.nix { };
           };
 
         imports = [

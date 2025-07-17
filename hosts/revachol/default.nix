@@ -58,6 +58,7 @@
     mail.enable = true;
     ngrok.enable = true;
     printing2D.enable = true;
+    smartCalcTUI.enable = true;
     steam.enable = true;
     tmux.enable = true;
     windowsVM.enable = true;
