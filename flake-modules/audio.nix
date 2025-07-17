@@ -1,7 +1,8 @@
 { name }:
 { lib, moduleWithSystem, ... }:
 {
-  flake.nixosModules."${name}" =
+  flake.nixosModules."${name}" = moduleWithSystem (
+    { pkgs }:
     { config, ... }:
     let
       inherit (config.nether) graphicalEnv hardware;
@@ -30,10 +31,17 @@
               default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
             };
 
-            pavucontrol.enable = lib.mkOption {
-              type = lib.types.bool;
-              description = "PulseAudio Volume Control";
-              default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
+            pavucontrol = {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                description = "PulseAudio Volume Control";
+                default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
+              };
+
+              package = lib.mkOption {
+                type = lib.types.package;
+                default = pkgs.pavucontrol;
+              };
             };
           };
         };
@@ -52,16 +60,16 @@
 
         services.blueman.enable = hardware.audio.extra.blueman.enable;
       };
-    };
+    }
+  );
 
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs }:
+  flake.homeModules."${name}" =
     { osConfig, ... }:
     let
       inherit (osConfig.nether.hardware) audio;
     in
     {
-      home.packages = [ ] ++ (lib.optional audio.extra.pavucontrol.enable pkgs.pavucontrol);
-    }
-  );
+      home.packages =
+        [ ] ++ (lib.optional audio.extra.pavucontrol.enable audio.extra.pavucontrol.package);
+    };
 }
