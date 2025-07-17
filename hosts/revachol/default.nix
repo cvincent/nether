@@ -56,6 +56,7 @@
     jiraCLI.enable = true;
     lf.enable = true;
     mail.enable = true;
+    miscApps.enable = true;
     ngrok.enable = true;
     printing2D.enable = true;
     smartCalcTUI.enable = true;

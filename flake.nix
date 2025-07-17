@@ -5,6 +5,7 @@
     inputs@{
       nixpkgs,
       home-manager,
+      nix-flatpak,
       flake-parts,
       self,
       ...
@@ -66,6 +67,8 @@
                   nixpkgs.config.allowUnfree = true;
                   nether.networking.hostname = host;
                 }
+
+                nix-flatpak.nixosModules.nix-flatpak
 
                 home-manager.nixosModules.home-manager
                 (
