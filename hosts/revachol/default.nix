@@ -39,8 +39,8 @@
 
     graphicalEnv = {
       enable = true;
-      enableGnomeKeyring = true;
       displayManager = "gdm";
+      compositor = "hyprland";
     };
 
     media = {

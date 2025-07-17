@@ -16,6 +16,14 @@
             default = null;
           };
 
+          compositor = lib.mkOption {
+            type = lib.types.enum [
+              null
+              "hyprland"
+            ];
+            default = null;
+          };
+
           extra = {
             gnomeKeyring.enable = lib.mkOption {
               type = lib.types.bool;
