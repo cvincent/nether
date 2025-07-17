@@ -1,5 +1,5 @@
 { name }:
-{ lib, ... }:
+{ lib, moduleWithSystem, ... }:
 {
   flake.nixosModules."${name}" =
     { config, ... }:
@@ -16,8 +16,13 @@
             ];
             default = null;
           };
-        };
 
+
+          extra.networkmanagerapplet.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = config.nether.networking.networkmanager.enable;
+          };
+        };
       };
 
       config = {
@@ -30,4 +35,14 @@
         services.gnome.gnome-keyring.enable = config.nether.graphicalEnv.enableGnomeKeyring;
       };
     };
+
+  flake.homeModules."${name}" = moduleWithSystem (
+    { pkgs }:
+    { osConfig, ... }:
+    {
+      home.packages =
+        [ ]
+        ++ (lib.optional osConfig.nether.graphicalEnv.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet);
+    }
+  );
 }
