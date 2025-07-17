@@ -40,6 +40,8 @@
               }
             ) self.inputs;
 
+            # TODO: Iterate over the packages directory
+            packages.maildir-rank-addr = pkgs.callPackage ./packages/maildir-rank-addr.nix { };
             packages.smartcalc-tui = pkgs.callPackage ./packages/smartcalc-tui.nix { };
           };
 
