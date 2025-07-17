@@ -25,8 +25,8 @@
         };
       };
 
-      config = {
-        services.xserver = lib.mkIf config.nether.graphicalEnv.enable {
+      config = lib.mkIf config.nether.graphicalEnv.enable {
+        services.xserver = {
           enable = true;
           displayManager.gdm.enable = config.nether.graphicalEnv.displayManager == "gdm";
         };
@@ -40,9 +40,11 @@
     { pkgs }:
     { osConfig, ... }:
     {
-      home.packages =
-        [ ]
-        ++ (lib.optional osConfig.nether.graphicalEnv.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet);
+      config = lib.mkIf osConfig.nether.graphicalEnv.enable {
+        home.packages =
+          [ ]
+          ++ (lib.optional osConfig.nether.graphicalEnv.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet);
+      };
     }
   );
 }
