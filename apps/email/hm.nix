@@ -2,7 +2,6 @@
   pkgs,
   myHomeDir,
   utils,
-  myTestSecret,
   ...
 }:
 
