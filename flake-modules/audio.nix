@@ -1,5 +1,5 @@
 { name }:
-{ lib, ... }:
+{ lib, moduleWithSystem, ... }:
 {
   flake.nixosModules."${name}" =
     { config, ... }:
@@ -29,6 +29,12 @@
               description = "Blueman - Bluetooth manager";
               default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
             };
+
+            pavucontrol.enable = lib.mkOption {
+              type = lib.types.bool;
+              description = "PulseAudio Volume Control";
+              default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
+            };
           };
         };
       };
@@ -47,4 +53,15 @@
         services.blueman.enable = hardware.audio.extra.blueman.enable;
       };
     };
+
+  flake.homeModules."${name}" = moduleWithSystem (
+    { pkgs }:
+    { osConfig, ... }:
+    let
+      inherit (osConfig.nether.hardware) audio;
+    in
+    {
+      home.packages = [ ] ++ (lib.optional audio.extra.pavucontrol.enable pkgs.pavucontrol);
+    }
+  );
 }
