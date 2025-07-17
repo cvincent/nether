@@ -3,13 +3,37 @@
 {
   flake.nixosModules."${name}" =
     { config, ... }:
+    let
+      inherit (config.nether) graphicalEnv hardware;
+    in
     {
       options = {
-        nether.hardware.audio.enable = lib.mkEnableOption "Audio";
+        nether.hardware.audio = {
+          enable = lib.mkEnableOption "Audio";
+
+          rtkit.enable = lib.mkOption {
+            type = lib.types.bool;
+            description = "RealTime Kit";
+            default = true;
+          };
+
+          bluetooth.enable = lib.mkOption {
+            type = lib.types.bool;
+            description = "Bluetooth connectivity";
+            default = true;
+          };
+
+          extra = {
+            blueman.enable = lib.mkOption {
+              type = lib.types.bool;
+              description = "Blueman - Bluetooth manager";
+              default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
+            };
+          };
+        };
       };
 
       config = lib.mkIf config.nether.hardware.audio.enable {
-        security.rtkit.enable = true;
         services.pipewire = {
           enable = true;
           alsa.enable = true;
@@ -17,8 +41,10 @@
           pulse.enable = true;
         };
 
-        hardware.bluetooth.enable = true;
-        services.blueman.enable = true;
+        security.rtkit.enable = hardware.audio.rtkit.enable;
+        hardware.bluetooth.enable = hardware.audio.bluetooth.enable;
+
+        services.blueman.enable = hardware.audio.extra.blueman.enable;
       };
     };
 }
