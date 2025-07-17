@@ -21,7 +21,7 @@
   );
 
   flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs, inputs' }:
+    { pkgs, pkgInputs }:
     { osConfig, utils, ... }:
     lib.mkIf osConfig.nether.editors.neovim.enable (
       lib.mkMerge [
@@ -39,11 +39,11 @@
             nodePackages.prettier
 
             # Formatters
-            inputs'.nixpkgs-unstable-latest.legacyPackages.nixfmt-rfc-style
+            pkgInputs.nixpkgs-unstable-latest.nixfmt-rfc-style
             pgformatter
 
             # Language servers I want at all times
-            inputs'.nixpkgs-unstable-latest.legacyPackages.nixd
+            pkgInputs.nixpkgs-unstable-latest.nixd
             lua-language-server # The language of NeoVim
             tailwindcss-language-server
             nodePackages.typescript-language-server # TypeScript is a superset of JavaScript

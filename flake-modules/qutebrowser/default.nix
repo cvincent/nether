@@ -7,7 +7,7 @@
 }:
 {
   flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs, inputs' }:
+    { pkgs, pkgInputs }:
     { osConfig, ... }:
     let
       qutebrowser-route = (
@@ -29,7 +29,7 @@
       config = lib.mkIf osConfig.nether.browsers.qutebrowser.enable {
         programs.qutebrowser = {
           enable = true;
-          package = inputs'.nixpkgs-latest.legacyPackages.qutebrowser;
+          package = pkgInputs.nixpkgs-latest.qutebrowser;
 
           settings = {
             auto_save.session = true;
