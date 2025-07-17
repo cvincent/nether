@@ -1,5 +1,5 @@
 { name }:
-{ lib, ... }:
+{ lib, moduleWithSystem, ... }:
 {
   flake.nixosModules."${name}" =
     { config, ... }:
@@ -9,9 +9,13 @@
 
         networkmanager.enable = lib.mkEnableOption "NetworkManager";
         firewall.enable = lib.mkEnableOption "Linux firewall";
-
         openssh.enable = lib.mkEnableOption "OpenSSH";
         tor.enable = lib.mkEnableOption "Tor";
+
+        extra.networkmanagerapplet.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = config.nether.networking.networkmanager.enable && config.nether.graphicalEnv.enable;
+        };
       };
 
       config = {
@@ -27,4 +31,12 @@
         };
       };
     };
+
+  flake.homeModules."${name}" = moduleWithSystem (
+    { pkgs }:
+    { osConfig, ... }:
+    {
+      home.packages = lib.optional osConfig.nether.networking.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet;
+    }
+  );
 }

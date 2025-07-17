@@ -34,11 +34,6 @@
               type = lib.types.bool;
               default = true;
             };
-
-            networkmanagerapplet.enable = lib.mkOption {
-              type = lib.types.bool;
-              default = config.nether.networking.networkmanager.enable;
-            };
           };
         };
       };
@@ -63,10 +58,7 @@
     in
     {
       config = lib.mkIf graphicalEnv.enable {
-        home.packages =
-          [ ]
-          ++ (lib.optional graphicalEnv.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet)
-          ++ (lib.optional graphicalEnv.extra.libnotify.enable pkgs.libnotify);
+        home.packages = lib.optional graphicalEnv.extra.libnotify.enable pkgs.libnotify;
       };
     }
   );
