@@ -1,9 +1,13 @@
 { pkgs, myUsername, ... }:
 
 {
+  # Pretty sure all of this goes alongside the gnome-keyring stuff in
+  # graphical-env.nix. I am curious how/if they're all actually related.
   security.polkit = {
     enable = true;
-    adminIdentities = ["unix-user:${myUsername}"];
+    adminIdentities = [
+      "unix-user:${myUsername}"
+    ];
   };
 
   environment.systemPackages = [ pkgs.polkit_gnome ];
