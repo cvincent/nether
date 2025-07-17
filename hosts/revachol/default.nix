@@ -59,6 +59,7 @@
     ngrok.enable = true;
     printing2D.enable = true;
     steam.enable = true;
+    tmux.enable = true;
     windowsVM.enable = true;
     xremap = true;
 

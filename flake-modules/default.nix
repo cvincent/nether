@@ -15,6 +15,7 @@ in
     (import ./bitwarden { name = "bitwarden"; })
     (import ./invoice-generator { name = "invoice-generator"; })
     (import ./lf { name = "lf"; })
+    (import ./tmux { name = "tmux"; })
     (import ./windows-vm { name = "windows-vm"; })
   ];
 }

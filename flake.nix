@@ -131,6 +131,7 @@
     nixpkgs-signal.url = "nixpkgs/nixos-unstable";
     nixpkgs-slack.url = "nixpkgs/nixos-unstable";
     nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
+    nixpkgs-tmux.url = "nixpkgs/nixos-unstable";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
     stylix.url = "github:danth/stylix";

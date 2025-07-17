@@ -803,6 +803,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-tmux": {
+      "locked": {
+        "lastModified": 1752480373,
+        "narHash": "sha256-JHQbm+OcGp32wAsXTE/FLYGNpb+4GLi5oTvCxwSoBOA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "62e0f05ede1da0d54515d4ea8ce9c733f12d9f08",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1735471104,
@@ -1046,6 +1061,7 @@
         "nixpkgs-signal": "nixpkgs-signal",
         "nixpkgs-slack": "nixpkgs-slack",
         "nixpkgs-spotify": "nixpkgs-spotify",
+        "nixpkgs-tmux": "nixpkgs-tmux",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-unstable-latest": "nixpkgs-unstable-latest",
         "nixpkgs-yt-dlp": "nixpkgs-yt-dlp",
