@@ -45,11 +45,13 @@
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs }:
     { osConfig, ... }:
+    let
+      inherit (osConfig.nether) graphicalEnv;
+    in
     {
-      config = lib.mkIf osConfig.nether.graphicalEnv.enable {
+      config = lib.mkIf graphicalEnv.enable {
         home.packages =
-          [ ]
-          ++ (lib.optional osConfig.nether.graphicalEnv.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet);
+          [ ] ++ (lib.optional graphicalEnv.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet);
       };
     }
   );
