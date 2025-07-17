@@ -7,7 +7,6 @@
       options = {
         nether.graphicalEnv = {
           enable = lib.mkEnableOption "Graphical environment";
-          enableGnomeKeyring = lib.mkEnableOption "Gnome keyring service";
 
           displayManager = lib.mkOption {
             type = lib.types.enum [
@@ -17,10 +16,16 @@
             default = null;
           };
 
+          extra = {
+            gnomeKeyring.enable = lib.mkOption {
+              type = lib.types.bool;
+              default = true;
+            };
 
-          extra.networkmanagerapplet.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = config.nether.networking.networkmanager.enable;
+            networkmanagerapplet.enable = lib.mkOption {
+              type = lib.types.bool;
+              default = config.nether.networking.networkmanager.enable;
+            };
           };
         };
       };
@@ -31,8 +36,9 @@
           displayManager.gdm.enable = config.nether.graphicalEnv.displayManager == "gdm";
         };
 
-        security.pam.services.login.enableGnomeKeyring = config.nether.graphicalEnv.enableGnomeKeyring;
-        services.gnome.gnome-keyring.enable = config.nether.graphicalEnv.enableGnomeKeyring;
+        security.pam.services.login.enableGnomeKeyring =
+          config.nether.graphicalEnv.extra.gnomeKeyring.enable;
+        services.gnome.gnome-keyring.enable = config.nether.graphicalEnv.extra.gnomeKeyring.enable;
       };
     };
 
