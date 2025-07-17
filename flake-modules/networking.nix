@@ -20,9 +20,9 @@
 
       config = {
         networking.hostName = config.nether.networking.hostname;
+
         networking.networkmanager.enable = config.nether.networking.networkmanager.enable;
         networking.firewall.enable = config.nether.networking.firewall.enable;
-
         services.openssh.enable = config.nether.networking.openssh.enable;
         services.tor.client.enable = config.nether.networking.tor.enable;
 
