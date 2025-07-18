@@ -21,9 +21,9 @@
           bluetooth.enable = helpers.boolOpt true "Bluetooth connectivity";
 
           apps = {
-            blueman.enable =
-              helpers.boolOpt graphicalEnv.enable
-              && hardware.audio.bluetooth.enable "Blueman - Bluetooth manager";
+            blueman.enable = helpers.boolOpt (
+              graphicalEnv.enable && hardware.audio.bluetooth.enable
+            ) "Blueman - Bluetooth manager";
 
             pavucontrol = helpers.pkgOpt pkgs.pavucontrol true "PulseAudio Volume Control";
           };
