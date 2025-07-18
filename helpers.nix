@@ -3,6 +3,18 @@
     { lib, ... }:
     {
       _module.args.helpers = {
+        # TODO: Make `which` style options easier and more consistent; write
+        # this function
+        whichOpt = (
+          allowNull: default: pkgs:
+          (
+            {
+
+            }
+            // { }
+          )
+        );
+
         pkgOpt = (
           pkg: default: description: {
             enable = lib.mkOption {
