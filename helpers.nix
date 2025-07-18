@@ -19,10 +19,10 @@
 
         boolOpt =
           default: description:
-          lib.mkOption {
+          (lib.mkOption {
             type = lib.types.bool;
             inherit description default;
-          };
+          });
       };
     };
 
