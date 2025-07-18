@@ -9,7 +9,10 @@
   # TODO: This module will almost certainly grow, and we'll want to break
   # things out into submodules.
 
-  imports = [ (import ./swaylock { name = "swaylock"; }) ];
+  imports = [
+    (import ./swaylock { name = "swaylock"; })
+    (import ./swaync { name = "swaync"; })
+  ];
 
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
