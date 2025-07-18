@@ -78,19 +78,18 @@
         };
       };
 
-      config = lib.mkIf config.nether.graphicalEnv.enable {
+      config = lib.mkIf graphicalEnv.enable {
         environment.systemPackages = lib.optional graphicalEnv.extra.gnomePolkit.enable graphicalEnv.extra.gnomePolkit.package;
 
         services.xserver = {
           enable = true;
-          displayManager.gdm.enable = config.nether.graphicalEnv.displayManager == "gdm";
+          displayManager.gdm.enable = graphicalEnv.displayManager == "gdm";
         };
 
-        services.gnome.gnome-keyring.enable = config.nether.graphicalEnv.extra.gnomeKeyring.enable;
+        services.gnome.gnome-keyring.enable = graphicalEnv.extra.gnomeKeyring.enable;
 
         # Uses login password to unlock the GNOME Keyring
-        security.pam.services.login.enableGnomeKeyring =
-          config.nether.graphicalEnv.extra.gnomeKeyring.enable;
+        security.pam.services.login.enableGnomeKeyring = graphicalEnv.extra.gnomeKeyring.enable;
 
         security.polkit = {
           enable = graphicalEnv.extra.gnomePolkit.enable;
