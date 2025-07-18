@@ -20,7 +20,7 @@
           |> (nixpkgs.lib.attrsets.filterAttrs (_k: v: v == "directory"))
           |> nixpkgs.lib.attrsets.attrNames;
       in
-      flake@{ lib, ... }:
+      flake@{ lib, moduleWithSystem, ... }:
       {
         perSystem =
           { system, pkgs, ... }:
@@ -62,7 +62,7 @@
             (nixpkgs.lib.nixosSystem {
               # Automatically import any nixosModules that were defined
               modules = lib.attrsets.attrValues flake.config.flake.nixosModules ++ [
-                ./hosts/${host}
+                (moduleWithSystem (import ./hosts/${host}))
 
                 {
                   nixpkgs.config.allowUnfree = true;
