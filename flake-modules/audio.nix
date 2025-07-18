@@ -21,6 +21,8 @@
           bluetooth.enable = helpers.boolOpt true "Bluetooth connectivity";
 
           apps = {
+            alsaUtils = helpers.pkgOpt pkgs.alsa-utils true "ALSA utilities";
+
             blueman.enable = helpers.boolOpt (
               graphicalEnv.enable && hardware.audio.bluetooth.enable
             ) "Blueman - Bluetooth manager";
