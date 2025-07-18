@@ -54,8 +54,7 @@
     }
   );
 
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs }:
+  flake.homeModules."${name}" =
     { osConfig, ... }:
     let
       inherit (osConfig.nether) media;
@@ -73,6 +72,5 @@
           inherit (media.apps.mpv) config scripts scriptOpts;
         };
       };
-    }
-  );
+    };
 }
