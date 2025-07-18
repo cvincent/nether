@@ -6,6 +6,8 @@
   ...
 }:
 {
+  # TODO: This module will almost certainly grow, and we'll want to break
+  # things out into submodules.
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
     { config, ... }:
