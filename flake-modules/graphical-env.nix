@@ -153,6 +153,9 @@
                   helpers.pkgOpt pkgs.swappy enabled
                     "swappy - app for editing screenshots after they are taken";
               };
+
+            # TODO: This should probably be grouped with screenLocker settings
+            swayIdle = helpers.pkgOpt pkgs.swayidle true "swayidle - Idle timer and command launcher";
           };
         };
       };
@@ -212,7 +215,8 @@
           ++ helpers.pkgOptPkg graphicalEnv.extra.displaySettings.wlrRandr
           ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.grim
           ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.slurp
-          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.swappy;
+          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.swappy
+          ++ helpers.pkgOptPkg graphicalEnv.extra.swayIdle;
       };
     };
 }
