@@ -19,4 +19,12 @@
         );
       };
     };
+
+  homeModuleHelpers =
+    { config, ... }:
+    {
+      _module.args.helpers = {
+        directSymlink = (path: config.lib.file.mkOutOfStoreSymlink (toString path));
+      };
+    };
 }

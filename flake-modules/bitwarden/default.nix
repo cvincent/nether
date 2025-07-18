@@ -24,7 +24,7 @@
     { pkgs }:
     {
       osConfig,
-      utils,
+      helpers,
       ...
     }:
     let
@@ -56,7 +56,7 @@
           (pkgs.writeShellScriptBin "bitwarden-create" (builtins.readFile ./bitwarden-create.bash))
         ];
 
-        home.file."./.local/share/bitwarden/templates".source = utils.directSymlink ./templates;
+        home.file."./.local/share/bitwarden/templates".source = helpers.directSymlink ./templates;
 
         home.file."./.local/share/bitwarden/client_id".text = inputs.private-nethers.bitwarden.clientId;
         home.file."./.local/share/bitwarden/client_secret".text =

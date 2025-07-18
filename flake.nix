@@ -86,18 +86,12 @@
                     home-manager.users."${osConfig.config.nether.username}" = {
                       # Automatically import any homeModules that were defined
                       imports = nixpkgs.lib.attrsets.attrValues flake.config.flake.homeModules ++ [
+                        { programs.home-manager.enable = true; }
+                        helpers.homeModuleHelpers
                         # Attempting to import these in their related modules
                         # causes infinite recursion
                         inputs.xremap-flake.homeManagerModules.default
                         inputs.ha-notifier.homeManagerModules.default
-
-                        { programs.home-manager.enable = true; }
-                        (
-                          hm@{ ... }:
-                          {
-                            _module.args.utils.directSymlink = (path: hm.config.lib.file.mkOutOfStoreSymlink (toString path));
-                          }
-                        )
                       ];
                     };
                   }

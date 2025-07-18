@@ -3,7 +3,7 @@
 {
   # TODO: We need to be using a NeoVim wrapper, rather than installing gcc and
   # compiling Treesitter parsers from there. Something lightweight that still
-  # allows me to utils.directSymlink most of my configs, and keep them in raw
+  # allows me to helpers.directSymlink most of my configs, and keep them in raw
   # Lua, because my NeoVim config is easily my most rapidly-iterated config, so
   # I need a tight feedback loop without nixos-rebuild.
 
@@ -22,11 +22,11 @@
 
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs, pkgInputs }:
-    { osConfig, utils, ... }:
+    { osConfig, helpers, ... }:
     lib.mkIf osConfig.nether.editors.neovim.enable (
       lib.mkMerge [
         {
-          home.file."./.config/nvim".source = utils.directSymlink ./configs;
+          home.file."./.config/nvim".source = helpers.directSymlink ./configs;
 
           home.packages = with pkgs; [
             # Treesitter wants a C compiler

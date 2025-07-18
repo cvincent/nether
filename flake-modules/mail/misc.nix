@@ -1,6 +1,6 @@
 {
   pkgs,
-  utils,
+  helpers,
   private-nethers,
 }:
 {
@@ -47,9 +47,9 @@
 
   home.file = {
     "./.mbsyncrc".text = private-nethers.mail.mbsyncRC;
-    "./.config/aerc/aerc.conf".source = utils.directSymlink ./aerc/aerc.conf;
-    "./.config/aerc/binds.conf".source = utils.directSymlink ./aerc/binds.conf;
-    "./.config/aerc/stylesets".source = utils.directSymlink ./aerc/stylesets;
+    "./.config/aerc/aerc.conf".source = helpers.directSymlink ./aerc/aerc.conf;
+    "./.config/aerc/binds.conf".source = helpers.directSymlink ./aerc/binds.conf;
+    "./.config/aerc/stylesets".source = helpers.directSymlink ./aerc/stylesets;
     "./.config/aerc/accounts.conf".text = private-nethers.mail.aercAccountsConf;
     "./.config/khard/khard.conf".source = ./khard.conf;
     "./.config/khal/config".source = ./khal.conf;
