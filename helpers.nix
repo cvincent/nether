@@ -17,6 +17,8 @@
           }
         );
 
+        pkgOptPkg = (pkgOpt: lib.optional pkgOpt.enable pkgOpt.package);
+
         boolOpt =
           default: description:
           (lib.mkOption {
