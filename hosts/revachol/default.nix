@@ -42,6 +42,11 @@
       enable = true;
       displayManager = "gdm";
       compositor = "hyprland";
+
+      screenLocker = {
+        which = "swaylock";
+        swaylock.package = pkgInputs.nixpkgs-unstable.swaylock;
+      };
     };
 
     media = {

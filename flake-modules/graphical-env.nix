@@ -8,6 +8,9 @@
 {
   # TODO: This module will almost certainly grow, and we'll want to break
   # things out into submodules.
+
+  imports = [ (import ./swaylock { name = "swaylock"; }) ];
+
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
     { config, ... }:
@@ -33,6 +36,21 @@
               "hyprland"
             ];
             default = null;
+          };
+
+          screenLocker = {
+            which = lib.mkOption {
+              type = lib.types.enum [
+                null
+                "swaylock"
+              ];
+              default = null;
+            };
+
+            swaylock.package = lib.mkOption {
+              type = lib.types.package;
+              default = pkgs.swaylock;
+            };
           };
 
           extra = {
