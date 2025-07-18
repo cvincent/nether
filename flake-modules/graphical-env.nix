@@ -1,5 +1,10 @@
 { name }:
-{ lib, moduleWithSystem, ... }:
+{
+  lib,
+  moduleWithSystem,
+  helpers,
+  ...
+}:
 {
   flake.nixosModules."${name}" =
     { config, ... }:
@@ -25,15 +30,8 @@
           };
 
           extra = {
-            gnomeKeyring.enable = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-            };
-
-            libnotify.enable = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-            };
+            gnomeKeyring.enable = helpers.boolOpt true "GNOME Keyring - some apps need this to store secrets";
+            libnotify.enable = helpers.boolOpt true "libnotify - utilities for system notifications";
           };
         };
       };
