@@ -4,11 +4,10 @@
     {
       _module.args.helpers = {
         pkgOpt = (
-          pkg: default: desc: {
+          pkg: default: description: {
             enable = lib.mkOption {
               type = lib.types.bool;
-              description = desc;
-              inherit default;
+              inherit description default;
             };
 
             package = lib.mkOption {
@@ -17,6 +16,11 @@
             };
           }
         );
+
+        boolOpt = default: description: {
+          type = lib.types.bool;
+          inherit description default;
+        };
       };
     };
 
