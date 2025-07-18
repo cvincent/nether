@@ -44,6 +44,31 @@
             default = null;
           };
 
+          launcher = {
+            which = lib.mkOption {
+              type = lib.types.enum [
+                null
+                "fuzzel"
+              ];
+              default = null;
+            };
+
+            fuzzel = {
+              package = lib.mkOption {
+                type = lib.types.package;
+                default = pkgs.fuzzel;
+              };
+
+              settings = lib.mkOption {
+                type = lib.types.attrs;
+                default = {
+                  main.output = "DP-1";
+                  border.width = "5";
+                };
+              };
+            };
+          };
+
           bar = {
             which = lib.mkOption {
               type = lib.types.enum [
@@ -110,6 +135,17 @@
           };
 
           extra = {
+            avizo =
+              (helpers.pkgOpt pkgs.avizo true "Avizo - graphical display for volume and brightness changes")
+              // {
+                settings = lib.mkOption {
+                  type = lib.types.attrs;
+                  default = {
+                    default.time = 0.5;
+                  };
+                };
+              };
+
             clipboardSupport =
               let
                 enabled = graphicalEnv.extra.clipboardSupport.enable;
@@ -219,6 +255,16 @@
           ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.slurp
           ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.swappy
           ++ helpers.pkgOptPkg graphicalEnv.extra.swayIdle;
+
+        programs.fuzzel = {
+          enable = graphicalEnv.launcher.which == "fuzzel";
+          inherit (graphicalEnv.launcher.fuzzel) package settings;
+        };
+
+        services.avizo = {
+          enable = graphicalEnv.extra.avizo.enable;
+          inherit (graphicalEnv.extra.avizo) package settings;
+        };
       };
     };
 }
