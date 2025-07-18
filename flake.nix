@@ -12,9 +12,6 @@
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       let
-        # commonArgs = rec {
-        #   myTestSecret = inputs.private-nethers.my-secrets.hi;
-        # };
 
         hosts =
           ./hosts
