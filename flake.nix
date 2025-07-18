@@ -30,6 +30,10 @@
               config.allowUnfree = true;
             };
 
+            # TODO: With `debug = true;`, inspect this with the repl. This seems
+            # to only make sense for nixpkgs inputs; the rest error about no
+            # `default.nix`. Why aren't we / can't we just using `inputs'`
+            # everywhere?
             _module.args.pkgInputs = builtins.mapAttrs (
               _: input:
               import input {
