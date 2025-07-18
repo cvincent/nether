@@ -12,7 +12,7 @@
         openssh.enable = lib.mkEnableOption "OpenSSH";
         tor.enable = lib.mkEnableOption "Tor";
 
-        extra.networkmanagerapplet.enable = lib.mkOption {
+        apps.networkmanagerapplet.enable = lib.mkOption {
           type = lib.types.bool;
           default = config.nether.networking.networkmanager.enable && config.nether.graphicalEnv.enable;
         };
@@ -36,7 +36,7 @@
     { pkgs }:
     { osConfig, ... }:
     {
-      home.packages = lib.optional osConfig.nether.networking.extra.networkmanagerapplet.enable pkgs.networkmanagerapplet;
+      home.packages = lib.optional osConfig.nether.networking.apps.networkmanagerapplet.enable pkgs.networkmanagerapplet;
     }
   );
 }
