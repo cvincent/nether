@@ -128,6 +128,19 @@
             gnomePolkit =
               helpers.pkgOpt pkgs.polkit_gnome true
                 "GNOME Polkit - some apps need this to authenticate the user";
+
+            screenshotSupport =
+              let
+                enabled = graphicalEnv.extra.screenshotSupport.enable;
+              in
+              {
+                enable = helpers.boolOpt true "Screenshot support - utilities for creating and editing screenshots";
+                grim = helpers.pkgOpt pkgs.grim enabled "grim - CLI for taking screenshots";
+                slurp = helpers.pkgOpt pkgs.slurp enabled "slurp - utility for selecting regions of the screen";
+                swappy =
+                  helpers.pkgOpt pkgs.swappy enabled
+                    "swappy - app for editing screenshots after they are taken";
+              };
           };
         };
       };
@@ -182,7 +195,10 @@
           ++ lib.optional (graphicalEnv.wallpapers == "swww") graphicalEnv.wallpapers.swww.package
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipboard
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipPersist
-          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.cliphist;
+          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.cliphist
+          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.grim
+          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.slurp
+          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.swappy;
       };
     };
 }
