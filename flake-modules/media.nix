@@ -29,29 +29,31 @@
       inherit (osConfig.nether) media;
     in
     {
-      home.packages =
-        [ ]
-        ++ lib.optional media.ytDlp.enable yt-dlp
-        ++ lib.optional media.playerctl.enable media.playerctl.package;
+      config = lib.mkIf media.enable {
+        home.packages =
+          [ ]
+          ++ lib.optional media.ytDlp.enable yt-dlp
+          ++ lib.optional media.playerctl.enable media.playerctl.package;
 
-      programs.mpv = {
-        enable = media.mpv.enable;
-        config = {
-          keep-open = true;
-          fullscreen = false;
-          hwdec = "auto";
-          save-position-on-quit = true;
-        };
-        scriptOpts = {
-          thumbfast.network = true;
-          ytdl_hook = lib.mkIf media.ytDlp.enable {
-            ytdl_path = "${yt-dlp.outPath}/bin/yt-dlp";
+        programs.mpv = {
+          enable = media.mpv.enable;
+          config = {
+            keep-open = true;
+            fullscreen = false;
+            hwdec = "auto";
+            save-position-on-quit = true;
           };
+          scriptOpts = {
+            thumbfast.network = true;
+            ytdl_hook = lib.mkIf media.ytDlp.enable {
+              ytdl_path = "${yt-dlp.outPath}/bin/yt-dlp";
+            };
+          };
+          scripts = with pkgs.mpvScripts; [
+            uosc
+            thumbfast
+          ];
         };
-        scripts = with pkgs.mpvScripts; [
-          uosc
-          thumbfast
-        ];
       };
     }
   );

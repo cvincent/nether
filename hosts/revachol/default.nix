@@ -43,11 +43,6 @@
       compositor = "hyprland";
     };
 
-    media = {
-      mpv.enable = true;
-      ytDlp.enable = true;
-    };
-
     # Note for the future on structure/organization, I wonder if these should be
     # nested within graphicalEnv when they're apps that wouldn't work without
     # one...
@@ -59,6 +54,7 @@
     jiraCLI.enable = true;
     lf.enable = true;
     mail.enable = true;
+    media.enable = true;
     miscApps.enable = true;
     ngrok.enable = true;
     printing2D.enable = true;
