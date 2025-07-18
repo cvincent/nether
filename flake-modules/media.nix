@@ -47,6 +47,13 @@
             };
           };
 
+          obsStudio = (helpers.pkgOpt pkgs.obs-studio true "OBS Studio") // {
+            plugins = lib.mkOption {
+              type = lib.types.listOf lib.types.package;
+              default = [ pkgs.obs-studio-plugins.wlrobs ];
+            };
+          };
+
           playerctl = helpers.pkgOpt pkgs.playerctl true "playerctl - CLI for media player controls";
           ytDlp = helpers.pkgOpt pkgs.yt-dlp true "yt-dlp video downloader";
         };
@@ -70,6 +77,10 @@
           enable = media.apps.mpv.enable;
           package = media.apps.mpv.package;
           inherit (media.apps.mpv) config scripts scriptOpts;
+        };
+
+        programs.obs-studio = {
+          inherit (media.apps.obsStudio) enable package plugins;
         };
       };
     };
