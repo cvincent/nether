@@ -1,4 +1,4 @@
-{ pkgInputs }:
+{ pkgInputs, inputs' }:
 { pkgs, ... }:
 {
   imports = [
@@ -41,7 +41,12 @@
     graphicalEnv = {
       enable = true;
       displayManager = "gdm";
-      compositor = "hyprland";
+
+      compositor = {
+        which = null;
+        hyprland.package = inputs'.hyprland.packages.hyprland;
+      };
+
       launcher.which = "fuzzel";
       bar.which = "waybar";
       notifications.which = "swaync";

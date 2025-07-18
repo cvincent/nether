@@ -10,6 +10,7 @@
   # things out into submodules.
 
   imports = [
+    (import ./hyprland { name = "hyprland"; })
     (import ./swaylock { name = "swaylock"; })
     (import ./swaync { name = "swaync"; })
     (import ./waybar { name = "waybar"; })
@@ -36,12 +37,19 @@
             default = null;
           };
 
-          compositor = lib.mkOption {
-            type = lib.types.enum [
-              null
-              "hyprland"
-            ];
-            default = null;
+          compositor = {
+            which = lib.mkOption {
+              type = lib.types.enum [
+                null
+                "hyprland"
+              ];
+              default = null;
+            };
+
+            hyprland.package = lib.mkOption {
+              type = lib.types.package;
+              default = pkgs.hyprland;
+            };
           };
 
           launcher = {
