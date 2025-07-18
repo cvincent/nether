@@ -161,6 +161,8 @@
       };
 
       config = lib.mkIf graphicalEnv.enable {
+        # TODO: Extract all this, and _maybe_ also the home.packages below.
+        # We'll want to figure out our conventions on nesting and directories.
         environment.systemPackages = lib.optional graphicalEnv.extra.gnomePolkit.enable graphicalEnv.extra.gnomePolkit.package;
 
         services.xserver = {
