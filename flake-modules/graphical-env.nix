@@ -76,6 +76,21 @@
             };
           };
 
+          wallpapers = {
+            which = lib.mkOption {
+              type = lib.types.enum [
+                null
+                "swww"
+              ];
+              default = null;
+            };
+
+            swww.package = lib.mkOption {
+              type = lib.types.package;
+              default = pkgs.swww;
+            };
+          };
+
           extra = {
             gnomeKeyring.enable = helpers.boolOpt true "GNOME Keyring - some apps need this to store secrets";
 
@@ -130,9 +145,10 @@
     in
     {
       config = lib.mkIf graphicalEnv.enable {
-        home.packages = lib.optional (
-          graphicalEnv.notifications != null
-        ) graphicalEnv.notifications.libnotify.package;
+        home.packages =
+          [ ]
+          ++ lib.optional (graphicalEnv.notifications != null) graphicalEnv.notifications.libnotify.package
+          ++ lib.optional (graphicalEnv.wallpapers == "swww") graphicalEnv.wallpapers.swww.package;
       };
     };
 }
