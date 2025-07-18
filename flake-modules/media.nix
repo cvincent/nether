@@ -8,12 +8,45 @@
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
+    { config, ... }:
+    let
+      inherit (config.nether) media;
+    in
     {
       options.nether.media = {
         enable = lib.mkEnableOption "Media viewing, playing, and acquisition";
 
         apps = {
-          mpv = helpers.pkgOpt pkgs.mpv true "mpv media player";
+          mpv = (helpers.pkgOpt pkgs.mpv true "mpv media player") // {
+            config = lib.mkOption {
+              type = lib.types.attrs;
+              default = {
+                keep-open = true;
+                fullscreen = false;
+                hwdec = "auto";
+                save-position-on-quit = true;
+              };
+            };
+
+            scripts = lib.mkOption {
+              type = lib.types.listOf lib.types.package;
+              default = with pkgs.mpvScripts; [
+                uosc
+                thumbfast
+              ];
+            };
+
+            scriptOpts = lib.mkOption {
+              type = lib.types.attrs;
+              default = {
+                thumbfast.network = true;
+                ytdl_hook = lib.mkIf media.apps.ytDlp.enable {
+                  ytdl_path = "${media.apps.ytDlp.package.outPath}/bin/yt-dlp";
+                };
+              };
+            };
+          };
+
           playerctl = helpers.pkgOpt pkgs.playerctl true "playerctl - CLI for media player controls";
           ytDlp = helpers.pkgOpt pkgs.yt-dlp true "yt-dlp video downloader";
         };
@@ -25,7 +58,6 @@
     { pkgs }:
     { osConfig, ... }:
     let
-      yt-dlp = media.apps.ytDlp.package;
       inherit (osConfig.nether) media;
     in
     {
@@ -38,22 +70,7 @@
         programs.mpv = {
           enable = media.apps.mpv.enable;
           package = media.apps.mpv.package;
-          config = {
-            keep-open = true;
-            fullscreen = false;
-            hwdec = "auto";
-            save-position-on-quit = true;
-          };
-          scriptOpts = {
-            thumbfast.network = true;
-            ytdl_hook = lib.mkIf media.apps.ytDlp.enable {
-              ytdl_path = "${yt-dlp.outPath}/bin/yt-dlp";
-            };
-          };
-          scripts = with pkgs.mpvScripts; [
-            uosc
-            thumbfast
-          ];
+          inherit (media.apps.mpv) config scripts scriptOpts;
         };
       };
     }
