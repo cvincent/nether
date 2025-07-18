@@ -38,6 +38,21 @@
             default = null;
           };
 
+          notifications = lib.mkOption {
+            which = lib.mkOption {
+              type = lib.types.enum [
+                null
+                "swaync"
+              ];
+              default = null;
+            };
+
+            libnotify.package = lib.mkOption {
+              type = lib.types.package;
+              default = pkgs.libnotify;
+            };
+          };
+
           screenLocker = {
             which = lib.mkOption {
               type = lib.types.enum [
@@ -59,8 +74,6 @@
             gnomePolkit =
               helpers.pkgOpt pkgs.polkit_gnome true
                 "GNOME Polkit - some apps need this to authenticate the user";
-
-            libnotify = helpers.pkgOpt pkgs.libnotify true "libnotify - utilities for system notifications";
           };
         };
       };
@@ -110,7 +123,7 @@
     in
     {
       config = lib.mkIf graphicalEnv.enable {
-        home.packages = lib.optional graphicalEnv.extra.libnotify.enable graphicalEnv.extra.libnotify.package;
+        home.packages = lib.optional (graphicalEnv.notifcations != null) graphicalEnv.notifications.libnotify.package;
       };
     };
 }
