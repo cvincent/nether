@@ -1,5 +1,10 @@
 { name }:
-{ lib, moduleWithSystem, ... }:
+{
+  lib,
+  moduleWithSystem,
+  helpers,
+  ...
+}:
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
@@ -12,37 +17,15 @@
         nether.hardware.audio = {
           enable = lib.mkEnableOption "Audio";
 
-          rtkit.enable = lib.mkOption {
-            type = lib.types.bool;
-            description = "RealTime Kit";
-            default = true;
-          };
-
-          bluetooth.enable = lib.mkOption {
-            type = lib.types.bool;
-            description = "Bluetooth connectivity";
-            default = true;
-          };
+          rtkit.enable = helpers.boolOpt true "RealTime Kit";
+          bluetooth.enable = helpers.boolOpt true "Bluetooth connectivity";
 
           apps = {
-            blueman.enable = lib.mkOption {
-              type = lib.types.bool;
-              description = "Blueman - Bluetooth manager";
-              default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
-            };
+            blueman.enable =
+              helpers.boolOpt graphicalEnv.enable
+              && hardware.audio.bluetooth.enable "Blueman - Bluetooth manager";
 
-            pavucontrol = {
-              enable = lib.mkOption {
-                type = lib.types.bool;
-                description = "PulseAudio Volume Control";
-                default = graphicalEnv.enable && hardware.audio.bluetooth.enable;
-              };
-
-              package = lib.mkOption {
-                type = lib.types.package;
-                default = pkgs.pavucontrol;
-              };
-            };
+            pavucontrol = helpers.pkgOpt pkgs.pavucontrol true "PulseAudio Volume Control";
           };
         };
       };
