@@ -110,6 +110,19 @@
           };
 
           extra = {
+            clipboardSupport =
+              let
+                enabled = graphicalEnv.extra.clipboardSupport.enable;
+              in
+              {
+                enable = helpers.boolOpt true "Clipboard support - utilities for working with and enhancing the clipboard";
+                wlClipboard = helpers.pkgOpt pkgs.wl-clipboard enabled "wl-clipboard - CLI for the clipboard";
+                wlClipPersist =
+                  helpers.pkgOpt pkgs.wl-clip-persist enabled
+                    "wl-clip-persist - Persist the clipboard";
+                cliphist = helpers.pkgOpt pkgs.cliphist enabled "cliphist - Clipboard history";
+              };
+
             gnomeKeyring.enable = helpers.boolOpt true "GNOME Keyring - some apps need this to store secrets";
 
             gnomePolkit =
@@ -166,7 +179,10 @@
         home.packages =
           [ ]
           ++ lib.optional (graphicalEnv.notifications != null) graphicalEnv.notifications.libnotify.package
-          ++ lib.optional (graphicalEnv.wallpapers == "swww") graphicalEnv.wallpapers.swww.package;
+          ++ lib.optional (graphicalEnv.wallpapers == "swww") graphicalEnv.wallpapers.swww.package
+          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipboard
+          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipPersist
+          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.cliphist;
       };
     };
 }
