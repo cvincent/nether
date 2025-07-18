@@ -122,7 +122,9 @@
     in
     {
       config = lib.mkIf graphicalEnv.enable {
-        home.packages = lib.optional (graphicalEnv.notifications != null) graphicalEnv.notifications.libnotify.package;
+        home.packages = lib.optional (
+          graphicalEnv.notifications != null
+        ) graphicalEnv.notifications.libnotify.package;
       };
     };
 }
