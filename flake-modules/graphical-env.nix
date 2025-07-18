@@ -123,6 +123,18 @@
                 cliphist = helpers.pkgOpt pkgs.cliphist enabled "cliphist - Clipboard history";
               };
 
+            displaySettings =
+              let
+                enabled = graphicalEnv.extra.displaySettings.enable;
+              in
+              {
+                enable = helpers.boolOpt true "Utilities for manipulating display settings";
+                nwgDisplays = helpers.pkgOpt pkgs.nwg-displays enabled "nwg-displays - GUI for display settings";
+                wlrRandr =
+                  helpers.pkgOpt pkgs.wlr-randr enabled
+                    "wlr-randr - CLI for display settings; dependency of nwg-displays";
+              };
+
             gnomeKeyring.enable = helpers.boolOpt true "GNOME Keyring - some apps need this to store secrets";
 
             gnomePolkit =
@@ -196,6 +208,8 @@
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipboard
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipPersist
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.cliphist
+          ++ helpers.pkgOptPkg graphicalEnv.extra.displaySettings.nwgDisplays
+          ++ helpers.pkgOptPkg graphicalEnv.extra.displaySettings.wlrRandr
           ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.grim
           ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.slurp
           ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.swappy;
