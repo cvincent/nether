@@ -25,6 +25,8 @@
         nether.graphicalEnv = {
           enable = lib.mkEnableOption "Graphical environment";
 
+          # TODO: displayManager, compositor, and pickers in other modules
+          # should follow the convention of other pickers in this module
           displayManager = lib.mkOption {
             type = lib.types.enum [
               null
