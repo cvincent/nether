@@ -51,6 +51,11 @@
               type = lib.types.package;
               default = pkgs.libnotify;
             };
+
+            swaync.package = lib.mkOption {
+              type = lib.types.package;
+              default = pkgs.swaynotificationcenter;
+            };
           };
 
           screenLocker = {

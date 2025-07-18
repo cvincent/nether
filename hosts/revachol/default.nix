@@ -42,6 +42,7 @@
       enable = true;
       displayManager = "gdm";
       compositor = "hyprland";
+      notifications.which = "swaync";
 
       screenLocker = {
         which = "swaylock";
