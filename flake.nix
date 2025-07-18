@@ -12,6 +12,7 @@
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       let
+        helpers = import ./helpers.nix;
 
         hosts =
           ./hosts
@@ -44,6 +45,7 @@
 
         imports = [
           home-manager.flakeModules.home-manager
+          helpers.flakeModuleHelpers
           ./flake-modules
         ];
 
