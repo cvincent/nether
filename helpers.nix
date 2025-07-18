@@ -17,10 +17,12 @@
           }
         );
 
-        boolOpt = default: description: {
-          type = lib.types.bool;
-          inherit description default;
-        };
+        boolOpt =
+          default: description:
+          lib.mkOption {
+            type = lib.types.bool;
+            inherit description default;
+          };
       };
     };
 
