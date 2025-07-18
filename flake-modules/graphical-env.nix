@@ -38,7 +38,7 @@
             default = null;
           };
 
-          notifications = lib.mkOption {
+          notifications = {
             which = lib.mkOption {
               type = lib.types.enum [
                 null
@@ -123,7 +123,7 @@
     in
     {
       config = lib.mkIf graphicalEnv.enable {
-        home.packages = lib.optional (graphicalEnv.notifcations != null) graphicalEnv.notifications.libnotify.package;
+        home.packages = lib.optional (graphicalEnv.notifications != null) graphicalEnv.notifications.libnotify.package;
       };
     };
 }
