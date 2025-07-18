@@ -4,11 +4,11 @@
   flake.homeModules."${name}" =
     { osConfig, helpers, ... }:
     let
-      inherit (osConfig.nether.graphicalEnv) notifications;
+      inherit (osConfig.nether) graphicalEnv;
     in
     {
-      config = lib.mkIf (notifications.which == "swaync") {
-        home.packages = [ notifications.swaync.package ];
+      config = lib.mkIf (graphicalEnv.enable && graphicalEnv.notifications.which == "swaync") {
+        home.packages = [ graphicalEnv.notifications.swaync.package ];
         home.file."./.config/swaync".source = helpers.directSymlink ./configs;
       };
     };
