@@ -12,6 +12,7 @@
   imports = [
     (import ./swaylock { name = "swaylock"; })
     (import ./swaync { name = "swaync"; })
+    (import ./waybar { name = "waybar"; })
   ];
 
   flake.nixosModules."${name}" = moduleWithSystem (
@@ -41,6 +42,21 @@
               "hyprland"
             ];
             default = null;
+          };
+
+          bar = {
+            which = lib.mkOption {
+              type = lib.types.enum [
+                null
+                "waybar"
+              ];
+              default = null;
+            };
+
+            waybar.package = lib.mkOption {
+              type = lib.types.package;
+              default = pkgs.waybar;
+            };
           };
 
           notifications = {

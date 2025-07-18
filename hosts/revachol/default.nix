@@ -42,6 +42,7 @@
       enable = true;
       displayManager = "gdm";
       compositor = "hyprland";
+      bar.which = "waybar";
       notifications.which = "swaync";
       wallpapers.which = "swww";
 
