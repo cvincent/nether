@@ -1,6 +1,7 @@
 { name }:
 { lib, moduleWithSystem, ... }:
 {
+  # TODO: Probably belongs with hardware
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
     { config, ... }:
