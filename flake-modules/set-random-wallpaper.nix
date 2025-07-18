@@ -24,6 +24,7 @@
     in
     {
       # TODO: Consider making this agnostic about our wallpaper switcher
+      # It could potentially be its own Flake
       config = lib.mkIf (wallpapers.which == "swww") {
         home.packages = [ set-random-wallpaper ];
 
