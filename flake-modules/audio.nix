@@ -24,7 +24,7 @@
             default = true;
           };
 
-          extra = {
+          apps = {
             blueman.enable = lib.mkOption {
               type = lib.types.bool;
               description = "Blueman - Bluetooth manager";
@@ -58,7 +58,7 @@
         security.rtkit.enable = hardware.audio.rtkit.enable;
         hardware.bluetooth.enable = hardware.audio.bluetooth.enable;
 
-        services.blueman.enable = hardware.audio.extra.blueman.enable;
+        services.blueman.enable = hardware.audio.apps.blueman.enable;
       };
     }
   );
@@ -69,7 +69,6 @@
       inherit (osConfig.nether.hardware) audio;
     in
     {
-      home.packages =
-        [ ] ++ (lib.optional audio.extra.pavucontrol.enable audio.extra.pavucontrol.package);
+      home.packages = [ ] ++ (lib.optional audio.apps.pavucontrol.enable audio.apps.pavucontrol.package);
     };
 }
