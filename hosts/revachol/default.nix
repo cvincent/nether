@@ -43,6 +43,7 @@
       displayManager = "gdm";
       compositor = "hyprland";
       notifications.which = "swaync";
+      wallpapers.which = "swww";
 
       screenLocker = {
         which = "swaylock";
