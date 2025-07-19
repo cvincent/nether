@@ -51,8 +51,12 @@ in
           ./mail/notifications/email.nix
           ./mail/notifications/events.nix
         ]
-        ++ lib.optional osConfig.nether.mail.misc.enable ./mail/misc.nix
-        ++ lib.optional osConfig.nether.mail.misc.enable ./mail/maildir-rank-addr.nix
+        ++ lib.optional osConfig.nether.mail.misc.enable (
+          import ./mail/misc.nix { inherit private-nethers; }
+        )
+        ++ lib.optional osConfig.nether.mail.misc.enable (
+          moduleWithSystem (import ./mail/maildir-rank-addr.nix)
+        )
         ++ lib.optional osConfig.nether.mail.davmail.enable ./mail/davmail.nix
       );
     };

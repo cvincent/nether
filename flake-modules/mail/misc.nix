@@ -1,7 +1,7 @@
+{ private-nethers }:
 {
   pkgs,
   helpers,
-  private-nethers,
   ...
 }:
 {

@@ -1,10 +1,8 @@
-{
-  config,
-  maildir-rank-addr,
-  pkgs,
-  ...
-}:
+{ self' }:
+{ config, pkgs, ... }:
 let
+  maildir-rank-addr = self'.packages.maildir-rank-addr;
+
   sync-script = (
     pkgs.writeShellScriptBin "maildir-sync-contacts" ''
       for dir in ${config.home.homeDirectory}/mail/*/; do
