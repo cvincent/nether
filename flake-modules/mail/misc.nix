@@ -2,6 +2,7 @@
   pkgs,
   helpers,
   private-nethers,
+  ...
 }:
 {
   home.packages = with pkgs; [

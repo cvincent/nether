@@ -1,5 +1,4 @@
-{ config, pkgs }:
-
+{ config, pkgs, ... }:
 let
   watch-vdirsyncer-dir = (
     pkgs.writeShellScriptBin "watch-vdirsyncer-dir" ''

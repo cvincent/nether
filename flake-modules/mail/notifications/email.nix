@@ -1,5 +1,4 @@
-{ config, pkgs }:
-
+{ config, pkgs, ... }:
 let
   decodemail = (
     pkgs.writeScriptBin "decodemail.py" ''

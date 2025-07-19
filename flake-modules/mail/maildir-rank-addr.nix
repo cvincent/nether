@@ -2,6 +2,7 @@
   config,
   maildir-rank-addr,
   pkgs,
+  ...
 }:
 let
   sync-script = (

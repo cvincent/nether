@@ -43,35 +43,17 @@ in
       };
     };
 
-  flake.homeModules."${name}" = moduleWithSystem (
-    { self', pkgs }:
+  flake.homeModules."${name}" =
+    { osConfig, ... }:
     {
-      osConfig,
-      config,
-      utils,
-      ...
-    }:
-    {
-      config = lib.mkIf osConfig.nether.mail.enable (
-        { }
-        // lib.mkIf osConfig.nether.mail.misc.enable (
-          (import ./mail/misc.nix {
-            inherit
-              config
-              pkgs
-              utils
-              private-nethers
-              ;
-          })
-          // (import ./mail/maildir-rank-addr.nix {
-            inherit config pkgs;
-            inherit (self'.packages) maildir-rank-addr;
-          })
-          // (import ./mail/notifications/email.nix { inherit config pkgs; })
-          // (import ./mail/notifications/events.nix { inherit config pkgs; })
-        )
-        // lib.mkIf osConfig.nether.mail.davmail.enable (import ./mail/davmail.nix { inherit config pkgs; })
+      imports = lib.optionals osConfig.nether.mail.enable (
+        [
+          ./mail/notifications/email.nix
+          ./mail/notifications/events.nix
+        ]
+        ++ lib.optional osConfig.nether.mail.misc.enable ./mail/misc.nix
+        ++ lib.optional osConfig.nether.mail.misc.enable ./mail/maildir-rank-addr.nix
+        ++ lib.optional osConfig.nether.mail.davmail.enable ./mail/davmail.nix
       );
-    }
-  );
+    };
 }
