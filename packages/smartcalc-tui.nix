@@ -9,7 +9,7 @@ rustPlatform.buildRustPackage {
     sha256 = "sha256:1dv24rsj87avpbrmab0hy3v729fdqh1cfbvl1xsjmfn8y35z4m5m";
   };
 
-  cargoHash = "";
+  cargoHash = "sha256-0AWsJccfzkUkpB6imibN6iUNDEx3vrX9kEgD98nXURw=";
 
   buildNoDefaultFeatures = true;
 
