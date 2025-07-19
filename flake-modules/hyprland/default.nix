@@ -3,7 +3,7 @@
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs, system }:
-    { config, pkgInputs, ... }:
+    { config, inputs, ... }:
     {
       config =
         lib.mkIf
@@ -69,8 +69,8 @@
             };
 
             hardware.graphics = {
-              package = pkgInputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.mesa.drivers;
-              package32 = pkgInputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.pkgsi686Linux.mesa.drivers;
+              package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.mesa.drivers;
+              package32 = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.pkgsi686Linux.mesa.drivers;
             };
           };
     }

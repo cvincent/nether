@@ -22,7 +22,7 @@
       in
       flake@{ lib, moduleWithSystem, ... }:
       {
-        # debug = true;
+        debug = true;
 
         perSystem =
           {
@@ -79,6 +79,7 @@
                 (moduleWithSystem (import ./hosts/${host}))
 
                 {
+                  _module.args = { inherit inputs; };
                   nixpkgs.config.allowUnfree = true;
                   nether.networking.hostname = host;
                 }
