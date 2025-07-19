@@ -123,6 +123,7 @@
     # host
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    # TODO: See about updating
     nixpkgs.url = "nixpkgs/nixos-24.11";
     nixpkgs-latest.url = "nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
