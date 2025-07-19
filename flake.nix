@@ -23,7 +23,12 @@
       flake@{ lib, moduleWithSystem, ... }:
       {
         perSystem =
-          { system, pkgs, ... }:
+          {
+            system,
+            pkgs,
+            inputs',
+            ...
+          }:
           {
             _module.args.pkgs = import self.inputs.nixpkgs {
               inherit system;
@@ -45,6 +50,9 @@
             # TODO: Iterate over the packages directory
             packages.maildir-rank-addr = pkgs.callPackage ./packages/maildir-rank-addr.nix { };
             packages.smartcalc-tui = pkgs.callPackage ./packages/smartcalc-tui.nix { };
+
+            legacyPackages.fonts.Helvetica = inputs'.private-nethers.legacyPackages.fonts.Helvetica;
+            legacyPackages.fonts.PragmataPro = inputs'.private-nethers.legacyPackages.fonts.PragmataPro;
           };
 
         imports = [
