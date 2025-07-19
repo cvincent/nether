@@ -1,5 +1,5 @@
 { name }:
-{ lib, inputs, ... }:
+{ inputs, ... }:
 {
   flake.nixosModules."${name}" = {
     config = {
