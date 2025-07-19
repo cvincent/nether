@@ -9,7 +9,6 @@
         settings.experimental-features = [
           "nix-command"
           "flakes"
-          "pipe-operator"
         ];
 
         optimise = {
