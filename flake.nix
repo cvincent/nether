@@ -22,6 +22,8 @@
       in
       flake@{ lib, moduleWithSystem, ... }:
       {
+        # debug = true;
+
         perSystem =
           {
             system,
@@ -81,6 +83,7 @@
                   nether.networking.hostname = host;
                 }
 
+                inputs.stylix.nixosModules.stylix
                 nix-flatpak.nixosModules.nix-flatpak
 
                 home-manager.nixosModules.home-manager

@@ -75,24 +75,23 @@
             colors = {
               webpage.darkmode.enabled = false;
 
-              # TODO: Bring back colors once we've got Stylix again
-              # statusbar = {
-              #   insert.fg = lib.mkForce "#${config.lib.stylix.colors.base00}";
-              #   url = {
-              #     fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
-              #     hover.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
-              #     success.http.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
-              #     success.https.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
-              #     warn.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
-              #   };
-              # };
+              statusbar = {
+                insert.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
+                url = {
+                  fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
+                  hover.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
+                  success.http.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
+                  success.https.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
+                  warn.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
+                };
+              };
 
-              # tabs = {
-              #   odd.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
-              #   even.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
-              #   pinned.odd.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
-              #   pinned.even.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
-              # };
+              tabs = {
+                odd.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
+                even.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
+                pinned.odd.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
+                pinned.even.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
+              };
             };
           };
 
