@@ -134,6 +134,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: Set this in an option one time so anywhere can access it via config
+    # or osConfig
     private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
     sops-nix.url = "github:Mic92/sops-nix";
 
