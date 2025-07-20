@@ -72,6 +72,14 @@
               package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.mesa.drivers;
               package32 = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.pkgsi686Linux.mesa.drivers;
             };
+
+            virtualisation.vmVariant = {
+              environment.sessionVariables = {
+                GBM_BACKEND = lib.mkForce null;
+                __GLX_VENDOR_LIBRARY_NAME = lib.mkForce null;
+                AQ_DRM_DEVICES = lib.mkForce null;
+              };
+            };
           };
     }
   );
