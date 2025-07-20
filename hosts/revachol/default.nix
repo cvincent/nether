@@ -42,7 +42,7 @@
       displayManager = "gdm";
 
       compositor = {
-        which = null;
+        which = "hyprland";
         hyprland.package = inputs'.hyprland.packages.hyprland;
       };
 
