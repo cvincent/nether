@@ -11,7 +11,7 @@
           default = {
             enable = true;
             image = ../wallpapers/nord-irithyll.png;
-            # base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/nord.yaml";
+            base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/nord.yaml";
             polarity = "dark";
 
             targets.fish.enable = false;
