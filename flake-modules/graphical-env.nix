@@ -212,6 +212,7 @@
         services.xserver = {
           enable = true;
           displayManager.gdm.enable = graphicalEnv.displayManager == "gdm";
+          displayManager.lightdm.enable = graphicalEnv.displayManager == "lightdm";
         };
 
         services.gnome.gnome-keyring.enable = graphicalEnv.extra.gnomeKeyring.enable;
