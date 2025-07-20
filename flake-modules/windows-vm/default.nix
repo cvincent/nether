@@ -1,6 +1,10 @@
 { name }:
 { lib, moduleWithSystem, ... }:
 {
+  # TODO: Most of this is actually setting up GPU passthrough, which isn't
+  # necessarily only used by the Windows VM; it's also possible to pass the GPU
+  # through to other guests, such as `build-vm`, which we configure in
+  # `build-vm.nix`. So we could probably split the modules a bit better.
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
     { config, ... }:
