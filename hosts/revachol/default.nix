@@ -1,9 +1,7 @@
 { pkgInputs, inputs' }:
 { pkgs, ... }:
 {
-  imports = [
-    ./hardware.nix
-  ];
+  imports = [ ./hardware.nix ];
 
   nether = {
     username = "cvincent";
