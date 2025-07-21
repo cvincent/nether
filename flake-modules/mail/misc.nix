@@ -1,6 +1,8 @@
 { private-nethers }:
 {
+  lib,
   config,
+  osConfig,
   pkgs,
   helpers,
   ...
@@ -66,4 +68,36 @@
     "./.config/khal/config".source = ./khal.conf;
     "./.config/vdirsyncer/config".text = private-nethers.mail.vdirsyncerConfig;
   };
+
+  systemd.user.services =
+    let
+      vdirsyncer = "${config.services.vdirsyncer.package}/bin/vdirsyncer";
+      discover = pkgs.writeShellScript "vdirsyncer-discover-wrapper" ''
+        # `yes` can sometimes result in a broken pipe; suppress that
+        (${pkgs.coreutils}/bin/yes ||:) | ${vdirsyncer} discover $1
+      '';
+      discoverService = (
+        name: Description: {
+          Install.RequiredBy = [ "vdirsyncer.service" ];
+          Unit = {
+            inherit Description;
+            Before = [ "vdirsyncer.service" ];
+          };
+          Service = {
+            Type = "oneshot";
+            ExecStart = "${discover} ${name}";
+          };
+        }
+      );
+    in
+    {
+      vdirsyncerDiscoverAppleCalendars = discoverService "icloud_calendars" "Initial setup for iCloud calendars";
+      vdirsyncerDiscoverAppleContacts = discoverService "icloud_contacts" "Initial setup for iCloud contacts";
+      vdirsyncerDiscoverWorkCalendar =
+        lib.attrsets.recursiveUpdate (discoverService "work_calendar" "Initial setup for work calendar")
+          {
+            Unit.After = [ "davmail.service" ];
+            Unit.Requires = [ "davmail.service" ];
+          };
+    };
 }
