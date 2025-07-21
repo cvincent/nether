@@ -1,6 +1,20 @@
-{ config, pkgs, ... }:
+{
+  lib,
+  config,
+  osConfig,
+  pkgs,
+  ...
+}:
 {
   home.packages = [ pkgs.davmail ];
+
+  home.activation = {
+    davmailToken = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      if [[ ! -f ${config.home.homeDirectory}/.davmail-token.properties ]]; then
+        run cp /backup/${osConfig.nether.networking.hostname}/.davmail-token.properties ${config.home.homeDirectory}/.davmail-token.properties
+      fi
+    '';
+  };
 
   systemd.user.services.davmail = {
     Unit.Description = "DavMail POP/IMAP/SMTP Exchange Gateway";
