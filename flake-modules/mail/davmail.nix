@@ -11,7 +11,7 @@
   home.activation = {
     davmailToken = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [[ ! -f ${config.home.homeDirectory}/.davmail-token.properties ]]; then
-        run cp /backup/${osConfig.nether.networking.hostname}/.davmail-token.properties ${config.home.homeDirectory}/.davmail-token.properties
+        run cp /backup/${osConfig.nether.networking.hostname}/home/.davmail-token.properties ${config.home.homeDirectory}/.davmail-token.properties
       fi
     '';
   };
