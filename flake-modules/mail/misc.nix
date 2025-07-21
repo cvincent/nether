@@ -91,9 +91,9 @@
       );
     in
     {
-      vdirsyncerDiscoverAppleCalendars = discoverService "icloud_calendars" "Initial setup for iCloud calendars";
-      vdirsyncerDiscoverAppleContacts = discoverService "icloud_contacts" "Initial setup for iCloud contacts";
-      vdirsyncerDiscoverWorkCalendar =
+      vdirsyncer-discover-apple-calendars = discoverService "icloud_calendars" "Initial setup for iCloud calendars";
+      vdirsyncer-discover-apple-contacts = discoverService "icloud_contacts" "Initial setup for iCloud contacts";
+      vdirsyncer-discover-work-calendar =
         lib.attrsets.recursiveUpdate (discoverService "work_calendar" "Initial setup for work calendar")
           {
             Unit.After = [ "davmail.service" ];
