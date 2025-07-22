@@ -8,6 +8,8 @@
 {
   home.packages = [ pkgs.davmail ];
 
+  # TODO: Convert this module into a Flake module so we can add this file to
+  # nether.backups.paths
   home.activation = {
     davmailToken = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       if [[ ! -f ${config.home.homeDirectory}/.davmail-token.properties ]]; then
