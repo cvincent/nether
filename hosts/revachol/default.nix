@@ -65,6 +65,7 @@
     # Note for the future on structure/organization, I wonder if these should be
     # nested within graphicalEnv when they're apps that wouldn't work without
     # one...
+    backups.enable = true;
     bitwarden.enable = true;
     browsers.enable = true;
     flatpak.enable = true;
@@ -96,15 +97,5 @@
     device = "/dev/disk/by-uuid/2749d5f5-c6c6-4a62-abe2-8ebcfb0bc68a";
     fsType = "ext4";
     options = [ "nofail" ];
-  };
-
-  fileSystems."/backup" = {
-    device = "192.168.1.128:/storage/smb";
-    fsType = "nfs";
-    options = [
-      "nfsvers=4.2"
-      "noatime"
-      "nofail"
-    ];
   };
 }

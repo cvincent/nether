@@ -66,8 +66,8 @@
             mountConfig = {
               Options = "noatime";
             };
-            what = "192.168.1.128:/storage/smb";
-            where = "/backup";
+            what = config.nether.backups.mount.device;
+            where = config.nether.backups.mount.path;
           }
         ];
 
@@ -77,7 +77,7 @@
             automountConfig = {
               TimeoutIdleSec = "600";
             };
-            where = "/backup";
+            where = config.nether.backups.mount.path;
           }
         ];
       };
