@@ -40,6 +40,7 @@ in
 
       config = lib.mkIf config.nether.mail.enable {
         services.peroxide.enable = config.nether.mail.peroxide.enable;
+        systemd.services.peroxide.serviceConfig.User = lib.mkForce config.nether.username;
 
         system.activationScripts = lib.mkIf config.nether.mail.peroxide.enable {
           peroxide =
