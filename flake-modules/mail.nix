@@ -43,8 +43,8 @@ in
         systemd.services.peroxide.serviceConfig.User = lib.mkForce config.nether.username;
 
         nether.backups.paths = lib.mkIf config.nether.mail.peroxide.enable {
-          "/var/lib/peroxide/credentials.json".source = "revachol";
-          "/var/lib/peroxide/cookies.json".source = "revachol";
+          "/var/lib/peroxide/credentials.json".fallbackSource = "revachol";
+          "/var/lib/peroxide/cookies.json".fallbackSource = "revachol";
         };
 
         system.activationScripts = lib.mkIf config.nether.mail.peroxide.enable {

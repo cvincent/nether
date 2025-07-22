@@ -24,17 +24,9 @@
           enable = (lib.mkEnableOption "Enable this backup path") // {
             default = true;
           };
-          owner = lib.mkOption {
-            type = lib.types.str;
-            default = config.nether.username;
-          };
-          group = lib.mkOption {
-            type = lib.types.str;
-            default = "users";
-          };
-          mode = lib.mkOption {
-            type = lib.types.str;
-            default = "600";
+          deleteMissing = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
           };
           fallbackSource = lib.mkOption {
             type = lib.types.enum (
@@ -73,6 +65,7 @@
                 "nfsvers=4.2"
                 "noatime"
                 "nofail"
+                "bg" # Retry mounting for a week on failure
               ];
             };
           };
@@ -90,6 +83,8 @@
 
       config = lib.mkIf config.nether.backups.enable (
         let
+          rsync = config.nether.backups.rsync.package;
+
           enabledPaths = lib.attrsets.filterAttrs (_: { enable, ... }: enable) config.nether.backups.paths;
 
           restoreScripts = lib.attrsets.mapAttrsToList (
@@ -102,48 +97,103 @@
               if [[ ! -e ${path} ]]; then
                 if [[ -e ${hostPath}${path} ]]; then
                   hostPath=${hostPath}
+                elif [[ -e ${fallbackHostPath}${path} ]]; then
+                  hostPath=${fallbackHostPath}
                 else
-                  if [[ -e ${fallbackHostPath}${path} ]]; then
-                    hostPath=${fallbackHostPath}
-                  else
-                    echo "Could not find source for ${path}"
-                    exit 0
-                  fi
+                  echo "No source for ${path}"
                 fi
-                dir=$(dirname "$hostPath${path}")
-                mkdir -p ''${dir#"$hostPath"}
-                cp -R "$hostPath${path}" ${path}
-                chown ${opts.owner}:${opts.group} ${path}
-                chmod ${opts.mode} ${path}
+                if [[ -d $hostPath ]]; then
+                  ${rsync}/bin/rsync -arR --usermap=root:root,*:${config.nether.username} --groupmap=root:root,*:users "$hostPath/.${path}" /
+                fi
               fi
             ''
           ) enabledPaths;
 
-          restoreScript = pkgs.writeShellScript "restore" (lib.strings.concatLines restoreScripts);
+          restoreScript = pkgs.writeShellScriptBin "restore-all" (lib.strings.concatLines restoreScripts);
 
-          backupPaths = lib.attrsets.filterAttrs (
-            _: { source, ... }: builtins.elem source ([ null ] ++ config.nether.networking.hostname)
-          ) enabledPaths;
+          backupWithoutDeletePaths =
+            enabledPaths
+            |> lib.attrsets.filterAttrs (_: { deleteMissing, ... }: !deleteMissing)
+            |> lib.attrsets.mapAttrsToList (path: _opts: path);
+
+          backupWithDeletePaths =
+            enabledPaths
+            |> lib.attrsets.filterAttrs (_: { deleteMissing, ... }: deleteMissing)
+            |> lib.attrsets.mapAttrsToList (path: _opts: path);
+
+          backupScript = pkgs.writeShellScriptBin "backup-all" ''
+            ${rsync}/bin/rsync -ar --files-from=/etc/backup/without-delete / /backup/${config.nether.networking.hostname}
+            ${rsync}/bin/rsync -ar --delete --files-from=/etc/backup/with-delete / /backup/${config.nether.networking.hostname}
+          '';
         in
         {
-          environment.systemPackages = [ config.nether.backups.rsync.package ];
+          # nether.backups.paths."/home/cvincent/arbitrary/test-file" = {
+          #   fallbackSource = "test-host";
+          # };
+          # nether.backups.paths."/home/cvincent/arbitrary-dir" = {
+          #   fallbackSource = "test-host";
+          # };
+          # nether.backups.paths."/home/cvincent/arbitrary-dir-with-delete" = {
+          #   deleteMissing = true;
+          # };
 
-          fileSystems."${backupMount}" = {
-            device = config.nether.backups.mount.device;
-            fsType = "nfs";
-            options = config.nether.backups.mount.options;
-          };
+          environment.systemPackages = [
+            rsync
+            restoreScript
+            backupScript
+          ];
 
-          system.activationScripts.restore-backups = "${restoreScript}";
+          boot.supportedFilesystems = [ "nfs" ];
+
+          systemd.mounts = [
+            {
+              type = "nfs";
+              mountConfig = {
+                Options = config.nether.backups.mount.options;
+              };
+              what = config.nether.backups.mount.device;
+              where = config.nether.backups.mount.path;
+              wantedBy = [ "remote-fs.target" ];
+              before = [ "remote-fs.target" ];
+            }
+          ];
+
+          system.activationScripts.restore-and-backup = ''
+            ${restoreScript}/bin/restore-all
+            ${backupScript}/bin/backup-all
+          '';
 
           systemd.services.restore-backups = {
             wantedBy = [ "multi-user.target" ];
             description = "Restore enabled backup files if not present";
-            requires = [ "remote-fs.target" ];
+            wants = [ "remote-fs.target" ];
             after = [ "remote-fs.target" ];
             serviceConfig = {
               Type = "oneshot";
-              ExecStart = restoreScript;
+              ExecStart = "${restoreScript}/bin/restore-all";
+            };
+          };
+
+          environment.etc."backup/without-delete".text = lib.strings.concatLines backupWithoutDeletePaths;
+          environment.etc."backup/with-delete".text = lib.strings.concatLines backupWithDeletePaths;
+
+          systemd.services.backup-all = {
+            description = "Backup enabled backup files";
+            serviceConfig = {
+              Type = "oneshot";
+              ExecStart = "${backupScript}/bin/backup-all";
+            };
+          };
+
+          systemd.timers.backup-all = {
+            wantedBy = [ "timers.target" ];
+            requires = [ "restore-backups.service" ];
+            after = [ "restore-backups.service" ];
+            timerConfig = {
+              OnActiveSec = "0s";
+              OnUnitActiveSec = "5m";
+              AccuracySec = "1s";
+              Unit = "backup-all.service";
             };
           };
         }

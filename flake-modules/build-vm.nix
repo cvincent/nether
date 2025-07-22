@@ -54,32 +54,6 @@
         services.xserver.videoDrivers = [ "qxl" ];
 
         users.users."${config.nether.username}".initialPassword = lib.mkForce "testvm";
-
-        # `virtualisation.fileSystems` gets overwritten, so we mount the backup
-        # NFS this way instead. TODO: DRY this up
-        boot.supportedFilesystems = [ "nfs" ];
-        services.rpcbind.enable = true;
-
-        systemd.mounts = [
-          {
-            type = "nfs";
-            mountConfig = {
-              Options = "noatime";
-            };
-            what = config.nether.backups.mount.device;
-            where = config.nether.backups.mount.path;
-          }
-        ];
-
-        systemd.automounts = [
-          {
-            wantedBy = [ "multi-user.target" ];
-            automountConfig = {
-              TimeoutIdleSec = "600";
-            };
-            where = config.nether.backups.mount.path;
-          }
-        ];
       };
     };
 }
