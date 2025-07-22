@@ -6,11 +6,12 @@
   ...
 }:
 # Allows defining specific files or directories to be regularly backed up to the
-# network backup drive. On activation, enabled backup files are copied from the
-# network drive to the machine being activated. Each file can define a `source`,
-# which is the hostname of the machine the file should be backed up from. If
-# null, the machine's own hostname is used. Each file also has an `enable`
-# option, so hosts can select which files they want.
+# network backup drive. On activation and boot, enabled backup files are
+# restored from the network drive to the machine being activated. Each file can
+# define a `fallbackSource`, which is the hostname of the machine the file
+# should be restored from if it's not already backed up for the own machine's
+# hostname. Each file also has an `enable` option, so hosts can select which
+# files they want.
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
@@ -35,9 +36,15 @@
             type = lib.types.str;
             default = "600";
           };
-          source = lib.mkOption {
-            type = lib.types.enum ([ null ] ++ config.nether.hosts);
-            default = config.nether.backups.defaultSource;
+          fallbackSource = lib.mkOption {
+            type = lib.types.enum (
+              [
+                null
+                "test-host"
+              ]
+              ++ config.nether.hosts
+            );
+            default = config.nether.backups.defaultFallbackSource;
           };
         };
       };
@@ -75,7 +82,7 @@
             default = { };
           };
 
-          defaultSource = lib.mkOption { type = lib.types.str; };
+          defaultFallbackSource = lib.mkOption { type = lib.types.str; };
 
           rsync = helpers.pkgOpt pkgs.rsync true "rsync - robust copying for backups";
         };
@@ -84,6 +91,36 @@
       config = lib.mkIf config.nether.backups.enable (
         let
           enabledPaths = lib.attrsets.filterAttrs (_: { enable, ... }: enable) config.nether.backups.paths;
+
+          restoreScripts = lib.attrsets.mapAttrsToList (
+            path: opts:
+            let
+              hostPath = "${backupMount}/${config.nether.networking.hostname}";
+              fallbackHostPath = "${backupMount}/${opts.fallbackSource}";
+            in
+            ''
+              if [[ ! -e ${path} ]]; then
+                if [[ -e ${hostPath}${path} ]]; then
+                  hostPath=${hostPath}
+                else
+                  if [[ -e ${fallbackHostPath}${path} ]]; then
+                    hostPath=${fallbackHostPath}
+                  else
+                    echo "Could not find source for ${path}"
+                    exit 0
+                  fi
+                fi
+                dir=$(dirname "$hostPath${path}")
+                mkdir -p ''${dir#"$hostPath"}
+                cp -R "$hostPath${path}" ${path}
+                chown ${opts.owner}:${opts.group} ${path}
+                chmod ${opts.mode} ${path}
+              fi
+            ''
+          ) enabledPaths;
+
+          restoreScript = pkgs.writeShellScript "restore" (lib.strings.concatLines restoreScripts);
+
           backupPaths = lib.attrsets.filterAttrs (
             _: { source, ... }: builtins.elem source ([ null ] ++ config.nether.networking.hostname)
           ) enabledPaths;
@@ -97,39 +134,16 @@
             options = config.nether.backups.mount.options;
           };
 
-          systemd.services = lib.attrsets.mapAttrs' (
-            path: opts:
-            let
-              sourcePath =
-                if opts.source != null then
-                  "${backupMount}/${opts.source}"
-                else
-                  "${backupMount}/${config.nether.networking.hostname}";
-
-              restore = pkgs.writeShellScript "restore" ''
-                if [[ ! -e ${path} ]]; then
-                  dir=$(dirname ${backupMount}/${sourcePath}${path})
-                  mkdir -p ''${dir#"${sourcePath}"}
-                  cp -R ${sourcePath}${path} ${path}
-                  chown ${opts.owner}:${opts.group} ${path}
-                  chmod ${opts.mode} ${path}
-                fi
-              '';
-            in
-            {
-              name = "backups-${lib.strings.replaceStrings [ "/" "." ] [ "-" "-" ] path}";
-              value = {
-                wantedBy = [ "multi-user.target" ];
-                description = "Backup system - restore ${path}";
-                requires = [ "remote-fs.target" ];
-                after = [ "remote-fs.target" ];
-                serviceConfig = {
-                  Type = "oneshot";
-                  ExecStart = restore;
-                };
-              };
-            }
-          ) enabledPaths;
+          systemd.services.restore-backups = {
+            wantedBy = [ "multi-user.target" ];
+            description = "Restore enabled backup files if not present";
+            requires = [ "remote-fs.target" ];
+            after = [ "remote-fs.target" ];
+            serviceConfig = {
+              Type = "oneshot";
+              ExecStart = restoreScript;
+            };
+          };
         }
       );
     }
