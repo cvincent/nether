@@ -134,6 +134,8 @@
             options = config.nether.backups.mount.options;
           };
 
+          system.activationScripts.restore-backups = "${restoreScript}";
+
           systemd.services.restore-backups = {
             wantedBy = [ "multi-user.target" ];
             description = "Restore enabled backup files if not present";
