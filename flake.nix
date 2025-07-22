@@ -88,6 +88,7 @@
                     nixpkgs.config.allowUnfree = true;
                     nether.networking.hostname = host;
                     nether.hosts = hosts;
+                    nether.backups.defaultSource = "revachol";
                   };
                 }
 
