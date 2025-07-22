@@ -14,7 +14,7 @@ in
   # much-improved Flake. Some of this could potentially be split off into a
   # Flake of its own so others can easily use the functionality.
   flake.nixosModules."${name}" =
-    { config, ... }:
+    { pkgs, config, ... }:
     {
       options = {
         nether.mail.enable = lib.mkEnableOption "Fetching, reading, and sending email";
@@ -40,6 +40,22 @@ in
 
       config = lib.mkIf config.nether.mail.enable {
         services.peroxide.enable = config.nether.mail.peroxide.enable;
+
+        system.activationScripts = lib.mkIf config.nether.mail.peroxide.enable {
+          peroxide =
+            let
+              certPem = pkgs.writeText "peroxide-cert.pem" private-nethers.mail.peroxide.certPem;
+              keyPem = pkgs.writeText "peroxide-key.pem" private-nethers.mail.peroxide.keyPem;
+            in
+            ''
+              if [[ ! -d /var/lib/peroxide ]]; then
+                mkdir -p /var/lib/peroxide
+                ln -s ${certPem} /var/lib/peroxide/cert.pem
+                ln -s ${keyPem} /var/lib/peroxide/key.pem
+                chown -R ${config.nether.username}:users /var/lib/peroxide
+              fi
+            '';
+        };
       };
     };
 
