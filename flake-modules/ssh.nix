@@ -21,8 +21,26 @@
 
   flake.homeModules."${name}" =
     { osConfig, ... }:
+    let
+      sshKeys = lib.attrsets.mapAttrs' (
+        name: opts:
+        let
+          path = "${osConfig.nether.homeDirectory}/${name}";
+        in
+        {
+          name = "${name}-dummy";
+          value = opts // {
+            onChange = ''
+              rm -f ${path}
+              cp ${path}-dummy ${path}
+              rm -f ${path}-dummy
+              chmod 600 ${path}
+            '';
+          };
+        }
+      ) inputs.private-nethers.ssh.keys;
+    in
     {
-
       config = lib.mkIf osConfig.nether.ssh.enable {
         programs.ssh = {
           enable = true;
@@ -30,7 +48,9 @@
           extraConfig = lib.strings.concatLines [ inputs.private-nethers.ssh.extraConfig ];
         };
 
-        home.file = inputs.private-nethers.ssh.keys;
+        home.file = sshKeys // {
+          ".ssh/known_host_backup".text = inputs.private-nethers.ssh.knownHostBackup;
+        };
       };
     };
 }
