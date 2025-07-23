@@ -69,6 +69,7 @@
     bitwarden.enable = true;
     browsers.enable = true;
     flatpak.enable = true;
+    git.enable = true;
     homeAssistant.enable = true;
     ios.enable = true;
     jiraCLI.enable = true;
