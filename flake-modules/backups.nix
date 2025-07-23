@@ -51,6 +51,7 @@
             # this option
             path = lib.mkOption {
               type = lib.types.str;
+              # TODO: Be civilized and move this to /mnt/backup
               default = "/backup";
             };
 
