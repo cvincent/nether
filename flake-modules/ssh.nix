@@ -9,9 +9,13 @@
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
-    { ... }:
+    { config, ... }:
     {
-      options.nether.ssh = (helpers.pkgOpt pkgs.ssh true "SSH client") // { };
+      options.nether.ssh = (helpers.pkgOpt pkgs.openssh true "SSH client") // { };
+
+      config = lib.mkIf config.nether.ssh.enable {
+        nether.backups.paths."${config.nether.homeDirectory}/.ssh/known_hosts" = { };
+      };
     }
   );
 
