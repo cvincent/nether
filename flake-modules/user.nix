@@ -6,6 +6,7 @@
     {
       options = {
         nether.username = lib.mkOption { type = lib.types.str; };
+        nether.homeDirectory = lib.mkOption { type = lib.types.str; };
         nether.me.fullName = lib.mkOption { type = lib.types.str; };
         nether.me.email = lib.mkOption { type = lib.types.str; };
       };
@@ -16,6 +17,7 @@
           extraGroups = [ "wheel" ];
         };
 
+        nether.homeDirectory = "/home/${config.nether.username}";
         nether.me.fullName = "Chris Vincent";
         nether.me.email = inputs.private-nethers.email;
       };
@@ -25,6 +27,6 @@
     { osConfig, ... }:
     {
       home.username = osConfig.nether.username;
-      home.homeDirectory = "/home/${osConfig.nether.username}";
+      home.homeDirectory = osConfig.nether.homeDirectory;
     };
 }
