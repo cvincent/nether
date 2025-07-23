@@ -8,7 +8,7 @@
 {
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs, pkgInputs }:
-    hm@{ config, osConfig, ... }:
+    { osConfig, ... }:
     let
       qutebrowser-route = (
         pkgs.writeShellScriptBin "qutebrowser-route" ''
@@ -209,12 +209,6 @@
             "x-scheme-handler/unknown" = "qutebrowser-route.desktop";
           };
         };
-
-        home.activation.ensureDownloadsDir = hm.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          if [[ ! -d ${config.home.homeDirectory}/Downloads ]]; then
-            run mkdir ${config.home.homeDirectory}/Downloads
-          fi
-        '';
       };
     }
   );
