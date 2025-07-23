@@ -122,8 +122,12 @@
             |> lib.attrsets.mapAttrsToList (path: _opts: path);
 
           backupScript = pkgs.writeShellScriptBin "backup-all" ''
-            ${rsync}/bin/rsync -ar --files-from=/etc/backup/without-delete / /backup/${config.nether.networking.hostname}
-            ${rsync}/bin/rsync -ar --delete --files-from=/etc/backup/with-delete / /backup/${config.nether.networking.hostname}
+            if mountpoint ${backupMount}; then
+              ${rsync}/bin/rsync -ar --files-from=/etc/backup/without-delete / /backup/${config.nether.networking.hostname}
+              ${rsync}/bin/rsync -ar --delete --files-from=/etc/backup/with-delete / /backup/${config.nether.networking.hostname}
+            else
+              echo '${backupMount} is not mounted!'
+            fi
           '';
         in
         {
