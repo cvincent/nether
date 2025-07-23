@@ -3,20 +3,29 @@
   lib,
   inputs,
   moduleWithSystem,
+  helpers,
   ...
 }:
 {
-  flake.homeModules."${name}" = moduleWithSystem (
+  flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
-    { osConfig, helpers, ... }:
+    { ... }:
     {
       options.nether.git = helpers.pkgOpt pkgs.git true "Git SCM";
+    }
+  );
+
+  flake.homeModules."${name}" =
+    { osConfig, ... }:
+    {
 
       config = lib.mkIf osConfig.nether.git.enable {
         programs.git = {
           enable = true;
+          package = osConfig.nether.git.package;
+
           userName = osConfig.nether.me.fullName;
-          email = osConfig.nether.me.email;
+          userEmail = osConfig.nether.me.email;
 
           ignores = [ "Session.vim" ];
 
@@ -25,6 +34,5 @@
           } inputs.private-nethers.git.extraConfig;
         };
       };
-    }
-  );
+    };
 }
