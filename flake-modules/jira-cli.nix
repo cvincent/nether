@@ -6,9 +6,15 @@
   ...
 }:
 {
-  flake.nixosModules."${name}" = {
-    options.nether.jiraCLI.enable = lib.mkEnableOption "Jira CLI tool";
-  };
+  flake.nixosModules."${name}" =
+    { config, ... }:
+    {
+      options.nether.jiraCLI.enable = lib.mkEnableOption "Jira CLI tool";
+
+      config = lib.mkIf config.nether.jiraCLI.enable {
+        nether.backups.paths."${config.nether.homeDirectory}/.config/.jira/.config.yml" = { };
+      };
+    };
 
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs }:
