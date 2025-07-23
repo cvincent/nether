@@ -43,11 +43,11 @@ in
         systemd.services.peroxide.serviceConfig.User = lib.mkForce config.nether.username;
 
         nether.backups.paths = lib.mkIf config.nether.mail.peroxide.enable {
-          "/var/lib/peroxide/credentials.json".fallbackSource = "revachol";
-          "/var/lib/peroxide/cookies.json".fallbackSource = "revachol";
+          "/var/lib/peroxide/credentials.json" = { };
+          "/var/lib/peroxide/cookies.json" = { };
           # TODO: Once all of this is in proper Flake modules, this should obviously
           # be grouped with the davmail configs
-          "${config.nether.homeDirectory}/.davmail-token.properties".fallbackSource = "revachol";
+          "${config.nether.homeDirectory}/.davmail-token.properties" = { };
         };
 
         system.activationScripts = lib.mkIf config.nether.mail.peroxide.enable {
