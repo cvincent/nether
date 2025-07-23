@@ -34,6 +34,15 @@
           settings = {
             auto_save.session = true;
             session.lazy_restore = true;
+            # TODO: We should figure out how to more easily manage the spelling
+            # dictionaries. Initially downloading the dictionary is done with:
+            # $(find $(nix-store --query --outputs $(which qutebrowser)) -name 'dictcli.py' | head -1) install en-US
+            # And then each time we have a new Qutebrowser session instance, it
+            # needs a copy of it:
+            # cp -R ~/.local/share/qutebrowser/qtwebengine_dictionaries ~/.local/qutebrowsers/personal/qtwebengine_dictionaries
+            # Ideally, we would put the dictionary in nether.backups.paths, then
+            # each time we create a Qutebrowser instance, symlink that instance's
+            # spelling dictionary back to the main one.
             spellcheck.languages = [ "en-US" ];
             input.media_keys = false;
 
