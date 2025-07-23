@@ -12,6 +12,9 @@
 # should be restored from if it's not already backed up for the own machine's
 # hostname. Each file also has an `enable` option, so hosts can select which
 # files they want.
+# NOTE: Once we're configuring the backup server with NixOS, we need to make
+# sure sudoers has a line like:
+# synthesis ALL=NOPASSWD:/path/to/rsync
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
@@ -46,6 +49,21 @@
         nether.backups = {
           enable = lib.mkEnableOption "System for automatically backing up select files to the network drive, and restoring them on activation";
 
+          server = {
+            addr = lib.mkOption {
+              type = lib.types.str;
+              default = "192.168.1.128";
+            };
+            root = lib.mkOption {
+              type = lib.types.str;
+              default = "/storage/smb";
+            };
+            username = lib.mkOption {
+              type = lib.types.str;
+              default = "synthesis";
+            };
+          };
+
           mount = {
             # TODO: Ensure references to /backup throughout the config refer to
             # this option
@@ -57,7 +75,7 @@
 
             device = lib.mkOption {
               type = lib.types.str;
-              default = "192.168.1.128:/storage/smb";
+              default = "${config.nether.backups.server.addr}:${config.nether.backups.server.root}";
             };
 
             options = lib.mkOption {
@@ -86,6 +104,16 @@
         let
           rsync = config.nether.backups.rsync.package;
 
+          rsyncOpts = lib.strings.concatStringsSep " " [
+            "--progress"
+            "-arR"
+            "-e '${config.nether.ssh.package}/bin/ssh -i ${config.nether.homeDirectory}/.ssh/id_rsa"
+            "-o UserKnownHostsFile=${config.nether.homeDirectory}/.ssh/known_host_backup'"
+            "--rsync-path='sudo rsync'"
+          ];
+
+          rsyncRemoteRoot = "${config.nether.backups.server.username}@${config.nether.backups.mount.device}";
+
           enabledPaths = lib.attrsets.filterAttrs (_: { enable, ... }: enable) config.nether.backups.paths;
 
           restoreScripts = lib.attrsets.mapAttrsToList (
@@ -93,24 +121,39 @@
             let
               hostPath = "${backupMount}/${config.nether.networking.hostname}";
               fallbackHostPath = "${backupMount}/${opts.fallbackSource}";
+              remoteHostPath = "${rsyncRemoteRoot}/${config.nether.networking.hostname}";
+              remoteFallbackHostPath = "${rsyncRemoteRoot}/${opts.fallbackSource}";
             in
             ''
               if [[ ! -e ${path} ]]; then
                 if [[ -e ${hostPath}${path} ]]; then
-                  hostPath=${hostPath}
+                  hostPath=${remoteHostPath}
                 elif [[ -e ${fallbackHostPath}${path} ]]; then
-                  hostPath=${fallbackHostPath}
+                  hostPath=${remoteFallbackHostPath}
                 else
+                  hostPath=""
                   echo "No source for ${path}"
                 fi
-                if [[ -d $hostPath ]]; then
-                  ${rsync}/bin/rsync -arR --usermap=root:root,*:${config.nether.username} --groupmap=root:root,*:users "$hostPath/.${path}" /
+                if [[ $hostPath ]]; then
+                  ${rsync}/bin/rsync ${rsyncOpts} --usermap=root:root,*:${config.nether.username} --groupmap=root:root,*:users "$hostPath/.${path}" /
                 fi
               fi
             ''
           ) enabledPaths;
 
-          restoreScript = pkgs.writeShellScriptBin "restore-all" (lib.strings.concatLines restoreScripts);
+          restoreScript = pkgs.writeShellScriptBin "restore-all" (
+            lib.strings.concatLines (
+              [
+                ''
+                  echo "Waiting for SSH key..."
+                  while ! ${pkgs.coreutils}/bin/test -f ${config.nether.homeDirectory}/.ssh/id_rsa; do
+                    sleep 0.1
+                  done
+                ''
+              ]
+              ++ restoreScripts
+            )
+          );
 
           backupWithoutDeletePaths =
             enabledPaths
@@ -123,12 +166,8 @@
             |> lib.attrsets.mapAttrsToList (path: _opts: path);
 
           backupScript = pkgs.writeShellScriptBin "backup-all" ''
-            if mountpoint ${backupMount}; then
-              ${rsync}/bin/rsync -ar --files-from=/etc/backup/without-delete / /backup/${config.nether.networking.hostname}
-              ${rsync}/bin/rsync -ar --delete --files-from=/etc/backup/with-delete / /backup/${config.nether.networking.hostname}
-            else
-              echo '${backupMount} is not mounted!'
-            fi
+            ${rsync}/bin/rsync --progress ${rsyncOpts} -arR --files-from=/etc/backup/without-delete / ${rsyncRemoteRoot}/${config.nether.networking.hostname}
+            ${rsync}/bin/rsync --progress ${rsyncOpts} -arR --delete --files-from=/etc/backup/with-delete / ${rsyncRemoteRoot}/${config.nether.networking.hostname}
           '';
         in
         {
@@ -141,6 +180,8 @@
           # nether.backups.paths."/home/cvincent/arbitrary-dir-with-delete" = {
           #   deleteMissing = true;
           # };
+
+          nether.ssh.enable = true;
 
           environment.systemPackages = [
             rsync
@@ -163,16 +204,16 @@
             }
           ];
 
-          system.activationScripts.restore-and-backup = ''
-            ${restoreScript}/bin/restore-all
-            ${backupScript}/bin/backup-all
+          system.userActivationScripts.restore-and-backup = ''
+            ${pkgs.systemd}/bin/systemctl start restore-backups.service
+            # Backup is always called on successful restore-backups.service
           '';
 
           systemd.services.restore-backups = {
             wantedBy = [ "multi-user.target" ];
             description = "Restore enabled backup files if not present";
-            wants = [ "remote-fs.target" ];
-            after = [ "remote-fs.target" ];
+            unitConfig.RequiresMountsFor = backupMount;
+            onSuccess = [ "backup-all.service" ];
             serviceConfig = {
               Type = "oneshot";
               ExecStart = "${restoreScript}/bin/restore-all";
@@ -184,6 +225,7 @@
 
           systemd.services.backup-all = {
             description = "Backup enabled backup files";
+            after = [ "restore-backups.service" ];
             serviceConfig = {
               Type = "oneshot";
               ExecStart = "${backupScript}/bin/backup-all";
@@ -195,7 +237,6 @@
             requires = [ "restore-backups.service" ];
             after = [ "restore-backups.service" ];
             timerConfig = {
-              OnActiveSec = "0s";
               OnUnitActiveSec = "5m";
               AccuracySec = "1s";
               Unit = "backup-all.service";
