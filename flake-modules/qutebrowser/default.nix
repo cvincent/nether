@@ -6,6 +6,14 @@
   ...
 }:
 {
+  flake.nixosModules."${name}" =
+    { config, ... }:
+    {
+      config = lib.mkIf config.nether.browsers.qutebrowser.enable {
+        nether.backups.paths."${config.nether.homeDirectory}/.local/qutebrowsers".deleteMissing = true;
+      };
+    };
+
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs, pkgInputs }:
     { osConfig, ... }:

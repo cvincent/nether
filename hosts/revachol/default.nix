@@ -62,6 +62,8 @@
       apps.ytDlp.package = pkgInputs.nixpkgs-yt-dlp.yt-dlp;
     };
 
+    homeSrcDirectory = true;
+
     # Note for the future on structure/organization, I wonder if these should be
     # nested within graphicalEnv when they're apps that wouldn't work without
     # one...

@@ -16,6 +16,11 @@
           pkgInputs.nixpkgs-unstable-latest.protonup-qt
           pkgInputs.nixpkgs-unstable-latest.protontricks
         ];
+
+        nether.backups.paths = {
+          "${config.nether.homeDirectory}/.local/share/Steam/config".deleteMissing = true;
+          "${config.nether.homeDirectory}/.local/share/Steam/userdata".deleteMissing = true;
+        };
       };
     }
   );

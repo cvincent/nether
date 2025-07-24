@@ -1,6 +1,12 @@
 { name }:
 { ... }:
 {
+  flake.nixosModules."${name}" =
+    { config, ... }:
+    {
+      nether.backups.paths."${config.nether.homeDirectory}/.local/share/fish/fish_history" = { };
+    };
+
   flake.homeModules."${name}" =
     { osConfig, ... }:
     {

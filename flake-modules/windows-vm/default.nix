@@ -19,6 +19,8 @@
           looking-glass-client
         ];
 
+        nether.backups.paths."/var/lib/libvirt/images" = { };
+
         virtualisation.libvirtd = {
           enable = true;
           qemu.ovmf.enable = true;

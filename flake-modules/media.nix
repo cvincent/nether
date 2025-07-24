@@ -58,6 +58,10 @@
           ytDlp = helpers.pkgOpt pkgs.yt-dlp true "yt-dlp video downloader";
         };
       };
+
+      config = lib.mkIf config.nether.media.enable {
+        nether.backups.paths."${config.nether.homeDirectory}/videos".deleteMissing = true;
+      };
     }
   );
 

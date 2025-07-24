@@ -52,6 +52,9 @@ in
           # TODO: Once all of this is in proper Flake modules, this should obviously
           # be grouped with the davmail configs
           "${config.nether.homeDirectory}/.davmail-token.properties" = { };
+          "${config.nether.homeDirectory}/mail".deleteMissing = true;
+          "${config.nether.homeDirectory}/.local/share/vdirsyncer".deleteMissing = true;
+          "${config.nether.homeDirectory}/.local/state/vdirsyncer".deleteMissing = true;
         };
 
         system.activationScripts = lib.mkIf config.nether.mail.peroxide.enable {

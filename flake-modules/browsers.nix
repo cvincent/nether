@@ -40,6 +40,24 @@ in
       };
 
       config = lib.mkIf config.nether.browsers.enable {
+        nether.backups.paths = {
+          "${config.nether.homeDirectory}/Downloads".deleteMissing = true;
+
+          "${config.nether.homeDirectory}/.config/BraveSoftware/Brave-Browser" =
+            lib.mkIf config.nether.browsers.brave.enable
+              { deleteMissing = true; };
+
+          "${config.nether.homeDirectory}/.config/chromium" =
+            lib.mkIf config.nether.browsers.chromium.enable
+              {
+                deleteMissing = true;
+              };
+
+          "${config.nether.homeDirectory}/.mozilla/firefox" = lib.mkIf config.nether.browsers.firefox.enable {
+            deleteMissing = true;
+          };
+        };
+
         # Silences warnings on Chromium boot, and useful for checking battery levels
         # from CLI
         services.upower = lib.mkIf config.nether.browsers.chromium.enable { enable = true; };

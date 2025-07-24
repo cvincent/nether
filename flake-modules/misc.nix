@@ -14,6 +14,21 @@
 
       config = lib.mkIf (config.nether.miscApps.enable && config.nether.flatpak.enable) {
         services.flatpak.packages = [ "app.bluebubbles.BlueBubbles" ];
+
+        nether.backups.paths = {
+          "${config.nether.homeDirectory}/.config/discord".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/discordcanary".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/Signal".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/Slack".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/spotify".deleteMissing = true;
+          "${config.nether.homeDirectory}/.local/share/fractal".deleteMissing = true;
+          "${config.nether.homeDirectory}/.var/app/app.bluebubbles.BlueBubbles".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/obsidian".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/FreeCAD".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/tigervnc".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/zoom.conf".deleteMissing = true;
+          "${config.nether.homeDirectory}/.config/zoomus.conf".deleteMissing = true;
+        };
       };
     };
 

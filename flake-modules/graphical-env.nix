@@ -217,6 +217,8 @@
 
         services.gnome.gnome-keyring.enable = graphicalEnv.extra.gnomeKeyring.enable;
 
+        nether.backups.paths."${config.nether.homeDirectory}/.local/share/keyrings".deleteMissing = true;
+
         # Uses login password to unlock the GNOME Keyring
         security.pam.services.login.enableGnomeKeyring = graphicalEnv.extra.gnomeKeyring.enable;
 
