@@ -163,9 +163,12 @@
               "<ctrl-l>" = "edit-url";
 
               # BitWarden
-              "<ctrl-shift-l>" = "spawn --userscript ~/.nix-profile/bin/bitwarden-qutebrowser";
-              "<space>bc" = "spawn --userscript ~/.nix-profile/bin/bitwarden-create login {url}";
-              "<space>bf" = "spawn --userscript ~/.nix-profile/bin/bitwarden-fuzzel {url:host}";
+              "<ctrl-shift-l>" =
+                "spawn --userscript /etc/profiles/per-user/${osConfig.nether.username}/bin/bitwarden-qutebrowser";
+              "<space>bc" =
+                "spawn --userscript /etc/profiles/per-user/${osConfig.nether.username}/bin/bitwarden-create login {url}";
+              "<space>bf" =
+                "spawn --userscript /etc/profiles/per-user/${osConfig.nether.username}/bin/bitwarden-fuzzel {url:host}";
 
               # Other
               "<space>wi" = "devtools";
