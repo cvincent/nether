@@ -43,7 +43,7 @@
         security.rtkit.enable = hardware.audio.rtkit.enable;
         hardware.bluetooth.enable = hardware.audio.bluetooth.enable;
 
-        services.blueman.enable = hardware.audio.apps.blueman.enable;
+        services.blueman.enable = hardware.audio.bluetooth.enable && hardware.audio.apps.blueman.enable;
       };
     }
   );
