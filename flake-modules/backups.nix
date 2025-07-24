@@ -29,6 +29,8 @@
           };
           # TODO: compressTransfer option, for large files. Will require
           # updating how we generate our backup script.
+          # TODO: Look into an option for selectively enabling rsync's Time
+          # Machine like feature
           deleteMissing = lib.mkOption {
             type = lib.types.bool;
             default = false;
