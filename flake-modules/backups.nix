@@ -254,7 +254,7 @@
             requires = [ "restore-backups.service" ];
             after = [ "restore-backups.service" ];
             timerConfig = {
-              OnUnitActiveSec = "5m";
+              OnCalendar = "*-*-* 02:00:00";
               AccuracySec = "1s";
               Unit = "backup-all.service";
             };
