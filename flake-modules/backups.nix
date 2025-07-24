@@ -228,6 +228,8 @@
             serviceConfig = {
               Type = "oneshot";
               ExecStart = "${restoreScript}/bin/restore-all";
+              TimeoutStopSec = "infinity";
+              KillSignal = "SIGCONT";
             };
           };
 
@@ -242,6 +244,8 @@
             serviceConfig = {
               Type = "oneshot";
               ExecStart = "${backupScript}/bin/backup-all";
+              TimeoutStopSec = "infinity";
+              KillSignal = "SIGCONT";
             };
           };
 
