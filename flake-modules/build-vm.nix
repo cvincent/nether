@@ -6,9 +6,9 @@
     {
       virtualisation.vmVariant = {
         virtualisation = {
-          cores = 4;
-          memorySize = 8192;
-          diskSize = 5120;
+          cores = 12;
+          memorySize = 32768;
+          diskSize = 20480;
         };
 
         virtualisation.qemu.options = [
