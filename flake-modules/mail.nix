@@ -41,6 +41,10 @@ in
       config = lib.mkIf config.nether.mail.enable {
         services.peroxide.enable = config.nether.mail.peroxide.enable;
         systemd.services.peroxide.serviceConfig.User = lib.mkForce config.nether.username;
+        # TODO: We would probably prefer to run this as a user service. See also
+        # notes on davmail.service.
+        systemd.services.peroxide.requires = [ "restore-backups.service" ];
+        systemd.services.peroxide.after = [ "restore-backups.service" ];
 
         nether.backups.paths = lib.mkIf config.nether.mail.peroxide.enable {
           "/var/lib/peroxide/credentials.json" = { };
