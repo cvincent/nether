@@ -45,6 +45,7 @@ in
         # notes on davmail.service.
         systemd.services.peroxide.requires = [ "restore-backups.service" ];
         systemd.services.peroxide.after = [ "restore-backups.service" ];
+        services.logrotate.settings.peroxide.su = lib.mkForce "${config.nether.username} users";
 
         nether.backups.paths = lib.mkIf config.nether.mail.peroxide.enable {
           "/var/lib/peroxide/credentials.json" = { };
