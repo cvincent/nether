@@ -39,10 +39,10 @@ in
         };
       };
 
-      config = lib.mkIf config.nether.browsers.chromium.enable {
+      config = lib.mkIf config.nether.browsers.enable {
         # Silences warnings on Chromium boot, and useful for checking battery levels
         # from CLI
-        services.upower.enable = true;
+        services.upower = lib.mkIf config.nether.browsers.chromium.enable { enable = true; };
       };
     };
 
