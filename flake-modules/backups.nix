@@ -27,6 +27,8 @@
           enable = (lib.mkEnableOption "Enable this backup path") // {
             default = true;
           };
+          # TODO: compressTransfer option, for large files. Will require
+          # updating how we generate our backup script.
           deleteMissing = lib.mkOption {
             type = lib.types.bool;
             default = false;
