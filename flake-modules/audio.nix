@@ -54,6 +54,9 @@
       inherit (osConfig.nether.hardware) audio;
     in
     {
-      home.packages = [ ] ++ (lib.optional audio.apps.pavucontrol.enable audio.apps.pavucontrol.package);
+      home.packages =
+        [ ]
+        ++ (lib.optional audio.apps.pavucontrol.enable audio.apps.pavucontrol.package)
+        ++ (lib.optional audio.apps.alsaUtils.enable audio.apps.alsaUtils.package);
     };
 }
