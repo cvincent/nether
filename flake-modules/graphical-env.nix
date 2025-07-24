@@ -256,7 +256,7 @@
         home.packages =
           [ ]
           ++ lib.optional (graphicalEnv.notifications != null) graphicalEnv.notifications.libnotify.package
-          ++ lib.optional (graphicalEnv.wallpapers == "swww") graphicalEnv.wallpapers.swww.package
+          ++ lib.optional (graphicalEnv.wallpapers.which == "swww") graphicalEnv.wallpapers.swww.package
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipboard
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipPersist
           ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.cliphist
