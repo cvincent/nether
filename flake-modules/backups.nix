@@ -206,7 +206,11 @@
 
           system.userActivationScripts.restore-and-backup = ''
             ${pkgs.systemd}/bin/systemctl start restore-backups.service
-            # Backup is always called on successful restore-backups.service
+            # Backup is always called after successful restore-backups.service.
+            # This means if we add new backup paths to our config, activating
+            # the config will restore the new paths if they exist on remote,
+            # then back up whatever we have in local. Which should be what we
+            # want in every case.
           '';
 
           systemd.services.restore-backups = {
