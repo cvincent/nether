@@ -234,6 +234,8 @@
           environment.etc."backup/without-delete".text = lib.strings.concatLines backupWithoutDeletePaths;
           environment.etc."backup/with-delete".text = lib.strings.concatLines backupWithDeletePaths;
 
+          # TODO: Some mechanism that prevents this from running if
+          # restore-backups.service is running, and vice-versa
           systemd.services.backup-all = {
             description = "Backup enabled backup files";
             after = [ "restore-backups.service" ];
