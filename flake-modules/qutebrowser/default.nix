@@ -37,7 +37,7 @@
       config = lib.mkIf osConfig.nether.browsers.qutebrowser.enable {
         programs.qutebrowser = {
           enable = true;
-          package = pkgInputs.nixpkgs-latest.qutebrowser;
+          package = pkgInputs.nixpkgs-qutebrowser.qutebrowser;
 
           settings = {
             auto_save.session = true;

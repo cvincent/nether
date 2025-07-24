@@ -13,7 +13,8 @@ in
   # is one of the first significant chunks of Nix I ever wrote ported into our
   # much-improved Flake. Some of this could potentially be split off into a
   # Flake of its own so others can easily use the functionality.
-  flake.nixosModules."${name}" =
+  flake.nixosModules."${name}" = moduleWithSystem (
+    { pkgInputs }:
     { pkgs, config, ... }:
     {
       options = {
@@ -40,6 +41,7 @@ in
 
       config = lib.mkIf config.nether.mail.enable {
         services.peroxide.enable = config.nether.mail.peroxide.enable;
+        services.peroxide.package = pkgInputs.nixpkgs-peroxide.peroxide;
         systemd.services.peroxide.serviceConfig.User = lib.mkForce config.nether.username;
         # TODO: We would probably prefer to run this as a user service. See also
         # notes on davmail.service.
@@ -74,7 +76,8 @@ in
             '';
         };
       };
-    };
+    }
+  );
 
   flake.homeModules."${name}" =
     { osConfig, ... }:

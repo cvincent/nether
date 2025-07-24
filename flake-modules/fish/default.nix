@@ -10,6 +10,8 @@
   flake.homeModules."${name}" =
     { osConfig, ... }:
     {
+      stylix.targets.fish.enable = false;
+
       # TODO: Extract a lot of this so it can be more portable between shells
       # Some things should be grouped with other modules, e.g. `m` belongs in
       # media.nix. And aliases for various utilities should be grouped with
@@ -53,16 +55,6 @@
               notify-send -i dialog-information -t 5000 -e 'NixOS Rebuild Succeeded'
             else
               notify-send -i dialog-error -t 5000 -e 'NixOS Rebuild Failed'
-            end
-            aplay ~/dotfiles/misc/notification.wav 2> /dev/null
-          '';
-
-          nxhm = ''
-            if home-manager switch --flake ~/dotfiles
-              systemctl --user start sops-nix
-              notify-send -i dialog-information -t 5000 -e 'Home Manager Rebuild Succeeded'
-            else
-              notify-send -i dialog-error -t 5000 -e 'Home Manager Rebuild Failed'
             end
             aplay ~/dotfiles/misc/notification.wav 2> /dev/null
           '';

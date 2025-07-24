@@ -132,23 +132,22 @@
     # host
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    # TODO: See about updating
-    nixpkgs.url = "nixpkgs/nixos-24.11";
-    nixpkgs-latest.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs-latest.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs-unstable-latest.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+    stylix.url = "github:nix-community/stylix/release-25.05";
 
     # TODO: Set this in an option one time so anywhere can access it via config
     # or osConfig
     private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
-    sops-nix.url = "github:Mic92/sops-nix";
-
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
     browser-pkgs.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
@@ -161,7 +160,11 @@
     nixpkgs-tmux.url = "nixpkgs/nixos-unstable";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
-    stylix.url = "github:danth/stylix";
     xremap-flake.url = "github:xremap/nix-flake";
+
+    # Package dropped from later NixOS
+    nixpkgs-peroxide.url = "nixpkgs/nixos-24.11";
+    # Latest version crashes due to GPU shit
+    nixpkgs-qutebrowser.url = "nixpkgs/nixos-24.11";
   };
 }

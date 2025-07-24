@@ -221,7 +221,7 @@
           '';
 
           systemd.services.restore-backups = {
-            wantedBy = [ "multi-user.target" ];
+            wantedBy = [ "network-online.target" ];
             description = "Restore enabled backup files if not present";
             unitConfig.RequiresMountsFor = backupMount;
             onSuccess = [ "backup-all.service" ];

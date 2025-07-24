@@ -6,8 +6,8 @@
   nether = {
     username = "cvincent";
     # TODO: See about updating these
-    system.stateVersion = "24.11";
-    home.stateVersion = "23.11";
+    system.stateVersion = "25.05";
+    home.stateVersion = "25.05";
 
     hardware = {
       audio.enable = true;
@@ -89,7 +89,7 @@
     scripts.invoiceGenerator.enable = true;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_6_11;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 

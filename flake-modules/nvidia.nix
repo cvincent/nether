@@ -34,7 +34,7 @@
           modesetting.enable = true;
           powerManagement.enable = true;
           powerManagement.finegrained = false;
-          open = false;
+          open = true;
           nvidiaSettings = false;
 
           # prime = {
@@ -45,16 +45,6 @@
           #   intelBusId = "PCI:0:2:0";
           #   nvidiaBusId = "PCI:1:0:0";
           # };
-
-          # Use the freshest of fresh closed Nvidia driver
-          package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-            version = "560.35.03";
-            sha256_64bit = "sha256-8pMskvrdQ8WyNBvkU/xPc/CtcYXCa7ekP73oGuKfH+M=";
-            sha256_aarch64 = "";
-            openSha256 = "";
-            settingsSha256 = "";
-            persistencedSha256 = "";
-          };
         };
 
         environment.sessionVariables = {

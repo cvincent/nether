@@ -65,20 +65,6 @@
           }
         )
       );
-
-      latest-shadps4 = (
-        pkgInputs.nixpkgs-unstable.shadps4.overrideAttrs (
-          final: prev: {
-            src = pkgInputs.nixpkgs-unstable.fetchFromGitHub {
-              owner = "shadps4-emu";
-              repo = "shadPS4";
-              rev = "a1a98966eee07e7ecf3a5e3836b5f2ecde5664b0";
-              hash = "sha256-lN+qXvf+rHlfZt7iT/De/tMvAQJpqLGOJxrv9z4tX5c=";
-              fetchSubmodules = true;
-            };
-          }
-        )
-      );
     in
     {
       config = lib.mkIf osConfig.nether.miscApps.enable {
@@ -95,7 +81,7 @@
           wayland-spotify
           transmission_4-gtk
           pkgInputs.nixpkgs-unstable.ryujinx
-          latest-shadps4
+          pkgInputs.nixpkgs-unstable.shadps4
           xwayland-obsidian
           (pkgs.symlinkJoin {
             name = "FreeCAD";
@@ -104,7 +90,7 @@
             postBuild = ''
               wrapProgram $out/bin/FreeCAD \
               --set __GLX_VENDOR_LIBRARY_NAME mesa \
-              --set __EGL_VENDOR_LIBRARY_FILENAMES ${pkgs.mesa.drivers}/share/glvnd/egl_vendor.d/50_mesa.json
+              --set __EGL_VENDOR_LIBRARY_FILENAMES ${pkgs.mesa}/share/glvnd/egl_vendor.d/50_mesa.json
             '';
             meta.mainProgram = "FreeCAD";
           })

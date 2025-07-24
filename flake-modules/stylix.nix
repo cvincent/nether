@@ -21,6 +21,7 @@
             cursor = {
               package = pkgs.nordzy-cursor-theme;
               name = "Nordzy-cursors";
+              size = 32;
             };
 
             fonts = {
@@ -44,8 +45,6 @@
     { pkgs }:
     { osConfig, ... }:
     {
-      inherit (osConfig.nether) stylix;
-
       dconf = {
         enable = osConfig.nether.stylix.enable;
         settings = {
