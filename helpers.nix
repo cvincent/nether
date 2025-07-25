@@ -41,10 +41,28 @@
     };
 
   homeModuleHelpers =
-    { config, ... }:
+    {
+      config,
+      osConfig,
+      lib,
+      ...
+    }:
     {
       _module.args.helpers = {
-        directSymlink = (path: config.lib.file.mkOutOfStoreSymlink (toString path));
+        directSymlink = (
+          path:
+          [
+            "${osConfig.nether.homeDirectory}/dotfiles/"
+            (
+              path
+              |> toString
+              |> builtins.match "\/nix\/store\/[a-z0-9]+-source\/(.+)"
+              |> lib.strings.concatStrings
+            )
+          ]
+          |> lib.strings.concatStrings
+          |> config.lib.file.mkOutOfStoreSymlink
+        );
       };
     };
 }
