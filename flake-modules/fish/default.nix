@@ -18,6 +18,7 @@
       # those utilities.
       programs.fish = {
         enable = osConfig.nether.shells.fish.enable;
+        package = osConfig.nether.shells.fish.package;
 
         interactiveShellInit = ''
           bind \cH backward-kill-word

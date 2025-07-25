@@ -1,25 +1,34 @@
 { name }:
-{ lib, moduleWithSystem, ... }:
+{
+  lib,
+  moduleWithSystem,
+  helpers,
+  ...
+}:
 {
   imports = [ (import ./fish { name = "fish"; }) ];
 
-  flake.nixosModules."${name}" = {
-    options = {
-      nether.shells = {
-        fish.enable = lib.mkEnableOption "Fish shell";
-        extraUtils.enable = lib.mkEnableOption "Various useful shell utilities";
+  flake.nixosModules."${name}" = moduleWithSystem (
+    { pkgs }:
+    { config, ... }:
+    {
+      options = {
+        nether.shells = {
+          fish = helpers.pkgOpt pkgs.fish (config.nether.shells.default == "fish") "Fish shell";
+          extraUtils.enable = lib.mkEnableOption "Various useful shell utilities";
 
-        # TODO: Propagate this where we currently reference fish
-        default = lib.mkOption {
-          type = lib.types.enum [
-            null
-            "fish"
-          ];
-          default = null;
+          # TODO: Propagate this where we currently reference fish
+          default = lib.mkOption {
+            type = lib.types.enum [
+              null
+              "fish"
+            ];
+            default = null;
+          };
         };
       };
-    };
-  };
+    }
+  );
 
   # TODO: Make this more modular
   flake.homeModules."${name}" = moduleWithSystem (
