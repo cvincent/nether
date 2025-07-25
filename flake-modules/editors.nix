@@ -8,6 +8,7 @@
       nether.editors = {
         neovim.enable = lib.mkEnableOption "NeoVim - the greatest editor";
 
+        # TODO: Follow the example of shells.nix and terminals.nix
         default = lib.mkOption {
           type = lib.types.enum [
             null
