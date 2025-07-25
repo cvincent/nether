@@ -30,7 +30,8 @@
           # support! We previously used an overlay to get it.
           package = pkgInputs.nixpkgs-tmux.tmux;
 
-          shell = "~/.nix-profile/bin/fish";
+          shell = osConfig.nether.shells.defaultPath;
+
           prefix = "C-f";
           escapeTime = 0;
           keyMode = "vi";

@@ -17,7 +17,6 @@
           fish = helpers.pkgOpt pkgs.fish (config.nether.shells.default == "fish") "Fish shell";
           extraUtils.enable = lib.mkEnableOption "Various useful shell utilities";
 
-          # TODO: Propagate this where we currently reference fish
           default = lib.mkOption {
             type = lib.types.enum [
               null
@@ -25,8 +24,14 @@
             ];
             default = null;
           };
+
+          defaultPath = lib.mkOption { type = lib.types.str; };
         };
       };
+
+      config.nether.shells.defaultPath = lib.mkForce "${
+        config.nether.shells."${config.nether.shells.default}".package
+      }/bin/${config.nether.shells.default}";
     }
   );
 
