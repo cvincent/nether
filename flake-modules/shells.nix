@@ -29,9 +29,11 @@
         };
       };
 
-      config.nether.shells.defaultPath = lib.mkForce "${
-        config.nether.shells."${config.nether.shells.default}".package
-      }/bin/${config.nether.shells.default}";
+      config.nether.shells = lib.mkIf (config.nether.shells.default != null) {
+        defaultPath = lib.mkForce "${
+          config.nether.shells."${config.nether.shells.default}".package
+        }/bin/${config.nether.shells.default}";
+      };
     }
   );
 
