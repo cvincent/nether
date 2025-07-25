@@ -28,40 +28,110 @@
       ...
     }:
     let
-      bitwarden-cli = pkgs.bitwarden-cli;
+      bitwarden-cache-vault = pkgs.writeShellApplication {
+        name = "bitwarden-cache-vault";
+        text = builtins.readFile ./bitwarden-cache-vault.bash;
+        runtimeInputs = with pkgs; [
+          bitwarden-cli
+          bitwarden-ensure-session
+        ];
+      };
 
-      bitwarden-cache-vault = (
-        pkgs.writeShellScriptBin "bitwarden-cache-vault" (builtins.readFile ./bitwarden-cache-vault.bash)
-      );
-      bitwarden-ensure-session = (
-        pkgs.writeShellScriptBin "bitwarden-ensure-session" (
-          builtins.readFile ./bitwarden-ensure-session.bash
-        )
-      );
-      bitwarden-qutebrowser = (
-        pkgs.writeShellScriptBin "bitwarden-qutebrowser" (builtins.readFile ./bitwarden-qutebrowser.bash)
-      );
-      bitwarden-search-vault = (
-        pkgs.writeShellScriptBin "bitwarden-search-vault" (builtins.readFile ./bitwarden-search-vault.bash)
-      );
-      bitwarden-fuzzel = (
-        pkgs.writeShellScriptBin "bitwarden-fuzzel" (builtins.readFile ./bitwarden-fuzzel.bash)
-      );
+      bitwarden-ensure-session = pkgs.writeShellApplication {
+        name = "bitwarden-ensure-session";
+        text = builtins.readFile ./bitwarden-ensure-session.bash;
+        runtimeInputs = with pkgs; [
+          bitwarden-cli
+          coreutils
+        ];
+      };
+
+      bitwarden-qutebrowser = pkgs.writeShellApplication {
+        name = "bitwarden-qutebrowser";
+        text = builtins.readFile ./bitwarden-qutebrowser.bash;
+        runtimeInputs = with pkgs; [
+          bitwarden-search-vault
+          coreutils
+        ];
+      };
+
+      bitwarden-search-vault = pkgs.writeShellApplication {
+        name = "bitwarden-search-vault";
+        text = builtins.readFile ./bitwarden-search-vault.bash;
+        runtimeInputs = with pkgs; [
+          bitwarden-cache-vault
+          coreutils
+        ];
+      };
+
+      bitwarden-fuzzel = pkgs.writeShellApplication {
+        name = "bitwarden-fuzzel";
+        text = builtins.readFile ./bitwarden-fuzzel.bash;
+        runtimeInputs = with pkgs; [
+          bitwarden-cache-vault
+          bitwarden-cli
+          bitwarden-edit
+          bitwarden-ensure-session
+          coreutils
+          findutils
+          gnused
+          jq
+          oath-toolkit
+          osConfig.nether.graphicalEnv.extra.clipboardSupport.wlClipboard.package
+          osConfig.nether.graphicalEnv.extra.clipboardSupport.cliphist.package
+          osConfig.nether.graphicalEnv.launcher.fuzzel.package
+          osConfig.nether.graphicalEnv.notifications.libnotify.package
+        ];
+      };
+
       bitwarden-fuzzel-create = (
-        pkgs.writeShellScriptBin "bitwarden-fuzzel-create" (
-          builtins.readFile ./bitwarden-fuzzel-create.bash
-        )
+        pkgs.writeShellApplication {
+          name = "bitwarden-fuzzel-create";
+          text = builtins.readFile ./bitwarden-fuzzel-create.bash;
+          runtimeInputs = with pkgs; [
+            bitwarden-cli
+            bitwarden-create
+            coreutils
+            findutils
+            gnused
+            osConfig.nether.graphicalEnv.launcher.fuzzel.package
+          ];
+        }
       );
-      bitwarden-edit = (
-        pkgs.writeShellScriptBin "bitwarden-edit" (builtins.readFile ./bitwarden-edit.bash)
-      );
-      bitwarden-create = (
-        pkgs.writeShellScriptBin "bitwarden-create" (builtins.readFile ./bitwarden-create.bash)
-      );
+
+      bitwarden-edit = pkgs.writeShellApplication {
+        name = "bitwarden-edit";
+        text = builtins.readFile ./bitwarden-edit.bash;
+        runtimeInputs = with pkgs; [
+          bitwarden-cache-vault
+          bitwarden-cli
+          bitwarden-ensure-session
+          coreutils
+          jq
+          osConfig.nether.graphicalEnv.launcher.fuzzel.package
+          osConfig.nether.graphicalEnv.notifications.libnotify.package
+          osConfig.nether.terminals.default.package
+        ];
+      };
+
+      bitwarden-create = pkgs.writeShellApplication {
+        name = "bitwarden-create";
+        text = builtins.readFile ./bitwarden-create.bash;
+        # runtimeInputs = with pkgs; [
+        #   bitwarden-cache-vault
+        #   bitwarden-cli
+        #   bitwarden-ensure-session
+        #   coreutils
+        #   jq
+        #   osConfig.nether.graphicalEnv.launcher.fuzzel.package
+        #   osConfig.nether.graphicalEnv.notifications.libnotify.package
+        #   osConfig.nether.terminals.default.package
+        # ];
+      };
 
       path =
         [
-          bitwarden-cli
+          pkgs.bitwarden-cli
           bitwarden-cache-vault
           bitwarden-ensure-session
           bitwarden-qutebrowser

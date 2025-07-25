@@ -8,9 +8,9 @@ function new-session() {
   >&2 echo "Starting new session..."
   bw logout > /dev/null
   BW_CLIENTID=$client_id BW_CLIENTSECRET=$client_secret bw login --apikey > /dev/null
-  session=$(bw unlock --raw $bw_password) > /dev/null
-  echo $session > $session_file
-  echo $session
+  session=$(bw unlock --raw "$bw_password") > /dev/null
+  echo "$session" > $session_file
+  echo "$session"
 }
 
 if [[ -f "$session_file" ]]; then
@@ -20,4 +20,4 @@ else
   new-session
 fi
 
-echo $session
+echo "$session"

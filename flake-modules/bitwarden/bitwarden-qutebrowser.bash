@@ -9,7 +9,7 @@ domain=$(echo "$url" | awk -F/ '{print $3}')
 >&2 echo "DOMAIN: $domain"
 
 result=$(bitwarden-search-vault "$domain")
-num_results=$(echo $result | jq length)
+num_results=$(echo "$result" | jq length)
 
 case $num_results in
   1)
@@ -24,18 +24,18 @@ case $num_results in
 
   *)
     >&2 echo 'Multiple results...'
-    choice=$(echo $result | jq -r '.[].name' | fuzzel --prompt='Vault ❯ ' -d | tr -cd '[:alnum:][:punct:]')
+    choice=$(echo "$result" | jq -r '.[].name' | fuzzel --prompt='Vault ❯ ' -d | tr -cd '[:alnum:][:punct:]')
     if [[ -n "$choice" ]]; then
       >&2 echo "Chose $choice!"
-      item=$(echo $result | jq -a --arg choice '.[]|select(.name=="$choice")')
+      item=$(echo "$result" | jq -a --arg choice '.[]|select(.name=="$choice")')
     fi
     ;;
 esac
 
 if [[ -n "$item" ]]; then
-  username=$(echo $item | jq -r '.[0].login.username')
-  password=$(echo $item | jq -r '.[0].login.password')
-  totp=$(echo $item | jq -r '.[0].login.totp')
+  username=$(echo "$item" | jq -r '.[0].login.username')
+  password=$(echo "$item" | jq -r '.[0].login.password')
+  totp=$(echo "$item" | jq -r '.[0].login.totp')
 
   >&2 echo "Username: $username"
   >&2 echo "Password: $password"
@@ -43,11 +43,13 @@ if [[ -n "$item" ]]; then
 
   if [[ -n "$QUTE_FIFO" ]]; then
     >&2 echo 'Writing autofill to Qutebrowser...'
-    echo "fake-key $username" >> "$QUTE_FIFO"
-    echo "fake-key <tab>" >> "$QUTE_FIFO"
-    echo "fake-key $password" >> "$QUTE_FIFO"
+    {
+      echo "fake-key $username"
+      echo "fake-key <tab>"
+      echo "fake-key $password"
+    } >> "$QUTE_FIFO"
   else
-    echo $result
+    echo "$result"
   fi
 else
   >&2 echo "Nothing chosen!"

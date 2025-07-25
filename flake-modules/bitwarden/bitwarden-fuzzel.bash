@@ -7,10 +7,12 @@ start-menu() {
 
 if [[ ! -f "$vault_cache" ]]; then bitwarden-cache-vault; fi
 
-if [[ $1 == '--previous' ]]; then
+query=${1:-}
+
+if [[ $query == '--previous' ]]; then
   choice=$(cat $last_item)
-elif [[ -n "$1" ]]; then
-  choice=$1
+elif [[ -n "$query" ]]; then
+  choice=$query
 else
   choice=$(jq -r '.[].name' $vault_cache | fuzzel --prompt='Vault ❯ ' -d)
 fi
@@ -60,7 +62,7 @@ if [[ -z "$field" ]]; then exit 0; fi
 
 if [[ "$field" == 'Edit' ]]; then
   item_id=$(echo "$item" | jq -r '.id')
-  bitwarden-edit $item_id
+  bitwarden-edit "$item_id"
   exit 0
 elif [[ "$field" == 'Delete' ]]; then
   item_id=$(echo "$item" | jq -r '.id')
@@ -69,7 +71,7 @@ elif [[ "$field" == 'Delete' ]]; then
   if [[ "$confirm" == 'Yes' ]]; then
     notify-send -i lock -e "Deleted!"
     session=$(bitwarden-ensure-session)
-    bw delete item $item_id --session $session
+    bw delete item "$item_id" --session "$session"
     bitwarden-cache-vault
   else
     >&2 echo 'Cancelled!'

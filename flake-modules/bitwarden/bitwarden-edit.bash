@@ -11,19 +11,17 @@ item=$(jq -a --arg item_id "$item_id" '.[] | select(.id == $item_id)' $vault_cac
 tmp=$(mktemp -q /tmp/item.XXXXXX.json || exit 1)
 trap 'rm -f -- "$tmp"' EXIT
 
-echo "$item" > $tmp
-kitty --class=tmp-edit nvim $tmp
-changed=$(cat $tmp)
+echo "$item" > "$tmp"
+kitty --class=tmp-edit nvim "$tmp"
+changed=$(cat "$tmp")
 
-echo "$changed" | jq empty > /dev/null 2>&1
-
-if [[ $? -eq 0 ]]; then
+if [[ $(echo "$changed" | jq empty > /dev/null 2>&1) -eq 0 ]]; then
   >&2 echo 'Valid!'
   confirm=$(echo $'No\nYes\n' | fuzzel --prompt='Save? ❯ ' -d)
 
   if [[ "$confirm" == 'Yes' ]]; then
     session=$(bitwarden-ensure-session)
-    echo "$changed" | bw encode | bw edit item $item_id --session $session
+    echo "$changed" | bw encode | bw edit item "$item_id" --session "$session"
     notify-send -i lock -e "Edit saved!"
     bitwarden-cache-vault
   else

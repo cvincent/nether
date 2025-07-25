@@ -1,7 +1,7 @@
 tmp=$(mktemp -q /tmp/item.XXXXXX.json || exit 1)
 trap 'rm -f -- "$tmp"' EXIT
 
-json=$(cat ~/.local/share/bitwarden/templates/$1.json)
+json=$(cat ~/.local/share/bitwarden/templates/"$1".json)
 
 case $1 in
   'login')
@@ -18,20 +18,18 @@ case $1 in
     ;;
 esac
 
-echo "$json" > $tmp
-kitty --class=tmp-edit nvim $tmp +"/\[$open_search\]" +'norm W'
-json=$(cat $tmp)
+echo "$json" > "$tmp"
+kitty --class=tmp-edit nvim "$tmp" +"/\[$open_search\]" +'norm W'
+json=$(cat "$tmp")
 
-echo "$json" | jq empty > /dev/null 2>&1
-
-if [[ $? -eq 0 ]]; then
+if [[ $(echo "$json" | jq empty > /dev/null 2>&1) -eq 0 ]]; then
   >&2 echo 'Valid!'
   confirm=$(echo $'No\nYes\n' | fuzzel --prompt='Save? ❯ ' -d)
 
   if [[ "$confirm" == 'Yes' ]]; then
     >&2 echo 'Saving!'
     session=$(bitwarden-ensure-session)
-    echo "$json" | bw encode | bw create item --session $session
+    echo "$json" | bw encode | bw create item --session "$session"
     notify-send -i lock -e "Saved!"
     bitwarden-cache-vault
   else
