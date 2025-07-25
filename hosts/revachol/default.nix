@@ -29,7 +29,7 @@
 
     terminals = {
       kitty.enable = true;
-      default = "kitty";
+      default.which = "kitty";
     };
 
     editors = {
