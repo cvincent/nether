@@ -25,15 +25,18 @@
             default = null;
           };
 
+          defaultPackage = lib.mkOption { type = lib.types.package; };
           defaultPath = lib.mkOption { type = lib.types.str; };
         };
       };
 
-      config.nether.shells = lib.mkIf (config.nether.shells.default != null) {
-        defaultPath = lib.mkForce "${
-          config.nether.shells."${config.nether.shells.default}".package
-        }/bin/${config.nether.shells.default}";
-      };
+      config.nether.shells.defaultPackage = lib.mkIf (config.nether.shells.default != null) (
+        lib.mkForce config.nether.shells."${config.nether.shells.default}".package
+      );
+
+      config.nether.shells.defaultPath = lib.mkIf (config.nether.shells.default != null) (
+        lib.mkForce "${config.nether.shells.defaultPackage}/bin/${config.nether.shells.default}"
+      );
     }
   );
 
