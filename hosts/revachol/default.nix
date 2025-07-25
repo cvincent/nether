@@ -1,5 +1,5 @@
 { pkgInputs, inputs' }:
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   imports = [ ./hardware.nix ];
 
@@ -95,6 +95,12 @@
 
   # Kill user processes on logout
   services.logind.killUserProcesses = true;
+
+  fileSystems."${config.nether.homeDirectory}/art" = {
+    device = "/dev/disk/by-uuid/8c65989a-12bd-4bee-8e40-c8679eb49a6a";
+    fsType = "ext4";
+    options = [ "nofail" ];
+  };
 
   fileSystems."/steam" = {
     device = "/dev/disk/by-uuid/2749d5f5-c6c6-4a62-abe2-8ebcfb0bc68a";
