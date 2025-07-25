@@ -54,7 +54,7 @@
           fish_prompt = builtins.readFile ./fish_prompt.fish;
 
           nxrb = ''
-            if nixos-rebuild switch --flake ~/dotfiles --use-remote-sudo
+            if sudo nixos-rebuild switch --flake ~/dotfiles --fast
               notify-send -i dialog-information -t 5000 -e 'NixOS Rebuild Succeeded'
             else
               notify-send -i dialog-error -t 5000 -e 'NixOS Rebuild Failed'
