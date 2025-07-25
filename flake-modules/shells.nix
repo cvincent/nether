@@ -17,26 +17,25 @@
           fish = helpers.pkgOpt pkgs.fish (config.nether.shells.default == "fish") "Fish shell";
           extraUtils.enable = lib.mkEnableOption "Various useful shell utilities";
 
-          default = lib.mkOption {
-            type = lib.types.enum [
-              null
-              "fish"
-            ];
-            default = null;
-          };
+          default = {
+            which = lib.mkOption {
+              type = lib.types.enum [
+                null
+                "fish"
+              ];
+              default = null;
+            };
 
-          defaultPackage = lib.mkOption { type = lib.types.package; };
-          defaultPath = lib.mkOption { type = lib.types.str; };
+            package = lib.mkOption { type = lib.types.package; };
+            path = lib.mkOption { type = lib.types.str; };
+          };
         };
       };
 
-      config.nether.shells.defaultPackage = lib.mkIf (config.nether.shells.default != null) (
-        lib.mkForce config.nether.shells."${config.nether.shells.default}".package
-      );
-
-      config.nether.shells.defaultPath = lib.mkIf (config.nether.shells.default != null) (
-        lib.mkForce "${config.nether.shells.defaultPackage}/bin/${config.nether.shells.default}"
-      );
+      config.nether.shells.default = lib.mkIf (config.nether.shells.default.which != null) {
+        package = lib.mkForce config.nether.shells."${config.nether.shells.default.which}".package;
+        path = lib.mkForce "${config.nether.shells.default.package}/bin/${config.nether.shells.default.which}";
+      };
     }
   );
 

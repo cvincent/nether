@@ -9,7 +9,7 @@
         home.packages = [ pkgInputs.nixpkgs-kitty.kitty ];
 
         home.file."./.config/kitty/generated.conf".text = ''
-          shell ${osConfig.nether.shells.defaultPath}
+          shell ${osConfig.nether.shells.default.path}
         '';
 
         home.file."./.config/kitty/kitty.conf".source = helpers.directSymlink ./configs/kitty.conf;

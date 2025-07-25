@@ -30,7 +30,7 @@
           # support! We previously used an overlay to get it.
           package = pkgInputs.nixpkgs-tmux.tmux;
 
-          shell = osConfig.nether.shells.defaultPath;
+          shell = osConfig.nether.shells.default.path;
 
           prefix = "C-f";
           escapeTime = 0;

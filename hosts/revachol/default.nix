@@ -24,7 +24,7 @@
     shells = {
       fish.enable = true;
       extraUtils.enable = true;
-      default = "fish";
+      default.which = "fish";
     };
 
     terminals = {
