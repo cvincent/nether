@@ -1,10 +1,12 @@
 { name }:
-{ ... }:
+{ lib, ... }:
 {
   flake.nixosModules."${name}" =
     { config, ... }:
     {
-      nether.backups.paths."${config.nether.homeDirectory}/.local/share/fish/fish_history" = { };
+      nether.backups.paths."${config.nether.homeDirectory}/.local/share/fish/fish_history" =
+        lib.mkIf config.nether.shells.fish.enable
+          { };
     };
 
   flake.homeModules."${name}" =
