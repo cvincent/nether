@@ -24,6 +24,7 @@
     { osConfig, ... }:
     {
       programs.nix-index = {
+        # TODO: Run `nix-index` in a service or similar
         enable = true;
         enableFishIntegration = osConfig.nether.shells.fish.enable;
       };
