@@ -93,7 +93,23 @@
 
         programs.direnv = {
           enable = true;
+          silent = true;
           nix-direnv.enable = true;
+
+          # Stolen from @isabelroses
+          # modified from @i077O
+          # store direnv in cache and not per project
+          stdlib = ''
+            : ''${XDG_CACHE_HOME:=$HOME/.cache}
+            declare -A direnv_layout_dirs
+
+            direnv_layout_dir() {
+              echo "''${direnv_layout_dirs[$PWD]:=$(
+                echo -n "$XDG_CACHE_HOME"/direnv/layouts/
+                echo -n "$PWD" | sha1sum | cut -d ' ' -f 1
+              )}"
+            }
+          '';
         };
 
         programs.zoxide = {
