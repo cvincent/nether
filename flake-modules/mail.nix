@@ -56,9 +56,9 @@ in
           # be grouped with the davmail configs
           "${config.nether.homeDirectory}/.davmail-token.properties" = { };
           "${config.nether.homeDirectory}/mail".deleteMissing = true;
+          "${config.nether.homeDirectory}/.local/state/isync".deleteMissing = true;
           "${config.nether.homeDirectory}/.local/share/vdirsyncer".deleteMissing = true;
           "${config.nether.homeDirectory}/.local/state/vdirsyncer".deleteMissing = true;
-          "${config.nether.homeDirectory}/.local/state/isync".deleteMissing = true;
         };
 
         system.activationScripts = lib.mkIf config.nether.mail.peroxide.enable {
