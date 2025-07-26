@@ -288,9 +288,13 @@ in
   ];
 
   systemd.user.services.maildir-notifications = {
-    Unit.Description = "Monitors maildir and notifies about new emails";
+    Install.WantedBy = [ "graphical.target" ];
 
-    Install.WantedBy = [ "default.target" ];
+    Unit = {
+      Description = "Monitors maildir and notifies about new emails";
+      Requires = [ "graphical.target" ];
+      After = [ "graphical.target" ];
+    };
 
     Service = {
       Type = "exec";
