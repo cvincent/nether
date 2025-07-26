@@ -1,4 +1,4 @@
 Session.vim
-apps/nvim/configs/spell/
+flake-modules/neovim/configs/spell
 result
 revachol.qcow2
