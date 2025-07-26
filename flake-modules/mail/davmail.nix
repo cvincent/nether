@@ -7,13 +7,17 @@
   home.packages = [ pkgs.davmail ];
 
   systemd.user.services.davmail = {
-    Unit.Description = "DavMail POP/IMAP/SMTP Exchange Gateway";
+    Unit = {
+      Description = "DavMail POP/IMAP/SMTP Exchange Gateway";
+      Requires = [ "restore-backups.service" ];
+      After = [ "restore-backups.service" ];
+    };
 
     # TODO: Ideally we would do this after restore-backups.service, which is
     # what provides the token file we need, but we want to run this as a user
     # service, as vdirsyncer (enabled with HM option) needs to refer to it.
     # There is probably a better way to do all of this.
-    Install.WantedBy = [ "graphical.target" ];
+    Install.WantedBy = [ "network-online.target" ];
 
     Service = {
       ExecStart = "${pkgs.davmail}/bin/davmail ${config.home.homeDirectory}/.config/davmail/davmail.properties";
