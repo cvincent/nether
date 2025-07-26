@@ -13,6 +13,9 @@
     # what provides the token file we need, but we want to run this as a user
     # service, as vdirsyncer (enabled with HM option) needs to refer to it.
     # There is probably a better way to do all of this.
+    # Maybe we should require the token file to be present to start, and retry
+    # indefinitely if it's not. This module doesn't really care _how_ the token
+    # file gets there, just that it gets there eventually.
     Install.WantedBy = [ "graphical.target" ];
 
     Service = {
