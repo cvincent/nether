@@ -64,6 +64,8 @@
 
     homeSrcDirectory = true;
 
+    dev.postgresql.enable = true;
+
     # Note for the future on structure/organization, I wonder if these should be
     # nested within graphicalEnv when they're apps that wouldn't work without
     # one...
