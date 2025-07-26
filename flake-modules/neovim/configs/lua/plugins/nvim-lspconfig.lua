@@ -66,6 +66,13 @@ return {
       end
     })
 
+    lspconfig.ruby_lsp.setup({
+      init_options = {
+        formatter = "standard",
+        linters = { "standard" },
+      }
+    })
+
     lspconfig.gleam.setup({})
 
     local default_diagnostic_config = {
