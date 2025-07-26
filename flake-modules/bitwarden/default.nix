@@ -170,18 +170,28 @@
         home.file."./.local/share/bitwarden/password".text = inputs.private-nethers.bitwarden.password;
 
         systemd.user.services.sync-bitwarden = {
-          Unit.PartOf = [ "graphical.target" ];
-          Unit.After = [ "graphical.target" ];
-          Install.WantedBy = [ "graphical.target" ];
-          Service.ExecStart = "${bitwarden-cache-vault}/bin/bitwarden-cache-vault";
-          Service.Type = "oneshot";
-          Service.Environment = "PATH=${path}";
+          Unit = {
+            Requires = [ "network-online.target" ];
+            After = [ "network-online.target" ];
+          };
+          Service = {
+            ExecStart = "${bitwarden-cache-vault}/bin/bitwarden-cache-vault";
+            Type = "oneshot";
+            Environment = "PATH=${path}";
+          };
         };
 
         systemd.user.timers.sync-bitwarden = {
           Install.WantedBy = [ "timers.target" ];
-          Timer.OnCalendar = "*:00,10,20,30,40,50:00";
-          Timer.AccuracySec = "1s";
+          Unit = {
+            Requires = [ "network-online.target" ];
+            After = [ "network-online.target" ];
+          };
+          Timer = {
+            OnCalendar = "*:00,10,20,30,40,50:00";
+            AccuracySec = "1s";
+            Unit = "sync-bitwarden.timer";
+          };
         };
       };
     }
