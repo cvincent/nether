@@ -89,6 +89,7 @@
                 "noatime"
                 "nofail"
                 "bg" # Retry mounting for a week on failure
+                "_netdev"
               ];
             };
           };
@@ -221,7 +222,8 @@
           '';
 
           systemd.services.restore-backups = {
-            wantedBy = [ "network-online.target" ];
+            wantedBy = [ "remote-fs.target" ];
+            after = [ "remote-fs.target" ];
             description = "Restore enabled backup files if not present";
             unitConfig.RequiresMountsFor = backupMount;
             onSuccess = [ "backup-all.service" ];
