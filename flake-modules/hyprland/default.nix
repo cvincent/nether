@@ -31,37 +31,40 @@
               package = config.nether.graphicalEnv.compositor.hyprland.package;
             };
 
-          environment.sessionVariables = ({
-            # Recommended env vars from the Hyprland wiki
-            GDK_BACKEND = "wayland,x11";
-            QT_QPA_PLATFORM = "wayland;xcb";
-            SDL_VIDEODRIVER = "wayland";
-            CLUTTER_BACKEND = "wayland";
-            XDG_CURRENT_DESKTOP = "Hyprland";
-            XDG_SESSION_TYPE = "wayland";
-            XDG_SESSION_DESKTOP = "Hyprland";
-            QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-            QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-            # This is no longer a hard requirement in latest Hyprland or probably
-            # Wayland more generally (fix was pulled from a wlroots patch), but I tried
-            # without it and found the cursor quite stuttery still, including with
-            # `allow_dumb_copy` in the Hyprland config
-            WLR_NO_HARDWARE_CURSORS = "1";
-            # This may help with laggy cursor? It's still laggy though
-            OGL_DEDICATED_HW_STATE_PER_CONTEXT = "ENABLE_ROBUST";
-            # Launch apps in native Wayland (not XWayland) by default
-            NIXOS_OZONE_WL = "1";
-            # Would be required for tearing, which we don't really need as we don't
-            # game on here these days
-            # WLR_DRM_NO_ATOMIC = "1";
-          } // (lib.mkIf config.nether.hardware.nvidia.enable {
-              # Remove if Firefox crashes:
-              GBM_BACKEND = "nvidia-drm";
-              # Remove if issues with Discord windows or Zoom screensharing:
-              __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+            environment.sessionVariables = lib.mkMerge [
+              {
+                # Recommended env vars from the Hyprland wiki
+                GDK_BACKEND = "wayland,x11";
+                QT_QPA_PLATFORM = "wayland;xcb";
+                SDL_VIDEODRIVER = "wayland";
+                CLUTTER_BACKEND = "wayland";
+                XDG_CURRENT_DESKTOP = "Hyprland";
+                XDG_SESSION_TYPE = "wayland";
+                XDG_SESSION_DESKTOP = "Hyprland";
+                QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+                QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+                # This is no longer a hard requirement in latest Hyprland or probably
+                # Wayland more generally (fix was pulled from a wlroots patch), but I tried
+                # without it and found the cursor quite stuttery still, including with
+                # `allow_dumb_copy` in the Hyprland config
+                WLR_NO_HARDWARE_CURSORS = "1";
+                # This may help with laggy cursor? It's still laggy though
+                OGL_DEDICATED_HW_STATE_PER_CONTEXT = "ENABLE_ROBUST";
+                # Launch apps in native Wayland (not XWayland) by default
+                NIXOS_OZONE_WL = "1";
+                # Would be required for tearing, which we don't really need as we don't
+                # game on here these days
+                # WLR_DRM_NO_ATOMIC = "1";
+              }
+              (lib.mkIf config.nether.hardware.nvidia.enable {
+                # Remove if Firefox crashes:
+                GBM_BACKEND = "nvidia-drm";
+                # Remove if issues with Discord windows or Zoom screensharing:
+                __GLX_VENDOR_LIBRARY_NAME = "nvidia";
 
-              AQ_DRM_DEVICES = "/dev/dri/card1";
-            }));
+                AQ_DRM_DEVICES = "/dev/dri/card1";
+              })
+            ];
 
             hardware.graphics = {
               package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.mesa.drivers;
