@@ -16,6 +16,10 @@
     {
       config = lib.mkIf config.nether.editors.neovim.enable {
         environment.systemPackages = [ pkgInputs.nixpkgs-neovim.neovim ];
+
+        nether.backups.paths."${config.nether.homeDirectory}/.config/nvim/spell" = {
+          deleteMissing = true;
+        };
       };
     }
   );
