@@ -84,7 +84,15 @@
     printing2D.enable = true;
     smartCalcTUI.enable = true;
     steam.enable = true;
-    tmux.enable = true;
+
+    tmux = {
+      enable = true;
+      # TODO: See if we can get rid of this override. We need to check if the
+      # currently packaged version has the scroll top/middle/bottom working
+      # still.
+      package = pkgInputs.nixpkgs-tmux.tmux;
+    };
+
     windowsVM.enable = true;
     xremap = true;
 

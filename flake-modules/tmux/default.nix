@@ -1,9 +1,14 @@
 { name }:
-{ lib, moduleWithSystem, ... }:
+{ moduleWithSystem, helpers, ... }:
 {
-  flake.nixosModules."${name}" = {
-    options.nether.tmux.enable = lib.mkEnableOption "tmux - the terminal multiplexer";
-  };
+  flake.nixosModules."${name}" = moduleWithSystem (
+    { pkgs }:
+    {
+      options.nether.tmux = (helpers.pkgOpt pkgs.tmux false "tmux - the terminal multiplexer") // {
+        tmuxinator = helpers.pkgOpt pkgs.tmuxinator true "tmuxinator - repeatable tmux sessions";
+      };
+    }
+  );
 
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs, pkgInputs }:
@@ -21,27 +26,21 @@
       };
     in
     {
-      config = lib.mkIf osConfig.nether.tmux.enable {
-        home.packages = [ pkgs.tmuxinator ];
-
+      config = {
         programs.tmux = {
-          enable = true;
-          # TODO: Make sure this latest ersion has our scroll-middle/top/bottom
-          # support! We previously used an overlay to get it.
+          inherit (osConfig.nether.tmux) enable;
           package = pkgInputs.nixpkgs-tmux.tmux;
 
-          shell = osConfig.nether.shells.default.path;
+          tmuxinator = { inherit (osConfig.nether.tmux.tmuxinator) enable; };
+          plugins = [ tmux-safekill ];
 
+          shell = osConfig.nether.shells.default.path;
           prefix = "C-f";
           escapeTime = 0;
           keyMode = "vi";
           reverseSplit = true;
           mouse = true;
           historyLimit = 50000;
-
-          plugins = [
-            tmux-safekill
-          ];
 
           extraConfig = ''
             # Scroll relative to cursor like Vim zz, zt, and zb
