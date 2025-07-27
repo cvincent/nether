@@ -56,9 +56,9 @@ tooltip label {
   background: #4c566a;
 }
 
-#workspaces button.urgent {
-  background: #bf616a;
-}
+/* #workspaces button.urgent { */
+/*   background: #bf616a; */
+/* } */
 
 #mpris,
 #window,
