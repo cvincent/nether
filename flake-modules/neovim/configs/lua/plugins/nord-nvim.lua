@@ -43,7 +43,7 @@ return {
     vim.api.nvim_command("hi! @string.special.symbol guifg=" .. colors.nord7_gui)
 
     -- Ruby instance vars
-    vim.api.nvim_command("hi! @variable.member guifg=" .. colors.nord13_gui)
+    vim.api.nvim_command("hi! @variable.member.ruby guifg=" .. colors.nord13_gui)
 
     vim.api.nvim_command("hi! link @keyword.function @keyword")
 
