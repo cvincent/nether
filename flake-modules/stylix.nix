@@ -6,12 +6,20 @@
     { config, ... }:
     {
       options = {
+        # TODO: This is just for our convenience and consistency for now, for
+        # when other configs want the name of a base 16 theme. We want to look
+        # into fast switchable theming at some point.
+        nether.theme = lib.mkOption {
+          type = lib.types.str;
+          default = "nord";
+        };
+
         nether.stylix = lib.mkOption {
           type = lib.types.attrs;
           default = {
             enable = true;
             image = ../resources/wallpapers/nord-irithyll.png;
-            base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/nord.yaml";
+            base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/${config.nether.theme}.yaml";
             polarity = "dark";
 
             targets.fish.enable = false;
