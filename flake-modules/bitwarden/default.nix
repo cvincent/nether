@@ -117,16 +117,16 @@
       bitwarden-create = pkgs.writeShellApplication {
         name = "bitwarden-create";
         text = builtins.readFile ./bitwarden-create.bash;
-        # runtimeInputs = with pkgs; [
-        #   bitwarden-cache-vault
-        #   bitwarden-cli
-        #   bitwarden-ensure-session
-        #   coreutils
-        #   jq
-        #   osConfig.nether.graphicalEnv.launcher.fuzzel.package
-        #   osConfig.nether.graphicalEnv.notifications.libnotify.package
-        #   osConfig.nether.terminals.default.package
-        # ];
+        runtimeInputs = with pkgs; [
+          bitwarden-cache-vault
+          bitwarden-cli
+          bitwarden-ensure-session
+          coreutils
+          jq
+          osConfig.nether.graphicalEnv.launcher.fuzzel.package
+          osConfig.nether.graphicalEnv.notifications.libnotify.package
+          osConfig.nether.terminals.default.package
+        ];
       };
 
       path =
