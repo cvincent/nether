@@ -154,12 +154,8 @@
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.45.0";
     nixpkgs-kitty.url = "nixpkgs/nixos-unstable";
     nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
-    nixpkgs-signal.url = "nixpkgs/nixos-unstable";
-    nixpkgs-slack.url = "nixpkgs/nixos-unstable";
-    nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
     nixpkgs-tmux.url = "nixpkgs/nixos-unstable";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
-    nixpkgs-zoom.url = "github:NixOS/nixpkgs/3f316d2a50699a78afe5e77ca486ad553169061e";
     xremap-flake.url = "github:xremap/nix-flake";
 
     # Package dropped from later NixOS

@@ -769,51 +769,6 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-signal": {
-      "locked": {
-        "lastModified": 1748026106,
-        "narHash": "sha256-6m1Y3/4pVw1RWTsrkAK2VMYSzG4MMIj7sqUy7o8th1o=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "063f43f2dbdef86376cc29ad646c45c46e93234c",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs-slack": {
-      "locked": {
-        "lastModified": 1732014248,
-        "narHash": "sha256-y/MEyuJ5oBWrWAic/14LaIr/u5E0wRVzyYsouYY3W6w=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "23e89b7da85c3640bbc2173fe04f4bd114342367",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs-spotify": {
-      "locked": {
-        "lastModified": 1748190013,
-        "narHash": "sha256-R5HJFflOfsP5FBtk+zE8FpL8uqE7n62jqOsADvVshhE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "62b852f6c6742134ade1abdd2a21685fd617a291",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
-        "type": "indirect"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1730741070,
@@ -888,22 +843,6 @@
         "id": "nixpkgs",
         "ref": "nixos-unstable",
         "type": "indirect"
-      }
-    },
-    "nixpkgs-zoom": {
-      "locked": {
-        "lastModified": 1716358718,
-        "narHash": "sha256-NQbegJb2ZZnAqp2EJhWwTf6DrZXSpA6xZCEq+RGV1r0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3f316d2a50699a78afe5e77ca486ad553169061e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3f316d2a50699a78afe5e77ca486ad553169061e",
-        "type": "github"
       }
     },
     "nixpkgs_2": {
@@ -1115,14 +1054,10 @@
         "nixpkgs-neovim": "nixpkgs-neovim",
         "nixpkgs-peroxide": "nixpkgs-peroxide",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
-        "nixpkgs-signal": "nixpkgs-signal",
-        "nixpkgs-slack": "nixpkgs-slack",
-        "nixpkgs-spotify": "nixpkgs-spotify",
         "nixpkgs-tmux": "nixpkgs-tmux",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-unstable-latest": "nixpkgs-unstable-latest",
         "nixpkgs-yt-dlp": "nixpkgs-yt-dlp",
-        "nixpkgs-zoom": "nixpkgs-zoom",
         "private-nethers": "private-nethers",
         "stylix": "stylix",
         "xremap-flake": "xremap-flake"

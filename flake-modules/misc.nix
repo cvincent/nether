@@ -35,37 +35,6 @@
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs, pkgInputs }:
     { osConfig, ... }:
-    let
-      wayland-spotify = (
-        pkgInputs.nixpkgs-spotify.spotify.overrideAttrs (
-          final: prev: {
-            postInstall = ''
-              sed -i "s:^Exec=.*:Exec=spotify --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime %U:" "$out/share/applications/spotify.desktop"
-            '';
-          }
-        )
-      );
-
-      xwayland-obsidian = (
-        pkgInputs.nixpkgs-unstable.obsidian.overrideAttrs (
-          final: prev: {
-            postInstall = ''
-              sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL obsidian %u:" "$out/share/applications/obsidian.desktop"
-            '';
-          }
-        )
-      );
-
-      xwayland-signal-desktop = (
-        pkgInputs.nixpkgs-signal.signal-desktop.overrideAttrs (
-          final: prev: {
-            postInstall = ''
-              # sed -i "s:^Exec=.*:Exec=env --unset NIXOS_OZONE_WL /opt/Signal/signal-desktop --no-sandbox %u:" "$out/share/applications/signal-desktop.desktop"
-            '';
-          }
-        )
-      );
-    in
     {
       config = lib.mkIf osConfig.nether.miscApps.enable {
         home.packages = with pkgs; [
@@ -74,15 +43,15 @@
           libreoffice
           nautilus
           bambu-studio
-          pkgInputs.nixpkgs-unstable-latest.discord-canary
-          pkgInputs.nixpkgs-slack.slack
-          pkgInputs.nixpkgs-zoom.zoom-us
-          xwayland-signal-desktop
-          wayland-spotify
+          discord-canary
+          slack
+          zoom-us
+          signal-desktop
+          spotify
           transmission_4-gtk
           pkgInputs.nixpkgs-unstable.ryujinx
           pkgInputs.nixpkgs-unstable.shadps4
-          xwayland-obsidian
+          obsidian
           (pkgs.symlinkJoin {
             name = "FreeCAD";
             paths = [ pkgs.freecad-wayland ];
