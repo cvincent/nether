@@ -127,6 +127,7 @@
         home.sessionVariables = {
           ERL_AFLAGS = "-kernel shell_history enabled";
           FZF_DEFAULT_OPTS = "--bind=ctrl-h:backward-kill-word";
+          DIRENV_WARN_TIMEOUT = "0";
         };
 
         programs.starship = {
