@@ -32,6 +32,7 @@
             starship = helpers.delegateToSoftware options "starship" true;
             zoxide = helpers.delegateToSoftware options "zoxide" true;
 
+            d2 = helpers.pkgOpt pkgs.dua true "d2 - text-to-diagram tool";
             dua = helpers.pkgOpt pkgs.dua true "dua - disk usage like du, but simpler";
             duf = helpers.pkgOpt pkgs.duf true "duf - per-disk usage like df, but nicely formatted";
             dust = helpers.pkgOpt pkgs.dust true "dust - disk usage like du, but more visual";
@@ -113,6 +114,7 @@
       config = lib.mkIf extra.enable {
         home.packages =
           [ ]
+          ++ helpers.pkgOptPkg extra.d2
           ++ helpers.pkgOptPkg extra.dua
           ++ helpers.pkgOptPkg extra.duf
           ++ helpers.pkgOptPkg extra.dust
