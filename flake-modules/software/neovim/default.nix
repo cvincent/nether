@@ -17,9 +17,11 @@
       config = lib.mkIf config.nether.editors.neovim.enable {
         environment.systemPackages = [ pkgInputs.nixpkgs-neovim.neovim ];
 
-        nether.backups.paths."${config.nether.homeDirectory}/.config/nvim/spell" = {
-          deleteMissing = true;
-        };
+        # TODO: We should store the dictionaries somewhere else if possible, so
+        # we can back them up without screwing with our symlinking
+        # nether.backups.paths."${config.nether.homeDirectory}/.config/nvim/spell" = {
+        #   deleteMissing = true;
+        # };
       };
     }
   );
