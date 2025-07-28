@@ -13,6 +13,7 @@
       config = lib.mkIf osConfig.nether.scripts.invoiceGenerator.enable {
         home.packages = with pkgs; [
           texlive.combined.scheme-medium # For generating PDFs from LaTeX
+          # TODO: This doesn't belong here
           d2 # Text to diagrams
 
           (pkgs.writeShellScriptBin "generate-invoice" (builtins.readFile ./generate-invoice.bash))

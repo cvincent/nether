@@ -13,7 +13,6 @@ in
   # have editors.nix pulling it in
   imports = (lib.map (mod: (import ./${mod}.nix { name = mod; })) modules) ++ [
     (import ./bitwarden { name = "bitwarden"; })
-    (import ./invoice-generator { name = "invoice-generator"; })
     (import ./lf { name = "lf"; })
     (import ./tmux { name = "tmux"; })
     (import ./windows-vm { name = "windows-vm"; })
