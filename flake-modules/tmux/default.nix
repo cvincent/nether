@@ -1,6 +1,7 @@
 { name }:
 { moduleWithSystem, helpers, ... }:
 {
+  # TODO: Why isn't this under shells.nix?
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
     {
