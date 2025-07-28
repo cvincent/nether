@@ -1,11 +1,18 @@
 { lib, ... }:
 {
   imports =
-    ./.
-    |> builtins.readDir
-    |> (lib.attrsets.filterAttrs (_k: v: v == "regular"))
-    |> lib.attrsets.attrNames
-    |> (lib.lists.remove "default.nix")
-    |> (lib.lists.map (name: lib.strings.removeSuffix ".nix" name))
-    |> (lib.map (mod: (import ./${mod}.nix { name = mod; })));
+    (
+      ./.
+      |> builtins.readDir
+      |> (lib.attrsets.filterAttrs (_k: v: v == "regular"))
+      |> lib.attrsets.attrNames
+      |> (lib.lists.remove "default.nix")
+      |> (lib.lists.map (name: lib.strings.removeSuffix ".nix" name))
+      |> (lib.map (mod: (import ./${mod}.nix { name = mod; })))
+    )
+    ++ [
+      (import ./bitwarden { name = "bitwarden"; })
+      (import ./lf { name = "lf"; })
+      (import ./tmux { name = "tmux"; })
+    ];
 }

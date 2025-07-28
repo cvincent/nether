@@ -1,5 +1,6 @@
 { name }:
 { lib, ... }:
+# TODO: Put this under nix.nix
 {
   flake.nixosModules."${name}" =
     { config, ... }:

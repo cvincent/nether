@@ -10,10 +10,10 @@
   # things out into submodules.
 
   imports = [
-    (import ./hyprland { name = "hyprland"; })
-    (import ./swaylock { name = "swaylock"; })
-    (import ./swaync { name = "swaync"; })
-    (import ./waybar { name = "waybar"; })
+    (import ../software/hyprland { name = "hyprland"; })
+    (import ../software/swaylock { name = "swaylock"; })
+    (import ../software/swaync { name = "swaync"; })
+    (import ../software/waybar { name = "waybar"; })
   ];
 
   flake.nixosModules."${name}" = moduleWithSystem (

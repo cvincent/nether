@@ -6,6 +6,7 @@
   helpers,
   ...
 }:
+# TODO: This is software that should be enabled under networking
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:

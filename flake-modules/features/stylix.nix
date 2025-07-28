@@ -18,7 +18,7 @@
           type = lib.types.attrs;
           default = {
             enable = true;
-            image = ../resources/wallpapers/nord-irithyll.png;
+            image = ../../resources/wallpapers/nord-irithyll.png;
             base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/${config.nether.theme}.yaml";
             polarity = "dark";
 

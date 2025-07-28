@@ -10,7 +10,7 @@ let
   };
 in
 {
-  imports = [ (import ./qutebrowser { name = "qutebrowser"; }) ];
+  imports = [ (import ../software/qutebrowser { name = "qutebrowser"; }) ];
 
   flake.nixosModules."${name}" =
     { config, ... }:

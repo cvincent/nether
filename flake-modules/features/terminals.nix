@@ -6,7 +6,7 @@
   ...
 }:
 {
-  imports = [ (import ./kitty { name = "kitty"; }) ];
+  imports = [ (import ../software/kitty { name = "kitty"; }) ];
 
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:

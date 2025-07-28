@@ -1,7 +1,7 @@
 { name }:
 { lib, ... }:
 {
-  imports = [ (import ./neovim { name = "neovim"; }) ];
+  imports = [ (import ../software/neovim { name = "neovim"; }) ];
 
   flake.nixosModules."${name}" = {
     options = {
