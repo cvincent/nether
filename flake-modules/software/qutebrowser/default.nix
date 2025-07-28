@@ -222,6 +222,7 @@
           enable = true;
 
           defaultApplications = {
+            "application/x-mimearchive" = "qutebrowser-route.desktop";
             "text/html" = "qutebrowser-route.desktop";
             "x-scheme-handler/http" = "qutebrowser-route.desktop";
             "x-scheme-handler/https" = "qutebrowser-route.desktop";

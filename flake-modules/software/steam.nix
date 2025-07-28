@@ -24,4 +24,15 @@
       };
     }
   );
+
+  flake.homeModules."${name}" =
+    { osConfig, ... }:
+    {
+      config = lib.mkIf osConfig.nether.steam.enable {
+        xdg.mimeApps = {
+          enable = true;
+          defaultApplications."x-scheme-handler/steam" = "steam.desktop";
+        };
+      };
+    };
 }
