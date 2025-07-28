@@ -5,6 +5,7 @@
     { config, ... }:
     {
       options = {
+        nether.dev.beam.enable = lib.mkEnableOption "Configuration for an easier time in BEAM languages";
         nether.dev.postgresql.enable = lib.mkEnableOption "Easier use of postgresql for dev";
       };
 
@@ -17,6 +18,17 @@
           systemd.tmpfiles.rules = [
             "d /run/postgresql 0755 ${config.nether.username} users -"
           ];
+        })
+      ];
+    };
+
+  flake.homeModules."${name}" =
+    { osConfig, ... }:
+    {
+      config = lib.mkMerge [
+        { }
+        (lib.mkIf osConfig.nether.dev.beam.enable {
+          home.sessionVariables.ERL_AFLAGS = "-kernel shell_history enabled";
         })
       ];
     };

@@ -10,12 +10,45 @@
 
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
-    { config, ... }:
+    { config, options, ... }:
+    let
+      inherit (config.nether) shells;
+    in
     {
       options = {
         nether.shells = {
           fish = helpers.pkgOpt pkgs.fish (config.nether.shells.default == "fish") "Fish shell";
-          extraUtils.enable = lib.mkEnableOption "Various useful shell utilities";
+
+          extra = {
+            enable = lib.mkEnableOption "Various useful shell utilities";
+
+            bat = helpers.delegateToSoftware options "bat" true;
+            btop = helpers.delegateToSoftware options "btop" true;
+            direnv = helpers.delegateToSoftware options "direnv" true;
+            eza = helpers.delegateToSoftware options "eza" true;
+            fzf = helpers.delegateToSoftware options "fzf" true;
+            jq = helpers.delegateToSoftware options "jq" true;
+            ripgrep = helpers.delegateToSoftware options "ripgrep" true;
+            starship = helpers.delegateToSoftware options "starship" true;
+            zoxide = helpers.delegateToSoftware options "zoxide" true;
+
+            dua = helpers.pkgOpt pkgs.dua true "dua - disk usage like du, but simpler";
+            duf = helpers.pkgOpt pkgs.duf true "duf - per-disk usage like df, but nicely formatted";
+            dust = helpers.pkgOpt pkgs.dust true "dust - disk usage like du, but more visual";
+            fastfetch = helpers.pkgOpt pkgs.fastfetch true "fastfetch - system information fetcher";
+            fd = helpers.pkgOpt pkgs.fd true "fd - a simpler alternative to find";
+            fx = helpers.pkgOpt pkgs.fx true "fx - interactive terminal JSON viewer";
+            gh = helpers.pkgOpt pkgs.gh true "gh - GitHub CLI";
+            unzip = helpers.pkgOpt pkgs.unzip true "unzip - easy zip extraction";
+
+            magicWormhole =
+              helpers.pkgOpt pkgs.magic-wormhole true
+                "wormhole - easy, secure file transfer over the Internet";
+
+            zf =
+              helpers.pkgOpt pkgs.zf true
+                "zf - a command-line fuzzy finder that prioritizes base filename matches";
+          };
 
           default = {
             which = lib.mkOption {
@@ -32,109 +65,67 @@
         };
       };
 
-      config.nether.shells.default = lib.mkIf (config.nether.shells.default.which != null) {
-        package = lib.mkForce config.nether.shells."${config.nether.shells.default.which}".package;
-        path = lib.mkForce "${config.nether.shells.default.package}/bin/${config.nether.shells.default.which}";
+      config.nether = {
+        shells.default = lib.mkIf (shells.default.which != null) {
+          package = lib.mkForce shells."${shells.default.which}".package;
+          path = lib.mkForce "${shells.default.package}/bin/${shells.default.which}";
+        };
+
+        software = lib.mkIf shells.extra.enable {
+          bat = {
+            inherit (shells.extra.bat) enable package;
+            enableFishIntegration = shells.fish.enable;
+          };
+
+          btop = { inherit (shells.extra.btop) enable package; };
+          direnv = { inherit (shells.extra.direnv) enable package; };
+
+          eza = {
+            inherit (shells.extra.eza) enable package;
+            enableFishIntegration = shells.fish.enable;
+          };
+
+          fzf = { inherit (shells.extra.fzf) enable package; };
+          jq = { inherit (shells.extra.jq) enable package; };
+          ripgrep = { inherit (shells.extra.ripgrep) enable package; };
+
+          starship = {
+            inherit (shells.extra.starship) enable package;
+            enableFishIntegration = shells.fish.enable;
+          };
+
+          zoxide = {
+            inherit (shells.extra.zoxide) enable package;
+            enableFishIntegration = shells.fish.enable;
+          };
+        };
       };
     }
   );
 
-  # TODO: Make this more modular
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs, pkgInputs }:
+  flake.homeModules."${name}" =
     { osConfig, ... }:
+    let
+      inherit (osConfig.nether) shells;
+      inherit (shells) extra;
+    in
     {
-      config = lib.mkIf osConfig.nether.shells.extraUtils.enable {
-        home.packages = with pkgs; [
-          bat # `cat` alternative
-          btop # `top` alternative
+      config = lib.mkIf extra.enable {
+        home.packages =
+          [ ]
+          ++ helpers.pkgOptPkg extra.dua
+          ++ helpers.pkgOptPkg extra.duf
+          ++ helpers.pkgOptPkg extra.dust
+          ++ helpers.pkgOptPkg extra.fx
+          ++ helpers.pkgOptPkg extra.magicWormhole
+          ++ helpers.pkgOptPkg extra.unzip
+          ++ helpers.pkgOptPkg extra.zf;
 
-          # `du`-like alternatives
-          du-dust
-          dua
-          duf
-
-          eza # `ls` alternative
-          fd # `find` alternative
-          fzf
-          zf
-          jq
-          fx
-          magic-wormhole
-          unzip
-
-          neofetch
-          pkgInputs.nixpkgs-unstable-latest.gh
-
-          (pkgs.writeShellScriptBin "wait-for-port" ''
-            echo "Waiting for port $1..."
-            while ! nc -z localhost $1; do
-              sleep 0.1
-            done
-          '')
-
-          (pkgs.writeShellScriptBin "jq-preview" ''
-            #!/usr/bin/env bash
-            if [[ -z $1 ]] || [[ $1 == "-" ]]; then
-              input=$(mktemp)
-              trap "rm -f $input" EXIT
-              cat /dev/stdin > $input
-            else
-              input=$1
-            fi
-
-            echo "" | fzf \
-              --phony \
-              --preview-window='up:90%' \
-              --print-query \
-              --preview "jq --color-output -r {q} $input"
-          '')
-        ];
-
-        programs.direnv = {
-          enable = true;
-          silent = true;
-          nix-direnv.enable = true;
-
-          # Stolen from @isabelroses
-          # modified from @i077O
-          # store direnv in cache and not per project
-          stdlib = ''
-            : ''${XDG_CACHE_HOME:=$HOME/.cache}
-            declare -A direnv_layout_dirs
-
-            direnv_layout_dir() {
-              echo "''${direnv_layout_dirs[$PWD]:=$(
-                echo -n "$XDG_CACHE_HOME"/direnv/layouts/
-                echo -n "$PWD" | sha1sum | cut -d ' ' -f 1
-              )}"
-            }
-          '';
-        };
-
-        programs.zoxide = {
-          enable = true;
-          enableFishIntegration = osConfig.nether.shells.fish.enable;
-        };
-
-        programs.ripgrep = {
-          enable = true;
-          arguments = [
-            "--glob=!*.enc"
-          ];
-        };
-
-        home.sessionVariables = {
-          ERL_AFLAGS = "-kernel shell_history enabled";
-          FZF_DEFAULT_OPTS = "--bind=ctrl-h:backward-kill-word";
-          DIRENV_WARN_TIMEOUT = "0";
-        };
-
-        programs.starship = {
-          enable = true;
-          enableFishIntegration = osConfig.nether.shells.fish.enable;
+        programs = {
+          fastfetch = { inherit (extra.fastfetch) enable package; };
+          fd = { inherit (extra.fd) enable package; };
+          gh = { inherit (extra.gh) enable package; };
         };
       };
-    }
-  );
+    };
 }

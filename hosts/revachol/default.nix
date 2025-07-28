@@ -23,7 +23,7 @@
 
     shells = {
       fish.enable = true;
-      extraUtils.enable = true;
+      extra.enable = true;
       default.which = "fish";
     };
 
@@ -97,6 +97,7 @@
     xremap = true;
 
     scripts.invoiceGenerator.enable = true;
+    scripts.waitForPort.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

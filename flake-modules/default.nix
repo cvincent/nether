@@ -17,5 +17,6 @@ in
     (import ./lf { name = "lf"; })
     (import ./tmux { name = "tmux"; })
     (import ./windows-vm { name = "windows-vm"; })
+    ./scripts
   ];
 }

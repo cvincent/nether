@@ -2,7 +2,7 @@
   flakeModuleHelpers =
     { lib, ... }:
     {
-      _module.args.helpers = {
+      _module.args.helpers = rec {
         # TODO: Make `which` style options easier and more consistent; write
         # this function
         whichOpt = (
@@ -37,6 +37,16 @@
             type = lib.types.bool;
             inherit description default;
           });
+
+        # Create a feature module package option that delegates to a software
+        # module
+        delegateToSoftware = (
+          options: name: defaultEnable:
+          let
+            softwareOpts = options.nether.software."${name}";
+          in
+          (pkgOpt softwareOpts.package.default defaultEnable softwareOpts.enable.description)
+        );
       };
     };
 

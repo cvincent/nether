@@ -19,22 +19,14 @@
       # media.nix. And aliases for various utilities should be grouped with
       # those utilities.
       programs.fish = {
-        enable = osConfig.nether.shells.fish.enable;
-        package = osConfig.nether.shells.fish.package;
+        inherit (osConfig.nether.shells.fish) enable package;
 
         interactiveShellInit = ''
           bind \cH backward-kill-word
         '';
 
         shellAliases = {
-          cd = "z";
           mkdir = "mkdir -p";
-          ls = "exa";
-          l = "eza -lh --group-directories-first";
-          ll = "eza -lha --group-directories-first";
-          lt = "eza --tree --group-directories-first";
-          cat = "bat";
-          grep = "rg";
           # Put this one in mpv config
           lfhh = "mpv --no-resume-playback --force-window=immediate --http-proxy='https://192.168.1.114:8888' 'https://www.youtube.com/watch?v=jfKfPfyJRdk'";
           mux = "tmuxinator start --suppress-tmux-version-warning=SUPPRESS-TMUX-VERSION-WARNING";
