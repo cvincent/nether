@@ -1,12 +1,24 @@
 { name }:
-{ moduleWithSystem, helpers, ... }:
+{
+  lib,
+  moduleWithSystem,
+  helpers,
+  ...
+}:
 {
   # TODO: Why isn't this under shells.nix?
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
+    { config, ... }:
     {
       options.nether.tmux = (helpers.pkgOpt pkgs.tmux false "tmux - the terminal multiplexer") // {
         tmuxinator = helpers.pkgOpt pkgs.tmuxinator true "tmuxinator - repeatable tmux sessions";
+      };
+
+      config = lib.mkIf config.nether.tmux.enable {
+        nether.shells.aliases = lib.mkIf config.nether.tmux.tmuxinator.enable {
+          mux = "tmuxinator start --suppress-tmux-version-warning=SUPPRESS-TMUX-VERSION-WARNING";
+        };
       };
     }
   );

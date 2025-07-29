@@ -20,6 +20,8 @@
         nether.backups.paths."${config.nether.homeDirectory}/.local/share/neovim-spell" = {
           deleteMissing = true;
         };
+
+        nether.shells.aliases.nvs = "nvim -S Session.vim";
       };
     }
   );

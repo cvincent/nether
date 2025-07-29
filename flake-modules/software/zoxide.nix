@@ -8,7 +8,10 @@
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
-    { ... }:
+    { config, ... }:
+    let
+      inherit (config.nether.software) zoxide;
+    in
     {
       options = {
         nether.software."${name}" =
@@ -19,6 +22,10 @@
               default = false;
             };
           };
+      };
+
+      config = lib.mkIf zoxide.enable {
+        nether.shells.aliases.cd = "z";
       };
     }
   );
@@ -31,10 +38,6 @@
     {
       programs.zoxide = {
         inherit (zoxide) enable package enableFishIntegration;
-      };
-
-      programs.fish.shellAliases = lib.mkIf zoxide.enableFishIntegration {
-        cd = "z";
       };
     };
 }

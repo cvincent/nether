@@ -25,13 +25,7 @@
           bind \cH backward-kill-word
         '';
 
-        shellAliases = {
-          mkdir = "mkdir -p";
-          # Put this one in mpv config
-          lfhh = "mpv --no-resume-playback --force-window=immediate --http-proxy='https://192.168.1.114:8888' 'https://www.youtube.com/watch?v=jfKfPfyJRdk'";
-          mux = "tmuxinator start --suppress-tmux-version-warning=SUPPRESS-TMUX-VERSION-WARNING";
-          nvs = "nvim -S Session.vim";
-        };
+        shellAliases = osConfig.nether.shells.aliases;
 
         functions = {
           fish_greeting = ''
@@ -43,7 +37,11 @@
               set_color red; echo ""; set_color normal
             )
           '';
-          fish_prompt = builtins.readFile ./fish_prompt.fish;
+
+          # NOTE: This is my old prompt. Right now this does nothing because we
+          # use Starship. But I liked it, and I don't feel like deleting it.
+          # Call me sentimental.
+          # fish_prompt = builtins.readFile ./fish_prompt.fish;
 
           nxrb = ''
             if sudo nixos-rebuild switch --flake ~/dotfiles --fast
@@ -52,10 +50,6 @@
               notify-send -i dialog-error -t 5000 -e 'NixOS Rebuild Failed'
             end
             aplay ~/dotfiles/resources/notification.wav 2> /dev/null
-          '';
-
-          m = ''
-            mpv --force-window=immediate --volume=50 $argv & disown
           '';
         };
       };

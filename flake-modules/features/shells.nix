@@ -19,6 +19,11 @@
         nether.shells = {
           fish = helpers.pkgOpt pkgs.fish (config.nether.shells.default == "fish") "Fish shell";
 
+          aliases = lib.mkOption {
+            type = lib.types.attrsOf lib.types.str;
+            default = { };
+          };
+
           extra = {
             enable = lib.mkEnableOption "Various useful shell utilities";
 
@@ -72,12 +77,10 @@
           path = lib.mkForce "${shells.default.package}/bin/${shells.default.which}";
         };
 
-        software = lib.mkIf shells.extra.enable {
-          bat = {
-            inherit (shells.extra.bat) enable package;
-            enableFishIntegration = shells.fish.enable;
-          };
+        shells.aliases.mkdir = "mkdir -p";
 
+        software = lib.mkIf shells.extra.enable {
+          bat = { inherit (shells.extra.bat) enable package; };
           btop = { inherit (shells.extra.btop) enable package; };
           direnv = { inherit (shells.extra.direnv) enable package; };
 

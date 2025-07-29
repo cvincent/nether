@@ -57,11 +57,25 @@
           playerctl = helpers.pkgOpt pkgs.playerctl true "playerctl - CLI for media player controls";
           ytDlp = helpers.pkgOpt pkgs.yt-dlp true "yt-dlp video downloader";
         };
+
+        extra = {
+          lofiHipHop = helpers.boolOpt true "lfhh alias for quickly starting lo-fi hip hop radio: beats to relax/study to";
+        };
       };
 
-      config = lib.mkIf config.nether.media.enable {
-        nether.backups.paths."${config.nether.homeDirectory}/videos".deleteMissing = true;
-      };
+      config = lib.mkIf media.enable (
+        lib.mkMerge [
+          {
+            nether.backups.paths."${config.nether.homeDirectory}/videos".deleteMissing = true;
+          }
+          (lib.mkIf media.extra.lofiHipHop {
+            nether.shells.aliases.lfhh = "mpv --no-resume-playback --force-window=immediate --http-proxy='https://192.168.1.114:8888' 'https://www.youtube.com/watch?v=jfKfPfyJRdk'";
+          })
+          (lib.mkIf media.apps.mpv.enable {
+            nether.shells.aliases.m = "mpv --force-window=immediate --volume=50 $argv & disown";
+          })
+        ]
+      );
     }
   );
 

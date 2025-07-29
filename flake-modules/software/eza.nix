@@ -8,7 +8,10 @@
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
-    { ... }:
+    { config, ... }:
+    let
+      inherit (config.nether.software) eza;
+    in
     {
       options = {
         nether.software."${name}" = (helpers.pkgOpt pkgs.eza false "eza - a modern replacement for ls") // {
@@ -16,6 +19,14 @@
             type = lib.types.bool;
             default = false;
           };
+        };
+      };
+
+      config = lib.mkIf eza.enable {
+        nether.shells.aliases = {
+          # Slight difference from aliases provided by the HM module
+          l = "eza -l";
+          ll = "eza -la";
         };
       };
     }
@@ -31,12 +42,6 @@
         inherit (eza) enable package enableFishIntegration;
         git = true;
         extraOptions = [ "--group-directories-first" ];
-      };
-
-      programs.fish.shellAliases = lib.mkIf eza.enableFishIntegration {
-        # Slight difference from aliases provided by the HM module
-        l = "eza -l";
-        ll = "eza -la";
       };
     };
 }
