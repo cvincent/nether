@@ -6,6 +6,8 @@
   ...
 }:
 {
+  # TODO: Currently this assumes your terminal and editor; these should be
+  # agnostic
   flake.nixosModules."${name}" =
     { config, ... }:
     {

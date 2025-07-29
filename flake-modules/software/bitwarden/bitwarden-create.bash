@@ -1,12 +1,14 @@
+type=${1:-}
+url=${2:-}
+
 tmp=$(mktemp -q /tmp/item.XXXXXX.json || exit 1)
 trap 'rm -f -- "$tmp"' EXIT
 
-json=$(cat ~/.local/share/bitwarden/templates/"$1".json)
+json=$(cat ~/.local/share/bitwarden/templates/"$type".json)
 
-case $1 in
+case $type in
   'login')
-    if [[ -n "$2" ]]; then
-      url=$2
+    if [[ -n "$url" ]]; then
       domain=$(echo "$url" | awk -F/ '{print $3}')
       json=$(echo "$json" | jq --arg domain "$domain" '.name = $domain' | jq --arg url "$url" '.login.uris[0].uri = $url')
     fi
