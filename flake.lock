@@ -1026,11 +1026,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1753294910,
-        "narHash": "sha256-h/pt4/H4eDGdd3KZa0YgqLpBnMmzqCkwl/i/iHw4/vY=",
+        "lastModified": 1753748625,
+        "narHash": "sha256-RoQx1xPOzEF9gvVrOJQ2m67QgFQCBt3wuAnuzEUYBJY=",
         "ref": "main",
-        "rev": "dd9a3103f2c2cd1f1a2accf8f4be3964969a3482",
-        "revCount": 16,
+        "rev": "07115dc75c700cfaa0858c202fd63c798d94a20f",
+        "revCount": 18,
         "type": "git",
         "url": "ssh://git@github.com/cvincent/private-nethers.git"
       },
