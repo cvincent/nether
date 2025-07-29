@@ -22,7 +22,7 @@
       inherit (osConfig.nether.software) jq;
     in
     {
-      config = lib.optionalAttrs jq.enable {
+      config = lib.mkIf jq.enable {
         programs.jq = jq;
 
         home.packages = [

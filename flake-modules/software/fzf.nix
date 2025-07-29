@@ -27,7 +27,7 @@
       inherit (osConfig.nether.software) fzf;
     in
     {
-      config = lib.optionalAttrs fzf.enable {
+      config = lib.mkIf fzf.enable {
         programs.fzf = {
           inherit (fzf) enable package;
           defaultOptions = [ "--bind=ctrl-h:backward-kill-word" ];
