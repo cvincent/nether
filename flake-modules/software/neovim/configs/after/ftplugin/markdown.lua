@@ -2,7 +2,9 @@ vim.opt_local.conceallevel = 2
 vim.opt_local.concealcursor = "n"
 -- The space gets in the way of easily adding checkboxes
 vim.b[0].delimitMate_expand_space = 0
-vim.api.nvim_command("set spell")
+
+vim.wo.spell = true
+vim.bo.spellfile = vim.fs.abspath("~/.local/share/neovim-spell/en.utf-8.add")
 
 -- Bullets mappings
 vim.keymap.set("i", "<cr>", "<Plug>(bullets-newline)", { buffer = true })
