@@ -1,3 +1,8 @@
-# General information
+# nether
 
-TODO: Update this README for the new Flake structure.
+This README is WIP.
+
+## Conventions
+
+- All our own options are `camelCase`, even if referring to a package.
+- All files and directories are `kebab-case`.
