@@ -25,6 +25,7 @@ return {
       cmd = { "nixd" },
       settings = {
         nixd = {
+          -- TODO: Pull dotfiles path from Nix config
           nixpkgs = { expr = "import (builtins.getFlake \"/home/cvincent/dotfiles\").inputs.nixpkgs { }" },
           formatting = { "nixfmt" },
           options = {

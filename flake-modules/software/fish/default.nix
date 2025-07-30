@@ -11,6 +11,9 @@
 
   flake.homeModules."${name}" =
     { osConfig, ... }:
+    let
+      inherit (osConfig.nether) dotfilesDirectory;
+    in
     {
       stylix.targets.fish.enable = false;
 
@@ -43,13 +46,16 @@
           # Call me sentimental.
           # fish_prompt = builtins.readFile ./fish_prompt.fish;
 
+          # TODO: This should just be a bash script so we can use it from any
+          # shell.
           nxrb = ''
-            if sudo nixos-rebuild switch --flake ~/dotfiles --fast
+            git -C ${dotfilesDirectory} add -AN
+            if sudo nixos-rebuild switch --flake ${dotfilesDirectory} --fast
               notify-send -i dialog-information -t 5000 -e 'NixOS Rebuild Succeeded'
             else
               notify-send -i dialog-error -t 5000 -e 'NixOS Rebuild Failed'
             end
-            aplay ~/dotfiles/resources/notification.wav 2> /dev/null
+            aplay ${dotfilesDirectory}/resources/notification.wav 2> /dev/null
           '';
         };
       };

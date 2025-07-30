@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  osConfig,
+  pkgs,
+  ...
+}:
 let
   watch-vdirsyncer-dir = (
     pkgs.writeShellScriptBin "watch-vdirsyncer-dir" ''
@@ -39,7 +44,7 @@ let
     pkgs.writeShellScriptBin "notify-event" ''
       #!/usr/bin/env bash
 
-      ${pkgs.alsa-utils}/bin/aplay ${config.home.homeDirectory}/dotfiles/resources/notification.wav &
+      ${pkgs.alsa-utils}/bin/aplay ${osConfig.nether.dotfilesDirectory}/resources/notification.wav &
       resp=$(${pkgs.libnotify}/bin/notify-send -u critical -i dialog-information -A "default=Open" "$1" "$2")
 
       if [ "$resp" == "default" ]; then
