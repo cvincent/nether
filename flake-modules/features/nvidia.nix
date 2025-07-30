@@ -1,4 +1,4 @@
-{ name }:
+{ name, ... }:
 { lib, moduleWithSystem, ... }:
 {
   # TODO: Probably belongs with hardware

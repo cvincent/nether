@@ -1,4 +1,4 @@
-{ name }:
+{ name, ... }:
 { lib, ... }:
 {
   imports = [ (import ../software/neovim { name = "neovim"; }) ];

@@ -1,4 +1,4 @@
-{ name }:
+{ name, ... }:
 { lib, inputs, ... }:
 {
   flake.nixosModules."${name}" =

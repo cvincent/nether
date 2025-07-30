@@ -1,4 +1,4 @@
-{ name }:
+{ name, ... }:
 { lib, ... }:
 # TODO: Put this under nix.nix
 {
