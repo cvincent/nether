@@ -8,6 +8,8 @@ return {
       },
       javascript = { "prettier" },
       typescript = { "prettier" },
+      ruby = { "standardrb" },
+      eruby = { "erb_format" }
     }
   },
   init = function()

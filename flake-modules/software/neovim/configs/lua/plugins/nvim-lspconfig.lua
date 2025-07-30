@@ -73,6 +73,8 @@ return {
       }
     })
 
+    lspconfig.standardrb.setup({})
+
     lspconfig.gleam.setup({})
 
     local default_diagnostic_config = {
