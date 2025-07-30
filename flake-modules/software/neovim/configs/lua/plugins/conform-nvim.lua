@@ -39,10 +39,6 @@ return {
       vim.b.autoformat = new_val
     end, {})
 
-    local format = function()
-      require("conform").format()
-    end
-
     vim.keymap.set("n", "<leader><s-f>", require("conform").format)
     vim.keymap.set("v", "<leader><s-f>", require("conform").format)
   end
