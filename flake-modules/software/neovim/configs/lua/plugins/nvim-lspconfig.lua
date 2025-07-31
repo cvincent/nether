@@ -27,7 +27,7 @@ return {
         nixd = {
           -- TODO: Pull dotfiles path from Nix config
           nixpkgs = { expr = "import (builtins.getFlake \"/home/cvincent/dotfiles\").inputs.nixpkgs { }" },
-          formatting = { "nixfmt" },
+          -- formatting = { "nixfmt" },
           options = {
             nixos = { expr = "(builtins.getFlake \"/home/cvincent/dotfiles\").nixosConfigurations.nether.options { }" },
             home_manager = { expr = "(builtins.getFlake \"/home/cvincent/dotfiles\").homeConfigurations.nether.options { }" }

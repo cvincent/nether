@@ -9,7 +9,8 @@ return {
       javascript = { "prettier" },
       typescript = { "prettier" },
       ruby = { "standardrb" },
-      eruby = { "erb_format" }
+      eruby = { "erb_format" },
+      nix = { "nixfmt" }
     }
   },
   init = function()
