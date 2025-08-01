@@ -1,4 +1,4 @@
-{ name }:
+{ name, ... }:
 { lib, moduleWithSystem, ... }:
 {
   # TODO: We need to be using a NeoVim wrapper, rather than installing gcc and

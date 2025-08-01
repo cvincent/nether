@@ -1,5 +1,10 @@
-{ name }:
-{ lib, inputs, moduleWithSystem, ... }:
+{ name, ... }:
+{
+  lib,
+  inputs,
+  moduleWithSystem,
+  ...
+}:
 {
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs, system }:
@@ -108,10 +113,10 @@
                 "./.config/hypr/workspaces.conf".source = helpers.directSymlink ./configs/workspaces.conf;
                 "./.config/hypr/shaders".source = helpers.directSymlink ./configs/shaders;
 
-              "./.config/hypr/work-browsers.conf".text =
-                inputs.private-nethers.workBrowsers
-                |> builtins.map (class: "windowrule = workspace 2 silent, ^(qute-${class})$")
-                |> lib.strings.concatLines;
+                "./.config/hypr/work-browsers.conf".text =
+                  inputs.private-nethers.workBrowsers
+                  |> builtins.map (class: "windowrule = workspace 2 silent, ^(qute-${class})$")
+                  |> lib.strings.concatLines;
 
                 "./.config/hypr/pyprland.toml".text = builtins.concatStringsSep "\n" (
                   [
