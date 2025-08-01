@@ -65,7 +65,7 @@
         imports = [
           home-manager.flakeModules.home-manager
           helpers.flakeModuleHelpers
-          (flake-parts-lib.importApply ./flake-modules { inherit (helpers.helpers) mkFeature; })
+          (flake-parts-lib.importApply ./flake-modules { inherit (helpers.helpers) mkFeature mkModuleDir; })
         ];
 
         systems = [

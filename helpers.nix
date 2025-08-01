@@ -247,6 +247,38 @@
           }
         );
       };
+
+    mkModuleDir =
+      {
+        dir,
+        moduleArgs,
+        applyArgs ? { },
+        exclude ? [ ],
+        additionalImports ? [ ],
+      }:
+      let
+        inherit (moduleArgs) lib flake-parts-lib;
+        excluded = exclude ++ [ "default.nix" ];
+      in
+      {
+        imports =
+          (
+            dir
+            |> builtins.readDir
+            |> builtins.attrNames
+            |> builtins.filter (f: !builtins.elem f excluded)
+            |> builtins.map (
+              module:
+              (flake-parts-lib.importApply (dir + "/${module}") (
+                {
+                  name = lib.removeSuffix ".nix" module;
+                }
+                // applyArgs
+              ))
+            )
+          )
+          ++ additionalImports;
+      };
   };
 
   flakeModuleHelpers =
