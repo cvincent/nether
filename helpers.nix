@@ -146,7 +146,7 @@
               // feature.options or { };
             };
 
-            config = (lib.mkIf config.nether."${featureName}".enable) (
+            config = (lib.mkIf thisConfig.enable) (
               lib.mkMerge (
                 [ ]
                 ++ (
@@ -217,7 +217,7 @@
             softwareNamespaces = getSoftwareNamespaces lib feature;
           in
           {
-            config = (lib.mkIf osConfig.nether."${featureName}".enable) (
+            config = (lib.mkIf thisConfig.enable) (
               lib.mkMerge (
                 [ ]
                 ++ (
@@ -291,6 +291,89 @@
             )
           )
           ++ additionalImports;
+      };
+
+    mkSoftware =
+      softwareName: softwareDef:
+      { lib, moduleWithSystem, ... }:
+      {
+        flake.nixosModules."software-${softwareName}" = moduleWithSystem (
+          systemArgs@{
+            pkgs,
+            pkgInputs,
+            inputs',
+            self',
+            system,
+          }:
+          nixosModuleArgs@{ config, ... }:
+          let
+            thisConfig = config.nether.software."${softwareName}";
+
+            softwareDefFn = if builtins.isFunction softwareDef then softwareDef else (_: softwareDef);
+
+            software = (
+              softwareDefFn (
+                systemArgs
+                // nixosModuleArgs
+                // {
+                  "${softwareName}" = thisConfig;
+                  inherit (config) nether;
+                }
+              )
+            );
+          in
+          {
+            options = {
+              nether.software."${softwareName}" =
+                (
+                  if pkgs ? "${softwareName}" then
+                    {
+                      enable = lib.mkEnableOption pkgs."${softwareName}".meta.description;
+                      package = lib.mkOption {
+                        type = lib.types.package;
+                        default = pkgs."${softwareName}";
+                      };
+                    }
+                  else
+                    { }
+                )
+                // (software.options or { });
+            };
+
+            config = (lib.mkIf thisConfig.enable) (software.nixos or { });
+          }
+        );
+
+        flake.homeModules."software-${softwareName}" = moduleWithSystem (
+          systemArgs@{
+            pkgs,
+            pkgInputs,
+            inputs',
+            self',
+            system,
+          }:
+          homeModuleArgs@{ osConfig, ... }:
+          let
+            thisConfig = osConfig.nether.software."${softwareName}";
+
+            softwareDefFn = if builtins.isFunction softwareDef then softwareDef else (_: softwareDef);
+
+            software = (
+              softwareDefFn (
+                systemArgs
+                // homeModuleArgs
+                // {
+                  config = osConfig;
+                  "${softwareName}" = thisConfig;
+                  inherit (osConfig) nether;
+                }
+              )
+            );
+          in
+          {
+            config = (lib.mkIf thisConfig.enable) (software.hm or { });
+          }
+        );
       };
   };
 
