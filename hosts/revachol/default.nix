@@ -74,6 +74,7 @@
     backups.enable = true;
     bitwarden.enable = true;
     browsers.enable = true;
+    chat.enable = true;
     flatpak.enable = true;
     git.enable = true;
     homeAssistant.enable = true;

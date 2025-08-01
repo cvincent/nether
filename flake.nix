@@ -20,7 +20,12 @@
           |> (nixpkgs.lib.attrsets.filterAttrs (_k: v: v == "directory"))
           |> nixpkgs.lib.attrsets.attrNames;
       in
-      flake@{ lib, moduleWithSystem, ... }:
+      flake@{
+        flake-parts-lib,
+        lib,
+        moduleWithSystem,
+        ...
+      }:
       {
         debug = true;
 
@@ -60,7 +65,7 @@
         imports = [
           home-manager.flakeModules.home-manager
           helpers.flakeModuleHelpers
-          ./flake-modules
+          (flake-parts-lib.importApply ./flake-modules { inherit (helpers.helpers) mkFeature; })
         ];
 
         systems = [
@@ -77,6 +82,8 @@
               # Automatically import any nixosModules that were defined
               modules = lib.attrsets.attrValues flake.config.flake.nixosModules ++ [
                 (moduleWithSystem (import ./hosts/${host}))
+
+                helpers.nixosModule
 
                 {
                   options.nether.hosts = lib.mkOption {

@@ -1,7 +1,8 @@
-{ ... }:
+{ mkFeature, ... }:
+{ flake-parts-lib, ... }:
 {
   imports = [
-    ./features
+    (flake-parts-lib.importApply ./features { inherit mkFeature; })
     ./scripts
     ./software
   ];
