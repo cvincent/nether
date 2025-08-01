@@ -241,6 +241,22 @@
                     }
                   )
                 )
+                ++ (
+                  # Include any hm configs from enabled software definitions
+                  softwareNamespaces
+                  |> lib.attrsets.mapAttrsToList (
+                    softwareNamespace: softwareDefs:
+                    softwareDefs
+                    |> lib.attrsets.mapAttrsToList (
+                      softwareName: softwareDef:
+                      lib.mkIf (
+                        thisConfig."${softwareNamespace}".enable
+                        && thisConfig."${softwareNamespace}"."${softwareName}".enable
+                      ) (softwareDef.hm or { })
+                    )
+                  )
+                  |> lib.flatten
+                )
                 ++ [ (feature.hm or { }) ]
               )
             );
