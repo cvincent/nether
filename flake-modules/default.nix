@@ -1,7 +1,6 @@
 applyArgs@{ mkModuleDir, ... }:
 moduleArgs:
-mkModuleDir {
-  dir = ./.;
+mkModuleDir ./. {
   inherit applyArgs moduleArgs;
   exclude = [
     "scripts"

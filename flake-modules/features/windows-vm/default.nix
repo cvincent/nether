@@ -1,4 +1,4 @@
-{ name }:
+{ name, ... }:
 { lib, moduleWithSystem, ... }:
 {
   # TODO: Most of this is actually setting up GPU passthrough, which isn't

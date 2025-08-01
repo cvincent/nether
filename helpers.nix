@@ -249,8 +249,8 @@
       };
 
     mkModuleDir =
+      dir:
       {
-        dir,
         moduleArgs,
         applyArgs ? { },
         exclude ? [ ],
@@ -269,12 +269,9 @@
             |> builtins.filter (f: !builtins.elem f excluded)
             |> builtins.map (
               module:
-              (flake-parts-lib.importApply (dir + "/${module}") (
-                {
-                  name = lib.removeSuffix ".nix" module;
-                }
-                // applyArgs
-              ))
+              flake-parts-lib.importApply (dir + "/${module}") (
+                applyArgs // { name = lib.removeSuffix ".nix" module; }
+              )
             )
           )
           ++ additionalImports;

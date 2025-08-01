@@ -12,6 +12,7 @@
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       let
+        # TODO: Assign this under the next function so we can pass in `lib`
         helpers = import ./helpers.nix;
 
         hosts =
