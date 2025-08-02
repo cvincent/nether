@@ -120,13 +120,6 @@
                     # Attrs not included in the list below are assumed to be a
                     # single software definition
                     softwareDefs
-                    |> lib.attrsets.filterAttrs (
-                      softwareName: _:
-                      !(lib.lists.elem softwareName [
-                        "description"
-                        "options"
-                      ])
-                    )
                     |> lib.mapAttrs (
                       softwareName: softwareDef:
                       softwareOptionDefs {
