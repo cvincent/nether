@@ -8,18 +8,23 @@
 
   helpers = rec {
     getSoftwareNamespaces =
-      lib: feature:
+      lib: feature: includeToplevel:
       # Feature attrs not included in the list below are assumed to be
       # namespaced attrsets of software definitions for this feature
       feature
       |> lib.attrsets.filterAttrs (
         softwareNamespace: _:
-        !(lib.lists.elem softwareNamespace [
-          "description"
-          "options"
-          "nixos"
-          "hm"
-        ])
+        !(lib.lists.elem softwareNamespace (
+          (
+            [
+              "description"
+              "options"
+              "nixos"
+              "hm"
+            ]
+            ++ lib.optional (!includeToplevel) "toplevel"
+          )
+        ))
       );
 
     softwareOptionDefs =
@@ -62,6 +67,25 @@
       )
       // (softwareDef.options or { });
 
+    softwareNamespaceEnable =
+      thisConfig: softwareNamespace:
+      if softwareNamespace == "toplevel" then true else thisConfig."${softwareNamespace}".enable;
+
+    softwareConfig =
+      thisConfig: softwareNamespace: softwareName:
+      if softwareNamespace == "toplevel" then
+        thisConfig."${softwareName}"
+      else
+        thisConfig."${softwareNamespace}"."${softwareName}";
+
+    softwareEnable =
+      thisConfig: softwareNamespace: softwareName:
+      if softwareNamespace == "toplevel" then
+        thisConfig."${softwareName}".enable
+      else
+        thisConfig."${softwareNamespace}".enable
+        && thisConfig."${softwareNamespace}"."${softwareName}".enable;
+
     mkFeature =
       featureName: featureDef:
       { lib, moduleWithSystem, ... }:
@@ -91,7 +115,8 @@
               )
             );
 
-            softwareNamespaces = getSoftwareNamespaces lib feature;
+            softwareNamespaces = getSoftwareNamespaces lib feature false;
+            softwareNamespacesWithToplevel = getSoftwareNamespaces lib feature true;
           in
           {
             options = {
@@ -136,6 +161,23 @@
                   // (softwareDefs.options or { })
                 )
               )
+              // (
+                # `toplevel`, if defined, defines its software options
+                # without a namespace
+                (feature.toplevel or { })
+                |> lib.mapAttrs (
+                  softwareName: softwareDef:
+                  softwareOptionDefs {
+                    inherit
+                      lib
+                      pkgs
+                      options
+                      softwareName
+                      softwareDef
+                      ;
+                  }
+                )
+              )
               // feature.options or { };
             };
 
@@ -146,14 +188,18 @@
                   # For each software namespace, and each software definition
                   # within them, if it refers to a nether.software module, pass
                   # our feature options through to the software module.
-                  softwareNamespaces
+                  softwareNamespacesWithToplevel
                   |> lib.mapAttrsToList (
                     softwareNamespace: softwareDefs: {
-                      nether.software = lib.mkIf thisConfig."${softwareNamespace}".enable (
+                      nether.software = lib.mkIf (softwareNamespaceEnable thisConfig softwareNamespace) (
                         softwareDefs
                         |> lib.filterAttrs (softwareName: _: options ? nether.software."${softwareName}")
                         |> lib.mapAttrs (
-                          softwareName: _: { inherit (thisConfig."${softwareNamespace}"."${softwareName}") enable package; }
+                          softwareName: _:
+                          (softwareConfig thisConfig softwareNamespace softwareName)
+                          |> lib.filterAttrs (
+                            configName: _: lib.elem configName (lib.attrNames options.nether.software."${softwareName}")
+                          )
                         )
                       );
                     }
@@ -161,16 +207,13 @@
                 )
                 ++ (
                   # Include any nixos configs from enabled software definitions
-                  softwareNamespaces
+                  softwareNamespacesWithToplevel
                   |> lib.attrsets.mapAttrsToList (
                     softwareNamespace: softwareDefs:
                     softwareDefs
                     |> lib.attrsets.mapAttrsToList (
                       softwareName: softwareDef:
-                      lib.mkIf (
-                        thisConfig."${softwareNamespace}".enable
-                        && thisConfig."${softwareNamespace}"."${softwareName}".enable
-                      ) (softwareDef.nixos or { })
+                      (lib.mkIf (softwareEnable thisConfig softwareNamespace softwareName) (softwareDef.nixos or { }))
                     )
                   )
                   |> lib.flatten
@@ -207,7 +250,7 @@
               }
             );
 
-            softwareNamespaces = getSoftwareNamespaces lib feature;
+            softwareNamespacesWithToplevel = getSoftwareNamespaces lib feature true;
           in
           {
             config = (lib.mkIf thisConfig.enable) (
@@ -217,17 +260,17 @@
                   # For each software namespace, and each software definition
                   # within them, if it's not a nether.software module, but it is
                   # in pkgs, add the package to home.packages.
-                  softwareNamespaces
+                  softwareNamespacesWithToplevel
                   |> lib.mapAttrsToList (
                     softwareNamespace: softwareDefs: {
-                      home.packages = lib.optionals thisConfig."${softwareNamespace}".enable (
+                      home.packages = lib.optionals (softwareNamespaceEnable thisConfig softwareNamespace) (
                         softwareDefs
                         |> lib.filterAttrs (
                           softwareName: _: !osOptions ? nether.software."${softwareName}" && pkgs ? "${softwareName}"
                         )
                         |> lib.mapAttrsToList (
                           softwareName: _:
-                          lib.optional thisConfig."${softwareNamespace}"."${softwareName}".enable pkgs."${softwareName}"
+                          lib.optional (softwareEnable thisConfig softwareNamespace softwareName) pkgs."${softwareName}"
                         )
                         |> lib.flatten
                       );
@@ -236,15 +279,15 @@
                 )
                 ++ (
                   # Include any hm configs from enabled software definitions
-                  softwareNamespaces
+                  softwareNamespacesWithToplevel
                   |> lib.attrsets.mapAttrsToList (
                     softwareNamespace: softwareDefs:
                     softwareDefs
                     |> lib.attrsets.mapAttrsToList (
                       softwareName: softwareDef:
                       lib.mkIf (
-                        thisConfig."${softwareNamespace}".enable
-                        && thisConfig."${softwareNamespace}"."${softwareName}".enable
+                        (softwareNamespaceEnable thisConfig softwareNamespace)
+                        && (softwareEnable thisConfig softwareNamespace softwareName)
                       ) (softwareDef.hm or { })
                     )
                   )
