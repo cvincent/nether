@@ -50,6 +50,7 @@
 
             # Language servers I want at all times
             pkgInputs.nixpkgs-unstable-latest.nixd
+            pkgInputs.nixpkgs-unstable-latest.nil
             lua-language-server # The language of NeoVim
             tailwindcss-language-server
             nodePackages.typescript-language-server # TypeScript is a superset of JavaScript
