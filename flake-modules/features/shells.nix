@@ -29,20 +29,20 @@
             btop = helpers.delegateToSoftware options "btop" true;
             direnv = helpers.delegateToSoftware options "direnv" true;
             eza = helpers.delegateToSoftware options "eza" true;
+            fastfetch = helpers.delegateToSoftware options "fastfetch" true;
+            fd = helpers.delegateToSoftware options "fd" true;
             fzf = helpers.delegateToSoftware options "fzf" true;
+            gh = helpers.delegateToSoftware options "gh" true;
             jq = helpers.delegateToSoftware options "jq" true;
             ripgrep = helpers.delegateToSoftware options "ripgrep" true;
             starship = helpers.delegateToSoftware options "starship" true;
             zoxide = helpers.delegateToSoftware options "zoxide" true;
 
-            d2 = helpers.pkgOpt pkgs.dua true "d2 - text-to-diagram tool";
+            d2 = helpers.pkgOpt pkgs.d2 true "d2 - text-to-diagram tool";
             dua = helpers.pkgOpt pkgs.dua true "dua - disk usage like du, but simpler";
             duf = helpers.pkgOpt pkgs.duf true "duf - per-disk usage like df, but nicely formatted";
             dust = helpers.pkgOpt pkgs.dust true "dust - disk usage like du, but more visual";
-            fastfetch = helpers.pkgOpt pkgs.fastfetch true "fastfetch - system information fetcher";
-            fd = helpers.pkgOpt pkgs.fd true "fd - a simpler alternative to find";
             fx = helpers.pkgOpt pkgs.fx true "fx - interactive terminal JSON viewer";
-            gh = helpers.pkgOpt pkgs.gh true "gh - GitHub CLI";
             unzip = helpers.pkgOpt pkgs.unzip true "unzip - easy zip extraction";
 
             magicWormhole =
@@ -89,7 +89,10 @@
             enableFishIntegration = shells.fish.enable;
           };
 
+          fastfetch = { inherit (shells.extra.fastfetch) enable package; };
+          fd = { inherit (shells.extra.fd) enable package; };
           fzf = { inherit (shells.extra.fzf) enable package; };
+          gh = { inherit (shells.extra.gh) enable package; };
           jq = { inherit (shells.extra.jq) enable package; };
           ripgrep = { inherit (shells.extra.ripgrep) enable package; };
 
@@ -125,12 +128,6 @@
           ++ helpers.pkgOptPkg extra.magicWormhole
           ++ helpers.pkgOptPkg extra.unzip
           ++ helpers.pkgOptPkg extra.zf;
-
-        programs = {
-          fastfetch = { inherit (extra.fastfetch) enable package; };
-          fd = { inherit (extra.fd) enable package; };
-          gh = { inherit (extra.gh) enable package; };
-        };
       };
     };
 }
