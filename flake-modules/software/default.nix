@@ -3,7 +3,6 @@ moduleArgs:
 mkModuleDir ./. {
   inherit applyArgs moduleArgs;
   exclude = [
-    "fish"
     "hyprland"
     "kitty"
     "neovim"

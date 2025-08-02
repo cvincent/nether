@@ -6,8 +6,6 @@
   ...
 }:
 {
-  imports = [ (import ../software/fish { name = "fish"; }) ];
-
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
     { config, options, ... }:
@@ -80,6 +78,8 @@
         shells.aliases.mkdir = "mkdir -p";
 
         software = lib.mkIf shells.extra.enable {
+          fish = { inherit (shells.fish) enable package; };
+
           bat = { inherit (shells.extra.bat) enable package; };
           btop = { inherit (shells.extra.btop) enable package; };
           direnv = { inherit (shells.extra.direnv) enable package; };
