@@ -5,7 +5,7 @@
 
   nether = {
     username = "cvincent";
-    # TODO: See about updating these
+
     system.stateVersion = "25.05";
     home.stateVersion = "25.05";
 
