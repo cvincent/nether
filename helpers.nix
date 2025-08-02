@@ -67,6 +67,16 @@
       )
       // (softwareDef.options or { });
 
+    filterSoftwareDefs =
+      lib: softwareDefs:
+      lib.filterAttrs (
+        softwareName: _:
+        !lib.elem softwareName [
+          "description"
+          "options"
+        ]
+      ) softwareDefs;
+
     softwareNamespaceEnable =
       thisConfig: softwareNamespace:
       if softwareNamespace == "toplevel" then true else thisConfig."${softwareNamespace}".enable;
@@ -145,6 +155,7 @@
                     # Attrs not included in the list below are assumed to be a
                     # single software definition
                     softwareDefs
+                    |> filterSoftwareDefs lib
                     |> lib.mapAttrs (
                       softwareName: softwareDef:
                       softwareOptionDefs {
@@ -193,6 +204,7 @@
                     softwareNamespace: softwareDefs: {
                       nether.software = lib.mkIf (softwareNamespaceEnable thisConfig softwareNamespace) (
                         softwareDefs
+                        |> filterSoftwareDefs lib
                         |> lib.filterAttrs (softwareName: _: options ? nether.software."${softwareName}")
                         |> lib.mapAttrs (
                           softwareName: _:
@@ -211,6 +223,7 @@
                   |> lib.attrsets.mapAttrsToList (
                     softwareNamespace: softwareDefs:
                     softwareDefs
+                    |> filterSoftwareDefs lib
                     |> lib.attrsets.mapAttrsToList (
                       softwareName: softwareDef:
                       (lib.mkIf (softwareEnable thisConfig softwareNamespace softwareName) (softwareDef.nixos or { }))
