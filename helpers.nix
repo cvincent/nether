@@ -447,6 +447,71 @@
           }
         );
       };
+
+    mkSoftwareChoice =
+      lib: featureName: softwareNamespace: thisConfig: softwareDefs:
+      let
+        choices = softwareDefs |> filterSoftwareDefs lib |> lib.attrNames;
+      in
+      {
+        "${softwareNamespace}" =
+          softwareDefs
+          |> lib.mapAttrs (_: softwareDef: lib.recursiveUpdate softwareDef { enableDefault = false; })
+          |> filterSoftwareDefs lib
+          |> lib.recursiveUpdate {
+            options.default = {
+              which = lib.mkOption {
+                type = lib.types.enum ([ null ] ++ choices);
+                default = null;
+              };
+
+              package = lib.mkOption { type = lib.types.package; };
+              path = lib.mkOption { type = lib.types.str; };
+            };
+          };
+
+        nixos =
+          let
+            forceEnableDefault = lib.listToAttrs (
+              map (softwareName: {
+                name = softwareName;
+                value = {
+                  enable = lib.mkIf (thisConfig.default.which == softwareName) (lib.mkForce true);
+                };
+              }) choices
+            );
+          in
+          if softwareNamespace == "toplevel" then
+            {
+              nether."${featureName}" = lib.mkIf (thisConfig.default.which != null) (
+                {
+                  default = {
+                    package = lib.mkForce thisConfig."${thisConfig.default.which}".package;
+                    path = lib.mkForce "${thisConfig.default.package}/bin/${thisConfig.default.which}";
+                  };
+                }
+                // forceEnableDefault
+              );
+            }
+          else
+            {
+              nether."${featureName}"."${softwareNamespace}" = lib.mkIf (thisConfig.default.which != null) (
+                {
+                  "${thisConfig.default.which}".enable = lib.mkForce true;
+
+                  default = {
+                    package =
+                      lib.mkForce
+                        thisConfig."${softwareNamespace}"."${thisConfig."${softwareNamespace}".default.which}".package;
+                    path = lib.mkForce "${thisConfig."${softwareNamespace}".default.package}/bin/${
+                      thisConfig."${softwareNamespace}".default.which
+                    }";
+                  };
+                }
+                // forceEnableDefault
+              );
+            };
+      };
   };
 
   flakeModuleHelpers =
