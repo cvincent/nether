@@ -35,37 +35,43 @@
         softwareName,
         softwareDef,
       }:
+      let
+        enableDefault = if softwareDef ? enableDefault then softwareDef.enableDefault else true;
+      in
       (
-        if options ? nether.software."${softwareName}" then
-          # If a software module is defined, surface its options here, but
-          # override enable to default to true
-          options.nether.software."${softwareName}"
-          // {
-            enable = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-              description = options.nether.software."${softwareName}".enable.description;
-            };
-          }
-        else if pkgs ? "${softwareName}" then
-          # If named after a package, define default enable and package options
-          {
-            enable = lib.mkOption {
-              type = lib.types.bool;
-              default = true;
-              description = pkgs."${softwareName}".meta.description;
-            };
+        (
+          if options ? nether.software."${softwareName}" then
+            # If a software module is defined, surface its options here, but
+            # override enable to default to softwareDef.enableDefault if it
+            # exists, otherwise true
+            options.nether.software."${softwareName}"
+            // {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = enableDefault;
+                description = options.nether.software."${softwareName}".enable.description;
+              };
+            }
+          else if pkgs ? "${softwareName}" then
+            # If named after a package, define default enable and package options
+            {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = enableDefault;
+                description = pkgs."${softwareName}".meta.description;
+              };
 
-            package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs."${softwareName}";
-            };
-          }
-        else
-          # If we don't know what this is, the feature is on its own from here
-          { }
-      )
-      // (softwareDef.options or { });
+              package = lib.mkOption {
+                type = lib.types.package;
+                default = pkgs."${softwareName}";
+              };
+            }
+          else
+            # If we don't know what this is, the feature is on its own from here
+            { }
+        )
+        // (softwareDef.options or { })
+      );
 
     filterSoftwareDefs =
       lib: softwareDefs:
