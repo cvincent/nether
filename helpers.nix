@@ -464,14 +464,23 @@
       };
 
     mkSoftwareChoice =
-      featureName: softwareNamespace: thisConfig: softwareDefs:
+      {
+        name,
+        namespace,
+        thisConfig,
+        enableDefault ? false,
+      }:
+      softwareDefs:
       let
+        featureName = name;
+        softwareNamespace = namespace;
+
         choices = softwareDefs |> filterSoftwareDefs |> lib.attrNames;
       in
       {
         "${softwareNamespace}" =
           softwareDefs
-          |> lib.mapAttrs (_: softwareDef: lib.recursiveUpdate softwareDef { enableDefault = false; })
+          |> lib.mapAttrs (_: softwareDef: lib.recursiveUpdate softwareDef { inherit enableDefault; })
           |> filterSoftwareDefs
           |> lib.recursiveUpdate {
             options.default = {

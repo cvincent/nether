@@ -6,10 +6,17 @@
 }:
 mkFeature name (
   { lib, shells, ... }:
-  (mkSoftwareChoice name "toplevel" shells {
-    fish = { };
-    zsh = { };
-  })
+  (mkSoftwareChoice
+    {
+      inherit name;
+      namespace = "toplevel";
+      thisConfig = shells;
+    }
+    {
+      fish = { };
+      zsh = { };
+    }
+  )
   |> lib.recursiveUpdate {
     description = "Shells and shell tools and commands";
 
