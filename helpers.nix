@@ -379,7 +379,12 @@
 
     mkSoftware =
       softwareName: softwareDef:
-      { lib, moduleWithSystem, ... }:
+      {
+        lib,
+        moduleWithSystem,
+        inputs,
+        ...
+      }:
       {
         flake.nixosModules."software-${softwareName}" = moduleWithSystem (
           systemArgs@{
@@ -402,6 +407,7 @@
                 // {
                   "${softwareName}" = thisConfig;
                   inherit (config) nether;
+                  inherit inputs;
                 }
               )
             );
@@ -450,6 +456,7 @@
                   config = osConfig;
                   "${softwareName}" = thisConfig;
                   inherit (osConfig) nether;
+                  inherit inputs;
                 }
               )
             );
