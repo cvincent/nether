@@ -45,7 +45,6 @@ mkFeature name (
       zoxide.config.enableFishIntegration = shells.fish.enable;
     };
 
-    # TODO: Figure out why lib.mkForce is needed here, it's very strange
-    nixos.nether.shells = lib.mkForce { aliases.mkdir = "mkdir -p"; };
+    nixos.nether.shells.aliases.mkdir = "mkdir -p";
   }
 )

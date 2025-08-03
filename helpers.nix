@@ -495,9 +495,9 @@
           in
           if softwareNamespace == "toplevel" then
             {
-              nether."${featureName}" = lib.mkIf (thisConfig.default.which != null) (
+              nether."${featureName}" = (
                 {
-                  default = {
+                  default = lib.mkIf (thisConfig.default.which != null) {
                     package = lib.mkForce thisConfig."${thisConfig.default.which}".package;
                     path = lib.mkForce "${thisConfig.default.package}/bin/${thisConfig.default.which}";
                   };
@@ -507,11 +507,9 @@
             }
           else
             {
-              nether."${featureName}"."${softwareNamespace}" = lib.mkIf (thisConfig.default.which != null) (
+              nether."${featureName}"."${softwareNamespace}" = (
                 {
-                  "${thisConfig.default.which}".enable = lib.mkForce true;
-
-                  default = {
+                  default = lib.mkIf (thisConfig.default.which != null) {
                     package =
                       lib.mkForce
                         thisConfig."${softwareNamespace}"."${thisConfig."${softwareNamespace}".default.which}".package;
