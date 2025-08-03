@@ -1,80 +1,55 @@
-{ name, ... }:
-{ lib, moduleWithSystem, ... }:
-let
-  chromiumOverrides = {
-    commandLineArgs = [
-      "--enable-features=VaapiVideoEncoder"
-      "--ignore-gpu-blocklist"
-      "--enable-zero-copy"
-    ];
-  };
-in
 {
-  flake.nixosModules."${name}" =
-    { config, ... }:
-    {
-      options.nether.browsers = {
-        enable = lib.mkEnableOption "Browsers for the World Wide Web";
-
-        brave.enable = lib.mkOption {
-          type = lib.types.bool;
-          default = config.nether.browsers.enable;
+  name,
+  mkFeature,
+  mkSoftwareChoice,
+  ...
+}:
+mkFeature name (
+  {
+    nether,
+    browsers,
+    lib,
+    pkgs,
+    ...
+  }:
+  (
+    (mkSoftwareChoice
+      {
+        inherit name;
+        namespace = "toplevel";
+        thisConfig = browsers;
+        enableDefault = true;
+      }
+      {
+        brave.config = {
+          commandLineArgs = browsers.chromiumArgs;
         };
-
-        chromium.enable = lib.mkOption {
-          type = lib.types.bool;
-          default = config.nether.browsers.enable;
+        chromium.config = {
+          commandLineArgs = browsers.chromiumArgs;
         };
+        firefox = { };
+        qutebrowser = { };
+      }
+    )
+    |> lib.recursiveUpdate {
+      description = "Browsers for the World Wide Web";
 
-        firefox.enable = lib.mkOption {
-          type = lib.types.bool;
-          default = config.nether.browsers.enable;
-        };
-
-        qutebrowser.enable = lib.mkOption {
-          type = lib.types.bool;
-          default = config.nether.browsers.enable;
+      options = {
+        chromiumArgs = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [
+            "--enable-features=VaapiVideoEncoder"
+            "--ignore-gpu-blocklist"
+            "--enable-zero-copy"
+          ];
         };
       };
 
-      config = lib.mkIf config.nether.browsers.enable {
-        nether.software.qutebrowser.enable = true;
-
+      nixos = {
         nether.backups.paths = {
-          "${config.nether.homeDirectory}/Downloads".deleteMissing = true;
-
-          "${config.nether.homeDirectory}/.config/BraveSoftware/Brave-Browser" =
-            lib.mkIf config.nether.browsers.brave.enable
-              { deleteMissing = true; };
-
-          "${config.nether.homeDirectory}/.config/chromium" =
-            lib.mkIf config.nether.browsers.chromium.enable
-              {
-                deleteMissing = true;
-              };
-
-          "${config.nether.homeDirectory}/.mozilla/firefox" = lib.mkIf config.nether.browsers.firefox.enable {
-            deleteMissing = true;
-          };
+          "${nether.homeDirectory}/Downloads".deleteMissing = true;
         };
-
-        # Silences warnings on Chromium boot, and useful for checking battery levels
-        # from CLI
-        services.upower = lib.mkIf config.nether.browsers.chromium.enable { enable = true; };
       };
-    };
-
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs }:
-    { osConfig, ... }:
-    {
-      home.packages =
-        [ ]
-        ++ (lib.optional osConfig.nether.browsers.brave.enable (pkgs.brave.override chromiumOverrides))
-        ++ (lib.optional osConfig.nether.browsers.chromium.enable (
-          pkgs.chromium.override chromiumOverrides
-        ))
-        ++ (lib.optional osConfig.nether.browsers.firefox.enable pkgs.firefox);
     }
-  );
-}
+  )
+)

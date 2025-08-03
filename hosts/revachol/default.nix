@@ -72,7 +72,12 @@
     audio.enable = true;
     backups.enable = true;
     bitwarden.enable = true;
-    browsers.enable = true;
+
+    browsers = {
+      enable = true;
+      qutebrowser.package = pkgInputs.nixpkgs-qutebrowser.qutebrowser;
+    };
+
     chat.enable = true;
     flatpak.enable = true;
     git.enable = true;
@@ -100,9 +105,6 @@
 
     scripts.invoiceGenerator.enable = true;
     scripts.waitForPort.enable = true;
-
-    # TODO: Configure this in browsers once it's ported to mkFeature
-    software.qutebrowser.package = pkgInputs.nixpkgs-qutebrowser.qutebrowser;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
