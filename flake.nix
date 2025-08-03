@@ -11,9 +11,14 @@
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
+      flake@{
+        flake-parts-lib,
+        lib,
+        moduleWithSystem,
+        ...
+      }:
       let
-        # TODO: Assign this under the next function so we can pass in `lib`
-        helpers = import ./helpers.nix;
+        helpers = import ./helpers.nix { inherit lib; };
 
         hosts =
           ./hosts
@@ -21,12 +26,6 @@
           |> (nixpkgs.lib.attrsets.filterAttrs (_k: v: v == "directory"))
           |> nixpkgs.lib.attrsets.attrNames;
       in
-      flake@{
-        flake-parts-lib,
-        lib,
-        moduleWithSystem,
-        ...
-      }:
       {
         debug = true;
 

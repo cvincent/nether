@@ -1,3 +1,4 @@
+{ lib }:
 {
   # TODO: Extract all of mkFeature into its own module
   nixosModule =
@@ -8,7 +9,7 @@
 
   helpers = rec {
     getSoftwareNamespaces =
-      lib: feature: includeToplevel:
+      feature: includeToplevel:
       # Feature attrs not included in the list below are assumed to be
       # namespaced attrsets of software definitions for this feature
       feature
@@ -29,7 +30,6 @@
 
     softwareOptionDefs =
       {
-        lib,
         pkgs,
         options,
         softwareName,
@@ -74,7 +74,7 @@
       );
 
     filterSoftwareDefs =
-      lib: softwareDefs:
+      softwareDefs:
       lib.filterAttrs (
         softwareName: _:
         !lib.elem softwareName [
@@ -105,7 +105,6 @@
     mkFeature =
       featureName: featureDef:
       {
-        lib,
         moduleWithSystem,
         helpers,
         ...
@@ -137,8 +136,8 @@
               )
             );
 
-            softwareNamespaces = getSoftwareNamespaces lib feature false;
-            softwareNamespacesWithToplevel = getSoftwareNamespaces lib feature true;
+            softwareNamespaces = getSoftwareNamespaces feature false;
+            softwareNamespacesWithToplevel = getSoftwareNamespaces feature true;
 
             enableOption = {
               enable = lib.mkOption {
@@ -164,12 +163,11 @@
                 // (
                   (
                     softwareDefs
-                    |> filterSoftwareDefs lib
+                    |> filterSoftwareDefs
                     |> lib.mapAttrs (
                       softwareName: softwareDef:
                       softwareOptionDefs {
                         inherit
-                          lib
                           pkgs
                           options
                           softwareName
@@ -185,12 +183,11 @@
             softwareToplevelOptions =
               (
                 (feature.toplevel or { })
-                |> filterSoftwareDefs lib
+                |> filterSoftwareDefs
                 |> lib.mapAttrs (
                   softwareName: softwareDef:
                   softwareOptionDefs {
                     inherit
-                      lib
                       pkgs
                       options
                       softwareName
@@ -224,7 +221,7 @@
                     softwareNamespace: softwareDefs: {
                       nether.software = lib.mkIf (softwareNamespaceEnable thisConfig softwareNamespace) (
                         softwareDefs
-                        |> filterSoftwareDefs lib
+                        |> filterSoftwareDefs
                         |> lib.filterAttrs (softwareName: _: options ? nether.software."${softwareName}")
                         |> lib.mapAttrs (
                           softwareName: _:
@@ -243,7 +240,7 @@
                   |> lib.attrsets.mapAttrsToList (
                     softwareNamespace: softwareDefs:
                     softwareDefs
-                    |> filterSoftwareDefs lib
+                    |> filterSoftwareDefs
                     |> lib.attrsets.mapAttrsToList (
                       softwareName: softwareDef:
                       (lib.mkIf (softwareEnable thisConfig softwareNamespace softwareName) (
@@ -298,7 +295,7 @@
               }
             );
 
-            softwareNamespacesWithToplevel = getSoftwareNamespaces lib feature true;
+            softwareNamespacesWithToplevel = getSoftwareNamespaces feature true;
           in
           {
             config = (lib.mkIf thisConfig.enable) (
@@ -357,7 +354,7 @@
         additionalImports ? [ ],
       }:
       let
-        inherit (moduleArgs) lib flake-parts-lib;
+        inherit (moduleArgs) flake-parts-lib;
         excluded = exclude ++ [ "default.nix" ];
       in
       {
@@ -380,7 +377,6 @@
     mkSoftware =
       softwareName: softwareDef:
       {
-        lib,
         moduleWithSystem,
         inputs,
         ...
@@ -468,15 +464,15 @@
       };
 
     mkSoftwareChoice =
-      lib: featureName: softwareNamespace: thisConfig: softwareDefs:
+      featureName: softwareNamespace: thisConfig: softwareDefs:
       let
-        choices = softwareDefs |> filterSoftwareDefs lib |> lib.attrNames;
+        choices = softwareDefs |> filterSoftwareDefs |> lib.attrNames;
       in
       {
         "${softwareNamespace}" =
           softwareDefs
           |> lib.mapAttrs (_: softwareDef: lib.recursiveUpdate softwareDef { enableDefault = false; })
-          |> filterSoftwareDefs lib
+          |> filterSoftwareDefs
           |> lib.recursiveUpdate {
             options.default = {
               which = lib.mkOption {

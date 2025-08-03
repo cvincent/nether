@@ -6,7 +6,7 @@
 }:
 mkFeature name (
   { lib, shells, ... }:
-  (mkSoftwareChoice lib name "toplevel" shells {
+  (mkSoftwareChoice name "toplevel" shells {
     fish = { };
     zsh = { };
   })
