@@ -104,7 +104,12 @@
 
     mkFeature =
       featureName: featureDef:
-      { lib, moduleWithSystem, ... }:
+      {
+        lib,
+        moduleWithSystem,
+        helpers,
+        ...
+      }:
       {
         flake.nixosModules."${featureName}" = moduleWithSystem (
           systemArgs@{
@@ -127,6 +132,7 @@
                 // {
                   "${featureName}" = thisConfig;
                   inherit (config) nether;
+                  inherit helpers;
                 }
               )
             );
@@ -270,7 +276,12 @@
             self',
             system,
           }:
-          homeModuleArgs@{ osConfig, osOptions, ... }:
+          homeModuleArgs@{
+            osConfig,
+            osOptions,
+            helpers,
+            ...
+          }:
           let
             thisConfig = osConfig.nether."${featureName}";
 
@@ -283,6 +294,7 @@
                 config = osConfig;
                 "${featureName}" = thisConfig;
                 inherit (osConfig) nether;
+                hmHelpers = helpers;
               }
             );
 
