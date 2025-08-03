@@ -21,12 +21,8 @@ mkFeature name (
         enableDefault = true;
       }
       {
-        brave.config = {
-          commandLineArgs = browsers.chromiumArgs;
-        };
-        chromium.config = {
-          commandLineArgs = browsers.chromiumArgs;
-        };
+        brave.config.commandLineArgs = browsers.chromiumArgs;
+        chromium.config.commandLineArgs = browsers.chromiumArgs;
         firefox = { };
         qutebrowser = { };
       }
