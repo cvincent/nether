@@ -133,33 +133,30 @@
 
             softwareNamespaces = getSoftwareNamespaces lib feature false;
             softwareNamespacesWithToplevel = getSoftwareNamespaces lib feature true;
-          in
-          {
-            options = {
-              # Every feature has its own umbrella enable option, default false
-              nether."${featureName}" = {
-                enable = lib.mkOption {
-                  type = lib.types.bool;
-                  default = false;
-                  description = feature.description;
-                };
-              }
-              // (
-                softwareNamespaces
-                |> lib.mapAttrs (
-                  softwareNamespace: softwareDefs:
-                  {
-                    # Each software namespace gets its own enable option,
-                    # default true
-                    enable = lib.mkOption {
-                      type = lib.types.bool;
-                      description = (softwareDefs.description or "${featureName} ${softwareNamespace}");
-                      default = true;
-                    };
-                  }
-                  // (
-                    # Attrs not included in the list below are assumed to be a
-                    # single software definition
+
+            enableOption = {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = false;
+                description = feature.description;
+              };
+            };
+
+            softwareNamespaceOptions =
+              softwareNamespaces
+              |> lib.mapAttrs (
+                softwareNamespace: softwareDefs:
+                {
+                  # Each software namespace gets its own enable option,
+                  # default true
+                  enable = lib.mkOption {
+                    type = lib.types.bool;
+                    description = (softwareDefs.description or "${featureName} ${softwareNamespace}");
+                    default = true;
+                  };
+                }
+                // (
+                  (
                     softwareDefs
                     |> filterSoftwareDefs lib
                     |> lib.mapAttrs (
@@ -177,11 +174,12 @@
                   )
                   // (softwareDefs.options or { })
                 )
-              )
-              // (
-                # `toplevel`, if defined, defines its software options
-                # without a namespace
+              );
+
+            softwareToplevelOptions =
+              (
                 (feature.toplevel or { })
+                |> filterSoftwareDefs lib
                 |> lib.mapAttrs (
                   softwareName: softwareDef:
                   softwareOptionDefs {
@@ -195,8 +193,18 @@
                   }
                 )
               )
-              // feature.options or { };
-            };
+              // (feature.toplevel.options or { });
+
+            toplevelOptions = feature.options or { };
+
+            featureOptions =
+              enableOption
+              |> lib.recursiveUpdate softwareNamespaceOptions
+              |> lib.recursiveUpdate softwareToplevelOptions
+              |> lib.recursiveUpdate toplevelOptions;
+          in
+          {
+            options.nether."${featureName}" = featureOptions;
 
             config = (lib.mkIf thisConfig.enable) (
               lib.mkMerge (
