@@ -1,43 +1,38 @@
-{ name, ... }:
-{
-  lib,
-  moduleWithSystem,
-  inputs,
-  ...
-}:
-{
-  flake.nixosModules."${name}" =
-    { config, ... }:
-    {
-      config = lib.mkIf config.nether.browsers.qutebrowser.enable {
-        nether.backups.paths."${config.nether.homeDirectory}/.local/qutebrowsers".deleteMissing = true;
-      };
-    };
+{ name, mkSoftware, ... }:
+mkSoftware name (
+  {
+    config,
+    nether,
+    qutebrowser,
+    lib,
+    pkgs,
+    inputs,
+    ...
+  }:
+  {
+    nixos.nether.backups.paths."${nether.homeDirectory}/.local/qutebrowsers".deleteMissing = true;
 
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs, pkgInputs }:
-    { osConfig, ... }:
-    let
-      qutebrowser-route = (
-        pkgs.writeShellScriptBin "qutebrowser-route" ''
-          instance=$(jq --arg url "$1" -r '. | map(. as $item | select($url | test($item.regex))) | .[0].instance' ~/.config/qutebrowser/routes.json)
+    hm =
+      let
+        qutebrowser-route = (
+          pkgs.writeShellScriptBin "qutebrowser-route" ''
+            instance=$(jq --arg url "$1" -r '. | map(. as $item | select($url | test($item.regex))) | .[0].instance' ~/.config/qutebrowser/routes.json)
 
-          if [[ $instance == 'mpv' ]]; then
-            mpv "$1" --force-window=immediate
-          elif [[ $instance != 'null' ]]; then
-            qutebrowser-open "$instance" "$1"
-          else
-            qutebrowser-open personal "$1"
-          fi
-        ''
-      );
-    in
-    {
-      # TODO: Make...all of this nicer, more modular
-      config = lib.mkIf osConfig.nether.browsers.qutebrowser.enable {
+            if [[ $instance == 'mpv' ]]; then
+              mpv "$1" --force-window=immediate
+            elif [[ $instance != 'null' ]]; then
+              qutebrowser-open "$instance" "$1"
+            else
+              qutebrowser-open personal "$1"
+            fi
+          ''
+        );
+      in
+      {
+        # TODO: Make...all of this nicer, more modular
         programs.qutebrowser = {
           enable = true;
-          package = pkgInputs.nixpkgs-qutebrowser.qutebrowser;
+          package = qutebrowser.package;
 
           settings = {
             auto_save.session = true;
@@ -93,21 +88,21 @@
               webpage.darkmode.enabled = false;
 
               statusbar = {
-                insert.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
+                insert.fg = lib.mkForce "#${config.lib.stylix.colors.base00}";
                 url = {
-                  fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
-                  hover.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
-                  success.http.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
-                  success.https.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
-                  warn.fg = lib.mkForce "#${osConfig.lib.stylix.colors.base05}";
+                  fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
+                  hover.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
+                  success.http.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
+                  success.https.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
+                  warn.fg = lib.mkForce "#${config.lib.stylix.colors.base05}";
                 };
               };
 
               tabs = {
-                odd.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
-                even.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
-                pinned.odd.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
-                pinned.even.bg = lib.mkForce "#${osConfig.lib.stylix.colors.base00}";
+                odd.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
+                even.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
+                pinned.odd.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
+                pinned.even.bg = lib.mkForce "#${config.lib.stylix.colors.base00}";
               };
             };
           };
@@ -164,11 +159,11 @@
 
               # BitWarden
               "<ctrl-shift-l>" =
-                "spawn --userscript /etc/profiles/per-user/${osConfig.nether.username}/bin/bitwarden-qutebrowser";
+                "spawn --userscript /etc/profiles/per-user/${nether.username}/bin/bitwarden-qutebrowser";
               "<space>bc" =
-                "spawn --userscript /etc/profiles/per-user/${osConfig.nether.username}/bin/bitwarden-create login {url}";
+                "spawn --userscript /etc/profiles/per-user/${nether.username}/bin/bitwarden-create login {url}";
               "<space>bf" =
-                "spawn --userscript /etc/profiles/per-user/${osConfig.nether.username}/bin/bitwarden-fuzzel {url:host}";
+                "spawn --userscript /etc/profiles/per-user/${nether.username}/bin/bitwarden-fuzzel {url:host}";
 
               # Other
               "<space>wi" = "devtools";
@@ -231,6 +226,5 @@
           };
         };
       };
-    }
-  );
-}
+  }
+)

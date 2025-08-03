@@ -10,8 +10,6 @@ let
   };
 in
 {
-  imports = [ (import ../software/qutebrowser { name = "qutebrowser"; }) ];
-
   flake.nixosModules."${name}" =
     { config, ... }:
     {
@@ -40,6 +38,8 @@ in
       };
 
       config = lib.mkIf config.nether.browsers.enable {
+        nether.software.qutebrowser.enable = true;
+
         nether.backups.paths = {
           "${config.nether.homeDirectory}/Downloads".deleteMissing = true;
 

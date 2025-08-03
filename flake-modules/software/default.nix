@@ -6,7 +6,6 @@ mkModuleDir ./. {
     "hyprland"
     "kitty"
     "neovim"
-    "qutebrowser"
     "swaylock"
     "swaync"
     "waybar"

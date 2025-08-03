@@ -100,6 +100,9 @@
 
     scripts.invoiceGenerator.enable = true;
     scripts.waitForPort.enable = true;
+
+    # TODO: Configure this in browsers once it's ported to mkFeature
+    software.qutebrowser.package = pkgInputs.nixpkgs-qutebrowser.qutebrowser;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
