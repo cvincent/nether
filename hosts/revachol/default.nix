@@ -22,8 +22,7 @@
     };
 
     shells = {
-      fish.enable = true;
-      extra.enable = true;
+      enable = true;
       default.which = "fish";
     };
 
