@@ -240,14 +240,23 @@
                     |> filterSoftwareDefs lib
                     |> lib.attrsets.mapAttrsToList (
                       softwareName: softwareDef:
-                      (lib.mkIf (softwareEnable thisConfig softwareNamespace softwareName) (softwareDef.nixos or { }))
+                      (lib.mkIf (softwareEnable thisConfig softwareNamespace softwareName) (
+                        (softwareDef.nixos or { })
+                        |> lib.recursiveUpdate (
+                          # Software defs can use a `config` attr to set
+                          # software options, as a shortcut compared to doing it
+                          # from just `nixos`
+                          if softwareNamespace == "toplevel" then
+                            { nether."${featureName}"."${softwareName}" = (softwareDef.config or { }); }
+                          else
+                            { nether."${featureName}"."${softwareNamespace}"."${softwareName}" = (softwareDef.config or { }); }
+                        )
+                      ))
                     )
                   )
                   |> lib.flatten
                 )
-                ++ [
-                  (feature.nixos or { })
-                ]
+                ++ [ (feature.nixos or { }) ]
               )
             );
           }
