@@ -1,45 +1,41 @@
-{ name, ... }:
-{ lib, ... }:
-{
-  flake.nixosModules."${name}" =
-    { config, ... }:
-    let
-      inherit (config.nether) dev;
-    in
-    {
-      options = {
-        nether.dev.beam.enable = lib.mkEnableOption "Configuration for an easier time in BEAM languages";
-        nether.dev.postgresql.enable = lib.mkEnableOption "Easier use of postgresql for dev";
-        nether.dev.ruby.enable = lib.mkEnableOption "Assistance in Ruby projects";
-      };
+{ name, mkFeature, ... }:
+mkFeature name (
+  {
+    nether,
+    dev,
+    lib,
+    ...
+  }:
+  {
+    options = {
+      beam.enable = lib.mkEnableOption "Configuration for an easier time in BEAM languages";
+      postgresql.enable = lib.mkEnableOption "Easier use of postgresql for dev";
+      ruby.enable = lib.mkEnableOption "Assistance in Ruby projects";
+    };
 
-      config = lib.mkMerge [
-        { }
-        (lib.mkIf dev.postgresql.enable {
-          # Rails apps with multiple databases don't allow you to set the socket
-          # location; and it's just convenient to not have to modify
-          # postgresql.conf unix_socket_directories for each dev shell
+    nixos =
+      { }
+      |> lib.recursiveUpdate (
+        lib.mkIf dev.postgresql.enable {
           systemd.tmpfiles.rules = [
-            "d /run/postgresql 0755 ${config.nether.username} users -"
+            "d /run/postgresql 0755 ${nether.username} users -"
           ];
-        })
-        (lib.mkIf dev.ruby.enable {
+        }
+      )
+      |> lib.recursiveUpdate (
+        lib.mkIf dev.ruby.enable {
+          # TODO: This could maybe go in devShell
           nether.shells.aliases.be = "bundle exec ";
-        })
-      ];
-    };
+        }
+      );
 
-  flake.homeModules."${name}" =
-    { osConfig, ... }:
-    let
-      inherit (osConfig.nether) dev;
-    in
-    {
-      config = lib.mkMerge [
-        { }
-        (lib.mkIf dev.beam.enable {
+    hm =
+      { }
+      |> lib.recursiveUpdate (
+        lib.mkIf dev.beam.enable {
+          # TODO: This could maybe go in devShell
           home.sessionVariables.ERL_AFLAGS = "-kernel shell_history enabled";
-        })
-      ];
-    };
-}
+        }
+      );
+  }
+)

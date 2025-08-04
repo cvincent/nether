@@ -62,9 +62,12 @@
 
     homeSrcDirectory = true;
 
-    dev.beam.enable = true;
-    dev.postgresql.enable = true;
-    dev.ruby.enable = true;
+    dev = {
+      enable = true;
+      beam.enable = true;
+      postgresql.enable = true;
+      ruby.enable = true;
+    };
 
     # Note for the future on structure/organization, I wonder if these should be
     # nested within graphicalEnv when they're apps that wouldn't work without
