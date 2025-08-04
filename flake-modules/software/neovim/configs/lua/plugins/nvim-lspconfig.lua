@@ -71,8 +71,7 @@ return {
 
     lspconfig.ruby_lsp.setup({
       init_options = {
-        formatter = "standard",
-        linters = { "standard" },
+        linters = { "standardrb" },
       }
     })
 
