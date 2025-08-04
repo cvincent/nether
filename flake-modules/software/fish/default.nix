@@ -29,6 +29,9 @@ mkSoftware name (
             # https://github.com/starship/starship/issues/5463
             # Original code from the spec:
             # https://gitlab.freedesktop.org/Per_Bothner/specifications/-/blob/master/proposals/semantic-prompts.md
+            # Fish supposedly adds OSC 133 support by default since 4.0, but in
+            # my testing, the NeoVim terminal editing plugin only worked with
+            # this active (and with Starship disabled).
             if status --is-interactive
               set _fishprompt_aid "fish"$fish_pid
               set _fishprompt_started 0
