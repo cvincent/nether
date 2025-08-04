@@ -1,9 +1,8 @@
-{ name, ... }:
-{ lib, ... }:
-{
-  flake.nixosModules."${name}" =
-    { config, ... }:
-    {
+{ name, mkFeature, ... }:
+mkFeature name (
+  { nether, lib, ... }:
+  {
+    nixos = {
       virtualisation.vmVariant = {
         virtualisation = {
           cores = 12;
@@ -53,7 +52,8 @@
 
         services.xserver.videoDrivers = [ "qxl" ];
 
-        users.users."${config.nether.username}".initialPassword = lib.mkForce "testvm";
+        users.users."${nether.username}".initialPassword = lib.mkForce "testvm";
       };
     };
-}
+  }
+)
