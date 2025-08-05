@@ -53,6 +53,21 @@
                 description = options.nether.software."${softwareName}".enable.description;
               };
             }
+          else if softwareDef ? package then
+            # If given a package, use that
+            {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = enableDefault;
+                description = softwareDef.package.meta.description;
+              };
+
+              package = lib.mkOption {
+                type = lib.types.package;
+                default = softwareDef.package;
+              };
+            }
+
           else if pkgs ? "${softwareName}" then
             # If named after a package, define default enable and package options
             {
