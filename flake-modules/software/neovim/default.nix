@@ -14,7 +14,6 @@ mkSoftware name (
     helpers,
     lib,
     pkgs,
-    pkgInputs,
     ...
   }:
   {
