@@ -10,7 +10,6 @@
   # things out into submodules.
 
   imports = [
-    (import ../software/hyprland { name = "hyprland"; })
     (import ../software/swaylock { name = "swaylock"; })
     (import ../software/swaync { name = "swaync"; })
     (import ../software/waybar { name = "waybar"; })
@@ -205,6 +204,8 @@
       };
 
       config = lib.mkIf graphicalEnv.enable {
+        nether.software.hyprland.enable = config.nether.graphicalEnv.compositor.which == "hyprland";
+
         # TODO: Extract all this, and _maybe_ also the home.packages below.
         # We'll want to figure out our conventions on nesting and directories.
         environment.systemPackages = lib.optional graphicalEnv.extra.gnomePolkit.enable graphicalEnv.extra.gnomePolkit.package;
