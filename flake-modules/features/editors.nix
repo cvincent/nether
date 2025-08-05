@@ -40,5 +40,11 @@ mkFeature name (
       typescript-language-server.package = pkgs.nodePackages.typescript-language-server;
       vscode-langservers-extracted = { };
     };
+
+    hm.home.sessionVariables.EDITOR =
+      {
+        neovim = "nvim";
+      }
+      .${editors.default.which};
   }
 )
