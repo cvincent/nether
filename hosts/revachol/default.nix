@@ -31,8 +31,16 @@
     };
 
     editors = {
-      neovim.enable = true;
-      default = "neovim";
+      enable = true;
+      default.which = "neovim";
+      neovim.package = pkgInputs.nixpkgs-neovim.neovim;
+
+      formatters.nixfmt-rfc-style.package = pkgInputs.nixpkgs-unstable-latest.nixfmt-rfc-style;
+
+      lsps = {
+        nil.package = pkgInputs.nixpkgs-unstable-latest.nil;
+        nixd.package = pkgInputs.nixpkgs-unstable-latest.nixd;
+      };
     };
 
     graphicalEnv = {

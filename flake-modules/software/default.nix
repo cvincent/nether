@@ -5,7 +5,6 @@ mkModuleDir ./. {
   exclude = [
     "hyprland"
     "kitty"
-    "neovim"
     "swaylock"
     "swaync"
     "waybar"

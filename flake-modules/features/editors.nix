@@ -1,22 +1,44 @@
-{ name, ... }:
-{ lib, ... }:
 {
-  imports = [ (import ../software/neovim { name = "neovim"; }) ];
+  name,
+  mkFeature,
+  mkSoftwareChoice,
+  ...
+}:
+mkFeature name (
+  {
+    editors,
+    lib,
+    pkgs,
+    ...
+  }:
+  (mkSoftwareChoice
+    {
+      inherit name;
+      namespace = "toplevel";
+      thisConfig = editors;
+    }
+    {
+      neovim = { };
+    }
+  )
+  |> lib.recursiveUpdate {
+    description = "Textual human-computer interfacing";
 
-  flake.nixosModules."${name}" = {
-    options = {
-      nether.editors = {
-        neovim.enable = lib.mkEnableOption "NeoVim - the greatest editor";
-
-        # TODO: Follow the example of shells.nix and terminals.nix
-        default = lib.mkOption {
-          type = lib.types.enum [
-            null
-            "neovim"
-          ];
-          default = null;
-        };
-      };
+    formatters = {
+      description = "We generally install LSPs in devShells, but there are a few we always want around";
+      nixfmt-rfc-style = { };
+      pgformatter = { };
+      prettier.package = pkgs.nodePackages.prettier;
     };
-  };
-}
+
+    lsps = {
+      description = "We generally install LSPs in devShells, but there are a few we always want around";
+      lua-language-server = { };
+      nixd = { };
+      nil = { };
+      tailwindcss-language-server = { };
+      typescript-language-server.package = pkgs.nodePackages.typescript-language-server;
+      vscode-langservers-extracted = { };
+    };
+  }
+)

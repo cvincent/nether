@@ -1,6 +1,5 @@
-{ name, ... }:
-{ lib, moduleWithSystem, ... }:
-{
+{ name, mkSoftware, ... }:
+mkSoftware name (
   # TODO: We need to be using a NeoVim wrapper, rather than installing gcc and
   # compiling Treesitter parsers from there. Something lightweight that still
   # allows me to helpers.directSymlink most of my configs, and keep them in raw
@@ -9,64 +8,36 @@
 
   # For now, I am simply porting over what I already have, to get through the
   # porting process.
+  {
+    nether,
+    neovim,
+    helpers,
+    pkgs,
+    pkgInputs,
+    ...
+  }:
+  {
+    nixos = {
+      # Unlike most of our software, we install this at the system level so we
+      # never have to suffer nano, in even the bleakest conditionsb
+      environment.systemPackages = [ neovim.package ];
+      nether.backups.paths."${nether.homeDirectory}/.local/share/neovim-spell".deleteMissing = true;
+      nether.shells.aliases.nvs = "nvim -S Session.vim";
+    };
 
-  flake.nixosModules."${name}" = moduleWithSystem (
-    { pkgInputs }:
-    { config, ... }:
-    {
-      config = lib.mkIf config.nether.editors.neovim.enable {
-        environment.systemPackages = [ pkgInputs.nixpkgs-neovim.neovim ];
+    hm = {
+      home.file."./.config/nvim".source = helpers.directSymlink ./configs;
 
-        nether.backups.paths."${config.nether.homeDirectory}/.local/share/neovim-spell" = {
-          deleteMissing = true;
-        };
+      home.packages = with pkgs; [
+        # Treesitter wants a C compiler
+        gcc
 
-        nether.shells.aliases.nvs = "nvim -S Session.vim";
-      };
-    }
-  );
+        # Programmatically control NeoVim
+        neovim-remote
 
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs, pkgInputs }:
-    { osConfig, helpers, ... }:
-    lib.mkIf osConfig.nether.editors.neovim.enable (
-      lib.mkMerge [
-        {
-          home.file."./.config/nvim".source = helpers.directSymlink ./configs;
-
-          home.packages = with pkgs; [
-            # Treesitter wants a C compiler
-            gcc
-            # Neorg wants LuaRocks which wants a non-embedded Lua install, specifically
-            # 5.1. It also wants make.
-            lua5_1
-            lua51Packages.luarocks
-            gnumake
-            nodePackages.prettier
-
-            # Formatters
-            pkgInputs.nixpkgs-unstable-latest.nixfmt-rfc-style
-            pgformatter
-
-            # Language servers I want at all times
-            pkgInputs.nixpkgs-unstable-latest.nixd
-            pkgInputs.nixpkgs-unstable-latest.nil
-            lua-language-server # The language of NeoVim
-            tailwindcss-language-server
-            nodePackages.typescript-language-server # TypeScript is a superset of JavaScript
-            vscode-langservers-extracted # Provides VS Code's LSPs for HTML, CSS, JSON, and ESLint
-
-            # Script NeoVim
-            neovim-remote
-
-            # Image support
-            imagemagick
-          ];
-        }
-        (lib.mkIf (osConfig.nether.editors.default == "neovim") {
-          home.sessionVariables.EDITOR = "nvim";
-        })
-      ]
-    )
-  );
-}
+        # Image support, needed for image.nvim
+        imagemagick
+      ];
+    };
+  }
+)
