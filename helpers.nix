@@ -37,6 +37,7 @@
       }:
       let
         enableDefault = if softwareDef ? enableDefault then softwareDef.enableDefault else true;
+        packageOpts = if softwareDef ? packageOpts then softwareDef.packageOpts else true;
       in
       (
         (
@@ -66,8 +67,20 @@
                 default = pkgs."${softwareName}";
               };
             }
+          else if packageOpts then
+            # If we don't know what this is, define basic enable and package
+            # opts unless explicitly disabled
+            {
+              enable = lib.mkOption {
+                type = lib.types.bool;
+                default = enableDefault;
+                description = "${softwareName}";
+              };
+
+              package = lib.mkOption { type = lib.types.package; };
+            }
           else
-            # If we don't know what this is, the feature is on its own from here
+            # Otherwise, leave it to the module to define all options
             { }
         )
         // (softwareDef.options or { })
