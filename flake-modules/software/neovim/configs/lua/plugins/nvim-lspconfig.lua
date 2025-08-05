@@ -36,7 +36,7 @@ return {
       }
     })
 
-    -- lspconfig.nil_ls.setup({})
+    lspconfig.nil_ls.setup({})
 
     lspconfig.elixirls.setup({
       cmd = { "elixir-ls" },
