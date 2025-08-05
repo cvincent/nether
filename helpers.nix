@@ -291,7 +291,7 @@
                 config = osConfig;
                 "${featureName}" = thisConfig;
                 inherit (osConfig) nether;
-                hmHelpers = helpers;
+                inherit helpers;
               }
             );
 
@@ -390,7 +390,7 @@
             self',
             system,
           }:
-          nixosModuleArgs@{ config, ... }:
+          nixosModuleArgs@{ config, helpers, ... }:
           let
             thisConfig = config.nether.software."${softwareName}";
 
@@ -403,7 +403,7 @@
                 // {
                   "${softwareName}" = thisConfig;
                   inherit (config) nether;
-                  inherit inputs;
+                  inherit inputs helpers;
                 }
               )
             );
@@ -438,7 +438,7 @@
             self',
             system,
           }:
-          homeModuleArgs@{ osConfig, ... }:
+          homeModuleArgs@{ osConfig, helpers, ... }:
           let
             thisConfig = osConfig.nether.software."${softwareName}";
 
@@ -452,7 +452,7 @@
                   config = osConfig;
                   "${softwareName}" = thisConfig;
                   inherit (osConfig) nether;
-                  inherit inputs;
+                  inherit inputs helpers;
                 }
               )
             );
