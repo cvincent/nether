@@ -4,7 +4,6 @@ mkModuleDir ./. {
   inherit applyArgs moduleArgs;
   exclude = [
     "kitty"
-    "swaylock"
     "swaync"
     "waybar"
   ];
