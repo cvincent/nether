@@ -25,7 +25,7 @@ mkSoftware name (
 
     nixos = {
       # Unlike most of our software, we install this at the system level so we
-      # never have to suffer nano, in even the bleakest conditionsb
+      # never have to suffer nano, in even the bleakest conditions
       environment.systemPackages = [ neovim.package ];
       nether.backups.paths."${nether.homeDirectory}/.local/share/neovim-spell".deleteMissing = true;
       nether.shells.aliases.nvs = "nvim -S Session.vim";
