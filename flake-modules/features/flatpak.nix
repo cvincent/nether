@@ -1,17 +1,13 @@
-{ name, ... }:
-{ lib, ... }:
-{
-  flake.nixosModules."${name}" =
-    { config, ... }:
-    {
-      options = {
-        nether.flatpak.enable = lib.mkEnableOption "Flatpak application packaging and distribution";
-      };
+{ name, mkFeature, ... }:
+mkFeature name (
+  { lib, flatpak, ... }:
+  {
+    description = "Flatpak application packaging and distribution";
 
-      config = lib.mkIf config.nether.flatpak.enable {
-        services.flatpak.enable = true;
-        xdg.portal.enable = true;
-        xdg.portal.config.common.default = lib.mkDefault "*";
-      };
+    nixos = {
+      services.flatpak.enable = true;
+      xdg.portal.enable = true;
+      xdg.portal.config.common.default = lib.mkDefault "*";
     };
-}
+  }
+)
