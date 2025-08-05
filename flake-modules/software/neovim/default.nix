@@ -12,11 +12,17 @@ mkSoftware name (
     nether,
     neovim,
     helpers,
+    lib,
     pkgs,
     pkgInputs,
     ...
   }:
   {
+    options.command = lib.mkOption {
+      type = lib.types.str;
+      default = "nvim";
+    };
+
     nixos = {
       # Unlike most of our software, we install this at the system level so we
       # never have to suffer nano, in even the bleakest conditionsb

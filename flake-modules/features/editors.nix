@@ -6,6 +6,7 @@
 }:
 mkFeature name (
   {
+    nether,
     editors,
     lib,
     pkgs,
@@ -41,10 +42,6 @@ mkFeature name (
       vscode-langservers-extracted = { };
     };
 
-    hm.home.sessionVariables.EDITOR =
-      {
-        neovim = "nvim";
-      }
-      .${editors.default.which};
+    hm.home.sessionVariables.EDITOR = nether.software.${editors.default.which}.command;
   }
 )
