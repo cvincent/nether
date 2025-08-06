@@ -53,12 +53,13 @@
     { pkgs }:
     { osConfig, ... }:
     {
+      home.packages = [ pkgs.glib ];
+
       dconf = {
         enable = osConfig.nether.stylix.enable;
         settings = {
-          "org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-          };
+          "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+          "org/gtk/settings/debug".enable-inspector-keybinding = true;
         };
       };
 
