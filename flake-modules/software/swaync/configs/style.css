@@ -37,17 +37,17 @@
 }
 
 /* Uncomment to enable specific urgency colors */
-/* .low {
-  background: yellow;
-  padding: 6px;
-  border-radius: 12px;
-}
+// .low {
+//   background: yellow;
+//   padding: 6px;
+//   border-radius: 12px;
+// }
 
 .normal {
   background: green;
   padding: 6px;
   border-radius: 12px;
-} */
+}
 
 .critical {
   background: @noti-urgent;
