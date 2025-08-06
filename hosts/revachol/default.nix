@@ -54,7 +54,12 @@
 
       launcher.which = "fuzzel";
       bar.which = "waybar";
-      notifications.which = "swaync";
+
+      notifications = {
+        which = "swaync";
+        swaync.package = pkgInputs.nixpkgs-unstable-latest.swaynotificationcenter;
+      };
+
       wallpapers.which = "swww";
 
       screenLocker = {

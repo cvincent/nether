@@ -1,15 +1,22 @@
 { name, mkSoftware, ... }:
 mkSoftware name (
-  { swaync, pkgs, ... }:
+  {
+    swaync,
+    lib,
+    pkgs,
+    ...
+  }:
   {
     package = pkgs.swaynotificationcenter;
 
     hm.services.swaync = {
       inherit (swaync) enable package;
 
-      style = builtins.readFile ./style.css;
+      style = builtins.readFile ./style.css |> lib.mkAfter;
 
       settings = {
+        notification-window-preferred-output = "DP-1";
+        control-center-preferred-output = "DP-1";
         positionX = "right";
         positionY = "top";
         layer = "top";
