@@ -331,19 +331,23 @@
                 [ ]
                 ++ (
                   # For each software namespace, and each software definition
-                  # within them, if it's not a nether.software module, but it is
-                  # in pkgs, add the package to home.packages.
+                  # within them, if it's not a nether.software module, but it
+                  # has a package defined, add the it to home.packages.
                   softwareNamespacesWithToplevel
                   |> lib.mapAttrsToList (
                     softwareNamespace: softwareDefs: {
                       home.packages = lib.optionals (softwareNamespaceEnable thisConfig softwareNamespace) (
                         softwareDefs
+                        |> filterSoftwareDefs
                         |> lib.filterAttrs (
-                          softwareName: _: !osOptions ? nether.software."${softwareName}" && pkgs ? "${softwareName}"
+                          softwareName: _:
+                          !(osOptions ? nether.software."${softwareName}")
+                          && ((softwareConfig thisConfig softwareNamespace softwareName) ? package)
                         )
                         |> lib.mapAttrsToList (
                           softwareName: _:
-                          lib.optional (softwareEnable thisConfig softwareNamespace softwareName) pkgs."${softwareName}"
+                          lib.optional (softwareEnable thisConfig softwareNamespace softwareName)
+                            (softwareConfig thisConfig softwareNamespace softwareName).package
                         )
                         |> lib.flatten
                       );
@@ -356,6 +360,7 @@
                   |> lib.attrsets.mapAttrsToList (
                     softwareNamespace: softwareDefs:
                     softwareDefs
+                    |> filterSoftwareDefs
                     |> lib.attrsets.mapAttrsToList (
                       softwareName: softwareDef:
                       lib.mkIf (
