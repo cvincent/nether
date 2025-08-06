@@ -447,10 +447,18 @@
                 (
                   if pkgs ? "${softwareName}" then
                     {
-                      enable = lib.mkEnableOption pkgs."${softwareName}".meta.description;
+                      enable = lib.mkEnableOption pkgs."${softwareName}".meta.description or softwareName;
                       package = lib.mkOption {
                         type = lib.types.package;
                         default = pkgs."${softwareName}";
+                      };
+                    }
+                  else if software ? package then
+                    {
+                      enable = lib.mkEnableOption software.package.meta.description or softwareName;
+                      package = lib.mkOption {
+                        type = lib.types.package;
+                        default = software.package;
                       };
                     }
                   else
