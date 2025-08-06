@@ -50,7 +50,7 @@
               enable = lib.mkOption {
                 type = lib.types.bool;
                 default = enableDefault;
-                description = options.nether.software."${softwareName}".enable.description;
+                description = options.nether.software."${softwareName}".enable.description or softwareName;
               };
             }
           else if softwareDef ? package then
