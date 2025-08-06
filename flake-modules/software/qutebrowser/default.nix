@@ -173,11 +173,12 @@ mkSoftware name (
           searchEngines = {
             am = "https://www.amazon.com/s?k={}";
             yt = "https://www.youtube.com/results?search_query={}";
-          };
+          }
+          // inputs.private-nethers.qutebrowser.searchEngines;
         };
 
         home.file."./.config/qutebrowser/work.py".source = ./work.py;
-        home.file."./.config/qutebrowser/routes.json".text = inputs.private-nethers.qutebrowserRoutes;
+        home.file."./.config/qutebrowser/routes.json".text = inputs.private-nethers.qutebrowser.routes;
 
         home.packages = [
           pkgs.socat
