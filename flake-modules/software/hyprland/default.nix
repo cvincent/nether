@@ -30,8 +30,7 @@ mkSoftware name (
       };
 
       programs.hyprland = {
-        enable = true;
-        package = hyprland.package;
+        inherit (hyprland) enable package;
       };
 
       environment.sessionVariables = lib.mkMerge [
