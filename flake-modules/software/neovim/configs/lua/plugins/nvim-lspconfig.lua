@@ -36,12 +36,7 @@ return {
       }
     })
 
-    lspconfig.nil_ls.setup({
-      on_attach = function(client)
-        local ns = vim.lsp.diagnostic.get_namespace(client.id)
-        vim.diagnostic.disable(nil, ns)
-      end
-    })
+    lspconfig.nil_ls.setup({})
 
     lspconfig.elixirls.setup({
       cmd = { "elixir-ls" },

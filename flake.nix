@@ -176,8 +176,15 @@
     browser-pkgs.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.45.0";
+
+    nil-ls = {
+      url = "github:oxalica/nil?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixpkgs-kitty.url = "nixpkgs/nixos-unstable";
     nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
+
     nixpkgs-tmux.url = "nixpkgs/nixos-unstable";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     xremap-flake.url = "github:xremap/nix-flake";

@@ -38,7 +38,7 @@
       formatters.nixfmt-rfc-style.package = pkgInputs.nixpkgs-unstable-latest.nixfmt-rfc-style;
 
       lsps = {
-        nil.package = pkgInputs.nixpkgs-unstable-latest.nil;
+        nil.package = inputs'.nil-ls.packages.nil;
         nixd.package = pkgInputs.nixpkgs-unstable-latest.nixd;
       };
     };
