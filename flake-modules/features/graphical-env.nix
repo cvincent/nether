@@ -10,7 +10,6 @@
   # things out into submodules.
 
   imports = [
-    (import ../software/swaync { name = "swaync"; })
     (import ../software/waybar { name = "waybar"; })
   ];
 
@@ -205,6 +204,7 @@
       config = lib.mkIf graphicalEnv.enable {
         nether.software.hyprland.enable = config.nether.graphicalEnv.compositor.which == "hyprland";
         nether.software.swaylock.enable = config.nether.graphicalEnv.screenLocker.which == "swaylock";
+        nether.software.swaync.enable = config.nether.graphicalEnv.notifications.which == "swaync";
 
         # TODO: Extract all this, and _maybe_ also the home.packages below.
         # We'll want to figure out our conventions on nesting and directories.
