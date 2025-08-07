@@ -91,6 +91,7 @@
         // (softwareDef.options or { })
       );
 
+    # TODO: This logic is repeated
     filterSoftwareDefs =
       softwareDefs:
       lib.filterAttrs (
