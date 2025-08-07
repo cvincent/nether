@@ -7,16 +7,14 @@ mkSoftware name (
     ...
   }:
   {
-    options = {
-      settings = lib.mkOption {
-        type = (pkgs.formats.ini { }).type;
-        default = {
-          # TODO: Not sure if this belongs here... Stylix really kind of stops
-          # at fonts and colors it seems, but we define borders for the WM,
-          # utilities like Fuzzel, our bar, etc. Think about this when we return
-          # to theming.
-          border.width = 5;
-        };
+    options.settings = lib.mkOption {
+      type = (pkgs.formats.ini { }).type;
+      default = {
+        # TODO: Not sure if this belongs here... Stylix really kind of stops
+        # at fonts and colors it seems, but we define borders for the WM,
+        # utilities like Fuzzel, our bar, etc. Think about this when we return
+        # to theming.
+        border.width = 5;
       };
     };
 
