@@ -36,67 +36,58 @@
         softwareDef,
       }:
       let
+        # Inferring the options by precedence:
+        # - If package is explicitly defined, use it; can be null to skip
+        #   generating a package option
+        # - If the name is in nether.software, pull its options in, but override
+        #   enable to default to enableDefault (default true)
+        # - If the name is in pkgs, use that package
+        # - Otherwise, only an enable option is defined, unless enableDefault is
+        #   null
+
         enableDefault = if softwareDef ? enableDefault then softwareDef.enableDefault else true;
-        packageOpts = if softwareDef ? packageOpts then softwareDef.packageOpts else true;
-      in
-      (
-        (
-          if options ? nether.software."${softwareName}" then
-            # If a software module is defined, surface its options here, but
-            # override enable to default to softwareDef.enableDefault if it
-            # exists, otherwise true
-            options.nether.software."${softwareName}"
-            // {
-              enable = lib.mkOption {
-                type = lib.types.bool;
-                default = enableDefault;
-                description = options.nether.software."${softwareName}".enable.description or softwareName;
-              };
-            }
-          else if softwareDef ? package then
-            # If given a package, use that
-            {
-              enable = lib.mkOption {
-                type = lib.types.bool;
-                default = enableDefault;
-                description = softwareDef.package.meta.description;
-              };
 
+        defaultPackage =
+          if softwareDef ? package then
+            softwareDef.package
+          else if options ? nether.software.${softwareName} then
+            "mkSoftwareModule"
+          else if pkgs ? ${softwareName} then
+            pkgs.${softwareName}
+          else
+            "custom";
+
+        startingOpts =
+          if defaultPackage == "mkSoftwareModule" then options.nether.software.${softwareName} else { };
+
+        description =
+          if defaultPackage == "mkSoftwareModule" then
+            softwareDef.description or options.nether.software.${softwareName}.enable.description
+              or softwareName
+          else
+            softwareDef.description or defaultPackage.meta.description or softwareName;
+
+        enableOpt.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = enableDefault;
+          inherit description;
+        };
+
+        packageOpt =
+          if lib.isDerivation defaultPackage then
+            {
               package = lib.mkOption {
                 type = lib.types.package;
-                default = softwareDef.package;
+                default = defaultPackage;
               };
-            }
-          else if pkgs ? "${softwareName}" then
-            # If named after a package, define default enable and package options
-            {
-              enable = lib.mkOption {
-                type = lib.types.bool;
-                default = enableDefault;
-                description = pkgs."${softwareName}".meta.description;
-              };
-
-              package = lib.mkOption {
-                type = lib.types.package;
-                default = pkgs."${softwareName}";
-              };
-            }
-          else if packageOpts then
-            # If we don't know what this is, define basic enable and package
-            # opts unless explicitly disabled
-            {
-              enable = lib.mkOption {
-                type = lib.types.bool;
-                default = enableDefault;
-                description = "${softwareName}";
-              };
-
-              package = lib.mkOption { type = lib.types.package; };
             }
           else
-            # Otherwise, leave it to the module to define all options
-            { }
-        )
+            { };
+      in
+      (
+        startingOpts
+        // (lib.optionalAttrs (enableDefault != null) enableOpt)
+        // packageOpt
         // (softwareDef.options or { })
       );
 
