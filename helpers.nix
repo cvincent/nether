@@ -509,24 +509,28 @@
       let
         featureName = name;
         softwareNamespace = namespace;
-
         choices = softwareDefs |> filterSoftwareDefs |> lib.attrNames;
       in
       {
         "${softwareNamespace}" =
           softwareDefs
-          |> lib.mapAttrs (_: softwareDef: lib.recursiveUpdate softwareDef { inherit enableDefault; })
           |> filterSoftwareDefs
+          |> lib.mapAttrs (_: softwareDef: lib.recursiveUpdate softwareDef { inherit enableDefault; })
           |> lib.recursiveUpdate {
-            options.default = {
-              which = lib.mkOption {
-                type = lib.types.enum ([ null ] ++ choices);
-                default = null;
-              };
+            options = (
+              {
+                default = {
+                  which = lib.mkOption {
+                    type = lib.types.enum ([ null ] ++ choices);
+                    default = null;
+                  };
 
-              package = lib.mkOption { type = lib.types.package; };
-              path = lib.mkOption { type = lib.types.str; };
-            };
+                  package = lib.mkOption { type = lib.types.package; };
+                  path = lib.mkOption { type = lib.types.str; };
+                };
+              }
+              |> (lib.recursiveUpdate (softwareDefs.options or { }))
+            );
           };
 
         nixos =
