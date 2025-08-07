@@ -9,10 +9,6 @@
   # TODO: This module will almost certainly grow, and we'll want to break
   # things out into submodules.
 
-  imports = [
-    (import ../software/waybar { name = "waybar"; })
-  ];
-
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgs }:
     { config, ... }:
