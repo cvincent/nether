@@ -3,6 +3,7 @@ mkSoftware name (
   {
     config,
     waybar,
+    lib,
     helpers,
     ...
   }:
@@ -34,6 +35,12 @@ mkSoftware name (
           @define-color base0E ${base0E}; @define-color base0F ${base0F};
         ''
         + (builtins.readFile ./configs/style.css);
+
+      systemd.users.services.waybar = {
+        Install.WantedBy = lib.mkForce [ "graphical.target" ];
+        Unit.After = lib.mkForce [ "graphical.target" ];
+        Unit.PartOf = lib.mkForce [ "graphical.target" ];
+      };
     };
   }
 )
