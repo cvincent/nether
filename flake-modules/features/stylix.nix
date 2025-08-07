@@ -55,6 +55,10 @@
     {
       home.packages = [ pkgs.glib ];
 
+      # NOTE: This option only exists on HM, so our current option definition
+      # above is insufficient. But we want to revisit styling anyways.
+      stylix.targets.waybar.enable = false;
+
       dconf = {
         enable = osConfig.nether.stylix.enable;
         settings = {

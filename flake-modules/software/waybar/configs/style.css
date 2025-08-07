@@ -4,12 +4,19 @@
 }
 
 window#waybar {
-  background-color: rgba(46, 52, 64, 0.5);
+  background-color: alpha(@base00, 0.5);
 }
 
 tooltip {
-  background: rgba(46, 52, 64, 0.7);
-  border: 2px solid rgba(76, 86, 106, 0.9);
+  background: alpha(@base01, 0.95);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  border-color: @base02;
+  border-top-color: mix(@base00, white, 0.35);
+  border-bottom-color: mix(@base00, black, 0.35);
+  text-shadow: none;
+  font-size: 14px;
+  padding: 4px;
+  margin: 0;
 }
 
 tooltip label {
@@ -23,11 +30,12 @@ tooltip label {
 .modules-right {
   transition: width;
   transition-duration: 2s;
-  background-color: rgba(46, 52, 64, 0.75);
+  background-color: @base01;
   color: #eceff4;
-  border-top: 1px solid rgba(216, 222, 233, 0.6);
-  border-bottom: 2px solid rgba(46, 52, 64, 1.0);
+  border-top: 1px solid mix(@base00, white, 0.35);
+  /* border-bottom: 2px solid @base01; */
   padding: 0 10px;
+  padding-bottom: 2px;
 }
 
 .modules-center {
