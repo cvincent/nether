@@ -99,6 +99,8 @@
         !lib.elem softwareName [
           "description"
           "options"
+          "nixos"
+          "hm"
         ]
       ) softwareDefs;
 
@@ -185,7 +187,7 @@
                     |> filterSoftwareDefs
                     |> lib.mapAttrs (
                       softwareName: softwareDef:
-                      softwareOptionDefs {
+                      mkSoftwareOptions {
                         inherit
                           pkgs
                           options
@@ -205,7 +207,7 @@
                 |> filterSoftwareDefs
                 |> lib.mapAttrs (
                   softwareName: softwareDef:
-                  softwareOptionDefs {
+                  mkSoftwareOptions {
                     inherit
                       pkgs
                       options
@@ -277,6 +279,14 @@
                     )
                   )
                   |> lib.flatten
+                )
+                ++ (
+                  # Include any nixos configs from enabled software namespaces
+                  softwareNamespacesWithToplevel
+                  |> lib.mapAttrsToList (
+                    softwareNamespace: softwareDefs:
+                    (lib.mkIf (softwareNamespaceEnable thisConfig softwareNamespace) (softwareDefs.nixos or { }))
+                  )
                 )
                 ++ [ (feature.nixos or { }) ]
               )
@@ -362,6 +372,14 @@
                     )
                   )
                   |> lib.flatten
+                )
+                ++ (
+                  # Include any hm configs from enabled software namespaces
+                  softwareNamespacesWithToplevel
+                  |> lib.mapAttrsToList (
+                    softwareNamespace: softwareDefs:
+                    lib.mkIf (softwareNamespaceEnable thisConfig softwareNamespace) (softwareDefs.hm or { })
+                  )
                 )
                 ++ [ (feature.hm or { }) ]
               )
@@ -533,6 +551,9 @@
               }
               |> (lib.recursiveUpdate (softwareDefs.options or { }))
             );
+
+            nixos = softwareDefs.nixos or { };
+            hm = softwareDefs.hm or { };
           };
 
         nixos =
