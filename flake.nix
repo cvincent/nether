@@ -81,6 +81,7 @@
               mkModuleDir
               mkSoftware
               mkSoftwareChoice
+              mkSoftwareOptions
               ;
           })
         ];

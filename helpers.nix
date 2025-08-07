@@ -28,12 +28,12 @@
         ))
       );
 
-    softwareOptionDefs =
+    mkSoftwareOptions =
       {
         pkgs,
         options,
         softwareName,
-        softwareDef,
+        softwareDef ? { },
       }:
       let
         # Inferring the options by precedence:
