@@ -561,7 +561,7 @@
             {
               nether."${featureName}"."${softwareNamespace}" = (
                 {
-                  default = lib.mkIf (thisConfig.default.which != null) {
+                  default = lib.mkIf (thisConfig.${softwareNamespace}.default.which != null) {
                     package =
                       lib.mkForce
                         thisConfig."${softwareNamespace}"."${thisConfig."${softwareNamespace}".default.which}".package;
