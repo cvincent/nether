@@ -5,7 +5,7 @@ mkSoftware name (
     hm = {
       services.swww = { inherit (swww) enable package; };
 
-      systemd.users.services.swww = {
+      systemd.user.services.swww = {
         Install.WantedBy = lib.mkForce [ "graphical.target" ];
         Unit.After = lib.mkForce [ "graphical.target" ];
         Unit.PartOf = lib.mkForce [ "graphical.target" ];

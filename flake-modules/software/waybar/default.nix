@@ -36,7 +36,7 @@ mkSoftware name (
         ''
         + (builtins.readFile ./configs/style.css);
 
-      systemd.users.services.waybar = {
+      systemd.user.services.waybar = {
         Install.WantedBy = lib.mkForce [ "graphical.target" ];
         Unit.After = lib.mkForce [ "graphical.target" ];
         Unit.PartOf = lib.mkForce [ "graphical.target" ];
