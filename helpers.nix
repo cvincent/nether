@@ -384,6 +384,7 @@
         applyArgs ? { },
         exclude ? [ ],
         additionalImports ? [ ],
+        camelize ? false,
       }:
       let
         inherit (moduleArgs) flake-parts-lib;
@@ -399,7 +400,10 @@
             |> builtins.map (
               module:
               flake-parts-lib.importApply (dir + "/${module}") (
-                applyArgs // { name = lib.removeSuffix ".nix" module; }
+                applyArgs
+                // {
+                  name = module |> lib.removeSuffix ".nix" |> (str: if camelize then lib.toCamelCase str else str);
+                }
               )
             )
           )
