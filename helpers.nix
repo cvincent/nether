@@ -535,7 +535,12 @@
               map (softwareName: {
                 name = softwareName;
                 value = {
-                  enable = lib.mkIf (thisConfig.default.which == softwareName) (lib.mkForce true);
+                  enable = lib.mkIf (
+                    if softwareNamespace == "toplevel" then
+                      thisConfig.default.which == softwareName
+                    else
+                      thisConfig.${softwareNamespace}.default.which == softwareName
+                  ) (lib.mkForce true);
                 };
               }) choices
             );
