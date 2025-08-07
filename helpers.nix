@@ -67,7 +67,6 @@
                 default = softwareDef.package;
               };
             }
-
           else if pkgs ? "${softwareName}" then
             # If named after a package, define default enable and package options
             {
