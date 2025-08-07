@@ -1,6 +1,7 @@
-applyArgs@{ mkModuleDir, mkFeature, ... }:
-moduleArgs@{ lib, flake-parts-lib, ... }:
+applyArgs@{ mkModuleDir, ... }:
+moduleArgs:
 mkModuleDir ./. {
   inherit applyArgs moduleArgs;
   exclude = [ "mail" ];
+  camelize = true;
 }
