@@ -1,4 +1,9 @@
 return {
   "chenxin-yan/footnote.nvim",
-  opts = {},
+  opts = {
+    keys = {
+      next_footnote = "",
+      prev_footnote = "",
+    },
+  },
 }
