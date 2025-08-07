@@ -22,7 +22,7 @@ mkFeature name (
 
     options = {
       aliases = lib.mkOption {
-        type = lib.types.attrsOf lib.types.str;
+        type = with lib.types; attrsOf str;
         default = { };
       };
     };
