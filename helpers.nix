@@ -307,6 +307,7 @@
               // homeModuleArgs
               // {
                 config = osConfig;
+                options = osOptions;
                 "${featureName}" = thisConfig;
                 inherit (osConfig) nether;
                 inherit helpers;
