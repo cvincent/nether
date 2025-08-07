@@ -1,6 +1,7 @@
 { name, ... }:
 { lib, moduleWithSystem, ... }:
 {
+  # TODO: Port this and the other scripts to mkFeature
   flake.homeModules."${name}" = moduleWithSystem (
     { pkgs }:
     { osConfig, ... }:
@@ -25,7 +26,7 @@
     {
       # TODO: Consider making this agnostic about our wallpaper switcher
       # It could potentially be its own Flake
-      config = lib.mkIf (wallpapers.which == "swww") {
+      config = lib.mkIf (wallpapers.default.which == "swww") {
         home.packages = [ set-random-wallpaper ];
 
         systemd.user.services.set-random-wallpaper = {
