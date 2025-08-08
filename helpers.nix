@@ -552,7 +552,18 @@
       let
         featureName = name;
         softwareNamespace = namespace;
-        choices = softwareDefs |> filterSoftwareDefs |> lib.attrNames;
+        choices =
+          softwareDefs
+          |> filterSoftwareDefs
+          |> lib.filterAttrs (
+            _:
+            {
+              choice ? true,
+              ...
+            }:
+            choice
+          )
+          |> lib.attrNames;
       in
       {
         "${softwareNamespace}" =
@@ -570,6 +581,10 @@
 
                   package = lib.mkOption { type = lib.types.package; };
                   path = lib.mkOption { type = lib.types.str; };
+                  choices = lib.mkOption {
+                    type = with lib.types; listOf str;
+                    default = choices;
+                  };
                 };
               }
               |> (lib.recursiveUpdate (softwareDefs.options or { }))
