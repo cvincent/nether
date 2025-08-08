@@ -141,6 +141,8 @@
                         # causes infinite recursion
                         inputs.xremap-flake.homeManagerModules.default
                         inputs.ha-notifier.homeManagerModules.default
+
+                        helpers.homeModule
                       ];
                     };
                   }

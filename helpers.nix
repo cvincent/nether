@@ -7,6 +7,16 @@
       home-manager.extraSpecialArgs.osOptions = options;
     };
 
+  homeModule =
+    { options, ... }:
+    {
+      options.hmOptions = lib.mkOption {
+        type = lib.types.anything;
+      };
+
+      config.hmOptions = options;
+    };
+
   helpers = rec {
     getSoftwareNamespaces =
       feature: includeToplevel:
@@ -153,6 +163,7 @@
                   "${featureName}" = thisConfig;
                   inherit (config) nether;
                   inherit helpers;
+                  inherit (config.home-manager.users.${config.nether.username}) hmOptions;
                 }
               )
             );
@@ -305,6 +316,7 @@
           homeModuleArgs@{
             osConfig,
             osOptions,
+            options,
             helpers,
             ...
           }:
@@ -319,6 +331,7 @@
               // {
                 config = osConfig;
                 options = osOptions;
+                hmOptions = options;
                 "${featureName}" = thisConfig;
                 inherit (osConfig) nether;
                 inherit helpers;
@@ -451,6 +464,7 @@
                   "${softwareName}" = thisConfig;
                   inherit (config) nether;
                   inherit inputs helpers;
+                  inherit (config.home-manager.users.${config.nether.username}) hmOptions;
                 }
               )
             );
@@ -496,7 +510,12 @@
             self',
             system,
           }:
-          homeModuleArgs@{ osConfig, helpers, ... }:
+          homeModuleArgs@{
+            osConfig,
+            options,
+            helpers,
+            ...
+          }:
           let
             thisConfig = osConfig.nether.software."${softwareName}";
 
@@ -511,6 +530,7 @@
                   "${softwareName}" = thisConfig;
                   inherit (osConfig) nether;
                   inherit inputs helpers;
+                  hmOptions = options;
                 }
               )
             );
