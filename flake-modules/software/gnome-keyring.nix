@@ -1,6 +1,6 @@
 { name, mkSoftware, ... }:
 mkSoftware name (
-  { gnome-keyring, ... }:
+  { nether, gnome-keyring, ... }:
   {
     package = null;
 
@@ -9,6 +9,8 @@ mkSoftware name (
 
       # Unlock the keyring on login
       security.pam.services.login.enableGnomeKeyring = gnome-keyring.enable;
+
+      nether.backups.paths."${nether.homeDirectory}/.local/share/keyrings".deleteMissing = true;
     };
   }
 )
