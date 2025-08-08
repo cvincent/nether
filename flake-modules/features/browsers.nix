@@ -9,7 +9,6 @@ mkFeature name (
     nether,
     browsers,
     lib,
-    pkgs,
     ...
   }:
   (
