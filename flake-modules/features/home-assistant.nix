@@ -6,12 +6,6 @@
     {
       options = {
         nether.homeAssistant.enable = lib.mkEnableOption "Home Assistant desktop integrations";
-
-        nether.homeAssistant.notifier.enable = lib.mkOption {
-          type = lib.types.bool;
-          description = "Peroxide third-party bridge for ProtonMail";
-          default = config.nether.homeAssistant.enable;
-        };
       };
     };
 
