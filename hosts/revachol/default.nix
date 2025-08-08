@@ -1,4 +1,4 @@
-{ pkgInputs, inputs' }:
+{ inputs', ... }:
 { config, pkgs, ... }:
 {
   imports = [ ./hardware.nix ];
@@ -33,13 +33,16 @@
     editors = {
       enable = true;
       default.which = "neovim";
-      neovim.package = pkgInputs.nixpkgs-neovim.neovim;
+      # TODO: We should be able to juse use inputs' throughout
+      neovim.package = inputs'.nixpkgs-neovim.legacyPackages.neovim;
 
-      formatters.nixfmt-rfc-style.package = pkgInputs.nixpkgs-unstable-latest.nixfmt-rfc-style;
+      formatters.nixfmt-rfc-style.package =
+        inputs'.nixpkgs-unstable-latest.legacyPackages.nixfmt-rfc-style;
 
       lsps = {
         nil.package = inputs'.nil-ls.packages.nil;
-        nixd.package = pkgInputs.nixpkgs-unstable-latest.nixd;
+        # NOTE: Shouldn't we be able to use inputs' at least for all nixpkgs?
+        nixd.package = inputs'.nixpkgs-unstable-latest.legacyPackages.nixd;
       };
     };
 
@@ -72,7 +75,7 @@
 
     media = {
       enable = true;
-      apps.ytDlp.package = pkgInputs.nixpkgs-yt-dlp.yt-dlp;
+      apps.ytDlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp;
     };
 
     homeSrcDirectory = true;
@@ -93,7 +96,7 @@
 
     browsers = {
       enable = true;
-      qutebrowser.package = pkgInputs.nixpkgs-qutebrowser.qutebrowser;
+      qutebrowser.package = inputs'.nixpkgs-qutebrowser.legacyPackages.qutebrowser;
     };
 
     chat.enable = true;
@@ -115,7 +118,7 @@
       # TODO: See if we can get rid of this override. We need to check if the
       # currently packaged version has the scroll top/middle/bottom working
       # still.
-      package = pkgInputs.nixpkgs-tmux.tmux;
+      package = inputs'.nixpkgs-tmux.legacyPackages.tmux;
     };
 
     windowsVM.enable = true;
