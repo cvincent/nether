@@ -12,7 +12,12 @@ in
   # TODO: Yes, our whole mail/calendar/contacts setup needs a lot of work. This
   # is one of the first significant chunks of Nix I ever wrote ported into our
   # much-improved Flake. Some of this could potentially be split off into a
-  # Flake of its own so others can easily use the functionality.
+  # Flake of its own so others can easily use the functionality. For now we're
+  # leaving it be. An attempt was made at porting it to mkFeature, but it was
+  # going to need a lot of rework due to the way things are imported. It's fine.
+  # I think this module deserves basically a full rewrite, but it can limp along
+  # as-is until we have the time.
+
   flake.nixosModules."${name}" = moduleWithSystem (
     { pkgInputs }:
     { pkgs, config, ... }:
