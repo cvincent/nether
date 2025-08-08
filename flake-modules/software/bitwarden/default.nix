@@ -79,8 +79,8 @@
           gnused
           jq
           oath-toolkit
-          osConfig.nether.graphicalEnv.extra.clipboardSupport.wlClipboard.package
-          osConfig.nether.graphicalEnv.extra.clipboardSupport.cliphist.package
+          osConfig.nether.graphicalEnv.clipboardSupport.wl-clipboard.package
+          osConfig.nether.graphicalEnv.clipboardSupport.cliphist.package
           osConfig.nether.graphicalEnv.launcher.fuzzel.package
           osConfig.nether.graphicalEnv.notifications.libnotify.package
         ];

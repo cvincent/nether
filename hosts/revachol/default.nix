@@ -45,26 +45,28 @@
 
     graphicalEnv = {
       enable = true;
-      displayManager = "gdm";
+      primaryDisplay = "DP-1";
+
+      displayManager.default.which = "gdm";
 
       compositor = {
-        which = "hyprland";
+        default.which = "hyprland";
         hyprland.package = inputs'.hyprland.packages.hyprland;
       };
 
-      launcher.which = "fuzzel";
-      bar.which = "waybar";
+      launcher.default.which = "fuzzel";
+      bar.default.which = "waybar";
 
       notifications = {
-        which = "swaync";
-        swaync.package = pkgInputs.nixpkgs-unstable-latest.swaynotificationcenter;
+        default.which = "swaync";
+        swaync.package = inputs'.nixpkgs-unstable-latest.legacyPackages.swaynotificationcenter;
       };
 
-      wallpapers.which = "swww";
+      wallpapers.default.which = "swww";
 
       screenLocker = {
-        which = "swaylock";
-        swaylock.package = pkgInputs.nixpkgs-unstable.swaylock;
+        default.which = "swaylock";
+        swayidle.sleep.enable = false;
       };
     };
 

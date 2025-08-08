@@ -1,282 +1,165 @@
-{ name, ... }:
 {
-  lib,
-  moduleWithSystem,
-  helpers,
+  name,
+  mkFeature,
+  mkSoftwareChoice,
   ...
 }:
-{
-  # TODO: This module will almost certainly grow, and we'll want to break
-  # things out into submodules.
-
-  flake.nixosModules."${name}" = moduleWithSystem (
-    { pkgs }:
-    { config, ... }:
-    let
-      inherit (config.nether) graphicalEnv;
-    in
-    {
-      options = {
-        nether.graphicalEnv = {
-          enable = lib.mkEnableOption "Graphical environment";
-
-          # TODO: displayManager, compositor, and pickers in other modules
-          # should follow the convention of other pickers in this module
-          displayManager = lib.mkOption {
-            type = lib.types.enum [
-              null
-              "gdm"
-            ];
-            default = null;
-          };
-
-          compositor = {
-            which = lib.mkOption {
-              type = lib.types.enum [
-                null
-                "hyprland"
-              ];
-              default = null;
-            };
-
-            hyprland.package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.hyprland;
-            };
-          };
-
-          launcher = {
-            which = lib.mkOption {
-              type = lib.types.enum [
-                null
-                "fuzzel"
-              ];
-              default = null;
-            };
-
-            fuzzel = {
-              package = lib.mkOption {
-                type = lib.types.package;
-                default = pkgs.fuzzel;
-              };
-
-              settings = lib.mkOption {
-                type = lib.types.attrs;
-                default = {
-                  main.output = "DP-1";
-                  border.width = "5";
-                };
-              };
-            };
-          };
-
-          bar = {
-            which = lib.mkOption {
-              type = lib.types.enum [
-                null
-                "waybar"
-              ];
-              default = null;
-            };
-
-            waybar.package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.waybar;
-            };
-          };
-
-          notifications = {
-            which = lib.mkOption {
-              type = lib.types.enum [
-                null
-                "swaync"
-              ];
-              default = null;
-            };
-
-            libnotify.package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.libnotify;
-            };
-
-            swaync.package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.swaynotificationcenter;
-            };
-          };
-
-          screenLocker = {
-            which = lib.mkOption {
-              type = lib.types.enum [
-                null
-                "swaylock"
-              ];
-              default = null;
-            };
-
-            swaylock.package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.swaylock;
-            };
-          };
-
-          wallpapers = {
-            which = lib.mkOption {
-              type = lib.types.enum [
-                null
-                "swww"
-              ];
-              default = null;
-            };
-
-            swww.package = lib.mkOption {
-              type = lib.types.package;
-              default = pkgs.swww;
-            };
-          };
-
-          extra = {
-            avizo =
-              (helpers.pkgOpt pkgs.avizo true "Avizo - graphical display for volume and brightness changes")
-              // {
-                settings = lib.mkOption {
-                  type = lib.types.attrs;
-                  default = {
-                    default.time = 0.5;
-                  };
-                };
-              };
-
-            clipboardSupport =
-              let
-                enabled = graphicalEnv.extra.clipboardSupport.enable;
-              in
-              {
-                enable = helpers.boolOpt true "Clipboard support - utilities for working with and enhancing the clipboard";
-                wlClipboard = helpers.pkgOpt pkgs.wl-clipboard enabled "wl-clipboard - CLI for the clipboard";
-                wlClipPersist =
-                  helpers.pkgOpt pkgs.wl-clip-persist enabled
-                    "wl-clip-persist - Persist the clipboard";
-                cliphist = helpers.pkgOpt pkgs.cliphist enabled "cliphist - Clipboard history";
-              };
-
-            displaySettings =
-              let
-                enabled = graphicalEnv.extra.displaySettings.enable;
-              in
-              {
-                enable = helpers.boolOpt true "Utilities for manipulating display settings";
-                nwgDisplays = helpers.pkgOpt pkgs.nwg-displays enabled "nwg-displays - GUI for display settings";
-                wlrRandr =
-                  helpers.pkgOpt pkgs.wlr-randr enabled
-                    "wlr-randr - CLI for display settings; dependency of nwg-displays";
-              };
-
-            gnomeKeyring.enable = helpers.boolOpt true "GNOME Keyring - some apps need this to store secrets";
-
-            gnomePolkit =
-              helpers.pkgOpt pkgs.polkit_gnome true
-                "GNOME Polkit - some apps need this to authenticate the user";
-
-            screenshotSupport =
-              let
-                enabled = graphicalEnv.extra.screenshotSupport.enable;
-              in
-              {
-                enable = helpers.boolOpt true "Screenshot support - utilities for creating and editing screenshots";
-                grim = helpers.pkgOpt pkgs.grim enabled "grim - CLI for taking screenshots";
-                slurp = helpers.pkgOpt pkgs.slurp enabled "slurp - utility for selecting regions of the screen";
-                swappy =
-                  helpers.pkgOpt pkgs.swappy enabled
-                    "swappy - app for editing screenshots after they are taken";
-              };
-
-            # TODO: This should probably be grouped with screenLocker settings
-            swayIdle = helpers.pkgOpt pkgs.swayidle true "swayidle - Idle timer and command launcher";
-          };
-        };
-      };
-
-      config = lib.mkIf graphicalEnv.enable {
-        nether.software.waybar.enable = config.nether.graphicalEnv.bar.which == "waybar";
-        nether.software.hyprland.enable = config.nether.graphicalEnv.compositor.which == "hyprland";
-
-        nether.software.swaync.enable = config.nether.graphicalEnv.notifications.which == "swaync";
-        nether.software.swaync.package = config.nether.graphicalEnv.notifications.swaync.package;
-
-        nether.software.swaylock.enable = config.nether.graphicalEnv.screenLocker.which == "swaylock";
-
-        # TODO: Extract all this, and _maybe_ also the home.packages below.
-        # We'll want to figure out our conventions on nesting and directories.
-        environment.systemPackages = lib.optional graphicalEnv.extra.gnomePolkit.enable graphicalEnv.extra.gnomePolkit.package;
-
-        services.xserver = {
-          enable = true;
-          displayManager.gdm.enable = graphicalEnv.displayManager == "gdm";
-          displayManager.lightdm.enable = graphicalEnv.displayManager == "lightdm";
-        };
-
-        services.gnome.gnome-keyring.enable = graphicalEnv.extra.gnomeKeyring.enable;
-
-        nether.backups.paths."${config.nether.homeDirectory}/.local/share/keyrings".deleteMissing = true;
-
-        # Uses login password to unlock the GNOME Keyring
-        security.pam.services.login.enableGnomeKeyring = graphicalEnv.extra.gnomeKeyring.enable;
-
-        security.polkit = {
-          enable = graphicalEnv.extra.gnomePolkit.enable;
-          adminIdentities = [ "unix-user:${config.nether.username}" ];
-        };
-
-        systemd = lib.mkIf graphicalEnv.extra.gnomePolkit.enable {
-          user.services.polkit-gnome-authentication-agent-1 = {
-            description = "polkit-gnome-authentication-agent-1";
-            wantedBy = [ "graphical-session.target" ];
-            wants = [ "graphical-session.target" ];
-            after = [ "graphical-session.target" ];
-            serviceConfig = {
-              Type = "simple";
-              ExecStart = "${graphicalEnv.extra.gnomePolkit.package}/libexec/polkit-gnome-authentication-agent-1";
-              Restart = "on-failure";
-              RestartSec = 1;
-              TimeoutStopSec = 10;
-            };
-          };
-        };
+mkFeature name (
+  {
+    options,
+    graphicalEnv,
+    lib,
+    pkgs,
+    helpers,
+    ...
+  }:
+  let
+    mkSoftwareChoiceArgs = {
+      inherit name;
+      thisConfig = graphicalEnv;
+    };
+  in
+  { }
+  |> lib.recursiveUpdate (
+    mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "displayManager"; }) {
+      gdm.package = null;
+      lightdm.package = null;
+    }
+  )
+  |> lib.recursiveUpdate (
+    mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "compositor"; }) {
+      hyprland = { };
+    }
+  )
+  |> lib.recursiveUpdate (
+    mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "launcher"; }) {
+      fuzzel.config.settings = lib.mkOptionDefault {
+        main.output = graphicalEnv.primaryDisplay;
       };
     }
-  );
+  )
+  |> lib.recursiveUpdate (
+    mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "bar"; }) {
+      waybar = { };
+    }
+  )
+  |> lib.recursiveUpdate (
+    mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "notifications"; }) {
+      swaync = { };
 
-  flake.homeModules."${name}" =
-    { osConfig, ... }:
-    let
-      inherit (osConfig.nether) graphicalEnv;
-    in
-    {
-      config = lib.mkIf graphicalEnv.enable {
-        home.packages =
-          [ ]
-          ++ lib.optional (graphicalEnv.notifications != null) graphicalEnv.notifications.libnotify.package
-          ++ lib.optional (graphicalEnv.wallpapers.which == "swww") graphicalEnv.wallpapers.swww.package
-          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipboard
-          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.wlClipPersist
-          ++ helpers.pkgOptPkg graphicalEnv.extra.clipboardSupport.cliphist
-          ++ helpers.pkgOptPkg graphicalEnv.extra.displaySettings.nwgDisplays
-          ++ helpers.pkgOptPkg graphicalEnv.extra.displaySettings.wlrRandr
-          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.grim
-          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.slurp
-          ++ helpers.pkgOptPkg graphicalEnv.extra.screenshotSupport.swappy
-          ++ helpers.pkgOptPkg graphicalEnv.extra.swayIdle;
+      libnotify.choice = false;
+      nixos.nether.graphicalEnv.notifications.libnotify.enable =
+        graphicalEnv.notifications.default.which != null;
+    }
+  )
+  |> lib.recursiveUpdate (
+    mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "screenLocker"; }) {
+      swaylock = { };
 
-        programs.fuzzel = {
-          enable = graphicalEnv.launcher.which == "fuzzel";
-          inherit (graphicalEnv.launcher.fuzzel) package settings;
+      swayidle = {
+        choice = false;
+
+        options = {
+          lockSeconds = lib.mkOption {
+            type = lib.types.int;
+            default = 3600; # 1 hour
+          };
+
+          sleep = {
+            enable = (lib.mkEnableOption "sleep") // {
+              default = true;
+            };
+            seconds = lib.mkOption {
+              type = lib.types.int;
+              default = 4200; # 1 hour, 10 minutes
+            };
+          };
         };
 
-        services.avizo = {
-          enable = graphicalEnv.extra.avizo.enable;
-          inherit (graphicalEnv.extra.avizo) package settings;
-        };
+        config =
+          with graphicalEnv;
+          let
+            sleepCommand = compositor.${compositor.default.which}.sleepCommand or null;
+            resumeCommand = compositor.${compositor.default.which}.resumeCommand or null;
+          in
+          {
+            timeouts = [
+              {
+                timeout = screenLocker.swayidle.lockSeconds;
+                command = screenLocker.default.path;
+              }
+            ]
+            ++ (lib.optional
+              (screenLocker.swayidle.sleep.enable && sleepCommand != null && resumeCommand != null)
+              {
+                timeout = screenLocker.swayidle.sleep.seconds;
+                command = sleepCommand;
+                inherit resumeCommand;
+              }
+            );
+
+            events = [
+              {
+                event = "before-sleep";
+                command = screenLocker.default.path;
+              }
+            ];
+          };
       };
+
+      nixos.nether.graphicalEnv.screenLocker.swayidle.enable =
+        graphicalEnv.screenLocker.default.which != null;
+    }
+  )
+  |> lib.recursiveUpdate (
+    mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "wallpapers"; }) {
+      swww = { };
+    }
+  )
+  |> lib.recursiveUpdate {
+    options.primaryDisplay = lib.mkOption {
+      type = lib.types.str;
+      default = "DP-1";
     };
-}
+
+    clipboardSupport = {
+      wl-clipboard = { };
+      wl-clip-persist = { };
+      cliphist = { };
+    };
+
+    extra = {
+      avizo = { };
+      gnome-keyring = { };
+      gnome-polkit = { };
+
+      nwg-displays = { };
+
+      nixos.nether.graphicalEnv.extra.nwg-displays =
+        let
+          forCompositors =
+            graphicalEnv.compositor
+            |> lib.filterAttrs (_: opts: opts ? enable && opts.enable)
+            |> lib.mapAttrsToList (name: _: name);
+        in
+        {
+          enable = lib.mkOptionDefault (
+            with builtins;
+            any (compositor: elem compositor forCompositors) [
+              "hyprland"
+              "sway"
+            ]
+          );
+
+          inherit forCompositors;
+        };
+    };
+
+    screenshots = {
+      grim = { };
+      slurp = { };
+      swappy = { };
+      flameshot = { };
+    };
+  }
+)
