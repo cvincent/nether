@@ -8,6 +8,6 @@ mkSoftware name (
     };
 
     nixos.nether.software.wlr-randr.enable = builtins.elem "hyprland" nwg-displays.forCompositors;
-    hm.home.packages = [ nwg-displays.enable ];
+    hm.home.packages = [ nwg-displays.package ];
   }
 )
