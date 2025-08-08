@@ -11,6 +11,17 @@ mkSoftware name (
     ...
   }:
   {
+    options = {
+      sleepCommand = lib.mkOption {
+        type = lib.types.str;
+        default = "hyprctl dispatch dpms off";
+      };
+      resumeCommand = lib.mkOption {
+        type = lib.types.str;
+        default = "hyprctl dispatch dpms on";
+      };
+    };
+
     nixos = {
       environment.systemPackages = [
         # Ensure the /tmp/hypr symlink exists to continue using older versions
