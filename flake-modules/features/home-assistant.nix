@@ -4,7 +4,7 @@ mkFeature name (
   {
     options.notifier.enable = lib.mkOption {
       type = lib.types.bool;
-      description = "Peroxide third-party bridge for ProtonMail";
+      description = "Daemon for receiving notifications from Home Assistant";
       default = true;
     };
 
