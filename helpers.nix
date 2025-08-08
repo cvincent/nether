@@ -475,7 +475,7 @@
                     {
                       package = lib.mkOption {
                         type = lib.types.package;
-                        default = software.package;
+                        default = package;
                       };
                     }
                   else
