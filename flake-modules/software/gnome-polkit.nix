@@ -10,7 +10,7 @@ mkSoftware name (
     package = pkgs.polkit_gnome;
 
     nixos = {
-      environment.systemPackages = gnome-polkit.package;
+      environment.systemPackages = [ gnome-polkit.package ];
 
       security.polkit = {
         enable = true;
