@@ -458,21 +458,24 @@
           {
             options = {
               nether.software."${softwareName}" =
-                (
-                  if software ? package then
+                let
+                  package =
+                    if software ? package && software.package != null then
+                      software.package
+                    else if pkgs ? "${softwareName}" && (!(software ? package) || software.package != null) then
+                      pkgs.${softwareName}
+                    else
+                      null;
+                in
+                {
+                  enable = lib.mkEnableOption package.meta.description or softwareName;
+                }
+                // (
+                  if package != null then
                     {
-                      enable = lib.mkEnableOption software.package.meta.description or softwareName;
                       package = lib.mkOption {
                         type = lib.types.package;
                         default = software.package;
-                      };
-                    }
-                  else if pkgs ? "${softwareName}" then
-                    {
-                      enable = lib.mkEnableOption pkgs."${softwareName}".meta.description or softwareName;
-                      package = lib.mkOption {
-                        type = lib.types.package;
-                        default = pkgs."${softwareName}";
                       };
                     }
                   else
