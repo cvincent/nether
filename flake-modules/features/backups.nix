@@ -214,23 +214,23 @@ mkFeature name (
         # TODO: On the backup server, once we're on NixOS there, do nightly
         # backups of each host or something similar that aren't written to, in
         # case something silly happens.
-        system.userActivationScripts.restore-and-backup = ''
-          ${pkgs.systemd}/bin/systemctl start restore-backups.service
-        '';
+        # system.userActivationScripts.restore-and-backup = ''
+        #   ${pkgs.systemd}/bin/systemctl start restore-backups.service
+        # '';
 
-        systemd.services.restore-backups = {
-          wantedBy = [ "remote-fs.target" ];
-          after = [ "remote-fs.target" ];
-          description = "Restore enabled backup files if not present";
-          unitConfig.RequiresMountsFor = backupMount;
-          onSuccess = [ "backup-all.service" ];
-          serviceConfig = {
-            Type = "oneshot";
-            ExecStart = "${restoreScript}/bin/restore-all";
-            TimeoutStopSec = "infinity";
-            KillSignal = "SIGCONT";
-          };
-        };
+        # systemd.services.restore-backups = {
+        #   wantedBy = [ "graphical.target" ];
+        #   after = [ "graphical.target" ];
+        #   description = "Restore enabled backup files if not present";
+        #   unitConfig.RequiresMountsFor = backupMount;
+        #   onSuccess = [ "backup-all.service" ];
+        #   serviceConfig = {
+        #     Type = "oneshot";
+        #     ExecStart = "${restoreScript}/bin/restore-all";
+        #     TimeoutStopSec = "infinity";
+        #     KillSignal = "SIGCONT";
+        #   };
+        # };
 
         environment.etc."backup/without-delete".text = lib.strings.concatLines backupWithoutDeletePaths;
         environment.etc."backup/with-delete".text = lib.strings.concatLines backupWithDeletePaths;
