@@ -5,14 +5,7 @@
   ...
 }:
 mkFeature name (
-  {
-    options,
-    graphicalEnv,
-    lib,
-    pkgs,
-    helpers,
-    ...
-  }:
+  { graphicalEnv, lib, ... }:
   let
     mkSoftwareChoiceArgs = {
       inherit name;
