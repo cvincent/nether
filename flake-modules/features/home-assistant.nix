@@ -2,6 +2,8 @@
 mkFeature name (
   { homeAssistant, lib, ... }:
   {
+    description = "Home Assistant integrations";
+
     options.notifier.enable = lib.mkOption {
       type = lib.types.bool;
       description = "Daemon for receiving notifications from Home Assistant";

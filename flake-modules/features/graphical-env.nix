@@ -110,6 +110,8 @@ mkFeature name (
     }
   )
   |> lib.recursiveUpdate {
+    description = "Enter the world of modern computing with a Graphical User Interface, or GUI";
+
     options.primaryDisplay = lib.mkOption {
       type = lib.types.str;
       default = "DP-1";

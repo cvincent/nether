@@ -2,6 +2,8 @@
 mkFeature name (
   { pkgs, ... }:
   {
+    description = "iOS interfacing";
+
     nixos = {
       environment.systemPackages = with pkgs; [
         libimobiledevice
