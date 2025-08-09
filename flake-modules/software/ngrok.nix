@@ -5,6 +5,7 @@
   inputs,
   ...
 }:
+# TODO: Port to mkSoftware, enable and set config through networking.nix
 {
   flake.nixosModules."${name}" = {
     options.nether.ngrok.enable = lib.mkEnableOption "Ngrok web publication tool";
