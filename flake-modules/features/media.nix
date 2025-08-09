@@ -37,7 +37,18 @@ mkFeature name (
       obs-studio.config.plugins = with pkgs.obs-studio-plugins; [ wlrobs ];
 
       playerctl = { };
-      yt-dlp = { };
+
+      yt-dlp.config = {
+        extraConfig = "--update";
+
+        settings = {
+          proxy = "https://192.168.1.114:8888";
+          embed-chapters = true;
+          embed-thumbnail = true;
+          embed-subs = true;
+          sub-langs = "all";
+        };
+      };
     };
 
     extra.lofiHipHop = {
