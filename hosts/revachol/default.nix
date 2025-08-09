@@ -119,7 +119,7 @@
     nix.enable = true;
     ngrok.enable = true;
     nvidia.enable = true;
-    printing2D.enable = true;
+    printing2d.enable = true;
     smartCalcTUI.enable = true;
     steam.enable = true;
 
