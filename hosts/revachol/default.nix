@@ -117,6 +117,7 @@
       };
     };
 
+    nix.enable = true;
     ngrok.enable = true;
     printing2D.enable = true;
     smartCalcTUI.enable = true;
