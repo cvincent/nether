@@ -7,7 +7,7 @@ mkFeature name (
     ...
   }:
   {
-    description = "Media viewing, broadcasting, and acquisition";
+    description = "Media viewing, listening, broadcasting, and acquisition";
 
     apps = {
       ffmpeg = { };
@@ -39,6 +39,7 @@ mkFeature name (
       obs-studio.config.plugins = with pkgs.obs-studio-plugins; [ wlrobs ];
 
       playerctld = { };
+      spotify = { };
 
       yt-dlp.config = {
         extraConfig = "--update";
