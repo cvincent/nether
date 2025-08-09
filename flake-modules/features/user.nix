@@ -1,7 +1,6 @@
 { name, mkFeature, ... }:
 mkFeature name (
   {
-    nether,
     user,
     lib,
     inputs,
