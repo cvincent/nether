@@ -38,7 +38,7 @@ mkFeature name (
 
       obs-studio.config.plugins = with pkgs.obs-studio-plugins; [ wlrobs ];
 
-      playerctl = { };
+      playerctld = { };
 
       yt-dlp.config = {
         extraConfig = "--update";
