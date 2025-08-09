@@ -25,7 +25,7 @@
     {
       programs.btop = {
         inherit (btop) enable package;
-        settings.color_theme = lib.mkForce osConfig.nether.theme;
+        settings.color_theme = lib.mkForce osConfig.nether.theme.theme;
         settings.theme_background = false;
       };
     };

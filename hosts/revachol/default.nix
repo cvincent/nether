@@ -124,6 +124,8 @@
     smartCalcTUI.enable = true;
     steam.enable = true;
 
+    theme.enable = true;
+
     tmux = {
       enable = true;
       # TODO: See if we can get rid of this override. We need to check if the
