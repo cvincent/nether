@@ -16,6 +16,8 @@
           pkgInputs.nixpkgs-unstable-latest.protontricks
         ];
 
+        # TODO: These should be pulled up into the gaming.nix feature when we
+        # define it; mkSoftware modules shouldn't be defining nether options
         nether.backups.paths = {
           "${config.nether.homeDirectory}/.local/share/Steam/config".deleteMissing = true;
           "${config.nether.homeDirectory}/.local/share/Steam/userdata".deleteMissing = true;
