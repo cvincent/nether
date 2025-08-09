@@ -107,7 +107,15 @@
     jiraCLI.enable = true;
     lf.enable = true;
     mail.enable = true;
-    miscApps.enable = true;
+
+    misc = {
+      enable = true;
+      apps = {
+        ryujinx.package = inputs'.nixpkgs-unstable-latest.legacyPackages.ryujinx;
+        shadps4.package = inputs'.nixpkgs-unstable-latest.legacyPackages.shadps4;
+      };
+    };
+
     ngrok.enable = true;
     printing2D.enable = true;
     smartCalcTUI.enable = true;

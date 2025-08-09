@@ -1,70 +1,33 @@
-{ name, ... }:
-{
-  lib,
-  moduleWithSystem,
-  inputs,
-  ...
-}:
-{
-  # TODO: Break this out into smaller modules
-  flake.nixosModules."${name}" =
-    { config, ... }:
-    {
-      options.nether.miscApps.enable = lib.mkEnableOption "Grab-bag of miscellaneous desktop applications which I need to sort into smaller modules";
+{ name, mkFeature, ... }:
+mkFeature name (
+  { nether, pkgInputs, ... }:
+  {
+    apps = {
+      bambu-studio = { };
 
-      config = lib.mkIf (config.nether.miscApps.enable && config.nether.flatpak.enable) {
-        nether.backups.paths = {
-          "${config.nether.homeDirectory}/.config/spotify".deleteMissing = true;
-          "${config.nether.homeDirectory}/.config/obsidian".deleteMissing = true;
-          "${config.nether.homeDirectory}/.config/FreeCAD".deleteMissing = true;
-          "${config.nether.homeDirectory}/.config/tigervnc".deleteMissing = true;
-        };
+      freecad.nixos.nether.backups.paths."${nether.homeDirectory}/.config/FreeCAD".deleteMissing = true;
+
+      libreoffice = { };
+
+      nautilus.hm.dconf.settings."org/gnome/desktop/privacy".remember-recent-files = false;
+
+      # TODO: There are HM options to declare your Obsidian vaults and settings
+      # which we should migrate to
+      obsidian = {
+        nixos.nether.backups.paths."${nether.homeDirectory}/.config/obsidian".deleteMissing = true;
+        hm.home.sessionVariables.OBSIDIAN_REST_API_KEY = pkgInputs.private-nethers.obsidianRestAPIKey;
       };
+
+      tigervnc.nixos.nether.backups.paths."${nether.homeDirectory}/.config/tigervnc".deleteMissing = true;
+
+      transmission_4.hm.xdg.mimeApps.defaultApplications."x-scheme-handler/magnet" =
+        "transmission_4.desktop";
+
+      # TODO: Move these to a new gaming.nix feature, along with Steam
+      ryujinx = { };
+      shadps4 = { };
+
+      zathura.hm.xdg.mimeApps.defaultApplications."application/pdf" = "org.pwmt.zathura-cb.desktop";
     };
-
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs, pkgInputs }:
-    { osConfig, ... }:
-    {
-      config = lib.mkIf osConfig.nether.miscApps.enable {
-        home.packages = with pkgs; [
-          showmethekey
-          libreoffice
-          nautilus
-          bambu-studio
-          spotify
-          transmission_4-gtk
-          pkgInputs.nixpkgs-unstable.ryujinx
-          pkgInputs.nixpkgs-unstable.shadps4
-          obsidian
-          (pkgs.symlinkJoin {
-            name = "FreeCAD";
-            paths = [ pkgs.freecad-wayland ];
-            buildInputs = [ pkgs.makeWrapper ];
-            postBuild = ''
-              wrapProgram $out/bin/FreeCAD \
-              --set __GLX_VENDOR_LIBRARY_NAME mesa \
-              --set __EGL_VENDOR_LIBRARY_FILENAMES ${pkgs.mesa}/share/glvnd/egl_vendor.d/50_mesa.json
-            '';
-            meta.mainProgram = "FreeCAD";
-          })
-        ];
-
-        programs.zathura.enable = true;
-
-        xdg.mimeApps = {
-          defaultApplications."application/pdf" = "org.pwmt.zathura-cb.desktop";
-          defaultApplications."x-scheme-handler/magnet" = "userapp-transmission-gtk-SLUX52.desktop";
-        };
-
-        dconf.settings = {
-          "org/gnome/desktop/privacy" = {
-            remember-recent-files = false;
-          };
-        };
-
-        home.sessionVariables.OBSIDIAN_REST_API_KEY = inputs.private-nethers.obsidianRestAPIKey;
-      };
-    }
-  );
-}
+  }
+)
