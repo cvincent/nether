@@ -39,6 +39,7 @@ mkFeature name (
       obs-studio.config.plugins = with pkgs.obs-studio-plugins; [ wlrobs ];
 
       playerctld = { };
+      showmethekey = { };
 
       spotify.nixos.nether.backups.paths."${nether.homeDirectory}/.config/spotify".deleteMissing = true;
 
