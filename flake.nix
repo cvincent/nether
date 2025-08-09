@@ -117,6 +117,7 @@
                   };
                 }
 
+                inputs.hyprland.nixosModules.default
                 inputs.stylix.nixosModules.stylix
                 nix-flatpak.nixosModules.nix-flatpak
 
