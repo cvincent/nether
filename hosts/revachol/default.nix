@@ -75,7 +75,7 @@
 
     media = {
       enable = true;
-      apps.ytDlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp;
+      apps.yt-dlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp;
     };
 
     homeSrcDirectory = true;
