@@ -1,6 +1,7 @@
 { name, ... }:
 { lib, inputs, ... }:
 {
+  # TODO: Add hm.mimeApps.enable = true here so other modules can just add to it
   flake.nixosModules."${name}" =
     { config, ... }:
     {
