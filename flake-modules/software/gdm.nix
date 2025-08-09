@@ -4,7 +4,7 @@ mkSoftware name (
   {
     # TODO: Probably move to just services.xserver.displayManager, when we move
     # to UWSM
-    services.xserver.displayManager = {
+    services.displayManager = {
       inherit (gdm) enable;
       gdm = { inherit (gdm) enable; };
     };
