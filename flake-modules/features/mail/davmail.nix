@@ -24,7 +24,7 @@
     };
   };
 
-  home.file."./.config/davmail/davmail.properties".text = ''
+  xdg.configFile."davmail/davmail.properties".text = ''
     # NOTE: May need to change this to O365Interactive or other and run davmail as
     # a GUI to get the initial oauth tokens
     davmail.mode=O365Modern

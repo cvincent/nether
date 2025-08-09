@@ -48,13 +48,14 @@
   services.vdirsyncer.enable = true;
   services.vdirsyncer.frequency = "*-*-* *:*:00"; # Every minute
 
-  home.file = {
-    "./.mbsyncrc".text = private-nethers.mail.mbsyncRC;
-    "./.config/aerc/aerc.conf".source = helpers.directSymlink ./aerc/aerc.conf;
-    "./.config/aerc/binds.conf".source = helpers.directSymlink ./aerc/binds.conf;
-    "./.config/aerc/stylesets".source = helpers.directSymlink ./aerc/stylesets;
+  home.file."./.mbsyncrc".text = private-nethers.mail.mbsyncRC;
 
-    "./.config/aerc/accounts.conf.dummy" = {
+  xdg.configFile = {
+    "aerc/aerc.conf".source = helpers.directSymlink ./aerc/aerc.conf;
+    "aerc/binds.conf".source = helpers.directSymlink ./aerc/binds.conf;
+    "aerc/stylesets".source = helpers.directSymlink ./aerc/stylesets;
+
+    "aerc/accounts.conf.dummy" = {
       text = private-nethers.mail.aercAccountsConf;
       onChange = ''
         rm -f ${config.home.homeDirectory}/.config/aerc/accounts.conf
@@ -63,9 +64,9 @@
       '';
     };
 
-    "./.config/khard/khard.conf".source = ./khard.conf;
-    "./.config/khal/config".source = ./khal.conf;
-    "./.config/vdirsyncer/config".text = private-nethers.mail.vdirsyncerConfig;
+    "khard/khard.conf".source = ./khard.conf;
+    "khal/config".source = ./khal.conf;
+    "vdirsyncer/config".text = private-nethers.mail.vdirsyncerConfig;
   };
 
   systemd.user.services =

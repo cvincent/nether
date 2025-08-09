@@ -178,8 +178,8 @@ mkSoftware name (
           // inputs.private-nethers.qutebrowser.searchEngines;
         };
 
-        home.file."./.config/qutebrowser/work.py".source = ./work.py;
-        home.file."./.config/qutebrowser/routes.json".text = inputs.private-nethers.qutebrowser.routes;
+        xdg.configFile."qutebrowser/work.py".source = ./work.py;
+        xdg.configFile."routes.json".text = inputs.private-nethers.qutebrowser.routes;
 
         home.packages = [
           pkgs.socat

@@ -22,7 +22,7 @@
           };
         };
 
-        home.file."./.config/lf/previewer-kitty".source = ./previewer-kitty;
+        xdg.configFile."lf/previewer-kitty".source = ./previewer-kitty;
       };
     }
   );

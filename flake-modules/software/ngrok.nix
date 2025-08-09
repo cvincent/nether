@@ -17,7 +17,7 @@
     {
       config = lib.mkIf osConfig.nether.ngrok.enable {
         home.packages = [ pkgs.ngrok ];
-        home.file."./.config/ngrok/ngrok.yml".text = inputs.private-nethers.ngrokYml;
+        xdg.configFile."ngrok/ngrok.yml".text = inputs.private-nethers.ngrokYml;
       };
     }
   );

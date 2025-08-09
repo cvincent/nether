@@ -19,9 +19,9 @@ mkSoftware name (
         };
       };
 
-      home.file."./.config/waybar/config".source = helpers.directSymlink ./configs/config;
+      xdg.configFile."waybar/config".source = helpers.directSymlink ./configs/config;
 
-      home.file."./.config/waybar/style.css".text =
+      xdg.configFile."waybar/style.css".text =
         with config.lib.stylix.colors.withHashtag;
         ''
           @define-color base00 ${base00}; @define-color base01 ${base01};

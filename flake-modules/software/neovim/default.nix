@@ -31,7 +31,7 @@ mkSoftware name (
     };
 
     hm = {
-      home.file."./.config/nvim".source = helpers.directSymlink ./configs;
+      xdg.configFile.nvim.source = helpers.directSymlink ./configs;
 
       home.packages = with pkgs; [
         # Treesitter wants a C compiler
