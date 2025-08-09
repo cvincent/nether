@@ -4,7 +4,11 @@
   imports = [ ./hardware.nix ];
 
   nether = {
-    username = "cvincent";
+    user = {
+      enable = true;
+      username = "cvincent";
+      homeSrcDirectory = true;
+    };
 
     nix = {
       enable = true;
@@ -79,8 +83,6 @@
       enable = true;
       apps.yt-dlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp;
     };
-
-    homeSrcDirectory = true;
 
     dev = {
       enable = true;
