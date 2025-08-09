@@ -1,7 +1,6 @@
 { name, ... }:
 { lib, inputs, ... }:
 {
-  # TODO: Add hm.mimeApps.enable = true here so other modules can just add to it
   flake.nixosModules."${name}" =
     { config, ... }:
     {
@@ -43,5 +42,6 @@
     {
       home.username = osConfig.nether.username;
       home.homeDirectory = osConfig.nether.homeDirectory;
+      xdg.mimeApps.enable = true;
     };
 }
