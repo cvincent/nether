@@ -171,6 +171,7 @@ mkSoftware name (
           };
 
           searchEngines = {
+            DEFAULT = "https://kagi.com/search?q={}";
             am = "https://www.amazon.com/s?k={}";
             yt = "https://www.youtube.com/results?search_query={}";
           }
