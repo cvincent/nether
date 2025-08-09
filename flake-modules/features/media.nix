@@ -10,6 +10,8 @@ mkFeature name (
     description = "Media viewing, broadcasting, and acquisition";
 
     apps = {
+      ffmpeg = { };
+
       mpv = {
         config = {
           config = {
