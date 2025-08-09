@@ -56,11 +56,6 @@ mkSoftware name (
           XDG_SESSION_DESKTOP = "Hyprland";
           QT_AUTO_SCREEN_SCALE_FACTOR = "1";
           QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-          # This is no longer a hard requirement in latest Hyprland or probably
-          # Wayland more generally (fix was pulled from a wlroots patch), but I tried
-          # without it and found the cursor quite stuttery still, including with
-          # `allow_dumb_copy` in the Hyprland config
-          WLR_NO_HARDWARE_CURSORS = "1";
           # This may help with laggy cursor? It's still laggy though
           OGL_DEDICATED_HW_STATE_PER_CONTEXT = "ENABLE_ROBUST";
           # Launch apps in native Wayland (not XWayland) by default
