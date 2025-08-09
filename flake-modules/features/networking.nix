@@ -23,6 +23,8 @@ mkFeature name (
       networking.hostName = networking.hostname;
       networking.networkmanager.enable = networking.networkmanager.enable;
       networking.firewall.enable = networking.firewall.enable;
+      services.openssh.enable = networking.openssh.enable;
+      services.tor.client.enable = networking.tor.enable;
 
       users.users."${nether.username}" = lib.mkIf nether.networking.networkmanager.enable {
         extraGroups = [ "networkmanager" ];
