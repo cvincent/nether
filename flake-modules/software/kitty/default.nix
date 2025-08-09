@@ -1,20 +1,49 @@
-{ name, ... }:
-{ lib, moduleWithSystem, ... }:
-{
-  flake.homeModules."${name}" = moduleWithSystem (
-    { pkgInputs }:
-    { osConfig, helpers, ... }:
-    {
-      config = lib.mkIf osConfig.nether.terminals.kitty.enable {
-        home.packages = [ pkgInputs.nixpkgs-kitty.kitty ];
+{ name, mkSoftware, ... }:
+mkSoftware name (
+  {
+    hmOptions,
+    nether,
+    kitty,
+    lib,
+    helpers,
+    ...
+  }:
+  {
+    options = lib.getAttrs [
+      "enableGitIntegration"
+      "environment"
+      "extraConfig"
+      "keybindings"
+      "settings"
+      "themeFile"
+    ] hmOptions.programs.kitty;
 
-        home.file."./.config/kitty/generated.conf".text = ''
-          shell ${osConfig.nether.shells.default.path}
-        '';
-
-        home.file."./.config/kitty/kitty.conf".source = helpers.directSymlink ./configs/kitty.conf;
-        home.file."./.config/kitty/nord.conf".source = helpers.directSymlink ./configs/nord.conf;
+    nixos.nether.software.kitty = {
+      settings = {
+        shell = nether.shells.default.path;
       };
-    }
-  );
-}
+
+      extraConfig = lib.mkAfter ''
+        include ./main.conf
+      '';
+    };
+
+    hm = {
+      programs.kitty = {
+        inherit (kitty)
+          enable
+          package
+          enableGitIntegration
+          environment
+          keybindings
+          settings
+          themeFile
+          ;
+
+        extraConfig = lib.mkAfter kitty.extraConfig;
+      };
+
+      xdg.configFile."kitty/main.conf".source = helpers.directSymlink ./main.conf;
+    };
+  }
+)

@@ -1,6 +1,1 @@
-applyArgs@{ mkModuleDir, ... }:
-moduleArgs:
-mkModuleDir ./. {
-  inherit applyArgs moduleArgs;
-  exclude = [ "kitty" ];
-}
+applyArgs@{ mkModuleDir, ... }: moduleArgs: mkModuleDir ./. { inherit applyArgs moduleArgs; }

@@ -28,7 +28,7 @@
     };
 
     terminals = {
-      kitty.enable = true;
+      enable = true;
       default.which = "kitty";
     };
 
