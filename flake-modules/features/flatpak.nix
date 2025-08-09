@@ -1,6 +1,6 @@
 { name, mkFeature, ... }:
 mkFeature name (
-  { lib, flatpak, ... }:
+  { lib, ... }:
   {
     description = "Flatpak application packaging and distribution";
 

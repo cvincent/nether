@@ -14,7 +14,6 @@ mkFeature name (
     nether,
     backups,
     lib,
-    helpers,
     pkgs,
     ...
   }:
