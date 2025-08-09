@@ -42,6 +42,8 @@ mkFeature name (
         extraConfig = "--update";
 
         settings = {
+          # TODO: Once we've got all our hosts in nether, obv we'll pull this
+          # from config
           proxy = "https://192.168.1.114:8888";
           embed-chapters = true;
           embed-thumbnail = true;
