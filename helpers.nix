@@ -149,7 +149,12 @@
             self',
             system,
           }:
-          nixosModuleArgs@{ options, config, ... }:
+          nixosModuleArgs@{
+            options,
+            config,
+            inputs,
+            ...
+          }:
           let
             thisConfig = config.nether."${featureName}";
 
@@ -318,6 +323,7 @@
             osOptions,
             options,
             helpers,
+            inputs,
             ...
           }:
           let
