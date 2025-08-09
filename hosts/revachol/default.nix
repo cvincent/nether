@@ -125,6 +125,7 @@
     steam.enable = true;
 
     theme.enable = true;
+    timeAndLocale.enable = true;
 
     tmux = {
       enable = true;
