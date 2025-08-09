@@ -82,8 +82,8 @@ mkSoftware name (
           hyprlandNixpkgs = pkgInputs.hyprland.inputs.nixpkgs.legacyPackages.${system};
         in
         {
-          package = hyprlandNixpkgs.mesa.drivers;
-          package32 = hyprlandNixpkgs.pkgsi686Linux.mesa.drivers;
+          package = hyprlandNixpkgs.mesa;
+          package32 = hyprlandNixpkgs.pkgsi686Linux.mesa;
         };
     };
 
