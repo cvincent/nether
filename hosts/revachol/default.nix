@@ -6,8 +6,10 @@
   nether = {
     username = "cvincent";
 
-    system.stateVersion = "25.05";
-    home.stateVersion = "25.05";
+    nix = {
+      enable = true;
+      stateVersion = "25.05";
+    };
 
     hardware = {
       chrysalis.enable = true;
@@ -116,7 +118,6 @@
       };
     };
 
-    nix.enable = true;
     ngrok.enable = true;
     nvidia.enable = true;
     printing2d.enable = true;
