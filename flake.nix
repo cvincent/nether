@@ -179,7 +179,7 @@
 
     browser-pkgs.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.48.1";
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.50.1";
 
     nil-ls = {
       url = "github:oxalica/nil?ref=main";
