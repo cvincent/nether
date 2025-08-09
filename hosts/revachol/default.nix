@@ -15,6 +15,7 @@
     };
 
     networking = {
+      enable = true;
       networkmanager.enable = true;
       openssh.enable = true;
       tor.enable = true;
