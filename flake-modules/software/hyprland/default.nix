@@ -72,7 +72,7 @@ mkSoftware name (
         # TODO: Consider whether these are general enough to move these to
         # nvidia.nix. See if they're recommended by Wayland compositors other
         # than Hyprland.
-        (lib.mkIf nether.hardware.nvidia.enable {
+        (lib.mkIf nether.nvidia.enable {
           # Remove if Firefox crashes:
           GBM_BACKEND = "nvidia-drm";
           # Remove if issues with Discord windows or Zoom screensharing:
