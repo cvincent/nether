@@ -50,8 +50,12 @@ in
         systemd.services.peroxide.serviceConfig.User = lib.mkForce config.nether.username;
         # TODO: We would probably prefer to run this as a user service. See also
         # notes on davmail.service.
-        systemd.services.peroxide.requires = [ "restore-backups.service" ];
-        systemd.services.peroxide.after = [ "restore-backups.service" ];
+        # TODO: We've switched these to graphical.target until we're ready to
+        # bring restore-backups.service back. The thinking was, we don't want to
+        # start syncing on a new install until we've first restored our mail
+        # directory, so we don't have to resync everything from scratch.
+        systemd.services.peroxide.requires = [ "graphical.target" ];
+        systemd.services.peroxide.after = [ "graphical.target" ];
         services.logrotate.settings.peroxide.su = lib.mkForce "${config.nether.username} users";
 
         nether.backups.paths = lib.mkIf config.nether.mail.peroxide.enable {
