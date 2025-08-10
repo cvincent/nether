@@ -180,6 +180,17 @@ mkSoftware name (
             ]
           );
         };
+
+        systemd.user.services.pyprland = {
+          Install.WantedBy = [ "wayland-session@Hyprland.target" ];
+          Unit.After = [ "wayland-session@Hyprland.target" ];
+          Service = {
+            Type = "exec";
+            ExecStart = "${pkgs.pyprland}/bin/pypr";
+            Restart = "on-failure";
+            Slice = "background-graphical.slice";
+          };
+        };
       };
   }
 )
