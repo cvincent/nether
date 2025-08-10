@@ -16,7 +16,7 @@ mkFeature name (
     };
 
     networkmanager = {
-      networkmanagerapplet = { };
+      networkmanagerapplet.config.service.enable = true;
     };
 
     nixos = {
