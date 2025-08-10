@@ -1,6 +1,10 @@
 { lib }:
 {
   # TODO: Extract all of mkFeature into its own module
+  # Thought on future refactor. I think we could maybe use evalModules and the
+  # options system. Each call of `options` or `nixos` or `hm` would get merged
+  # for us. We would just need to be able to wrap them with different mkIf
+  # statements.
   nixosModule =
     { options, ... }:
     {
