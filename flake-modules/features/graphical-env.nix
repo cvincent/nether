@@ -17,6 +17,11 @@ mkFeature name (
     mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "displayManager"; }) {
       gdm.package = null;
       lightdm.package = null;
+
+      nixos.services.xserver = {
+        enable = true;
+        displayManager.${graphicalEnv.displayManager.default.which}.enable = true;
+      };
     }
   )
   |> lib.recursiveUpdate (
