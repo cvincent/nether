@@ -140,8 +140,8 @@
     windowsVM.enable = true;
     xremap = true;
 
-    scripts.invoiceGenerator.enable = true;
-    scripts.waitForPort.enable = true;
+    scripts.invoice-generator.enable = true;
+    scripts.wait-for-port.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

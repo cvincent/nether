@@ -2,7 +2,7 @@
 { lib, moduleWithSystem, ... }:
 {
   flake.nixosModules."${name}" = {
-    options.nether.scripts.invoiceGenerator.enable =
+    options.nether.scripts.invoice-generator.enable =
       lib.mkEnableOption "Script for generating and sending invoices";
   };
 
@@ -11,7 +11,7 @@
     { osConfig, ... }:
     {
       # TODO: Get rid of this or wrap it properly with writeShellApplication
-      config = lib.mkIf osConfig.nether.scripts.invoiceGenerator.enable {
+      config = lib.mkIf osConfig.nether.scripts.invoice-generator.enable {
         home.packages = with pkgs; [
           texlive.combined.scheme-medium # For generating PDFs from LaTeX
           (pkgs.writeShellScriptBin "generate-invoice" (builtins.readFile ./generate-invoice.bash))

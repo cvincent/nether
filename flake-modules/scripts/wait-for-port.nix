@@ -2,7 +2,7 @@
 { lib, moduleWithSystem, ... }:
 {
   flake.nixosModules."${name}" = {
-    options.nether.scripts.waitForPort.enable =
+    options.nether.scripts.wait-for-port.enable =
       lib.mkEnableOption "Script to block until the given port is open";
   };
 
@@ -10,7 +10,7 @@
     { pkgs }:
     { osConfig, ... }:
     {
-      config = lib.mkIf osConfig.nether.scripts.waitForPort.enable {
+      config = lib.mkIf osConfig.nether.scripts.wait-for-port.enable {
         home.packages = [
           (pkgs.writeShellApplication {
             name = "wait-for-port";

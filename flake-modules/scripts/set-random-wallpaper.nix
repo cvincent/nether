@@ -24,14 +24,14 @@ mkSoftware name (
     hm = {
       home.packages = [ script ];
 
-      systemd.user.services.set-random-wallpaper = {
+      systemd.user.services.${name} = {
         Install.WantedBy = [ "graphical-session.target" ];
         Unit.After = [ "graphical-session.target" ];
         Service.ExecStart = "${script}/bin/set-random-wallpaper";
         Service.Type = "oneshot";
       };
 
-      systemd.user.timers.set-random-wallpaper = {
+      systemd.user.timers.${name} = {
         Install.WantedBy = [ "timers.target" ];
         Timer.OnCalendar = "*:00,20,40:00";
         Timer.AccuracySec = "1s";

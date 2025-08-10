@@ -112,7 +112,7 @@ mkFeature name (
   |> lib.recursiveUpdate (
     mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "wallpapers"; }) {
       swww = { };
-      setRandomWallpaper = {
+      set-random-wallpaper = {
         choice = false;
         enableDefault = true;
       };
