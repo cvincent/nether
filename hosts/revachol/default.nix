@@ -140,6 +140,8 @@
     windowsVM.enable = true;
     xremap = true;
 
+    # TODO: Convert scripts to mkSoftware; enable wait-for-port as part of the
+    # dev feature; invoice-generator can stay here
     scripts.invoice-generator.enable = true;
     scripts.wait-for-port.enable = true;
   };
