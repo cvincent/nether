@@ -3,7 +3,6 @@ mkSoftware name (
   {
     config,
     waybar,
-    lib,
     helpers,
     ...
   }:
@@ -11,12 +10,7 @@ mkSoftware name (
     hm = {
       programs.waybar = {
         inherit (waybar) enable package;
-        systemd = {
-          enable = true;
-          # TODO: We should move to installing Hyprland via options, at which
-          # point this probably won't be needed...
-          target = "default.target";
-        };
+        systemd.enable = true;
       };
 
       xdg.configFile."waybar/config".source = helpers.directSymlink ./configs/config;
@@ -35,12 +29,6 @@ mkSoftware name (
           @define-color base0E ${base0E}; @define-color base0F ${base0F};
         ''
         + (builtins.readFile ./configs/style.css);
-
-      systemd.user.services.waybar = {
-        Install.WantedBy = lib.mkForce [ "graphical.target" ];
-        Unit.After = lib.mkForce [ "graphical.target" ];
-        Unit.PartOf = lib.mkForce [ "graphical.target" ];
-      };
     };
   }
 )

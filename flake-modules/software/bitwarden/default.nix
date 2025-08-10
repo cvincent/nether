@@ -172,9 +172,9 @@
         home.file."./.local/share/bitwarden/password".text = inputs.private-nethers.bitwarden.password;
 
         systemd.user.services.sync-bitwarden = {
-          Unit.PartOf = [ "graphical.target" ];
-          Unit.After = [ "graphical.target" ];
-          Install.WantedBy = [ "graphical.target" ];
+          Unit.PartOf = [ "graphical-session.target" ];
+          Unit.After = [ "graphical-session.target" ];
+          Install.WantedBy = [ "graphical-session.target" ];
           Service.ExecStart = "${bitwarden-cache-vault}/bin/bitwarden-cache-vault";
           Service.Type = "oneshot";
           Service.Environment = "PATH=${path}";

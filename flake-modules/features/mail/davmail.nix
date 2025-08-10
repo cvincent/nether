@@ -16,7 +16,7 @@
     # Maybe we should require the token file to be present to start, and retry
     # indefinitely if it's not. This module doesn't really care _how_ the token
     # file gets there, just that it gets there eventually.
-    Install.WantedBy = [ "graphical.target" ];
+    Install.WantedBy = [ "graphical-session.target" ];
 
     Service = {
       ExecStart = "${pkgs.davmail}/bin/davmail ${config.home.homeDirectory}/.config/davmail/davmail.properties";

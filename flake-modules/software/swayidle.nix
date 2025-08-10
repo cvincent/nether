@@ -16,7 +16,6 @@ mkSoftware name (
         events
         timeouts
         ;
-      systemdTarget = "graphical.target";
     };
   }
 )

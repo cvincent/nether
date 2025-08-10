@@ -30,9 +30,9 @@
         home.packages = [ set-random-wallpaper ];
 
         systemd.user.services.set-random-wallpaper = {
-          Unit.PartOf = [ "graphical.target" ];
-          Unit.After = [ "graphical.target" ];
-          Install.WantedBy = [ "graphical.target" ];
+          Unit.PartOf = [ "graphical-session.target" ];
+          Unit.After = [ "graphical-session.target" ];
+          Install.WantedBy = [ "graphical-session.target" ];
           Service.ExecStart = "${set-random-wallpaper}/bin/set-random-wallpaper";
           Service.Type = "oneshot";
         };

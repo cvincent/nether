@@ -23,7 +23,7 @@ in
   ];
 
   systemd.user.services.maildir-sync-contacts = {
-    Install.WantedBy = [ "graphical.target" ];
+    Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart = "${sync-script}/bin/maildir-sync-contacts";
     Service.Type = "oneshot";
   };

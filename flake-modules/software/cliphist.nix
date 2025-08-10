@@ -8,7 +8,6 @@ mkSoftware name (
         "-max-items"
         "10000"
       ];
-      systemdTargets = [ "graphical.target" ];
     };
   }
 )

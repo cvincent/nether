@@ -16,14 +16,6 @@ mkSoftware name (
       services.avizo = {
         inherit (avizo) enable package settings;
       };
-
-      systemd.user.services.avizo = {
-        Install.WantedBy = lib.mkForce [ "graphical.target" ];
-        Unit = {
-          After = lib.mkForce [ "graphical.target" ];
-          PartOf = lib.mkForce [ "graphical.target" ];
-        };
-      };
     };
   }
 )

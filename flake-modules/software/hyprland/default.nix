@@ -44,6 +44,7 @@ mkSoftware name (
         inherit (hyprland) enable package;
         portalPackage =
           pkgInputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.xdg-desktop-portal-hyprland;
+        withUWSM = true;
       };
 
       environment.sessionVariables = lib.mkMerge [

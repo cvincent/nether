@@ -75,12 +75,6 @@ mkSoftware name (
           };
         };
       };
-
-      systemd.user.services.swaync = {
-        Install.WantedBy = lib.mkForce [ "graphical.target" ];
-        Unit.After = lib.mkForce [ "graphical.target" ];
-        Unit.PartOf = lib.mkForce [ "graphical.target" ];
-      };
     };
   }
 )

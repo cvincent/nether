@@ -60,9 +60,9 @@ in
   ];
 
   systemd.user.services.send-event-notifications = {
-    Unit.PartOf = [ "graphical.target" ];
-    Unit.After = [ "graphical.target" ];
-    Install.WantedBy = [ "graphical.target" ];
+    Unit.PartOf = [ "graphical-session.target" ];
+    Unit.After = [ "graphical-session.target" ];
+    Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart = "${watch-vdirsyncer-dir}/bin/watch-vdirsyncer-dir";
     Service.Type = "forking";
   };
@@ -74,7 +74,7 @@ in
   };
 
   systemd.user.services.clear-send-event-notifications-cache = {
-    Install.WantedBy = [ "graphical.target" ];
+    Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart = "rm ${config.home.homeDirectory}/.cache/event-notifications/*";
     Service.Type = "oneshot";
   };
