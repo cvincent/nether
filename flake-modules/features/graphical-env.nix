@@ -128,7 +128,7 @@ mkFeature name (
 
     clipboardSupport = {
       wl-clipboard = { };
-      wl-clip-persist = { };
+      wl-clip-persist.config.service.enable = true;
       cliphist = { };
     };
 
