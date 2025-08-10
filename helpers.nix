@@ -575,7 +575,10 @@
         "${softwareNamespace}" =
           softwareDefs
           |> filterSoftwareDefs
-          |> lib.mapAttrs (_: softwareDef: lib.recursiveUpdate softwareDef { inherit enableDefault; })
+          |> lib.mapAttrs (
+            _: softwareDef:
+            lib.recursiveUpdate softwareDef { enableDefault = softwareDef.enableDefault or enableDefault; }
+          )
           |> lib.recursiveUpdate {
             options = (
               {
