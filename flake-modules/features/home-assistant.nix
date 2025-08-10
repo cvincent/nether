@@ -1,6 +1,11 @@
 { name, mkFeature, ... }:
 mkFeature name (
-  { homeAssistant, lib, ... }:
+  {
+    nether,
+    homeAssistant,
+    lib,
+    ...
+  }:
   {
     description = "Home Assistant integrations";
 
@@ -10,6 +15,9 @@ mkFeature name (
       default = true;
     };
 
-    hm.services.ha-notifier.enable = homeAssistant.notifier.enable;
+    hm.services.ha-notifier = {
+      enable = homeAssistant.notifier.enable;
+      libnotify = nether.graphicalEnv.notifications.libnotify.package;
+    };
   }
 )

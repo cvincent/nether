@@ -341,11 +341,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1753631748,
-        "narHash": "sha256-TXfRkGkwjwUMqh3Bz+G5hAmr2GGzCOVW/V2De+87MFU=",
+        "lastModified": 1754841143,
+        "narHash": "sha256-KSfod774cuCoW4BcKJEppThJ6d9D/tjBv6A0kDgn3wQ=",
         "owner": "cvincent",
         "repo": "ha-notifier",
-        "rev": "bd635a3e961aec86668c9aee215afd4a7b9a89cc",
+        "rev": "1b493448c7f4efbb1d5332afe7bb9b625042d2ab",
         "type": "github"
       },
       "original": {
