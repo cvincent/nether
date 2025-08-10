@@ -1,6 +1,6 @@
 { name, mkSoftware, ... }:
 mkSoftware name (
-  { swww, lib, ... }:
+  { swww, ... }:
   {
     hm.services.swww = { inherit (swww) enable package; };
   }
