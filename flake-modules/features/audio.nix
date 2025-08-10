@@ -16,7 +16,12 @@ mkFeature name (
 
     apps = {
       alsa-utils = { };
-      blueman.defaultEnable = nether.graphicalEnv.enable && audio.bluetooth.enable;
+
+      blueman = {
+        defaultEnable = nether.graphicalEnv.enable && audio.bluetooth.enable;
+        config.trayService.enable = true;
+      };
+
       pavucontrol = { };
     };
 
