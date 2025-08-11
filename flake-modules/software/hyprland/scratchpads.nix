@@ -2,7 +2,7 @@
 [
   {
     class = "kitty-scratch";
-    command = "kitty --class kitty-scratch";
+    command = "uwsm app -- kitty --class kitty-scratch";
     binding = "SUPER, t";
   }
   {
@@ -13,28 +13,28 @@
   }
   {
     class = "ytsub-scratch";
-    command = "kitty --class ytsub-scratch ytsub";
+    command = "uwsm app -- kitty --class ytsub-scratch ytsub";
     binding = "SUPER, y";
   }
   {
     class = "obsidian-scratch";
-    command = "kitty --class obsidian-scratch nvim --listen /tmp/obsidian.pipe -S /backup/second-brain/Session.vim";
+    command = "uwsm app -- kitty --class obsidian-scratch nvim --listen /tmp/obsidian.pipe -S /backup/second-brain/Session.vim";
     binding = "SUPER, o";
     size = "90% 90%";
   }
   {
     class = "spotify-tui-scratch";
-    command = "kitty --class spotify-tui-scratch ncspot";
+    command = "uwsm app -- kitty --class spotify-tui-scratch ncspot";
     binding = "SUPER, m";
   }
   {
     class = "smartcalc-tui-scratch";
-    command = "kitty --class smartcalc-tui-scratch smartcalc-slow-start";
+    command = "uwsm app -- kitty --class smartcalc-tui-scratch smartcalc-slow-start";
     binding = "SUPER, c";
   }
   {
     class = "aerc-scratch";
-    command = "kitty --class aerc-scratch aerc";
+    command = "uwsm app -- kitty --class aerc-scratch aerc";
     binding = "SUPER, e";
   }
 ]

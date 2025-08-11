@@ -32,7 +32,10 @@ mkFeature name (
   |> lib.recursiveUpdate (
     mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "launcher"; }) {
       fuzzel.config.settings = lib.mkOptionDefault {
-        main.output = graphicalEnv.primaryDisplay;
+        main = {
+          launch-prefix = "${config.programs.uwsm.package}/bin/uwsm app -- ";
+          output = graphicalEnv.primaryDisplay;
+        };
       };
     }
   )

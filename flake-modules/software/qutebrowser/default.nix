@@ -198,7 +198,7 @@ mkSoftware name (
             config=~/.config/qutebrowser/$profile.py
             if [[ ! -f "$config" ]]; then config=~/.config/qutebrowser/config.py; fi
 
-            qutebrowser -C $config --basedir ~/.local/qutebrowsers/$profile --desktop-file-name qute-$profile -r default
+            uwsm app -- qutebrowser -C $config --basedir ~/.local/qutebrowsers/$profile --desktop-file-name qute-$profile -r default
           '')
 
           (pkgs.writeShellScriptBin "qutebrowser-open" ''
