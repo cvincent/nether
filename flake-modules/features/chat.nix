@@ -13,6 +13,7 @@ mkFeature name (
       {
         bluebubbles = withBackupPath ".local/share/app.bluebubbles.BlueBubbles";
         discord-canary = withBackupPath ".config/discordcanary";
+        discord = withBackupPath ".config/discord";
         fractal = withBackupPath ".local/share/fractal";
         signal-desktop = withBackupPath ".config/Signal";
         slack = withBackupPath ".config/Slack";
