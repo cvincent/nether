@@ -87,6 +87,8 @@
         default.which = "swaylock";
         swayidle.sleep.enable = false;
       };
+
+      extra.gnome-polkit.enable = false;
     };
 
     media = {
