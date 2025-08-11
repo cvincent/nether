@@ -5,7 +5,13 @@
   ...
 }:
 mkFeature name (
-  { graphicalEnv, lib, ... }:
+  {
+    config,
+    graphicalEnv,
+    lib,
+    inputs,
+    ...
+  }:
   let
     mkSoftwareChoiceArgs = {
       inherit name;
@@ -27,6 +33,12 @@ mkFeature name (
   |> lib.recursiveUpdate (
     mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "compositor"; }) {
       hyprland = { };
+      niri = { };
+
+      nixos = {
+        programs.uwsm.enable = true;
+        nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+      };
     }
   )
   |> lib.recursiveUpdate (

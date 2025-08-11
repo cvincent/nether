@@ -118,6 +118,7 @@
                 }
 
                 inputs.hyprland.nixosModules.default
+                inputs.niri.nixosModules.niri
                 inputs.stylix.nixosModules.stylix
                 nix-flatpak.nixosModules.nix-flatpak
 
@@ -180,6 +181,8 @@
     browser-pkgs.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.50.1";
+    niri.url = "github:sodiboo/niri-flake";
+    niri-with-blur.url = "github:YaLTeR/niri?ref=pull/1634/head";
 
     nil-ls = {
       url = "github:oxalica/nil?ref=main";

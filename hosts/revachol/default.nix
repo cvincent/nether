@@ -1,5 +1,10 @@
 { inputs', ... }:
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [ ./hardware.nix ];
 
@@ -61,6 +66,11 @@
       compositor = {
         default.which = "hyprland";
         hyprland.package = inputs'.hyprland.packages.hyprland;
+
+        niri = {
+          enable = true;
+          package = pkgs.niri-unstable.override { src = inputs.niri-with-blur; };
+        };
       };
 
       launcher.default.which = "fuzzel";
