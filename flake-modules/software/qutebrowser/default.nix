@@ -61,6 +61,7 @@ mkSoftware name (
               geolocation = false;
               notifications.enabled = false;
               register_protocol_handler = false;
+              local_content_can_access_remote_urls = true;
 
               javascript = {
                 clipboard = "access-paste";
