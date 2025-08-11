@@ -14,6 +14,7 @@ mkFeature name (
     nether,
     backups,
     lib,
+    helpers,
     pkgs,
     ...
   }:
@@ -218,8 +219,8 @@ mkFeature name (
         '';
 
         systemd.services.restore-backups = {
-          wantedBy = [ "graphical-session.target" ];
-          after = [ "graphical-session.target" ];
+          wantedBy = [ "remote-fs.target" ];
+          after = [ "remote-fs.target" ];
           description = "Restore enabled backup files if not present";
           unitConfig.RequiresMountsFor = backupMount;
           onSuccess = [ "backup-all.service" ];
