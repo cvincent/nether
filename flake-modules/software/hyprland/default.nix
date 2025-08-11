@@ -47,6 +47,10 @@ mkSoftware name (
         withUWSM = true;
       };
 
+      # TODO: Some of these are general to Wayland and should be extracted up.
+      # Those that really are Hyprland-specific should be set in hyprland.conf
+      # rather than here, as vars set here are set even if we're using a
+      # different compositor but Hyprland is still enabled.
       environment.sessionVariables = lib.mkMerge [
         {
           # Recommended env vars from the Hyprland wiki
