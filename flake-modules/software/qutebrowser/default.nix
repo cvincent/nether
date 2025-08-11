@@ -179,7 +179,7 @@ mkSoftware name (
         };
 
         xdg.configFile."qutebrowser/work.py".source = ./work.py;
-        xdg.configFile."routes.json".text = inputs.private-nethers.qutebrowser.routes;
+        xdg.configFile."qutebrowser/routes.json".text = inputs.private-nethers.qutebrowser.routes;
 
         home.packages = [
           pkgs.socat
