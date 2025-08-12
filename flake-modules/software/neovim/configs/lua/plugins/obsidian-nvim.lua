@@ -170,7 +170,7 @@ return {
             set_opfunc(function()
               if vim.api.nvim_get_option_value("modified", { buf = 0 }) then
                 vim.cmd("w")
-                vim.loop.sleep(750)
+                -- vim.loop.sleep(750)
               end
 
               local path = vim.fn.expand("%:.")
@@ -180,7 +180,7 @@ return {
                   path .. '", ' .. line .. ', "' .. mark .. '")'
 
               obs_eval(eval)
-              vim.loop.sleep(500)
+              vim.loop.sleep(100)
               vim.cmd("checktime")
             end)
 
