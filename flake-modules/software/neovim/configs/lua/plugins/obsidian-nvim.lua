@@ -13,7 +13,7 @@ return {
     workspaces = {
       {
         name = "second-brain",
-        path = "/backup/second-brain",
+        path = "/home/cvincent/second-brain",
       },
     },
 
