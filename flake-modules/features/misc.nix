@@ -1,23 +1,13 @@
 { name, mkFeature, ... }:
 mkFeature name (
-  { nether, pkgInputs, ... }:
+  { nether, ... }:
   {
     apps = {
       bambu-studio = { };
 
       freecad.nixos.nether.backups.paths."${nether.homeDirectory}/.config/FreeCAD".deleteMissing = true;
-
       libreoffice = { };
-
       nautilus.hm.dconf.settings."org/gnome/desktop/privacy".remember-recent-files = false;
-
-      # TODO: There are HM options to declare your Obsidian vaults and settings
-      # which we should migrate to
-      obsidian = {
-        nixos.nether.backups.paths."${nether.homeDirectory}/.config/obsidian".deleteMissing = true;
-        hm.home.sessionVariables.OBSIDIAN_REST_API_KEY = pkgInputs.private-nethers.obsidianRestAPIKey;
-      };
-
       tigervnc.nixos.nether.backups.paths."${nether.homeDirectory}/.config/tigervnc".deleteMissing = true;
 
       transmission_4.hm.xdg.mimeApps.defaultApplications."x-scheme-handler/magnet" =

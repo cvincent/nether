@@ -18,7 +18,7 @@
   }
   {
     class = "obsidian-scratch";
-    command = "uwsm app -- kitty --class obsidian-scratch nvim --listen /tmp/obsidian.pipe -S /backup/second-brain/Session.vim";
+    command = "uwsm app -- kitty --class obsidian-scratch nvim --listen /tmp/obsidian.pipe -S /home/cvincent/second-brain/Session.vim";
     binding = "SUPER, o";
     size = "90% 90%";
   }

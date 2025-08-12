@@ -133,6 +133,7 @@
     };
 
     ngrok.enable = true;
+    notes.enable = true;
     nvidia.enable = true;
     printing2d.enable = true;
     smartCalcTUI.enable = true;
