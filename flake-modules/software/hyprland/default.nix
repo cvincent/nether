@@ -191,6 +191,7 @@ mkSoftware name (
           Service = {
             Type = "exec";
             ExecStart = "${pkgs.pyprland}/bin/pypr";
+            KillSignal = "SIGINT";
             Restart = "on-failure";
             Slice = "background-graphical.slice";
           };
