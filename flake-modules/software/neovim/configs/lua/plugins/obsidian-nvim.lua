@@ -117,7 +117,7 @@ return {
         vim.keymap.set("n", "<leader>ft", ":ObsidianTags<cr>")
 
         -- Set up custom integrations leveraging the Local REST API and Advanced URIs plugins
-        local obs_root = "/backup/second-brain"
+        local obs_root = "/home/cvincent/second-brain"
         local obs_token = "7570f5f498c2e466a338d90afe43337a4c2299bfc8fc92e271aed013159ef61f"
         -- local obs_token = vim.env.OBSIDIAN_REST_API_KEY
 
