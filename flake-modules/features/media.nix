@@ -44,8 +44,6 @@ mkFeature name (
       spotify.nixos.nether.backups.paths."${nether.homeDirectory}/.config/spotify".deleteMissing = true;
 
       yt-dlp.config = {
-        extraConfig = "--update";
-
         settings = {
           # TODO: Once we've got all our hosts in nether, obv we'll pull this
           # from config

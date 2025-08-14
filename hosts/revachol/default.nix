@@ -93,7 +93,14 @@
 
     media = {
       enable = true;
-      apps.yt-dlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp;
+      apps.yt-dlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp.overrideAttrs {
+        src = pkgs.fetchFromGitHub {
+          owner = "yt-dlp";
+          repo = "yt-dlp";
+          rev = "2025.08.11";
+          hash = "sha256-j7x844MPPFdXYTJiiMnru3CE79A/6JdfJDdh8it9KsU=";
+        };
+      };
     };
 
     dev = {
