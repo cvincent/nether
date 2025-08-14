@@ -106,6 +106,7 @@
     dev = {
       enable = true;
       beam.enable = true;
+      c.enable = true;
       postgresql.enable = true;
       ruby.enable = true;
     };
