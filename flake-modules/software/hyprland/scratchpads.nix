@@ -12,20 +12,10 @@
     binding = "SUPER SHIFT, M";
   }
   {
-    class = "ytsub-scratch";
-    command = "uwsm app -- kitty --class ytsub-scratch ytsub";
-    binding = "SUPER, y";
-  }
-  {
     class = "obsidian-scratch";
     command = "uwsm app -- kitty --class obsidian-scratch nvim --listen /tmp/obsidian.pipe -S /home/cvincent/second-brain/Session.vim";
     binding = "SUPER, o";
     size = "90% 90%";
-  }
-  {
-    class = "spotify-tui-scratch";
-    command = "uwsm app -- kitty --class spotify-tui-scratch ncspot";
-    binding = "SUPER, m";
   }
   {
     class = "smartcalc-tui-scratch";
