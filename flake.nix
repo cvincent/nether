@@ -162,9 +162,10 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     nixpkgs.url = "nixpkgs/nixos-25.05";
-    nixpkgs-latest.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs-unstable-latest.url = "nixpkgs/nixos-unstable";
+
+    nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
+    nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -178,7 +179,6 @@
     # or osConfig
     private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
 
-    browser-pkgs.url = "nixpkgs/nixos-unstable";
     ha-notifier.url = "github:cvincent/ha-notifier";
     hyprland.url = "github:hyprwm/Hyprland?ref=v0.50.1";
     niri.url = "github:sodiboo/niri-flake";
@@ -189,11 +189,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs-kitty.url = "nixpkgs/nixos-unstable";
-    nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
-
-    nixpkgs-tmux.url = "nixpkgs/nixos-unstable";
-    nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
     xremap-flake.url = "github:xremap/nix-flake";
 
     # Package dropped from later NixOS

@@ -41,8 +41,7 @@
     {
       config = {
         programs.tmux = {
-          inherit (osConfig.nether.tmux) enable;
-          package = pkgInputs.nixpkgs-tmux.tmux;
+          inherit (osConfig.nether.tmux) enable package;
 
           tmuxinator = { inherit (osConfig.nether.tmux.tmuxinator) enable; };
           plugins = [ tmux-safekill ];

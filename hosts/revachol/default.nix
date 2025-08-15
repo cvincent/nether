@@ -47,13 +47,12 @@
       # TODO: We should be able to juse use inputs' throughout
       neovim.package = inputs'.nixpkgs-neovim.legacyPackages.neovim;
 
-      formatters.nixfmt-rfc-style.package =
-        inputs'.nixpkgs-unstable-latest.legacyPackages.nixfmt-rfc-style;
+      formatters.nixfmt-rfc-style.package = inputs'.nixpkgs-unstable.legacyPackages.nixfmt-rfc-style;
 
       lsps = {
         nil.package = inputs'.nil-ls.packages.nil;
         # NOTE: Shouldn't we be able to use inputs' at least for all nixpkgs?
-        nixd.package = inputs'.nixpkgs-unstable-latest.legacyPackages.nixd;
+        nixd.package = inputs'.nixpkgs-unstable.legacyPackages.nixd;
       };
     };
 
@@ -68,7 +67,7 @@
         hyprland.package = inputs'.hyprland.packages.hyprland;
 
         niri = {
-          enable = true;
+          enable = false;
           package = pkgs.niri-unstable.override { src = inputs.niri-with-blur; };
         };
       };
@@ -78,7 +77,7 @@
 
       notifications = {
         default.which = "swaync";
-        swaync.package = inputs'.nixpkgs-unstable-latest.legacyPackages.swaynotificationcenter;
+        swaync.package = inputs'.nixpkgs-unstable.legacyPackages.swaynotificationcenter;
       };
 
       wallpapers.default.which = "swww";
@@ -135,8 +134,8 @@
     misc = {
       enable = true;
       apps = {
-        ryujinx.package = inputs'.nixpkgs-unstable-latest.legacyPackages.ryujinx;
-        shadps4.package = inputs'.nixpkgs-unstable-latest.legacyPackages.shadps4;
+        ryubing.package = inputs'.nixpkgs-unstable.legacyPackages.ryubing;
+        shadps4.package = inputs'.nixpkgs-unstable.legacyPackages.shadps4;
       };
     };
 
@@ -152,10 +151,7 @@
 
     tmux = {
       enable = true;
-      # TODO: See if we can get rid of this override. We need to check if the
-      # currently packaged version has the scroll top/middle/bottom working
-      # still.
-      package = inputs'.nixpkgs-tmux.legacyPackages.tmux;
+      package = inputs'.nixpkgs-unstable.legacyPackages.tmux;
     };
 
     windowsVM.enable = true;
@@ -167,7 +163,7 @@
     scripts.wait-for-port.enable = true;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_15;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 

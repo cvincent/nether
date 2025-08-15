@@ -14,7 +14,7 @@ mkFeature name (
         "transmission_4.desktop";
 
       # TODO: Move these to a new gaming.nix feature, along with Steam
-      ryujinx = { };
+      ryubing = { };
       shadps4 = { };
 
       zathura.hm.xdg.mimeApps.defaultApplications."application/pdf" = "org.pwmt.zathura-cb.desktop";

@@ -37,7 +37,7 @@ mkFeature name (
 
       nixos = {
         programs.uwsm.enable = true;
-        nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+        # nixpkgs.overlays = [ inputs.niri.overlays.niri ];
       };
     }
   )

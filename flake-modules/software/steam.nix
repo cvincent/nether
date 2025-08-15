@@ -12,8 +12,8 @@
       config = lib.mkIf config.nether.steam.enable {
         programs.steam.enable = true;
         environment.systemPackages = [
-          pkgInputs.nixpkgs-unstable-latest.protonup-qt
-          pkgInputs.nixpkgs-unstable-latest.protontricks
+          pkgInputs.nixpkgs-unstable.protonup-qt
+          pkgInputs.nixpkgs-unstable.protontricks
         ];
 
         # TODO: These should be pulled up into the gaming.nix feature when we
