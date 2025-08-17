@@ -16,6 +16,8 @@ return {
           documentation = { winblend = 15 }
         },
 
+        preselect = cmp.PreselectMode.None,
+
         formatting = {
           fields = { "abbr", "kind", "menu" },
           expandable_indicator = true,
