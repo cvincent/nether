@@ -32,6 +32,7 @@ vim.keymap.set("n", "`", "'")
 
 -- Quick hashrocket, assign, and pipe operators
 vim.keymap.set("i", "<c-l>", "<space>=><space>")
+vim.keymap.set("i", "<a-l>", "<space>-><space>")
 vim.keymap.set("i", "<c-e>", "<space>=<space>")
 vim.keymap.set("i", "<c-i>", "|><space>")
 
