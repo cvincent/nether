@@ -75,6 +75,8 @@ return {
       }
     })
 
+    lspconfig.rust_analyzer.setup({})
+
     lspconfig.standardrb.setup({})
 
     lspconfig.gleam.setup({})
