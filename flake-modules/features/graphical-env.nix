@@ -9,7 +9,6 @@ mkFeature name (
     config,
     graphicalEnv,
     lib,
-    inputs,
     ...
   }:
   let
