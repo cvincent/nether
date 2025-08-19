@@ -70,7 +70,7 @@ mkSoftware name (
 
             editor.command = [
               "kitty"
-              "--class=tmp-edit"
+              "--class=kitty-tmp-edit"
               "nvim"
               "{}"
             ];
