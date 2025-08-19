@@ -53,8 +53,12 @@
           reverseSplit = true;
           mouse = true;
           historyLimit = 50000;
+          baseIndex = 1;
 
           extraConfig = ''
+            # Reload config
+            bind r source-file "~/.config/tmux/tmux.conf"
+
             # Scroll relative to cursor like Vim zz, zt, and zb
             bind-key -T copy-mode-vi z switch-client -T my-scroll-keys
             bind-key -T my-scroll-keys z send -X scroll-middle
@@ -71,19 +75,24 @@
             bind -n S-Left  previous-window
             bind -n S-Right next-window
 
-            # Ctrl arrow to move windows
-            # bind -n C-Left  swap-window -d -t -1
-            # bind -n C-Right swap-window -d -t +1
+            # Alt arrow to move windows
+            bind -n M-Left  swap-window -d -t -1
+            bind -n M-Right swap-window -d -t +1
 
-            # Navigate panes like Vim
-            # We can't just C-h because that's ctrl-backspace...
-            bind-key h select-pane -L
-            bind-key l select-pane -R
-            bind-key j select-pane -D
-            bind-key k select-pane -U
+            # Alt-hjkl panes like Vim
+            bind -n M-h select-pane -L
+            bind -n M-j select-pane -D
+            bind -n M-k select-pane -U
+            bind -n M-l select-pane -R
 
-            # Tabs at the top
+            set -g status-left "#S "
+            set -g status-right ""
+
+            # Status / window tabs at the top
             set -g status-position top
+
+            # Renumber windows when created/killed
+            set -g renumber-windows on
           '';
         };
       };
