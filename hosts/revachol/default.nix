@@ -134,6 +134,7 @@
     misc = {
       enable = true;
       apps = {
+        bambu-studio.package = inputs'.nixpkgs-bambu-studio.legacyPackages.bambu-studio;
         ryubing.package = inputs'.nixpkgs-unstable.legacyPackages.ryubing;
         shadps4.package = inputs'.nixpkgs-unstable.legacyPackages.shadps4;
       };
