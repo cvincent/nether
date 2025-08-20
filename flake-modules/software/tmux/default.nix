@@ -24,7 +24,7 @@
   );
 
   flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs, pkgInputs }:
+    { pkgs }:
     { osConfig, ... }:
     let
       tmux-safekill = pkgs.tmuxPlugins.mkTmuxPlugin {
