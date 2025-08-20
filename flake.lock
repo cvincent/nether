@@ -395,11 +395,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1755455786,
-        "narHash": "sha256-RuzAax78rfsfpswwdworh7fq2gWpPsoEyb01w5sOUW4=",
+        "lastModified": 1755701771,
+        "narHash": "sha256-ImPnpgXBheACuD1KcQBtWPWB5hkPGnBmWtQzA8/iED0=",
         "owner": "cvincent",
         "repo": "ha-notifier",
-        "rev": "556e2b81766632f5ca64d62c776d3eae996e8e04",
+        "rev": "b6369a83b3b7faedd4d6f4f8c510c29c12f77e9d",
         "type": "github"
       },
       "original": {
