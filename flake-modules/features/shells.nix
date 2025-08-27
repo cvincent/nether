@@ -43,6 +43,7 @@ mkFeature name (
       fx = { };
       fzf = { };
       gh = { };
+      jless = { };
       jq = { };
       magic-wormhole = { };
       ripgrep = { };
