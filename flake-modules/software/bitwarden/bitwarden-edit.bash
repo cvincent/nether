@@ -12,7 +12,7 @@ tmp=$(mktemp -q /tmp/item.XXXXXX.json || exit 1)
 trap 'rm -f -- "$tmp"' EXIT
 
 echo "$item" > "$tmp"
-kitty --class=tmp-edit nvim "$tmp"
+kitty --class=kitty-tmp-edit nvim "$tmp"
 changed=$(cat "$tmp")
 
 if [[ $(echo "$changed" | jq empty > /dev/null 2>&1) -eq 0 ]]; then

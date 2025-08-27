@@ -21,7 +21,7 @@ case $type in
 esac
 
 echo "$json" > "$tmp"
-kitty --class=tmp-edit nvim "$tmp" +"/\[$open_search\]" +'norm W'
+kitty --class=kitty-tmp-edit nvim "$tmp" +"/\[$open_search\]" +'norm W'
 json=$(cat "$tmp")
 
 if [[ $(echo "$json" | jq empty > /dev/null 2>&1) -eq 0 ]]; then
