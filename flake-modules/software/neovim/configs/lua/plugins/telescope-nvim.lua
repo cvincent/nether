@@ -18,10 +18,10 @@ return {
         {
           mappings = {
             i = {
-              ["<c-bs>"] = { "<c-s-w>", type = "command" },
-              ["<esc>"] = require('telescope.actions').close,
-              ["<c-down>"] = require('telescope.actions').cycle_history_next,
-              ["<c-up>"] = require('telescope.actions').cycle_history_prev,
+              ["<m-bs>"] = { "<c-s-w>", type = "command" },
+              ["<esc>"] = "close",
+              ["<c-down>"] = "cycle_history_next",
+              ["<c-up>"] = "cycle_history_prev",
             }
           },
           winblend = 15,
