@@ -36,6 +36,7 @@
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
   "render-markdown.nvim": { "branch": "main", "commit": "78ffe3b0500bbc7e37fabde723d96661538e8b32" },
   "scratch.nvim": { "branch": "main", "commit": "6230634669d29bf05ab4e85b3c7df8fd8402dcb4" },
+  "splitjoin.vim": { "branch": "main", "commit": "b55d5ba3e2b2649317925c21a68f90c8f28ec3e9" },
   "tailiscope.nvim": { "branch": "fix/support-case-sensitive-filesystems", "commit": "8f5af94a23935a3275e5ed69a7c2d2cf486832ec" },
   "telescope-symbols.nvim": { "branch": "master", "commit": "a6d0127a53d39b9fc2af75bd169d288166118aec" },
   "telescope-zf-native.nvim": { "branch": "master", "commit": "5721be27df11a19b9cd95e6a4887f16f26599802" },
