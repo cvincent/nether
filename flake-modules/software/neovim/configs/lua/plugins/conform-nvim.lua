@@ -30,7 +30,7 @@ return {
         end
 
         if vim.b.autoformat then
-          require("conform").format({ bufnr = args.buf, lsp_format = "fallback" })
+          require("conform").format({ bufnr = args.buf, lsp_format = "fallback", timeout_ms = 10000 })
         end
       end,
     })
