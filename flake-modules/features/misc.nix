@@ -11,7 +11,7 @@ mkFeature name (
       tigervnc.nixos.nether.backups.paths."${nether.homeDirectory}/.config/tigervnc".deleteMissing = true;
 
       transmission_4-gtk.hm.xdg.mimeApps.defaultApplications."x-scheme-handler/magnet" =
-        "transmission_4.desktop";
+        "userapp-transmission-gtk-VU41B3.desktop";
 
       # TODO: Move these to a new gaming.nix feature, along with Steam
       ryubing = { };
