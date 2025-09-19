@@ -24,18 +24,19 @@ case $num_results in
 
   *)
     >&2 echo 'Multiple results...'
-    choice=$(echo "$result" | jq -r '.[].name' | fuzzel --prompt='Vault ❯ ' -d | tr -cd '[:alnum:][:punct:]')
+    choice=$(echo "$result" | jq -r '.[] | [.name, " (", .login.username, ")"] | join("")' | fuzzel --prompt='Vault ❯ ' -d -w60 --index)
     if [[ -n "$choice" ]]; then
       >&2 echo "Chose $choice!"
-      item=$(echo "$result" | jq -a --arg choice '.[]|select(.name=="$choice")')
+      item=$(echo "$result" | jq -a --argjson choice "$choice" '.[$choice]')
+      echo "$item"
     fi
     ;;
 esac
 
 if [[ -n "$item" ]]; then
-  username=$(echo "$item" | jq -r '.[0].login.username')
-  password=$(echo "$item" | jq -r '.[0].login.password')
-  totp=$(echo "$item" | jq -r '.[0].login.totp')
+  username=$(echo "$item" | jq -r '.login.username')
+  password=$(echo "$item" | jq -r '.login.password')
+  totp=$(echo "$item" | jq -r '.login.totp')
 
   >&2 echo "Username: $username"
   >&2 echo "Password: $password"
