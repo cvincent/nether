@@ -8,6 +8,8 @@ mkFeature name (
       freecad.nixos.nether.backups.paths."${nether.homeDirectory}/.config/FreeCAD".deleteMissing = true;
       libreoffice = { };
       nautilus.hm.dconf.settings."org/gnome/desktop/privacy".remember-recent-files = false;
+      # TODO: Belongs in a new gaming.nix feature, this is Minecraft btw
+      prismlauncher = { };
       tigervnc.nixos.nether.backups.paths."${nether.homeDirectory}/.config/tigervnc".deleteMissing = true;
 
       transmission_4-gtk.hm.xdg.mimeApps.defaultApplications."x-scheme-handler/magnet" =
