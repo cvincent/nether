@@ -11,17 +11,22 @@ query=${1:-}
 
 if [[ $query == '--previous' ]]; then
   choice=$(cat $last_item)
+  item=$(jq -a --arg choice "$choice" '.[] | select(.id == $choice)' $vault_cache)
 elif [[ -n "$query" ]]; then
   choice=$query
+  item=$(jq -a --arg choice "$choice" '.[] | select(.name == $choice)' $vault_cache)
 else
-  choice=$(jq -r '.[].name' $vault_cache | fuzzel --prompt='Vault ❯ ' -d)
+  choice=$(jq -r '.[] | [.name, " (", .login.username, ")"] | join("")' $vault_cache | fuzzel --prompt='Vault ❯ ' -d --index -w60)
+  item=$(jq -a --argjson choice "$choice" '.[$choice]' $vault_cache)
 fi
 
 if [[ -z "$choice" ]]; then exit 0; fi
 
-echo "$choice" > $last_item
-item=$(jq -a --arg choice "$choice" '.[] | select(.name == $choice)' $vault_cache)
 >&2 echo "$item"
+last_item_id=$(echo "$item" | jq -r '.id')
+>&2 echo "$last_item_id"
+echo "$last_item_id" > $last_item
+placeholder=$(echo "$item" | jq -r '[.name, " (", .login.username, ")"] | join("")')
 
 declare -A fields
 choices=''
@@ -56,7 +61,7 @@ if [[ ${fields['Name on Card']} != 'null' ]]; then choices+=$'Name on Card\n'; f
 choices+=$'Edit\n'
 choices+=$'Delete\n'
 
-field=$(echo "$choices" | fuzzel --placeholder="$choice" --prompt='❯ ' -d)
+field=$(echo "$choices" | fuzzel --placeholder="$placeholder" --prompt='❯ ' -d)
 
 if [[ -z "$field" ]]; then exit 0; fi
 
