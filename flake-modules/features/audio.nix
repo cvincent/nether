@@ -34,7 +34,15 @@ mkFeature name (
       };
 
       security.rtkit.enable = audio.rtkit.enable;
-      hardware.bluetooth.enable = audio.bluetooth.enable;
+
+      hardware.bluetooth = {
+        enable = audio.bluetooth.enable;
+
+        # Attempt to connect using A2DP
+        settings.General = {
+          Enable = "Source,Sink,Media,Socket";
+        };
+      };
     };
   }
 )
