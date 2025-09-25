@@ -1,4 +1,4 @@
-{ inputs', ... }:
+{ inputs', pkgInputs, ... }:
 {
   config,
   pkgs,
@@ -100,6 +100,8 @@
           hash = "sha256-pqdR1JfiqvBs5vSKF7bBBKqq0DRAi3kXCN1zDvaW3nQ=";
         };
       };
+
+      apps.spotify.package = pkgInputs.nixpkgs-spotify.spotify;
     };
 
     dev = {

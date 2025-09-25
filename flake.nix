@@ -196,5 +196,7 @@
     nixpkgs-peroxide.url = "nixpkgs/nixos-24.11";
     # Latest version crashes due to GPU shit
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-24.11";
+    # Needed to update, wasn't ready to deal with our kernel EOL
+    nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
   };
 }

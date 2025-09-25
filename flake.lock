@@ -1234,6 +1234,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-spotify": {
+      "locked": {
+        "lastModified": 1758690382,
+        "narHash": "sha256-NY3kSorgqE5LMm1LqNwGne3ZLMF2/ILgLpFr1fS4X3o=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e643668fd71b949c53f8626614b21ff71a07379d",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1754937576,
@@ -1562,6 +1577,7 @@
         "nixpkgs-neovim": "nixpkgs-neovim",
         "nixpkgs-peroxide": "nixpkgs-peroxide",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
+        "nixpkgs-spotify": "nixpkgs-spotify",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-yt-dlp": "nixpkgs-yt-dlp",
         "private-nethers": "private-nethers",
