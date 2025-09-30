@@ -4,6 +4,7 @@ mkFeature name (
     nether,
     networking,
     lib,
+    inputs,
     ...
   }:
   {
@@ -20,11 +21,17 @@ mkFeature name (
     };
 
     nixos = {
-      networking.hostName = networking.hostname;
-      networking.networkmanager.enable = networking.networkmanager.enable;
-      networking.firewall.enable = networking.firewall.enable;
-      services.openssh.enable = networking.openssh.enable;
-      services.tor.client.enable = networking.tor.enable;
+      networking = {
+        hostName = networking.hostname;
+        networkmanager.enable = networking.networkmanager.enable;
+        firewall.enable = networking.firewall.enable;
+        hosts = inputs.private-nethers.hosts;
+      };
+
+      services = {
+        openssh.enable = networking.openssh.enable;
+        tor.client.enable = networking.tor.enable;
+      };
 
       users.users."${nether.username}" = lib.mkIf nether.networking.networkmanager.enable {
         extraGroups = [ "networkmanager" ];
