@@ -18,11 +18,15 @@ mkFeature name (
       nix = {
         nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
-        settings.experimental-features = [
-          "nix-command"
-          "flakes"
-          "pipe-operators"
-        ];
+        settings = {
+          experimental-features = [
+            "nix-command"
+            "flakes"
+            "pipe-operators"
+          ];
+
+          trusted-users = [ nether.username ];
+        };
 
         optimise = {
           automatic = true;
