@@ -2,17 +2,47 @@ return {
   "stevearc/conform.nvim",
   opts = {
     formatters_by_ft = {
+      javascript = { "prettier" },
+      typescript = { "prettier" },
+
+      nix = { "nixfmt" },
+
+      ruby = { "rubocop" },
+      eruby = { "erb_lint", "htmlbeautifier" },
+
       sql = {
         "pg_format",
         prepend_args = { "--no-grouping" }
       },
-      javascript = { "prettier" },
-      typescript = { "prettier" },
-      ruby = { "standardrb" },
-      eruby = { "erb_format" },
-      nix = { "nixfmt" }
+    },
+
+    formatters = {
+      erb_lint = {
+        command = "erb_lint",
+        stdin = false,
+        args = { "--autocorrect", "$FILENAME" },
+        async = true,
+      },
+
+      htmlbeautifier = { prepend_args = { "-b1" } },
+
+      rubocop = {
+        args = {
+          "--server",
+          "-a",
+          "-f",
+          "quiet",
+          "--force-exclusion",
+          "--except",
+          "Lint/UselessAssignment",
+          "--stderr",
+          "--stdin",
+          "$FILENAME",
+        },
+      },
     }
   },
+
   init = function()
     vim.api.nvim_create_augroup("Autoformat", { clear = true })
 

@@ -71,13 +71,12 @@ return {
 
     lspconfig.ruby_lsp.setup({
       init_options = {
-        linters = { "standardrb" },
+        formatter = "rubocop",
+        linters = { "rubocop" },
       }
     })
 
     lspconfig.rust_analyzer.setup({})
-
-    lspconfig.standardrb.setup({})
 
     lspconfig.gleam.setup({})
 
