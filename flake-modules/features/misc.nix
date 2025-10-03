@@ -5,6 +5,7 @@ mkFeature name (
     apps = {
       bambu-studio = { };
 
+      feh = { };
       freecad.nixos.nether.backups.paths."${nether.homeDirectory}/.config/FreeCAD".deleteMissing = true;
       libreoffice = { };
       nautilus.hm.dconf.settings."org/gnome/desktop/privacy".remember-recent-files = false;
