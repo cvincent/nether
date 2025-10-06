@@ -5,6 +5,7 @@ mkFeature name (
     apps = {
       bambu-studio = { };
 
+      exiftool = { };
       feh = { };
       freecad.nixos.nether.backups.paths."${nether.homeDirectory}/.config/FreeCAD".deleteMissing = true;
       libreoffice = { };
@@ -19,6 +20,8 @@ mkFeature name (
       # TODO: Move these to a new gaming.nix feature, along with Steam
       ryubing = { };
       shadps4 = { };
+
+      wget = { };
 
       zathura.hm.xdg.mimeApps.defaultApplications."application/pdf" = "org.pwmt.zathura-cb.desktop";
     };
