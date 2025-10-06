@@ -10,7 +10,7 @@ return {
     integrations = {
       markdown = {
         resolve_image_path = function(document_path, image_path)
-          return "/backup/second-brain/" .. image_path
+          return "/home/cvincent/second-brain/" .. image_path
         end,
       }
     }
