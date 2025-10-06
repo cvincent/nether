@@ -82,7 +82,15 @@ return {
 
     local default_diagnostic_config = {
       virtual_text = { current_line = true },
-      virtual_lines = false
+      virtual_lines = false,
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = "",
+          [vim.diagnostic.severity.WARN] = "",
+          [vim.diagnostic.severity.INFO] = "",
+          [vim.diagnostic.severity.HINT] = "󱜹",
+        },
+      },
     }
     vim.diagnostic.config(default_diagnostic_config)
 
@@ -103,7 +111,8 @@ return {
       else
         vim.diagnostic.config({
           virtual_text = false,
-          virtual_lines = { current_line = true }
+          virtual_lines = { current_line = true },
+          signs = default_diagnostic_config.signs,
         })
         vim.b.diagnostic_detail = true
       end
