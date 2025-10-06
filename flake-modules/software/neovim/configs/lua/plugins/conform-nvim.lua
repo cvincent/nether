@@ -20,7 +20,7 @@ return {
       erb_lint = {
         command = "erb_lint",
         stdin = false,
-        args = { "--autocorrect", "$FILENAME" },
+        args = { "--autocorrect", "--fail-level", "F", "$FILENAME" },
         async = true,
       },
 
