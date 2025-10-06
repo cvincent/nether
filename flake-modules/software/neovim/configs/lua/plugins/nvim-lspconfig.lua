@@ -71,8 +71,8 @@ return {
 
     lspconfig.ruby_lsp.setup({
       init_options = {
-        formatter = "rubocop",
-        linters = { "rubocop" },
+        formatter = "rubocop_internal",
+        linters = { "rubocop_internal" },
       }
     })
 
