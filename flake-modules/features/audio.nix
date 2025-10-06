@@ -39,9 +39,9 @@ mkFeature name (
         enable = audio.bluetooth.enable;
 
         # Attempt to connect using A2DP
-        settings.General = {
-          Enable = "Source,Sink,Media,Socket";
-        };
+        # settings.General = {
+        #   Enable = "Source,Sink,Media,Socket";
+        # };
       };
     };
   }
