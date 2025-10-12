@@ -22,7 +22,4 @@ return {
 
   -- Projections
   "tpope/vim-projectionist",
-
-  -- Rails support
-  "tpope/vim-rails",
 }
