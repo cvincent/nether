@@ -16,21 +16,7 @@ local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.conditions")
 local conds_expand = require("luasnip.extras.conditions.expand")
 
-local M = {}
-
-function M.find_node_ancestor(types, node)
-  if not node then
-    return nil
-  end
-
-  if vim.tbl_contains(types, node:type()) then
-    return node
-  end
-
-  local parent = node:parent()
-
-  return M.find_node_ancestor(types, parent)
-end
+local find_node_ancestor = require("ts_utils").find_node_ancestor
 
 local vars_query = vim.treesitter.query.parse("ruby", [[
   ;query
@@ -46,7 +32,7 @@ local params_at_pos = function(pos)
     return {}
   end
 
-  local params_node = M.find_node_ancestor({ "method_parameters" }, node)
+  local params_node = find_node_ancestor({ "method_parameters" }, node)
 
   if not params_node then
     return {}
