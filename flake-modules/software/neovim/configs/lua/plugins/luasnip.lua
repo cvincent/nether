@@ -25,7 +25,7 @@ return {
       end
     end)
 
-    vim.keymap.set("s", "<C-S-K>", function()
+    vim.keymap.set({ "s", "i" }, "<C-H>", function()
       if ls.jumpable(-1) then
         ls.jump(-1)
       end
