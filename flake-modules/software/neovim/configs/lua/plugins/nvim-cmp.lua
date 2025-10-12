@@ -22,10 +22,15 @@ return {
           fields = { "abbr", "kind", "menu" },
           expandable_indicator = true,
           format = function(_, vim_item)
-            local label = vim_item.abbr or ""
-            local truncated_label = vim.fn.strcharpart(label, 0, 80)
-            if truncated_label ~= label then
-              vim_item.abbr = truncated_label .. "…"
+            local abbr = vim_item.abbr or ""
+            local truncated_abbr = vim.fn.strcharpart(abbr, 0, 80)
+            if truncated_abbr ~= abbr then
+              vim_item.abbr = truncated_abbr .. "…"
+            end
+            local menu = vim_item.menu or ""
+            local truncated_menu = vim.fn.strcharpart(menu, 0, 40)
+            if truncated_menu ~= menu then
+              vim_item.menu = truncated_menu .. "…"
             end
             return vim_item
           end,
