@@ -47,6 +47,6 @@ return {
 
     vim.api.nvim_command("hi! link @keyword.function @keyword")
 
-    vim.api.nvim_command("hi! MatchParen gui=underline")
+    vim.api.nvim_command("hi! MatchParen gui=underline guifg=NONE")
   end
 }
