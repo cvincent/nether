@@ -6,6 +6,9 @@ return {
 
   opts = {
     store_selection_keys = "<Tab>",
+    enable_autosnippets = true,
+    region_check_events = "CursorMoved, InsertLeave",
+    update_events = "TextChanged,TextChangedI",
   },
 
   init = function()
