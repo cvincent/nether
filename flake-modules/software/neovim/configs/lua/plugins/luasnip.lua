@@ -34,6 +34,12 @@ return {
       end
     end)
 
+    vim.keymap.set({ "s", "i" }, "<C-J>", function()
+      if ls.choice_active() then
+        ls.change_choice(1)
+      end
+    end)
+
     vim.keymap.set("s", "<bs>", "<c-o>s", { noremap = true })
   end
 }
