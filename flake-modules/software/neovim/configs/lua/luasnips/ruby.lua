@@ -55,7 +55,7 @@ local params_at_pos = function(pos)
   local captures = {}
 
   for _, param_node in vars_query:iter_captures(params_node, 0) do
-    local param = vim.treesitter.get_node_text(param_node, 0):gsub("[^%w_]", "")
+    local param = vim.treesitter.get_node_text(param_node, 0)
 
     if param ~= "" then
       table.insert(captures, param)
