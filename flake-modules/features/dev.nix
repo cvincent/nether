@@ -15,6 +15,8 @@ mkFeature name (
       ruby.enable = lib.mkEnableOption "Assistance in Ruby projects";
     };
 
+    toplevel.tldr = { };
+
     nixos = lib.mkMerge [
       (lib.mkIf dev.c.enable {
         documentation = {
