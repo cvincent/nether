@@ -5,6 +5,7 @@ vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>")
 vim.keymap.set("n", "<leader>q", "<cmd>q<cr>")
 vim.keymap.set("n", "<leader>a", "<cmd>A<cr>")
+vim.keymap.set("n", "<leader>A", "<cmd>e #<cr>")
 
 -- Go back up the tag stack
 vim.keymap.set("n", "<c-t>", ":pop<cr>")
