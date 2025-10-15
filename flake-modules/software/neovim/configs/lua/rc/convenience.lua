@@ -4,8 +4,14 @@ vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
 -- Muscle memory leader stuff
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr>")
 vim.keymap.set("n", "<leader>q", "<cmd>q<cr>")
+
 vim.keymap.set("n", "<leader>a", "<cmd>A<cr>")
+vim.keymap.set("n", "<leader>sa", "<cmd>AS<cr>")
+vim.keymap.set("n", "<leader>va", "<cmd>AV<cr>")
+
 vim.keymap.set("n", "<leader>A", "<cmd>e #<cr>")
+vim.keymap.set("n", "<leader>sA", "<cmd>:belowright sfind #<cr>")
+vim.keymap.set("n", "<leader>vA", "<cmd>:belowright vertical sfind #<cr>")
 
 -- Go back up the tag stack
 vim.keymap.set("n", "<c-t>", ":pop<cr>")
