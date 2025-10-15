@@ -67,6 +67,7 @@ return {
       vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
       vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
       vim.keymap.set("n", "<leader>fe", require("telescope.builtin").symbols)
+      vim.keymap.set("n", "<leader>fT", require("telescope.builtin").builtin)
 
       vim.keymap.set(
         "n", "<leader>fG",
