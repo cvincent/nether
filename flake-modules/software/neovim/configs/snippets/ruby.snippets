@@ -1,16 +1,16 @@
 snippet it b!
 	it "${1:works}" do
-		$0
+		$0${VISUAL}
 	end
 
 snippet con b!
 	context "${1:context}" do
-		$0
+		$0${VISUAL}
 	end
 
 snippet desc b!
 	describe "${1:something}" do
-		$0
+		$0${VISUAL}
 	end
 
 snippet let b!
@@ -18,17 +18,17 @@ snippet let b!
 
 snippet dop
 	do |${1:args}|
-		$0
+		$0${VISUAL}
 	end
 
 snippet begin
 	begin
-		$0
+		$0${VISUAL}
 	end
 
 snippet if
 	if ${1:true}
-		$0
+		$0${VISUAL}
 	end
 
 snippet ore
@@ -37,5 +37,5 @@ snippet ore
 snippet case
 	case $1
 	when $2
-		$0
+		$0${VISUAL}
 	end
