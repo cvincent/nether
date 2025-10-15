@@ -2,9 +2,9 @@
 vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
 
 -- Muscle memory leader stuff
-vim.keymap.set("n", "<leader>w", ":w<cr>")
-vim.keymap.set("n", "<leader>q", ":q<cr>")
-vim.keymap.set("n", "<leader>a", ":A<cr>")
+vim.keymap.set("n", "<leader>w", "<cmd>w<cr>")
+vim.keymap.set("n", "<leader>q", "<cmd>q<cr>")
+vim.keymap.set("n", "<leader>a", "<cmd>A<cr>")
 
 -- Go back up the tag stack
 vim.keymap.set("n", "<c-t>", ":pop<cr>")
