@@ -106,7 +106,7 @@ return {
                   end
                   return vim.tbl_keys(bufs)
                 end,
-                keyword_pattern = [[\%(-\?\d\+\%(\.\d\+\)\?\|\h\w*\%([\-.]\w*\)*\)]]
+                keyword_pattern = [[\k\+]]
               }
             },
           }
