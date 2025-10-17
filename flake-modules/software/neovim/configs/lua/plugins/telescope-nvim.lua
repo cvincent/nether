@@ -44,6 +44,28 @@ return {
         }),
 
       pickers = {
+        buffers = {
+          mappings = {
+            i = {
+              ["<cr>"] = function(prompt_bufnr)
+                -- Open existing window for buffer if there is one, otherwise
+                -- perform the default behavior (open buffer in current window)
+                local action_state = require("telescope.actions.state")
+                local actions = require("telescope.actions")
+                local entry = action_state.get_selected_entry()
+
+                local winid = vim.fn.win_findbuf(entry.bufnr)
+
+                if #winid > 0 then
+                  vim.fn.win_gotoid(winid[1])
+                else
+                  actions.select_default(prompt_bufnr)
+                end
+              end,
+            },
+          },
+        },
+
         git_branches = {
           mappings = {
             i = { ["<cr>"] = require("telescope.actions").git_switch_branch }
@@ -64,6 +86,7 @@ return {
 
       vim.keymap.set("n", "<leader>fs", require("telescope.builtin").lsp_document_symbols)
       vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
+      vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers)
       vim.keymap.set("n", "<leader>fg", require("telescope.builtin").live_grep)
       vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags)
       vim.keymap.set("n", "<leader>fe", require("telescope.builtin").symbols)
