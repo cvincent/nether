@@ -74,15 +74,7 @@ end
 
 vim.keymap.set("n", "<leader>rt", params_at_pos)
 
-local visual_or_insert = function(default)
-  return conds.make_condition(function(_, parent)
-    if (#parent.snippet.env.LS_SELECT_RAW > 0) then
-      return s(nil, { t(parent.snippet.env.LS_SELECT_RAW), i(1) })
-    else
-      return s(nil, i(1, default))
-    end
-  end)
-end
+local h = require("luasnips.helpers")
 
 local outside_snippet = function(...)
   return conds_expand.line_end(...) and not ls.in_snippet()
@@ -126,7 +118,7 @@ ls.add_snippets("ruby", {
           s(nil, { t(" < "), i(1, "ParentClass") }, { dedent = false }),
           { i(1) }
         }),
-        d(3, visual_or_insert("# class"))
+        d(3, h.visual_or_insert("# class"))
       }
     ))
   }),
@@ -178,7 +170,7 @@ ls.add_snippets("ruby", {
               s(nil, fmta(" |<>|", { r(1, "args") }, { dedent = false })),
               { i(1) }
             }),
-            d(3, visual_or_insert("# code"))
+            d(3, h.visual_or_insert("# code"))
           }
         ), {
           stored = { args = "args" },
@@ -193,7 +185,7 @@ ls.add_snippets("ruby", {
               s(nil, fmta(" |<>|", { r(1, "args") }, { dedent = false })),
               { i(1) }
             }),
-            d(3, visual_or_insert("code"))
+            d(3, h.visual_or_insert("code"))
           }
         )
       )
