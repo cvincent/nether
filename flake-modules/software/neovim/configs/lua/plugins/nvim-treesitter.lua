@@ -69,10 +69,12 @@ return {
 
             goto_next_start = {
               ["]a"] = "@parameter.outer",
+              ["]m"] = "@function.outer",
             },
 
             goto_previous_start = {
               ["[a"] = "@parameter.outer",
+              ["[m"] = "@function.outer",
             },
           },
         },
