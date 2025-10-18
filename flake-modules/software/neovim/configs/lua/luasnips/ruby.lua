@@ -213,4 +213,22 @@ ls.add_snippets("ruby", {
     i(0),
     t(" "),
   }),
+
+  -- snippet({
+  --   trig = "let",
+  --   condition = conds_expand.line_begin * outside_snippet,
+  --   show_condition = outside_snippet,
+  -- }, {
+  --   t("let"),
+  --   c(1, {
+  --     t(""),
+  --     t("!"),
+  --   }),
+  --   t("(:"),
+  --   i(2, "record"),
+  --   t(") "),
+  --   c(3, {
+  --     { t("{ "), s(nil, c(1, c())) }
+  --   })
+  -- }),
 }, { key = "ruby" })
