@@ -10,6 +10,20 @@ return {
 
       require("luasnip.loaders.from_snipmate").lazy_load()
 
+      if IsPluginInstalled("vim-matchup") then
+        -- vim-matchup causes the completion menu to immediately insert and
+        -- select a completion in some situations while wiping out the rest of
+        -- the menu; for me it was always inside <% erb %> regions. This works
+        -- around it by temporarily disabling the offending vim-matchup module
+        -- while the completion menu is open.
+        cmp.event:on("menu_opened", function()
+          vim.b.matchup_matchparen_enabled = false
+        end)
+        cmp.event:on("menu_closed", function()
+          vim.b.matchup_matchparen_enabled = true
+        end)
+      end
+
       cmp.setup({
         window = {
           completion = { winblend = 15 },
