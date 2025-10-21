@@ -135,6 +135,7 @@ mkSoftware name (
               x = "config-cycle tabs.position top right";
               "<space>ft" = "cmd-set-text -s :tab-select";
               T = "tab-focus";
+              co = null; # Default closes all tabs except current; we've lost all our tabs to this multiple times
 
               # Easy esc in normal mode
               e = "fake-key <esc>";
