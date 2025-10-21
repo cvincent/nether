@@ -15,7 +15,10 @@ mkFeature name (
       ruby.enable = lib.mkEnableOption "Assistance in Ruby projects";
     };
 
-    toplevel.tldr = { };
+    toplevel = {
+      jujutsu.hm.programs.jujutsu.enable = true;
+      tldr = { };
+    };
 
     nixos = lib.mkMerge [
       (lib.mkIf dev.c.enable {
