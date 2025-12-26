@@ -11,9 +11,9 @@ mkSoftware name (
   }:
   {
     nixos = {
-      programs.niri = {
-        inherit (niri) enable package;
-      };
+      # programs.niri = {
+      #   inherit (niri) enable package;
+      # };
 
       programs.uwsm.waylandCompositors.niri =
         let
@@ -31,128 +31,128 @@ mkSoftware name (
     };
 
     hm = {
-      programs.niri.config = ''
-        input {
-          keyboard {
-            xkb {
-              layout ""
-              model ""
-              rules ""
-              variant ""
-            }
-            repeat-delay 600
-            repeat-rate 25
-            track-layout "global"
-          }
-          touchpad {
-            tap
-            natural-scroll
-          }
-          mouse {
-            natural-scroll
-            accel-profile "adaptive"
-          }
-          trackball { natural-scroll; }
-        }
-        output "DP-1" {
-          focus-at-startup
-          transform "normal"
-          position x=2560 y=1440
-          mode "2560x1440@143.970000"
-          variable-refresh-rate on-demand=false
-        }
-        output "DP-2" {
-          transform "normal"
-          position x=2560 y=0
-          mode "2560x1440@143.970000"
-          variable-refresh-rate on-demand=false
-        }
-        output "DP-3" {
-          transform "normal"
-          position x=0 y=1440
-          mode "2560x1440@143.970000"
-          variable-refresh-rate on-demand=false
-        }
-        screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-        prefer-no-csd
-        layout {
-          gaps 16
-          struts {
-            left 0
-            right 0
-            top 0
-            bottom 0
-          }
-          focus-ring { off; }
-          border {
-            width 4
-            active-color "#81a1c1"
-            inactive-color "#4c566a"
-          }
-          default-column-width
-          center-focused-column "never"
-        }
-        cursor {
-          xcursor-theme "Nordzy-cursors"
-          xcursor-size 32
-          hide-after-inactive-ms 2000
-        }
-        binds {
-          Mod+B { spawn "bitwarden-fuzzel"; }
-          Mod+Comma { consume-or-expel-window-left; }
-          Mod+Ctrl+Shift+B { spawn "bitwarden-fuzzel-create"; }
-          Mod+D { spawn "fuzzel" "--prompt=App ❯ "; }
-          Mod+F { fullscreen-window; }
-          Mod+Grave { focus-window-down-or-top; }
-          Mod+H { focus-column-left-or-last; }
-          Mod+I { focus-monitor-up; }
-          Mod+J { focus-window-down-or-top; }
-          Mod+K { focus-window-up-or-bottom; }
-          Mod+L { focus-column-right-or-first; }
-          Mod+Next { focus-workspace-down; }
-          Mod+O { focus-monitor-right; }
-          Mod+Period { consume-or-expel-window-right; }
-          Mod+Prior { focus-workspace-up; }
-          Mod+Return { spawn "uwsm" "app" "--" "kitty"; }
-          Mod+Shift+B { spawn "bitwarden-fuzzel" "--previous"; }
-          Mod+Shift+Grave { focus-window-up-or-bottom; }
-          Mod+Shift+H { move-column-left; }
-          Mod+Shift+I { move-column-to-monitor-up; }
-          Mod+Shift+J { move-window-down; }
-          Mod+Shift+K { move-window-up; }
-          Mod+Shift+L { move-column-right; }
-          Mod+Shift+Next { move-column-to-workspace-down; }
-          Mod+Shift+O { move-column-to-monitor-right; }
-          Mod+Shift+Prior { move-column-to-workspace-up; }
-          Mod+Shift+Q { close-window; }
-          Mod+Shift+Space { toggle-window-floating; }
-          Mod+Shift+U { move-column-to-monitor-down; }
-          Mod+Shift+Y { move-column-to-monitor-left; }
-          Mod+U { focus-monitor-down; }
-          Mod+V { toggle-column-tabbed-display; }
-          Mod+W { spawn "qutebrowser-fuzzel"; }
-          Mod+WheelScrollDown cooldown-ms=250 { focus-workspace-down; }
-          Mod+WheelScrollLeft cooldown-ms=250 { focus-column-left; }
-          Mod+WheelScrollRight cooldown-ms=250 { focus-column-right; }
-          Mod+WheelScrollUp cooldown-ms=250 { focus-workspace-up; }
-          Mod+Y { focus-monitor-left; }
-          XF86AudioLowerVolume { spawn "volumectl" "-u" "down"; }
-          XF86AudioMute { spawn "volumectl" "toggle-mute"; }
-          XF86AudioNext { spawn "playerctl" "next"; }
-          XF86AudioPlay { spawn "playerctl" "play-pause"; }
-          XF86AudioPrev { spawn "playerctl" "previous"; }
-          XF86AudioRaiseVolume { spawn "volumectl" "-u" "up"; }
-        }
-        window-rule {
-          blur {
-            on
-            radius 3
-            passes 2
-            noise 0.1
-          }
-        }
-        xwayland-satellite { path "/nix/store/dqljjf1m5h6jscfgvc7q9kkn00mx0myj-xwayland-satellite-unstable-2025-08-07-e0d1dad/bin/xwayland-satellite"; }
-      '';
+      # programs.niri.config = ''
+      #   input {
+      #     keyboard {
+      #       xkb {
+      #         layout ""
+      #         model ""
+      #         rules ""
+      #         variant ""
+      #       }
+      #       repeat-delay 600
+      #       repeat-rate 25
+      #       track-layout "global"
+      #     }
+      #     touchpad {
+      #       tap
+      #       natural-scroll
+      #     }
+      #     mouse {
+      #       natural-scroll
+      #       accel-profile "adaptive"
+      #     }
+      #     trackball { natural-scroll; }
+      #   }
+      #   output "DP-1" {
+      #     focus-at-startup
+      #     transform "normal"
+      #     position x=2560 y=1440
+      #     mode "2560x1440@143.970000"
+      #     variable-refresh-rate on-demand=false
+      #   }
+      #   output "DP-2" {
+      #     transform "normal"
+      #     position x=2560 y=0
+      #     mode "2560x1440@143.970000"
+      #     variable-refresh-rate on-demand=false
+      #   }
+      #   output "DP-3" {
+      #     transform "normal"
+      #     position x=0 y=1440
+      #     mode "2560x1440@143.970000"
+      #     variable-refresh-rate on-demand=false
+      #   }
+      #   screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+      #   prefer-no-csd
+      #   layout {
+      #     gaps 16
+      #     struts {
+      #       left 0
+      #       right 0
+      #       top 0
+      #       bottom 0
+      #     }
+      #     focus-ring { off; }
+      #     border {
+      #       width 4
+      #       active-color "#81a1c1"
+      #       inactive-color "#4c566a"
+      #     }
+      #     default-column-width
+      #     center-focused-column "never"
+      #   }
+      #   cursor {
+      #     xcursor-theme "Nordzy-cursors"
+      #     xcursor-size 32
+      #     hide-after-inactive-ms 2000
+      #   }
+      #   binds {
+      #     Mod+B { spawn "bitwarden-fuzzel"; }
+      #     Mod+Comma { consume-or-expel-window-left; }
+      #     Mod+Ctrl+Shift+B { spawn "bitwarden-fuzzel-create"; }
+      #     Mod+D { spawn "fuzzel" "--prompt=App ❯ "; }
+      #     Mod+F { fullscreen-window; }
+      #     Mod+Grave { focus-window-down-or-top; }
+      #     Mod+H { focus-column-left-or-last; }
+      #     Mod+I { focus-monitor-up; }
+      #     Mod+J { focus-window-down-or-top; }
+      #     Mod+K { focus-window-up-or-bottom; }
+      #     Mod+L { focus-column-right-or-first; }
+      #     Mod+Next { focus-workspace-down; }
+      #     Mod+O { focus-monitor-right; }
+      #     Mod+Period { consume-or-expel-window-right; }
+      #     Mod+Prior { focus-workspace-up; }
+      #     Mod+Return { spawn "uwsm" "app" "--" "kitty"; }
+      #     Mod+Shift+B { spawn "bitwarden-fuzzel" "--previous"; }
+      #     Mod+Shift+Grave { focus-window-up-or-bottom; }
+      #     Mod+Shift+H { move-column-left; }
+      #     Mod+Shift+I { move-column-to-monitor-up; }
+      #     Mod+Shift+J { move-window-down; }
+      #     Mod+Shift+K { move-window-up; }
+      #     Mod+Shift+L { move-column-right; }
+      #     Mod+Shift+Next { move-column-to-workspace-down; }
+      #     Mod+Shift+O { move-column-to-monitor-right; }
+      #     Mod+Shift+Prior { move-column-to-workspace-up; }
+      #     Mod+Shift+Q { close-window; }
+      #     Mod+Shift+Space { toggle-window-floating; }
+      #     Mod+Shift+U { move-column-to-monitor-down; }
+      #     Mod+Shift+Y { move-column-to-monitor-left; }
+      #     Mod+U { focus-monitor-down; }
+      #     Mod+V { toggle-column-tabbed-display; }
+      #     Mod+W { spawn "qutebrowser-fuzzel"; }
+      #     Mod+WheelScrollDown cooldown-ms=250 { focus-workspace-down; }
+      #     Mod+WheelScrollLeft cooldown-ms=250 { focus-column-left; }
+      #     Mod+WheelScrollRight cooldown-ms=250 { focus-column-right; }
+      #     Mod+WheelScrollUp cooldown-ms=250 { focus-workspace-up; }
+      #     Mod+Y { focus-monitor-left; }
+      #     XF86AudioLowerVolume { spawn "volumectl" "-u" "down"; }
+      #     XF86AudioMute { spawn "volumectl" "toggle-mute"; }
+      #     XF86AudioNext { spawn "playerctl" "next"; }
+      #     XF86AudioPlay { spawn "playerctl" "play-pause"; }
+      #     XF86AudioPrev { spawn "playerctl" "previous"; }
+      #     XF86AudioRaiseVolume { spawn "volumectl" "-u" "up"; }
+      #   }
+      #   window-rule {
+      #     blur {
+      #       on
+      #       radius 3
+      #       passes 2
+      #       noise 0.1
+      #     }
+      #   }
+      #   xwayland-satellite { path "/nix/store/dqljjf1m5h6jscfgvc7q9kkn00mx0myj-xwayland-satellite-unstable-2025-08-07-e0d1dad/bin/xwayland-satellite"; }
+      # '';
 
       # programs.niri.settings = {
       #   window-rules = [

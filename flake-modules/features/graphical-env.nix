@@ -32,7 +32,7 @@ mkFeature name (
   |> lib.recursiveUpdate (
     mkSoftwareChoice (mkSoftwareChoiceArgs // { namespace = "compositor"; }) {
       hyprland = { };
-      niri = { };
+      # niri = { };
 
       nixos = {
         programs.uwsm.enable = true;

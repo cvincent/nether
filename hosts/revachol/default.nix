@@ -66,10 +66,10 @@
         default.which = "hyprland";
         hyprland.package = inputs'.hyprland.packages.hyprland;
 
-        niri = {
-          enable = false;
-          package = pkgs.niri-unstable.override { src = inputs.niri-with-blur; };
-        };
+        # niri = {
+        #   enable = false;
+        #   # package = pkgs.niri-unstable.override { src = inputs.niri-with-blur; };
+        # };
       };
 
       launcher.default.which = "fuzzel";
@@ -92,14 +92,14 @@
 
     media = {
       enable = true;
-      apps.yt-dlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp.overrideAttrs {
-        src = pkgs.fetchFromGitHub {
-          owner = "yt-dlp";
-          repo = "yt-dlp";
-          rev = "2025.10.22";
-          hash = "sha256-jQaENEflaF9HzY/EiMXIHgUehAJ3nnDT9IbaN6bDcac=";
-        };
-      };
+      # apps.yt-dlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp.overrideAttrs {
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "yt-dlp";
+      #     repo = "yt-dlp";
+      #     rev = "2025.10.22";
+      #     hash = "sha256-jQaENEflaF9HzY/EiMXIHgUehAJ3nnDT9IbaN6bDcac=";
+      #   };
+      # };
 
       apps.spotify.package = pkgInputs.nixpkgs-spotify.spotify;
     };
@@ -170,7 +170,7 @@
     scripts.wait-for-port.enable = true;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_6_15;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
