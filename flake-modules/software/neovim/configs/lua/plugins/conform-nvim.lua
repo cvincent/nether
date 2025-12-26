@@ -1,6 +1,9 @@
 return {
   "stevearc/conform.nvim",
   opts = {
+    -- notify_on_error = false,
+    -- default_format_opts = { quiet = true },
+
     formatters_by_ft = {
       javascript = { "prettier" },
       typescript = { "prettier" },
@@ -46,11 +49,11 @@ return {
   init = function()
     vim.api.nvim_create_augroup("Autoformat", { clear = true })
 
-    vim.api.nvim_create_autocmd("BufWritePre", {
+    vim.api.nvim_create_autocmd("BufWritePost", {
       pattern = "*",
       group = "Autoformat",
       callback = function(args)
-        local ignore_filetypes = {}
+        local ignore_filetypes = { "oil" }
         if vim.tbl_contains(ignore_filetypes, vim.bo[args.buf].filetype) then
           return
         end
@@ -60,7 +63,24 @@ return {
         end
 
         if vim.b.autoformat then
-          require("conform").format({ bufnr = args.buf, lsp_format = "fallback", timeout_ms = 10000 })
+          -- For async formatting, formatting is discarded if the buffer was
+          -- modified before the formatter completes, which includes writing to
+          -- disk. Therefore, we use BufWritePost instead of BufWritePre. Then,
+          -- after the formatter has run, we issue `:noa w` to write the file
+          -- out again but skipping autocmds.
+          --
+          -- Note, I think doing this async breaks quiet... Also, the `:noa w`
+          -- invocation fires on whatever buffer is focused, which we often have
+          -- changed after write...
+          require("conform").format(
+            {
+              bufnr = args.buf,
+              lsp_format = "fallback",
+              async = true,
+              -- quiet = true,
+            },
+            function() vim.cmd("noa w") end
+          )
         end
       end,
     })
