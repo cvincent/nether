@@ -11,14 +11,23 @@ vim.keymap.set("n", "<leader>va", "<cmd>AV<cr>")
 vim.keymap.set("n", "<leader>Ta", "<cmd>AT<cr>")
 
 vim.keymap.set("n", "<leader>A", "<cmd>e #<cr>")
-vim.keymap.set("n", "<leader>sA", "<cmd>:belowright sfind #<cr>")
-vim.keymap.set("n", "<leader>vA", "<cmd>:belowright vertical sfind #<cr>")
-vim.keymap.set("n", "<leader>TA", "<cmd>:tab sfind #<cr>")
+vim.keymap.set("n", "<leader>sA", "<cmd>belowright sfind #<cr>")
+vim.keymap.set("n", "<leader>vA", "<cmd>belowright vertical sfind #<cr>")
+vim.keymap.set("n", "<leader>TA", "<cmd>tab sfind #<cr>")
 
-vim.keymap.set("n", "<leader>r", "<cmd>R<cr>")
-vim.keymap.set("n", "<leader>sr", "<cmd>RS<cr>")
-vim.keymap.set("n", "<leader>vr", "<cmd>RA<cr>")
-vim.keymap.set("n", "<leader>Tr", "<cmd>RT<cr>")
+vim.keymap.set("n", "<leader>R", "<cmd>R<cr>")
+vim.keymap.set("n", "<leader>sR", "<cmd>RS<cr>")
+vim.keymap.set("n", "<leader>vR", "<cmd>RV<cr>")
+vim.keymap.set("n", "<leader>TR", "<cmd>RT<cr>")
+
+vim.keymap.set("n", "<leader>s-", "<cmd>belowright Oil<cr>")
+vim.keymap.set("n", "<leader>v-", "<cmd>belowright vertical Oil<cr>")
+vim.keymap.set("n", "<leader>T-", "<cmd>tabnew +Oil<cr>")
+
+-- Easy command line copy, move, and deletion by relative lines
+vim.keymap.set("n", "<leader>C", ":t.<left><left>")
+vim.keymap.set("n", "<leader>M", ":m.<left><left>")
+vim.keymap.set("n", "<leader>D", ":d<left>")
 
 -- Go back up the tag stack
 vim.keymap.set("n", "<c-t>", ":pop<cr>")
