@@ -28,8 +28,13 @@ mkFeature name (
         hosts = inputs.private-nethers.hosts;
 
         nameservers = [
-          "208.67.222.222"
-          "208.67.220.220"
+          # Cloudflare:
+          "1.1.1.1"
+          "1.0.0.1"
+
+          # OpenDNS:
+          # "208.67.222.222"
+          # "208.67.220.220"
         ];
       };
 
