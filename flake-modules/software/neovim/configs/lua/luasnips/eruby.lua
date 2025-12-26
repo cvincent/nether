@@ -37,4 +37,30 @@ ls.add_snippets("eruby", {
     )
   ),
 
+  snippet({
+      trig = "<(%w+)",
+      trigEngine = "pattern",
+      condition = conds_expand.line_end * h.outside_snippet,
+      show_condition = conds_expand.line_end * h.outside_snippet,
+    },
+    fmt(
+      [[
+        <{}{}>{}</{}>
+      ]],
+      {
+        f(function(_, snip) return snip.captures[1] end),
+        i(1),
+        c(2, {
+          { d(1, h.visual_or_insert("")), },
+          {
+            t({ "", "  " }),
+            d(1, h.visual_or_insert("")),
+            t({ "", "" }),
+          },
+        }),
+        f(function(_, snip) return snip.captures[1] end),
+      }
+    )
+  ),
+
 }, { key = "eruby", })
