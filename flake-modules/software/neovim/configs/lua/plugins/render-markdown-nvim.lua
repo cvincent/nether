@@ -39,6 +39,12 @@ return {
       },
     },
 
+    html = {
+      comment = {
+        conceal = false,
+      },
+    },
+
     win_options = {
       concealcursor = { rendered = "n" },
     },
