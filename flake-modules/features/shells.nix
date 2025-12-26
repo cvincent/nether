@@ -34,6 +34,7 @@ mkFeature name (
       btop = { };
       d2 = { };
       direnv = { };
+      dnsutils = { };
       dua = { };
       duf = { };
       dust = { };
