@@ -25,12 +25,6 @@ in
       options = {
         nether.mail.enable = lib.mkEnableOption "Fetching, reading, and sending email";
 
-        nether.mail.peroxide.enable = lib.mkOption {
-          type = lib.types.bool;
-          description = "Peroxide third-party bridge for ProtonMail";
-          default = config.nether.mail.enable;
-        };
-
         nether.mail.davmail.enable = lib.mkOption {
           type = lib.types.bool;
           description = "Davmail POP/IMAP/SMTP-Exchange gateway";
@@ -45,20 +39,7 @@ in
       };
 
       config = lib.mkIf config.nether.mail.enable {
-        services.peroxide.enable = config.nether.mail.peroxide.enable;
-        services.peroxide.package = pkgInputs.nixpkgs-peroxide.peroxide;
-        systemd.services.peroxide.serviceConfig.User = lib.mkForce config.nether.username;
-        # TODO: We would probably prefer to run this as a user service. See also
-        # notes on davmail.service.
-        # TODO: We've switched these to graphical.target until we're ready to
-        # bring restore-backups.service back. The thinking was, we don't want to
-        # start syncing on a new install until we've first restored our mail
-        # directory, so we don't have to resync everything from scratch.
-        services.logrotate.settings.peroxide.su = lib.mkForce "${config.nether.username} users";
-
-        nether.backups.paths = lib.mkIf config.nether.mail.peroxide.enable {
-          "/var/lib/peroxide/credentials.json" = { };
-          "/var/lib/peroxide/cookies.json" = { };
+        nether.backups.paths = lib.mkIf config.nether.mail.enable {
           # TODO: Once all of this is in proper Flake modules, this should obviously
           # be grouped with the davmail configs
           "${config.nether.homeDirectory}/.davmail-token.properties" = { };
@@ -66,22 +47,6 @@ in
           "${config.nether.homeDirectory}/.local/state/isync".deleteMissing = true;
           "${config.nether.homeDirectory}/.local/share/vdirsyncer".deleteMissing = true;
           "${config.nether.homeDirectory}/.local/state/vdirsyncer".deleteMissing = true;
-        };
-
-        system.activationScripts = lib.mkIf config.nether.mail.peroxide.enable {
-          peroxide =
-            let
-              certPem = pkgs.writeText "peroxide-cert.pem" private-nethers.mail.peroxide.certPem;
-              keyPem = pkgs.writeText "peroxide-key.pem" private-nethers.mail.peroxide.keyPem;
-            in
-            ''
-              if [[ ! -d /var/lib/peroxide ]]; then
-                mkdir -p /var/lib/peroxide
-                ln -s ${certPem} /var/lib/peroxide/cert.pem
-                ln -s ${keyPem} /var/lib/peroxide/key.pem
-                chown -R ${config.nether.username}:users /var/lib/peroxide
-              fi
-            '';
         };
       };
     }

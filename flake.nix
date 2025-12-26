@@ -194,8 +194,6 @@
 
     xremap-flake.url = "github:xremap/nix-flake";
 
-    # Package dropped from later NixOS
-    nixpkgs-peroxide.url = "nixpkgs/nixos-24.11";
     # Needed to update, wasn't ready to deal with our kernel EOL
     nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
   };
