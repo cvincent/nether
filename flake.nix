@@ -166,6 +166,7 @@
 
     nixpkgs-bambu-studio.url = "github:nixos/nixpkgs/573c650e8a14b2faa0041645ab18aed7e60f0c9a";
     nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
+    nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
 
     home-manager = {

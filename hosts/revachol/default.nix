@@ -124,7 +124,11 @@
       qutebrowser.package = inputs'.nixpkgs-qutebrowser.legacyPackages.qutebrowser;
     };
 
-    chat.enable = true;
+    chat = {
+      enable = true;
+      apps.signal-desktop.package = inputs'.nixpkgs-signal-desktop.legacyPackages.signal-desktop;
+    };
+
     flatpak.enable = true;
     git.enable = true;
     homeAssistant.enable = true;
