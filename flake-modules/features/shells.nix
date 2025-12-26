@@ -49,6 +49,7 @@ mkFeature name (
       jless = { };
       jq = { };
       magic-wormhole = { };
+      presenterm = { };
       ripgrep = { };
       starship.config.enableFishIntegration = shells.fish.enable;
       unzip = { };
