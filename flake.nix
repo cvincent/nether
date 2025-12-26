@@ -168,6 +168,7 @@
     nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
     nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
     nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
+    nixpkgs-yt-dlp-pot-provider.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
