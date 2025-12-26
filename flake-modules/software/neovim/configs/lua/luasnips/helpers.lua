@@ -28,4 +28,8 @@ M.visual_or_insert = function(default)
   end)
 end
 
+M.outside_snippet = function(...)
+  return conds_expand.line_end(...) and not ls.in_snippet()
+end
+
 return M
