@@ -15,7 +15,7 @@ echo "$item" > "$tmp"
 kitty --class=kitty-tmp-edit nvim "$tmp"
 changed=$(cat "$tmp")
 
-if [[ $(echo "$changed" | jq empty > /dev/null 2>&1) -eq 0 ]]; then
+if [[ $(echo "$changed" | jq empty) -eq 0 ]]; then
   >&2 echo 'Valid!'
   confirm=$(echo $'No\nYes\n' | fuzzel --prompt='Save? ❯ ' -d)
 

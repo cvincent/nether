@@ -23,7 +23,6 @@
 
         virtualisation.libvirtd = {
           enable = true;
-          qemu.ovmf.enable = true;
           onBoot = "ignore";
           onShutdown = "shutdown";
         };

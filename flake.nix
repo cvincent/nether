@@ -161,7 +161,7 @@
     # host
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs.url = "nixpkgs/nixos-25.05";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     nixpkgs-bambu-studio.url = "github:nixos/nixpkgs/573c650e8a14b2faa0041645ab18aed7e60f0c9a";
@@ -171,12 +171,12 @@
     nixpkgs-yt-dlp-pot-provider.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
-    stylix.url = "github:nix-community/stylix/release-25.05";
+    stylix.url = "github:nix-community/stylix/release-25.11";
 
     # TODO: Set this in an option one time so anywhere can access it via config
     # or osConfig

@@ -13,7 +13,7 @@ mkFeature name (
         # TODO: Revisit these and ensure we're using everything we need but nothing
         # more. See: {https://nixos.wiki/wiki/Accelerated_Video_Playback}
         extraPackages = with pkgs; [
-          vaapiVdpau
+          libva-vdpau-driver
           nvidia-vaapi-driver
           libvdpau-va-gl
         ];

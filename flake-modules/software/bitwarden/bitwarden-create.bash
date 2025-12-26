@@ -24,7 +24,7 @@ echo "$json" > "$tmp"
 kitty --class=kitty-tmp-edit nvim "$tmp" +"/\[$open_search\]" +'norm W'
 json=$(cat "$tmp")
 
-if [[ $(echo "$json" | jq empty > /dev/null 2>&1) -eq 0 ]]; then
+if [[ $(echo "$json" | jq empty) -eq 0 ]]; then
   >&2 echo 'Valid!'
   confirm=$(echo $'No\nYes\n' | fuzzel --prompt='Save? ❯ ' -d)
 
