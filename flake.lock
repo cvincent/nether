@@ -1144,21 +1144,6 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-qutebrowser": {
-      "locked": {
-        "lastModified": 1751274312,
-        "narHash": "sha256-/bVBlRpECLVzjV19t5KMdMFWSwKLtb5RyXdjz3LJT+g=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "50ab793786d9de88ee30ec4e4c24fb4236fc2674",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-24.11",
-        "type": "indirect"
-      }
-    },
     "nixpkgs-signal-desktop": {
       "locked": {
         "lastModified": 1766651565,
@@ -1481,7 +1466,6 @@
         "nixpkgs-bambu-studio": "nixpkgs-bambu-studio",
         "nixpkgs-neovim": "nixpkgs-neovim",
         "nixpkgs-peroxide": "nixpkgs-peroxide",
-        "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
         "nixpkgs-signal-desktop": "nixpkgs-signal-desktop",
         "nixpkgs-spotify": "nixpkgs-spotify",
         "nixpkgs-unstable": "nixpkgs-unstable",

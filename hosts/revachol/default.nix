@@ -118,11 +118,7 @@
     audio.enable = true;
     backups.enable = true;
     bitwarden.enable = true;
-
-    browsers = {
-      enable = true;
-      qutebrowser.package = inputs'.nixpkgs-qutebrowser.legacyPackages.qutebrowser;
-    };
+    browsers.enable = true;
 
     chat = {
       enable = true;
