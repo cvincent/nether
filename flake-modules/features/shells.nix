@@ -42,6 +42,8 @@ mkFeature name (
       fastfetch = { };
       fd = { };
       fx = { };
+      # NOTE: Do we have enableFishIntegration for fzf? Would be nice to be able
+      # to ctrl-t to fuzzy find past ssh connections, or kill -9 ctrl-t, etc...
       fzf = { };
       gh = { };
       jless = { };
