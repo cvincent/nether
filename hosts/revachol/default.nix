@@ -58,7 +58,7 @@
 
     graphicalEnv = {
       enable = true;
-      primaryDisplay = "DP-1";
+      primaryDisplay = "DP-4";
 
       displayManager.default.which = "gdm";
 

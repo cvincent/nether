@@ -10,12 +10,12 @@ mkSoftware name (
         PATH=$PATH:/run/current-system/sw/bin
 
         top_wallpaper=$(find ${dotfilesDirectory}/resources/wallpapers/nord-* -type f | sort -R | head -n1)
-        ${swww} img -o DP-2 $top_wallpaper
+        ${swww} img -o DP-5 $top_wallpaper
 
         landscape_wallpaper=$(find ${dotfilesDirectory}/resources/wallpapers/landscapes/nord-*-m0\.* -type f | sort -R | head -n1)
         landscape_right=$''\{landscape_wallpaper/m0\./m1\.}
-        ${swww} img -o DP-3 $landscape_wallpaper
-        ${swww} img -o DP-1 $landscape_right
+        ${swww} img -o DP-6 $landscape_wallpaper
+        ${swww} img -o DP-4 $landscape_right
       ''
     );
   in

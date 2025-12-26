@@ -16,8 +16,8 @@ mkSoftware name (
         style = builtins.readFile ./style.css |> lib.mkAfter;
 
         settings = {
-          notification-window-preferred-output = "DP-1";
-          control-center-preferred-output = "DP-1";
+          notification-window-preferred-output = "DP-4";
+          control-center-preferred-output = "DP-4";
           positionX = "right";
           positionY = "top";
           layer = "top";

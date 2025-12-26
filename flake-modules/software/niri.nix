@@ -54,20 +54,20 @@ mkSoftware name (
       #     }
       #     trackball { natural-scroll; }
       #   }
-      #   output "DP-1" {
+      #   output "DP-4" {
       #     focus-at-startup
       #     transform "normal"
       #     position x=2560 y=1440
       #     mode "2560x1440@143.970000"
       #     variable-refresh-rate on-demand=false
       #   }
-      #   output "DP-2" {
+      #   output "DP-5" {
       #     transform "normal"
       #     position x=2560 y=0
       #     mode "2560x1440@143.970000"
       #     variable-refresh-rate on-demand=false
       #   }
-      #   output "DP-3" {
+      #   output "DP-6" {
       #     transform "normal"
       #     position x=0 y=1440
       #     mode "2560x1440@143.970000"
@@ -199,7 +199,7 @@ mkSoftware name (
       #       };
       #     in
       #     {
-      #       "DP-1" = {
+      #       "DP-4" = {
       #         focus-at-startup = true;
       #         position = {
       #           x = 2560;
@@ -208,7 +208,7 @@ mkSoftware name (
       #       }
       #       // defaults;
 
-      #       "DP-2" = {
+      #       "DP-5" = {
       #         position = {
       #           x = 2560;
       #           y = 0;
@@ -216,7 +216,7 @@ mkSoftware name (
       #       }
       #       // defaults;
 
-      #       "DP-3" = {
+      #       "DP-6" = {
       #         position = {
       #           x = 0;
       #           y = 1440;

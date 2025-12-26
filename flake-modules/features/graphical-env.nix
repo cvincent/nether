@@ -137,7 +137,7 @@ mkFeature name (
 
     options.primaryDisplay = lib.mkOption {
       type = lib.types.str;
-      default = "DP-1";
+      default = "DP-4";
     };
 
     clipboardSupport = {

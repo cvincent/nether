@@ -80,7 +80,7 @@ mkSoftware name (
           # Remove if issues with Discord windows or Zoom screensharing:
           __GLX_VENDOR_LIBRARY_NAME = "nvidia";
 
-          AQ_DRM_DEVICES = "/dev/dri/card1";
+          AQ_DRM_DEVICES = "/dev/dri/card2";
         })
       ];
 
@@ -149,7 +149,7 @@ mkSoftware name (
                   unfocus = "hide"
                   margin = 50
                   offset = "500%"
-                  force_monitor = "DP-1"
+                  force_monitor = "DP-4"
                   exclude = "*"
                 ''
               ) scratchpads
