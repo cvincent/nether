@@ -25,6 +25,12 @@ return {
               ["<esc>"] = "close",
               ["<c-down>"] = "cycle_history_next",
               ["<c-up>"] = "cycle_history_prev",
+
+              ["<c-q>"] = function(prompt_bufnr)
+                local actions = require("telescope.actions")
+                actions.smart_send_to_qflist(prompt_bufnr)
+                actions.open_qflist(prompt_bufnr)
+              end,
             }
           },
           winblend = 15,
