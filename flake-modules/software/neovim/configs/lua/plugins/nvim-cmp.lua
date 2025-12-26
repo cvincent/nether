@@ -125,6 +125,21 @@ return {
             },
           }
         ),
+
+        sorting = {
+          priority_weight = 1,
+          -- TODO: Would be cool to add stuff like "See variable names before
+          -- method names" in rust, or something like that.
+          comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.length,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.order,
+          },
+        },
       })
     end,
 
