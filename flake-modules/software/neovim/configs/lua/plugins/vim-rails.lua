@@ -4,6 +4,24 @@ return {
   init = function()
     local augroup = vim.api.nvim_create_augroup("rails.init", { clear = true })
 
+    vim.g.rails_projections = {
+      ["app/controllers/*_controller.rb"] = {
+        command = "controller",
+        template = { "class {camelcase|capitalize|colons}Controller < ApplicationController", "end" },
+        test = { "spec/requests/{}_spec.rb" },
+      },
+      ["spec/requests/*_spec.rb"] = {
+        alternate = { "app/controllers/{}_controller.rb" },
+        template = {
+          [[require "rails_helper"]],
+          [[]],
+          [[RSpec.describe {camelcase|capitalize|colons}Controller, type: :request do]],
+          [[  include_context "request spec"]],
+          [[end]],
+        },
+      },
+    }
+
     vim.api.nvim_create_autocmd("User", {
       pattern = "Rails",
       group = augroup,
