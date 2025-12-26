@@ -76,10 +76,6 @@ vim.keymap.set("n", "<leader>rt", params_at_pos)
 
 local h = require("luasnips.helpers")
 
-local outside_snippet = function(...)
-  return conds_expand.line_end(...) and not ls.in_snippet()
-end
-
 local underscore_to_pascal = function(str)
   return str
       :gsub("_(%w)", function(match) return match:upper() end)
@@ -153,8 +149,8 @@ ls.add_snippets("ruby", {
 
   snippet({
     trig = "do",
-    condition = conds_expand.line_end * outside_snippet,
-    show_condition = conds_expand.line_end * outside_snippet,
+    condition = conds_expand.line_end * h.outside_snippet,
+    show_condition = conds_expand.line_end * h.outside_snippet,
   }, {
     c(1, {
       s(nil,
@@ -208,8 +204,8 @@ ls.add_snippets("ruby", {
 
   -- snippet({
   --   trig = "let",
-  --   condition = conds_expand.line_begin * outside_snippet,
-  --   show_condition = outside_snippet,
+  --   condition = conds_expand.line_begin * h.outside_snippet,
+  --   show_condition = h.outside_snippet,
   -- }, {
   --   t("let"),
   --   c(1, {
