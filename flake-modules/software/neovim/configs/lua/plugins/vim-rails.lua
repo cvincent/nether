@@ -43,9 +43,16 @@ return {
 
         local open_or_generate_spec = function(open_style)
           local cmd = open_style .. "spec "
+          local app_relative_path_for_spec = app_relative_path
 
-          if not pcall(vim.cmd, cmd .. app_relative_path) then
-            vim.cmd(cmd .. app_relative_path .. "!")
+          if type == "controller" then
+            app_relative_path_for_spec = app_relative_path_for_spec
+                :gsub("^controllers/", "requests/")
+                :gsub("_controller$", "")
+          end
+
+          if not pcall(vim.cmd, cmd .. app_relative_path_for_spec) then
+            vim.cmd(cmd .. app_relative_path_for_spec .. "!")
           end
         end
 
