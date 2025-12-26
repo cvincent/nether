@@ -6,9 +6,12 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       -- { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      { "natecraddock/telescope-zf-native.nvim" },
+      "natecraddock/telescope-zf-native.nvim",
       "nvim-telescope/telescope-symbols.nvim",
-      { "anekos/tailiscope.nvim",               branch = "fix/support-case-sensitive-filesystems" },
+      {
+        "anekos/tailiscope.nvim",
+        branch = "fix/support-case-sensitive-filesystems"
+      },
     },
 
     opts = {
