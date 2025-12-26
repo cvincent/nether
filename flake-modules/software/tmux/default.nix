@@ -70,6 +70,7 @@
             bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel 'wl-copy'
             # v like Vim visual mode
             bind-key -T copy-mode-vi v send -X begin-selection
+            bind-key -T copy-mode-vi C-v send -X rectangle-toggle
 
             # Shift arrow to switch windows
             bind -n S-Left  previous-window
