@@ -1234,6 +1234,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-signal-desktop": {
+      "locked": {
+        "lastModified": 1762977756,
+        "narHash": "sha256-4PqRErxfe+2toFJFgcRKZ0UI9NSIOJa+7RXVtBhy4KE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "c5ae371f1a6a7fd27823bc500d9390b38c05fa55",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-spotify": {
       "locked": {
         "lastModified": 1758690382,
@@ -1287,6 +1302,21 @@
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "fbcf476f790d8a217c3eab4e12033dc4a0f6d23c",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs-yt-dlp-pot-provider": {
+      "locked": {
+        "lastModified": 1761114652,
+        "narHash": "sha256-f/QCJM/YhrV/lavyCVz8iU3rlZun6d+dAiC3H+CDle4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "01f116e4df6a15f4ccdffb1bcd41096869fb385c",
         "type": "github"
       },
       "original": {
@@ -1577,9 +1607,11 @@
         "nixpkgs-neovim": "nixpkgs-neovim",
         "nixpkgs-peroxide": "nixpkgs-peroxide",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
+        "nixpkgs-signal-desktop": "nixpkgs-signal-desktop",
         "nixpkgs-spotify": "nixpkgs-spotify",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs-yt-dlp": "nixpkgs-yt-dlp",
+        "nixpkgs-yt-dlp-pot-provider": "nixpkgs-yt-dlp-pot-provider",
         "private-nethers": "private-nethers",
         "stylix": "stylix",
         "xremap-flake": "xremap-flake"
