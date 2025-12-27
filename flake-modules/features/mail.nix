@@ -19,11 +19,24 @@ in
   # as-is until we have the time.
 
   flake.nixosModules."${name}" = moduleWithSystem (
-    { pkgInputs }:
+    { }:
     { pkgs, config, ... }:
     {
       options = {
         nether.mail.enable = lib.mkEnableOption "Fetching, reading, and sending email";
+
+        nether.mail.hydroxide = {
+          enable = lib.mkOption {
+            type = lib.types.bool;
+            description = "Third-party, open-source ProtonMail bridge";
+            default = config.nether.mail.enable;
+          };
+
+          package = lib.mkOption {
+            type = lib.types.package;
+            default = pkgs.hydroxide;
+          };
+        };
 
         nether.mail.davmail.enable = lib.mkOption {
           type = lib.types.bool;
@@ -39,7 +52,12 @@ in
       };
 
       config = lib.mkIf config.nether.mail.enable {
+        environment.systemPackages = lib.mkIf config.nether.mail.hydroxide.enable [
+          config.nether.mail.hydroxide.package
+        ];
+
         nether.backups.paths = lib.mkIf config.nether.mail.enable {
+          "${config.nether.homeDirectory}/.config/hydroxide/auth.json" = { };
           # TODO: Once all of this is in proper Flake modules, this should obviously
           # be grouped with the davmail configs
           "${config.nether.homeDirectory}/.davmail-token.properties" = { };
@@ -55,6 +73,21 @@ in
   flake.homeModules."${name}" =
     { osConfig, ... }:
     {
+      systemd.user.services.hydroxide = lib.mkIf osConfig.nether.mail.hydroxide.enable (
+        let
+          package = osConfig.nether.mail.hydroxide.package;
+        in
+        {
+          Install.WantedBy = [ "graphical-session.target" ];
+          Unit.After = [ "graphical-session.target" ];
+          Service = {
+            Type = "exec";
+            ExecStart = "${package}/bin/hydroxide serve";
+            Restart = "on-failure";
+          };
+        }
+      );
+
       imports = lib.optionals osConfig.nether.mail.enable (
         [
           ./mail/notifications/email.nix
