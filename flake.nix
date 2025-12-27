@@ -183,7 +183,12 @@
     private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
 
     ha-notifier.url = "github:cvincent/ha-notifier";
-    hyprland.url = "github:hyprwm/Hyprland?ref=v0.50.1";
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland?ref=v0.50.1";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     # niri.url = "github:sodiboo/niri-flake";
     # niri-with-blur.url = "github:YaLTeR/niri?ref=pull/1634/head";
 
