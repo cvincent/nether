@@ -166,6 +166,22 @@
     scripts.wait-for-port.enable = true;
   };
 
+  # TODO: Move this stuff into a boot.nix feature
+
+  boot.kernelParams = [
+    "panic=0" # Don't auto-reboot on panic (0 = never)
+    "oops=panic" # Treat oops as panics
+    "softlockup_panic=1"
+    "loglevel=8" # Lower this if there's too much noise on screen
+    "debug" # Enable general kernel debugging
+  ];
+
+  boot.kernel.sysctl = {
+    "kernel.hung_task_panic" = 1;
+    "kernel.hardlockup_panic" = 1;
+    "kernel.panic_on_rcu_stall" = 1;
+  };
+
   boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
