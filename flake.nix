@@ -185,7 +185,7 @@
     ha-notifier.url = "github:cvincent/ha-notifier";
 
     hyprland = {
-      url = "github:hyprwm/Hyprland?ref=v0.50.1";
+      url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

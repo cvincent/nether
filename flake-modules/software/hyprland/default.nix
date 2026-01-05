@@ -124,7 +124,7 @@ mkSoftware name (
 
             "./.config/hypr/work-browsers.conf".text =
               pkgInputs.private-nethers.workBrowsers
-              |> builtins.map (class: "windowrulev2 = workspace 2 silent, class:^(qute-${class})$")
+              |> map (class: "windowrule = workspace 2 silent, match:class qute-${class}")
               |> lib.strings.concatLines;
 
             "./.config/hypr/pyprland.toml".text = builtins.concatStringsSep "\n" (
@@ -143,6 +143,7 @@ mkSoftware name (
                 }:
                 ''
                   [scratchpads.${name}]
+                  class = "${class}"
                   command = "${command}"
                   animation = "fromTop"
                   unfocus = "hide"
@@ -160,14 +161,14 @@ mkSoftware name (
                   class,
                   name ? class,
                   binding,
-                  size ? "60% 60%",
+                  size ? "monitor_w*0.60 monitor_h*0.60",
                   ...
                 }:
                 ''
                   bind = ${binding}, exec, pypr toggle ${name}
-                  windowrulev2 = float, class:^(${class})$
-                  windowrulev2 = size ${size}, class:^(${class})$
-                  windowrulev2 = move 30% -1000%, class:^(${class})$
+                  windowrule = float on, match:class ${class}
+                  windowrule = size ${size}, match:class ${class}
+                  windowrule = move 30% -1000%, match:class ${class}
                 ''
               ) scratchpads
             );
