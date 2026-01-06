@@ -711,22 +711,6 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-bambu-studio": {
-      "locked": {
-        "lastModified": 1741865919,
-        "narHash": "sha256-4thdbnP6dlbdq+qZWTsm4ffAwoS8Tiq1YResB+RP6WE=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "573c650e8a14b2faa0041645ab18aed7e60f0c9a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "573c650e8a14b2faa0041645ab18aed7e60f0c9a",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -938,7 +922,6 @@
         "nil-ls": "nil-ls",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-bambu-studio": "nixpkgs-bambu-studio",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "private-nethers": "private-nethers",
         "stylix": "stylix",

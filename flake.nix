@@ -204,6 +204,6 @@
     xremap-flake.url = "github:xremap/nix-flake";
 
     # Individual pins
-    nixpkgs-bambu-studio.url = "github:nixos/nixpkgs/573c650e8a14b2faa0041645ab18aed7e60f0c9a";
+    # None currently
   };
 }

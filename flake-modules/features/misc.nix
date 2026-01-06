@@ -3,7 +3,12 @@ mkFeature name (
   { nether, ... }:
   {
     apps = {
-      bambu-studio = { };
+      bambu-studio-flatpak.nixos.services.flatpak.packages = [
+        {
+          appId = "com.bambulab.BambuStudio";
+          origin = "flathub";
+        }
+      ];
 
       exiftool = { };
       feh = { };
