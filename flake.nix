@@ -157,32 +157,32 @@
     );
 
   inputs = {
-    # TODO: Pinned versions of things should be passed in as options from the
-    # host
+    # TODO: _All_ pinned versions of things should be passed in as options from
+    # the host; some things are doing this within mkFeature and maybe mkSoftware
+
+    # We structure our flake with flake-parts
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    # Our main sources for packages: nixpkgs, nixpkgs-unstable, and flatpaks
     nixpkgs.url = "nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
 
-    nixpkgs-bambu-studio.url = "github:nixos/nixpkgs/573c650e8a14b2faa0041645ab18aed7e60f0c9a";
-    nixpkgs-neovim.url = "nixpkgs/nixos-unstable";
-    nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
-    nixpkgs-yt-dlp.url = "nixpkgs/nixos-unstable";
-    nixpkgs-yt-dlp-pot-provider.url = "nixpkgs/nixos-unstable";
+    # Private repo with private flake inputs
+    # TODO: Set this in an option one time so anywhere can access it via config
+    # or osConfig
+    private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
 
+    # We manage our home directory and user packages with Home Mangaer
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+    # Easy unified theming
     stylix.url = "github:nix-community/stylix/release-25.11";
 
-    # TODO: Set this in an option one time so anywhere can access it via config
-    # or osConfig
-    private-nethers.url = "git+ssh://git@github.com/cvincent/private-nethers.git?ref=main";
-
-    ha-notifier.url = "github:cvincent/ha-notifier";
+    # Compositors
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -192,6 +192,10 @@
     # niri.url = "github:sodiboo/niri-flake";
     # niri-with-blur.url = "github:YaLTeR/niri?ref=pull/1634/head";
 
+    # Other software brought in as flakes rather than from nixpkgs
+
+    ha-notifier.url = "github:cvincent/ha-notifier";
+
     nil-ls = {
       url = "github:oxalica/nil?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -199,7 +203,7 @@
 
     xremap-flake.url = "github:xremap/nix-flake";
 
-    # Needed to update, wasn't ready to deal with our kernel EOL
-    nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
+    # Individual pins
+    nixpkgs-bambu-studio.url = "github:nixos/nixpkgs/573c650e8a14b2faa0041645ab18aed7e60f0c9a";
   };
 }

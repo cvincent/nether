@@ -4,7 +4,7 @@ mkSoftware name (
     hmOptions,
     yt-dlp,
     lib,
-    pkgInputs,
+    inputs',
     ...
   }:
   {
@@ -21,7 +21,10 @@ mkSoftware name (
       };
 
       home.packages = [
-        pkgInputs.nixpkgs-yt-dlp-pot-provider.python313Packages.bgutil-ytdlp-pot-provider
+        # NOTE: Is it possible to just automatically get this from whatever
+        # input yt-dlp itself is coming from? Or perhaps this should be raised
+        # to a host option so it can be set there.
+        inputs'.nixpkgs-unstable.legacyPackages.python313Packages.bgutil-ytdlp-pot-provider
       ];
     };
   }

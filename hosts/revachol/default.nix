@@ -1,10 +1,5 @@
-{ inputs', pkgInputs, ... }:
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}:
+{ inputs', ... }:
+{ config, pkgs, ... }:
 {
   imports = [ ./hardware.nix ];
 
@@ -44,14 +39,12 @@
     editors = {
       enable = true;
       default.which = "neovim";
-      # TODO: We should be able to juse use inputs' throughout
-      neovim.package = inputs'.nixpkgs-neovim.legacyPackages.neovim;
+      neovim.package = inputs'.nixpkgs-unstable.legacyPackages.neovim;
 
       formatters.nixfmt-rfc-style.package = inputs'.nixpkgs-unstable.legacyPackages.nixfmt-rfc-style;
 
       lsps = {
         nil.package = inputs'.nil-ls.packages.nil;
-        # NOTE: Shouldn't we be able to use inputs' at least for all nixpkgs?
         nixd.package = inputs'.nixpkgs-unstable.legacyPackages.nixd;
       };
     };
@@ -92,7 +85,7 @@
 
     media = {
       enable = true;
-      # apps.yt-dlp.package = inputs'.nixpkgs-yt-dlp.legacyPackages.yt-dlp.overrideAttrs {
+      # apps.yt-dlp.package = inputs'.nixpkgs-unstable.legacyPackages.yt-dlp.overrideAttrs {
       #   src = pkgs.fetchFromGitHub {
       #     owner = "yt-dlp";
       #     repo = "yt-dlp";
@@ -100,8 +93,6 @@
       #     hash = "sha256-jQaENEflaF9HzY/EiMXIHgUehAJ3nnDT9IbaN6bDcac=";
       #   };
       # };
-
-      apps.spotify.package = pkgInputs.nixpkgs-spotify.spotify;
     };
 
     dev = {
@@ -119,12 +110,7 @@
     backups.enable = true;
     bitwarden.enable = true;
     browsers.enable = true;
-
-    chat = {
-      enable = true;
-      apps.signal-desktop.package = inputs'.nixpkgs-signal-desktop.legacyPackages.signal-desktop;
-    };
-
+    chat.enable = true;
     flatpak.enable = true;
     git.enable = true;
     homeAssistant.enable = true;
