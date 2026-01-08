@@ -119,6 +119,7 @@
     jiraCLI.enable = true;
     lf.enable = true;
     mail.enable = true;
+    newMail.enable = true;
 
     misc = {
       enable = true;

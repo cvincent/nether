@@ -66,6 +66,7 @@
 
             # TODO: Iterate over the packages directory
             packages.maildir-rank-addr = pkgs.callPackage ./packages/maildir-rank-addr.nix { };
+            packages.peroxide = pkgs.callPackage ./packages/peroxide.nix { };
             packages.smartcalc-tui = pkgs.callPackage ./packages/smartcalc-tui.nix { };
 
             legacyPackages.fonts.Helvetica = inputs'.private-nethers.legacyPackages.fonts.Helvetica;
