@@ -16,7 +16,7 @@ mkFeature name (
     };
 
     toplevel = {
-      jujutsu.hm.programs.jujutsu.enable = true;
+      jujutsu = { };
       tldr = { };
     };
 
