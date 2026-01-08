@@ -4,6 +4,7 @@ mkSoftware name (
     lib,
     nether,
     fish,
+    config,
     ...
   }:
   {
@@ -111,9 +112,12 @@ mkSoftware name (
             # TODO: This should just be a bash script so we can use it from any
             # shell.
             nxrb = ''
+              # Is this still needed, now that we're on jj?
               git -C ${dotfilesDirectory} add -AN
               if sudo nixos-rebuild switch --flake ${dotfilesDirectory} --fast
                 notify-send -i dialog-information -t 5000 -e 'NixOS Rebuild Succeeded'
+                set gen $(readlink /nix/var/nix/profiles/system | grep -o "[0-9]*")
+                jj -R ${dotfilesDirectory} tag set "${config.nether.networking.hostname}-$gen"
               else
                 notify-send -i dialog-error -t 5000 -e 'NixOS Rebuild Failed'
               end
