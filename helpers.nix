@@ -695,6 +695,8 @@
           in
           (pkgOpt softwareOpts.package.default defaultEnable softwareOpts.enable.description)
         );
+
+        andThen = func: val: func val;
       };
     };
 
