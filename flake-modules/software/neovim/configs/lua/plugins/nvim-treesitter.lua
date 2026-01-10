@@ -97,4 +97,13 @@ return {
   },
 
   "nvim-treesitter/playground",
+
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+
+    opts = {
+      enable = false,
+      multiline_threshold = 1,
+    },
+  },
 }
