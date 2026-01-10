@@ -9,10 +9,13 @@ mkFeature name (
   }:
   {
     options = {
+      # We could define these in toplevel, but I prefer them to have descriptions
+      # since these options aren't actually for installing software.
       beam.enable = lib.mkEnableOption "Configuration for an easier time in BEAM languages";
       c.enable = lib.mkEnableOption "Easier C dev";
       postgresql.enable = lib.mkEnableOption "Easier use of postgresql for dev";
       ruby.enable = lib.mkEnableOption "Assistance in Ruby projects";
+      shell.enable = lib.mkEnableOption "Assistance for shell scripting";
     };
 
     toplevel = {
@@ -43,6 +46,10 @@ mkFeature name (
       (lib.mkIf dev.ruby.enable {
         # TODO: This could maybe go in devShell
         nether.shells.aliases.be = "bundle exec ";
+      })
+
+      (lib.mkIf dev.shell.enable {
+        environment.systemPackages = [ pkgs.shellcheck ];
       })
     ];
 

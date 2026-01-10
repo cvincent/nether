@@ -101,6 +101,7 @@
       c.enable = true;
       postgresql.enable = true;
       ruby.enable = true;
+      shell.enable = true;
     };
 
     # Note for the future on structure/organization, I wonder if these should be
