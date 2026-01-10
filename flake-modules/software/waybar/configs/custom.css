@@ -81,12 +81,13 @@ tooltip label {
 }
 
 #idle_inhibitor,
-#pulseaudio,
 #network,
+#pulseaudio,
 #cpu,
 #memory,
 #battery,
 #clock,
+#mail,
 #tray {
   padding-right: 14px;
   padding-top: 4px;
