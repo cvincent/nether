@@ -44,26 +44,12 @@
     '')
   ];
 
-  programs.aerc.enable = true;
   services.vdirsyncer.enable = true;
   services.vdirsyncer.frequency = "*-*-* *:*:00"; # Every minute
 
   home.file."./.mbsyncrc".text = private-nethers.mail.mbsyncRC;
 
   xdg.configFile = {
-    "aerc/aerc.conf".source = helpers.directSymlink ./aerc/aerc.conf;
-    "aerc/binds.conf".source = helpers.directSymlink ./aerc/binds.conf;
-    "aerc/stylesets".source = helpers.directSymlink ./aerc/stylesets;
-
-    "aerc/accounts.conf.dummy" = {
-      text = private-nethers.mail.aercAccountsConf;
-      onChange = ''
-        rm -f ${config.home.homeDirectory}/.config/aerc/accounts.conf
-        cp ${config.home.homeDirectory}/.config/aerc/accounts.conf.dummy ${config.home.homeDirectory}/.config/aerc/accounts.conf
-        chmod 0600 ${config.home.homeDirectory}/.config/aerc/accounts.conf
-      '';
-    };
-
     "khard/khard.conf".source = ./khard.conf;
     "khal/config".source = ./khal.conf;
     "vdirsyncer/config".text = private-nethers.mail.vdirsyncerConfig;

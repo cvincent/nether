@@ -116,6 +116,7 @@
     bitwarden.enable = true;
     browsers.enable = true;
     chat.enable = true;
+    desk.enable = true;
     flatpak.enable = true;
     git.enable = true;
     homeAssistant.enable = true;
@@ -123,8 +124,7 @@
     ios.enable = true;
     jiraCLI.enable = true;
     lf.enable = true;
-    mail.enable = true;
-    newMail.enable = true;
+    mail.enable = false;
 
     misc = {
       enable = true;

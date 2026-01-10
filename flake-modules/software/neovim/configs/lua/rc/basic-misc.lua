@@ -71,3 +71,6 @@ vim.opt.textwidth = 80
 
 -- Always draw the signcolumn
 vim.opt.signcolumn = "yes"
+
+-- Disable maps for built-in mail filetype plugin
+vim.api.nvim_command("let no_mail_maps = 1")

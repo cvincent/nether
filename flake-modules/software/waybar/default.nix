@@ -3,12 +3,14 @@ mkSoftware name (
   {
     config,
     waybar,
+    lib,
     helpers,
     nether,
     hmConfig,
     ...
   }:
   let
+    directSymlinkConfigPath = "waybar/direct-symlink.json";
     directSymlinkCssPath = "waybar/direct-symlink.css";
   in
   {
@@ -18,7 +20,17 @@ mkSoftware name (
         systemd.enable = true;
       };
 
-      xdg.configFile."waybar/config".source = helpers.directSymlink ./configs/config.json;
+      xdg.configFile."waybar/config".text = builtins.toJSON {
+        "custom/mail" = {
+          "exec" = lib.getExe nether.desk.mailWaybarModule;
+        };
+
+        "include" = [
+          "${nether.homeDirectory}/${hmConfig.xdg.configFile.${directSymlinkConfigPath}.target}"
+        ];
+      };
+
+      xdg.configFile.${directSymlinkConfigPath}.source = helpers.directSymlink ./configs/config.json;
 
       xdg.configFile."waybar/style.css".text = with config.lib.stylix.colors.withHashtag; ''
         @define-color base00 ${base00}; @define-color base01 ${base01};
