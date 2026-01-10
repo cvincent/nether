@@ -9,10 +9,7 @@
         nether.homeDirectory = lib.mkOption { type = lib.types.str; };
         nether.dotfilesDirectory = lib.mkOption { type = lib.types.str; };
         nether.downloadsDirectory = lib.mkOption { type = lib.types.str; };
-
-        nether.me = lib.mkOption {
-          type = with lib.types; attrsOf anything;
-        };
+        nether.me = lib.mkOption { type = with lib.types; attrsOf anything; };
       };
 
       config = {
