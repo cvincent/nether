@@ -114,6 +114,7 @@
     flatpak.enable = true;
     git.enable = true;
     homeAssistant.enable = true;
+    incron.enable = true;
     ios.enable = true;
     jiraCLI.enable = true;
     lf.enable = true;
