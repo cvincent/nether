@@ -12,11 +12,7 @@ vim.opt.history = 10000
 -- Match angle brackets
 vim.opt.matchpairs = vim.opt.matchpairs + "<:>"
 
--- Maybe learn what these do before fucking with them :P
--- set wildmenu
--- set wildmode=full
--- set completeopt=menuone,preview
--- set infercase
+vim.opt.wildmode = "longest:full,full"
 
 -- Ignore case during ex file completion
 vim.opt.wildignorecase = true
