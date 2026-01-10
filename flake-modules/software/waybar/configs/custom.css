@@ -80,6 +80,11 @@ window#waybar {
   background: #4c566a;
 }
 
+window#waybar.empty #window {
+  background: transparent;
+  border-color: transparent;
+}
+
 #battery.charging {
   background-color: #a3be8c;
   color: rgba(46, 52, 64, 0.9);

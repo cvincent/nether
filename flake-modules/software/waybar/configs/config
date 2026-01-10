@@ -58,9 +58,13 @@
   },
 
   "hyprland/window": {
-    "max-length": 40,
-    // "on-click": "hyprctl dispatch changegroupactive f",
-    // "on-click-right": "hyprctl dispatch changegroupactive b"
+    "hide-empty-text": true,
+    "separate-outputs": true,
+    "on-click": "hyprctl dispatch changegroupactive f",
+    "on-click-right": "hyprctl dispatch changegroupactive b",
+    "rewrite": {
+      "(.*) - qutebrowser": "$1"
+    }
   },
 
   "idle_inhibitor": {
