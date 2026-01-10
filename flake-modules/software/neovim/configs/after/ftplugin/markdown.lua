@@ -6,13 +6,3 @@ vim.b[0].delimitMate_expand_space = 0
 vim.wo.spell = true
 -- TODO: Set this globally, I guess with an aucmd for new buffers?
 vim.bo.spellfile = vim.fs.abspath("~/.local/share/neovim-spell/en.utf-8.add")
-
--- Bullets mappings
-vim.keymap.set("i", "<cr>", "<Plug>(bullets-newline)", { buffer = true })
-vim.keymap.set("i", "<c-cr>", "<cr>", { noremap = true, buffer = true })
-
-vim.keymap.set("n", "o", "<Plug>(bullets-newline)", { buffer = true })
-vim.keymap.set("n", ">>", "<Plug>(bullets-demote)", { buffer = true })
-vim.keymap.set("v", ">", "<Plug>(bullets-demote)", { buffer = true })
-vim.keymap.set("n", "<<", "<Plug>(bullets-promote)", { buffer = true })
-vim.keymap.set("v", "<", "<Plug>(bullets-promote)", { buffer = true })
