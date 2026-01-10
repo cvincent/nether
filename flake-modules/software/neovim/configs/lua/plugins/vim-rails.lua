@@ -1,6 +1,8 @@
 return {
   "tpope/vim-rails",
 
+  dependencies = { "tpope/vim-projectionist" },
+
   init = function()
     local augroup = vim.api.nvim_create_augroup("rails.init", { clear = true })
 
@@ -74,6 +76,16 @@ return {
           end
         end
       end
+    })
+
+    -- Make projection commands available for oil.nvim buffers
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "OilEnter",
+      callback = function()
+        if vim.fn["RailsDetect"](vim.fn.getcwd()) then
+          vim.fn["rails#buffer_setup"]()
+        end
+      end,
     })
   end
 }
