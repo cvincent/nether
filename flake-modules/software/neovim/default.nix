@@ -17,9 +17,17 @@ mkSoftware name (
     ...
   }:
   {
-    options.command = lib.mkOption {
-      type = lib.types.str;
-      default = "nvim";
+    options = {
+      command = lib.mkOption {
+        type = lib.types.str;
+        default = "nvim";
+      };
+
+      manPager = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Use NeoVim as our man pager";
+      };
     };
 
     nixos = {
@@ -30,19 +38,27 @@ mkSoftware name (
       nether.shells.aliases.nvs = "nvim -S Session.vim";
     };
 
-    hm = {
-      xdg.configFile.nvim.source = helpers.directSymlink ./configs;
+    hm = lib.mkMerge [
+      {
+        xdg.configFile.nvim.source = helpers.directSymlink ./configs;
 
-      home.packages = with pkgs; [
-        # Treesitter wants a C compiler
-        gcc
+        home.packages = with pkgs; [
+          # Treesitter wants a C compiler
+          gcc
 
-        # Programmatically control NeoVim
-        neovim-remote
+          # Programmatically control NeoVim
+          neovim-remote
 
-        # Image support, needed for image.nvim
-        imagemagick
-      ];
-    };
+          # Image support, needed for image.nvim
+          imagemagick
+        ];
+      }
+      (lib.mkIf neovim.manPager {
+        home.sessionVariables = {
+          MANWIDTH = 80;
+          MANPAGER = "${lib.getExe neovim.package} +Man! -c ZenMode";
+        };
+      })
+    ];
   }
 )

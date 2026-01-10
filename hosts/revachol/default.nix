@@ -39,7 +39,11 @@
     editors = {
       enable = true;
       default.which = "neovim";
-      neovim.package = inputs'.nixpkgs-unstable.legacyPackages.neovim;
+
+      neovim = {
+        package = inputs'.nixpkgs-unstable.legacyPackages.neovim;
+        manPager = true;
+      };
 
       formatters.nixfmt-rfc-style.package = inputs'.nixpkgs-unstable.legacyPackages.nixfmt-rfc-style;
 
