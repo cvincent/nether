@@ -133,6 +133,7 @@
     printing2d.enable = true;
     smartCalcTUI.enable = true;
     steam.enable = true;
+    systemNotifications.enable = true;
 
     theme.enable = true;
     timeAndLocale.enable = true;
