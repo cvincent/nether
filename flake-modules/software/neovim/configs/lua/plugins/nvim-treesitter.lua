@@ -28,8 +28,14 @@ return {
 
         indent = {
           enable = true,
-          -- Treesitter indent doesn't handle list continuations well
-          disable = { "markdown" }
+
+          -- NOTE: This takes the parser names, _not_ the filetypes
+          disable = {
+            -- Treesitter indent doesn't handle list continuations well
+            "markdown",
+            -- Works poorly in general in Nix files
+            "nix",
+          }
         },
 
         textobjects = {
