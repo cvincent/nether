@@ -170,6 +170,7 @@
                 // nixosModuleArgs
                 // {
                   "${featureName}" = thisConfig;
+                  hmConfig = config.home-manager.users.${config.nether.username};
                   inherit (config) nether;
                   inherit helpers;
                   inherit (config.home-manager.users.${config.nether.username}) hmOptions;
@@ -323,6 +324,7 @@
             system,
           }:
           homeModuleArgs@{
+            config,
             osConfig,
             osOptions,
             options,
@@ -331,6 +333,7 @@
             ...
           }:
           let
+            hmConfig = config;
             thisConfig = osConfig.nether."${featureName}";
 
             featureDefFn = if builtins.isFunction featureDef then featureDef else (_: featureDef);
@@ -344,7 +347,7 @@
                 hmOptions = options;
                 "${featureName}" = thisConfig;
                 inherit (osConfig) nether;
-                inherit helpers;
+                inherit helpers hmConfig;
               }
             );
 
@@ -472,6 +475,7 @@
                 // nixosModuleArgs
                 // {
                   "${softwareName}" = thisConfig;
+                  hmConfig = config.home-manager.users.${config.nether.username};
                   inherit (config) nether;
                   inherit inputs helpers;
                   inherit (config.home-manager.users.${config.nether.username}) hmOptions;
@@ -538,6 +542,7 @@
                 // {
                   config = osConfig;
                   "${softwareName}" = thisConfig;
+                  hmConfig = osConfig.home-manager.users.${osConfig.nether.username};
                   inherit (osConfig) nether;
                   inherit inputs helpers;
                   hmOptions = options;
