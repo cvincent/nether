@@ -57,12 +57,12 @@
     // "ignored-players": ["firefox"]
   },
 
-  "custom/weather": {
-    "exec": "~/bin/waybar-weather.py",
-    "return-type": "json"
+  "hyprland/window": {
+    "max-length": 40,
+    // "on-click": "hyprctl dispatch changegroupactive f",
+    // "on-click-right": "hyprctl dispatch changegroupactive b"
   },
 
-  // Modules configuration
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
@@ -72,55 +72,14 @@
     "tooltip": false
   },
 
-  "tray": {
-    // "icon-size": 21,
-    "spacing": 10
-  },
-
-  "clock": {
-    // "timezone": "America/New_York",
-    "format": " {:%a %b %d %I:%M %p}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-  },
-
-  "cpu": {
-    "format": " {usage}%",
-    "tooltip": false
-  },
-
-  "memory": {
-    "format": " {}%",
-    "tooltip-format": "{used} / {total}G"
-  },
-
-  "temperature": {
-    // "thermal-zone": 2,
-    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-    "critical-threshold": 80,
-    // "format-critical": "{temperatureC}°C {icon}",
-    "format": "{temperatureC}°C {icon}",
-    "format-icons": ["", "", ""]
-  },
-
-  "backlight": {
-    // "device": "acpi_video1",
-    "format": "{percent}% {icon}",
-    "format-icons": ["", "", "", "", "", "", "", "", ""]
-  },
-
-  "battery": {
-    "states": {
-      // "good": 95,
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "{icon} {capacity}%",
-    "format-charging": " {capacity}%",
-    "format-plugged": " {capacity}%",
-    "format-alt": "{icon} {time}",
-    // "format-good": "", // An empty format will hide the module
-    // "format-full": "",
-    "format-icons": ["", "", "", "", ""]
+  "network": {
+    // "interface": "wlp2*", // (Optional) To force the use of this interface
+    "format-wifi": "",
+    "format-ethernet": "{ipaddr}/{cidr}",
+    "tooltip-format": "{essid} {ipaddr} ({signalStrength}%)",
+    "format-linked": "{ifname} (No IP)",
+    "format-disconnected": "⚠",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
   },
 
   "pulseaudio": {
@@ -143,33 +102,45 @@
     "on-click": "pavucontrol"
   },
 
-  "network": {
-    // "interface": "wlp2*", // (Optional) To force the use of this interface
-    "format-wifi": "",
-    "format-ethernet": "{ipaddr}/{cidr}",
-    "tooltip-format": "{essid} {ipaddr} ({signalStrength}%)",
-    "format-linked": "{ifname} (No IP)",
-    "format-disconnected": "⚠",
-    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false
   },
 
-  "custom/media": {
-    "format": "{icon} {}",
-    "return-type": "json",
-    "max-length": 40,
-    "format-icons": {
-      "spotify": "",
-      "default": "🎜"
+  "memory": {
+    "format": " {}%",
+    "tooltip-format": "{used} / {total}G"
+  },
+
+  "battery": {
+    "states": {
+      // "good": 95,
+      "warning": 30,
+      "critical": 15
     },
-    "escape": true,
-    "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-    // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    "format": "{icon} {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-alt": "{icon} {time}",
+    // "format-good": "", // An empty format will hide the module
+    // "format-full": "",
+    "format-icons": ["", "", "", "", ""]
   },
 
-  "hyprland/window": {
-    "max-length": 40,
-    // "on-click": "hyprctl dispatch changegroupactive f",
-    // "on-click-right": "hyprctl dispatch changegroupactive b"
+  "clock": {
+    // "timezone": "America/New_York",
+    "format": " {:%a %b %d %I:%M %p}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+  },
+
+  "custom/weather": {
+    "exec": "~/bin/waybar-weather.py",
+    "return-type": "json"
+  },
+
+  "tray": {
+    // "icon-size": 21,
+    "spacing": 10
   },
 
   "custom/notification": {
@@ -192,4 +163,34 @@
     "on-click-right": "swaync-client -d -sw",
     "escape": true
   },
+
+  // Unused modules
+
+  "temperature": {
+    // "thermal-zone": 2,
+    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "critical-threshold": 80,
+    // "format-critical": "{temperatureC}°C {icon}",
+    "format": "{temperatureC}°C {icon}",
+    "format-icons": ["", "", ""]
+  },
+
+  "backlight": {
+    // "device": "acpi_video1",
+    "format": "{percent}% {icon}",
+    "format-icons": ["", "", "", "", "", "", "", "", ""]
+  },
+
+  "custom/media": {
+    "format": "{icon} {}",
+    "return-type": "json",
+    "max-length": 40,
+    "format-icons": {
+      "spotify": "",
+      "default": "🎜"
+    },
+    "escape": true,
+    "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+    // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+  }
 }
