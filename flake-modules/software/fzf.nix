@@ -24,7 +24,22 @@ mkSoftware name (
 
     hm.programs.fzf = {
       inherit (fzf) enable package;
-      defaultOptions = [ "--bind=ctrl-h:backward-kill-word" ];
+
+      defaultOptions =
+        let
+          bind =
+            {
+              ctrl-h = "backward-kill-word";
+              ctrl-left = "backward-word";
+              ctrl-right = "forward-word";
+            }
+            |> lib.mapAttrsToList (k: v: "${k}:${v}")
+            |> builtins.concatStringsSep ",";
+        in
+        [
+          "--bind=${bind}"
+        ];
+
       colors.bg = lib.mkForce "-1";
     };
   }
