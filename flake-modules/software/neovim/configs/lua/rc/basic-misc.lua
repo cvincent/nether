@@ -47,7 +47,7 @@ vim.opt.undofile = true
 
 -- Include winfixwidth in sessions
 vim.opt.sessionoptions:append("resize")
-vim.opt.sessionoptions:remove("folds")
+vim.opt.sessionoptions:append("folds")
 vim.opt.sessionoptions:remove("buffers")
 
 -- Per-project .vimrc files; safe commands only
