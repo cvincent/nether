@@ -5,10 +5,23 @@
   "height": 36, // Waybar height (to be removed for auto height)
   // "width": 1280, // Waybar width
   "spacing": 0, // Gaps between modules (4px)
-  // Choose the order of the modules
+
   "modules-left": ["hyprland/workspaces", "custom/spotify"],
   "modules-center": ["hyprland/window", "hyprland/submap"],
-  "modules-right": ["idle_inhibitor", "network", "pulseaudio", "cpu", "memory", "keyboard-state", "battery", "clock", "custom/weather", "tray", "custom/notification"],
+  "modules-right": [
+    "idle_inhibitor",
+    "network",
+    "pulseaudio",
+    "cpu",
+    "memory",
+    "keyboard-state",
+    "battery",
+    "clock",
+    "custom/weather",
+    "tray",
+    "custom/notification"
+  ],
+
   "hyprland/workspaces": {
     "disable-scroll": true,
     "on-click": "activate",
@@ -27,6 +40,7 @@
       "10": ""
     }
   },
+
   "mpris": {
     "player": "spotifyd",
     "format": "DEFAULT: {player_icon} {dynamic}",
@@ -40,10 +54,12 @@
     }
     // "ignored-players": ["firefox"]
   },
+
   "custom/weather": {
     "exec": "~/bin/waybar-weather.py",
     "return-type": "json"
   },
+
   // Modules configuration
   "idle_inhibitor": {
     "format": "{icon}",
@@ -53,23 +69,28 @@
     },
     "tooltip": false
   },
+
   "tray": {
     // "icon-size": 21,
     "spacing": 10
   },
+
   "clock": {
     // "timezone": "America/New_York",
     "format": " {:%a %b %d %I:%M %p}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
   },
+
   "cpu": {
     "format": " {usage}%",
     "tooltip": false
   },
+
   "memory": {
     "format": " {}%",
     "tooltip-format": "{used} / {total}G"
   },
+
   "temperature": {
     // "thermal-zone": 2,
     // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
@@ -78,11 +99,13 @@
     "format": "{temperatureC}°C {icon}",
     "format-icons": ["", "", ""]
   },
+
   "backlight": {
     // "device": "acpi_video1",
     "format": "{percent}% {icon}",
     "format-icons": ["", "", "", "", "", "", "", "", ""]
   },
+
   "battery": {
     "states": {
       // "good": 95,
@@ -97,6 +120,7 @@
     // "format-full": "",
     "format-icons": ["", "", "", "", ""]
   },
+
   "pulseaudio": {
     "scroll-step": 5, // %, can be a float
     "format": "{format_source} {icon} {volume}%",
@@ -116,6 +140,7 @@
     },
     "on-click": "pavucontrol"
   },
+
   "network": {
     // "interface": "wlp2*", // (Optional) To force the use of this interface
     "format-wifi": "",
@@ -125,6 +150,7 @@
     "format-disconnected": "⚠",
     "format-alt": "{ifname}: {ipaddr}/{cidr}"
   },
+
   "custom/media": {
     "format": "{icon} {}",
     "return-type": "json",
@@ -137,11 +163,13 @@
     "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
     // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
   },
+
   "hyprland/window": {
     "max-length": 40,
     // "on-click": "hyprctl dispatch changegroupactive f",
     // "on-click-right": "hyprctl dispatch changegroupactive b"
   },
+
   "custom/notification": {
     "tooltip": false,
     "format": "{icon}",
