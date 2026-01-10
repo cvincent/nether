@@ -204,7 +204,25 @@ mkSoftware name (
           '')
 
           (pkgs.writeShellScriptBin "qutebrowser-open" ''
-            ipc=$(find ~/.local/qutebrowsers/''\$1/runtime | grep '/ipc-' | xargs basename)
+            instance="$1"
+
+            find_ipc() {
+              find ~/.local/qutebrowsers/''\$instance/runtime | grep '/ipc-'
+            }
+
+            ipc=$(find_ipc)
+
+            if [[ ! -S "$ipc" ]]; then
+              qutebrowser-fuzzel $1 &
+
+              until [[ -S "$ipc" ]]; do
+                ipc=$(find_ipc)
+                sleep 0.1
+              done
+            fi
+
+            ipc=$(basename "$ipc")
+
             echo "{\"args\": [\"$2\"], \"target_arg\": \"\", \"protocol_version\":1}" | socat - UNIX-CONNECT:"/home/cvincent/.local/qutebrowsers/$1/runtime/$ipc"
           '')
 
