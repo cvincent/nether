@@ -3,9 +3,114 @@
   font-size: 14px;
 }
 
-window#waybar {
-  background-color: alpha(@base00, 0.5);
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
 }
+
+window#waybar {
+  background-color: alpha(@base00, 0.05);
+}
+
+/* Module sections and general modules */
+
+.module {
+  padding: 0 8px;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  /* Handy for debugging */
+  /* border-left: 1px solid blue; */
+  /* border-right: 1px solid blue; */
+}
+
+.modules-left .module {
+  margin-right: 10px;
+}
+
+.modules-left .module,
+.modules-center .module,
+.modules-right {
+  background-color: @base01;
+  color: @base04;
+  border-top: 1px solid mix(@base00, white, 0.35);
+  /* Handy for debugging */
+  /* border-left: 1px solid red; */
+  /* border-right: 1px solid red; */
+}
+
+.modules-left .module:not(#workspaces),
+.modules-center .module {
+  border-radius: 5px 5px 0 0;
+  margin: 0 5px;
+  border-radius: 5px 5px 0 0;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.modules-right {
+  border-top-left-radius: 5px;
+}
+
+.modules-right widget:first-child .module {
+  padding-left: 16px;
+}
+
+/* Per-module tweaks */
+
+/* .modules-left #workspaces button.urgent { */
+/*   background: #bf616a; */
+/* } */
+
+.modules-left #workspaces {
+  padding: 0;
+  border-top-right-radius: 5px;
+}
+
+#workspaces button {
+  /* padding: 0 5px; */
+  background: transparent;
+  color: #eceff4;
+  border-radius: 5px;
+  padding-top: 4px;
+}
+
+#workspaces button.active {
+  background: #4c566a;
+}
+
+#battery.charging {
+  background-color: #a3be8c;
+  color: rgba(46, 52, 64, 0.9);
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-right: 12px;
+}
+
+#battery.warning:not(.charging) {
+  background: #bf616a;
+  animation-name: blink;
+  animation-duration: 0.75s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin-right: 12px;
+}
+
+#tray {
+  padding-top: 2px;
+  padding-left: 12px;
+}
+
+#custom-notification {
+  padding-top: 1px;
+  min-width: 25px;
+}
+
+/* Tooltips */
 
 tooltip {
   background: alpha(@base01, 0.95);
@@ -21,120 +126,4 @@ tooltip {
 
 tooltip label {
   color: #eceff4;
-}
-
-#workspaces,
-#mpris,
-#window,
-#submap,
-.modules-right {
-  transition: width;
-  transition-duration: 2s;
-  background-color: @base01;
-  color: #eceff4;
-  border-top: 1px solid mix(@base00, white, 0.35);
-  /* border-bottom: 2px solid @base01; */
-  padding: 0 10px;
-  padding-bottom: 2px;
-}
-
-.modules-center {
-  border-radius: 5px 5px 0 0;
-}
-
-.modules-right {
-  border-top-left-radius: 5px;
-}
-
-#workspaces {
-  padding: 0;
-  border-top-right-radius: 5px;
-  border-bottom: none;
-}
-
-#workspaces button {
-  /* padding: 0 5px; */
-  background: transparent;
-  color: #eceff4;
-  border-radius: 5px;
-  padding-top: 4px;
-}
-
-#workspaces button.active {
-  background: #4c566a;
-}
-
-/* #workspaces button.urgent { */
-/*   background: #bf616a; */
-/* } */
-
-#mpris,
-#window,
-#submap {
-  margin-left: 10px;
-  border-radius: 5px 5px 0 0;
-  padding-top: 4px;
-}
-
-#idle_inhibitor {
-  margin-left: 6px;
-}
-
-#idle_inhibitor,
-#network,
-#pulseaudio,
-#cpu,
-#memory,
-#battery,
-#clock,
-#mail,
-#tray {
-  padding-right: 14px;
-  padding-top: 4px;
-}
-
-#custom-weather {
-  padding-top: 8px;
-}
-
-#tray {
-  padding-top: 1px;
-  padding-left: 14px;
-}
-
-#custom-notification {
-  padding-top: 1px;
-  min-width: 25px;
-}
-
-/* #mode { */
-/*   background: #64727D; */
-/*   border-bottom: 3px solid white; */
-/* } */
-
-#battery.charging {
-  background-color: #a3be8c;
-  color: rgba(46, 52, 64, 0.9);
-  padding-left: 6px;
-  padding-right: 6px;
-  margin-right: 12px;
-}
-
-@keyframes blink {
-  to {
-    background-color: #ffffff;
-    color: #000000;
-  }
-}
-
-#battery.warning:not(.charging) {
-  background: #bf616a;
-  animation-name: blink;
-  animation-duration: 0.75s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  padding-left: 6px;
-  padding-right: 6px;
-  margin-right: 12px;
 }
