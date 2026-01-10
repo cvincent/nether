@@ -85,14 +85,14 @@
 
     media = {
       enable = true;
-      # apps.yt-dlp.package = inputs'.nixpkgs-unstable.legacyPackages.yt-dlp.overrideAttrs {
-      #   src = pkgs.fetchFromGitHub {
-      #     owner = "yt-dlp";
-      #     repo = "yt-dlp";
-      #     rev = "2025.10.22";
-      #     hash = "sha256-jQaENEflaF9HzY/EiMXIHgUehAJ3nnDT9IbaN6bDcac=";
-      #   };
-      # };
+      apps.yt-dlp.package = inputs'.nixpkgs-unstable.legacyPackages.yt-dlp.overrideAttrs {
+        src = pkgs.fetchFromGitHub {
+          owner = "yt-dlp";
+          repo = "yt-dlp";
+          rev = "2026.02.04";
+          hash = "sha256-KXnz/ocHBftenDUkCiFoBRBxi6yWt0fNuRX+vKFWDQw=";
+        };
+      };
     };
 
     dev = {
