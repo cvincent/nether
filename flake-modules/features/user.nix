@@ -16,6 +16,11 @@ mkFeature name (
         default = "${user.homeDirectory}/dotfiles";
       };
 
+      downloadsDirectory = lib.mkOption {
+        type = lib.types.str;
+        default = "${user.homeDirectory}/Downloads";
+      };
+
       homeSrcDirectory = lib.mkEnableOption "Backup and restore source code for projects I'm working on";
       me.fullName = lib.mkOption { type = lib.types.str; };
       me.email = lib.mkOption { type = lib.types.str; };

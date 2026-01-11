@@ -39,12 +39,6 @@ mkFeature name (
           ];
         };
       };
-
-      nixos = {
-        nether.backups.paths = {
-          "${nether.homeDirectory}/Downloads".deleteMissing = true;
-        };
-      };
     }
   )
 )

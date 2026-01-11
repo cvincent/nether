@@ -52,7 +52,7 @@ mkSoftware name (
             tabs.position = "right";
             tabs.select_on_remove = "last-used";
 
-            downloads.location.directory = "~/Downloads";
+            downloads.location.directory = nether.downloadsDirectory;
             downloads.location.prompt = false;
 
             content = {
