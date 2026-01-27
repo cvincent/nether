@@ -1,6 +1,6 @@
 { name, mkFeature, ... }:
 mkFeature name (
-  { nether, ... }:
+  { nether, pkgInputs, ... }:
   {
     apps = {
       bambu-studio-flatpak.nixos.services.flatpak.packages = [
@@ -9,6 +9,8 @@ mkFeature name (
           origin = "flathub";
         }
       ];
+
+      bitwig-studio.package = pkgInputs.nixpkgs-bitwig-studio.bitwig-studio5;
 
       exiftool = { };
       feh = { };
