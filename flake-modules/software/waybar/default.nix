@@ -9,7 +9,7 @@ mkSoftware name (
     ...
   }:
   let
-    customCssPath = "waybar/custom.css";
+    directSymlinkCssPath = "waybar/direct-symlink.css";
   in
   {
     hm = {
@@ -18,8 +18,7 @@ mkSoftware name (
         systemd.enable = true;
       };
 
-      xdg.configFile."waybar/config".source = helpers.directSymlink ./configs/config;
-      xdg.configFile.${customCssPath}.source = helpers.directSymlink ./configs/custom.css;
+      xdg.configFile."waybar/config".source = helpers.directSymlink ./configs/config.json;
 
       xdg.configFile."waybar/style.css".text = with config.lib.stylix.colors.withHashtag; ''
         @define-color base00 ${base00}; @define-color base01 ${base01};
@@ -32,8 +31,10 @@ mkSoftware name (
         @define-color base0C ${base0C}; @define-color base0D ${base0D};
         @define-color base0E ${base0E}; @define-color base0F ${base0F};
 
-        @import url("${nether.homeDirectory}/${hmConfig.xdg.configFile.${customCssPath}.target}");
+        @import url("${nether.homeDirectory}/${hmConfig.xdg.configFile.${directSymlinkCssPath}.target}");
       '';
+
+      xdg.configFile.${directSymlinkCssPath}.source = helpers.directSymlink ./configs/direct-symlink.css;
     };
   }
 )
