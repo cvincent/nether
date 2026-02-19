@@ -2,18 +2,28 @@ return {
   "vim-test/vim-test",
 
   init = function()
-    vim.api.nvim_exec([[
-      function! VimTestMyTmuxStrategy(cmd)
-        call system("tmux send-keys -t " . g:vim_test_tmux_target . " C-C ENTER")
-        " This version prints the output in color and also saves it to a file, to maybe be later used to generate a quickfix list
-        " call system("tmux send-keys -t " . g:vim_test_tmux_target . " 'script --return --quiet -c \"" . a:cmd . "\" >&1 | tee testout' ENTER")
-        call system("tmux send-keys -t " . g:vim_test_tmux_target . " '" . a:cmd . "' ENTER")
-      endfunction
+    vim.g["test#custom_strategies"] = {
+      ["vim-test-my-tmux-strategy"] = function(cmd)
+        vim.system({
+          "tmux", "send-keys", "-t",
+          vim.g.vim_test_tmux_target,
+          "C-C", "ENTER",
+        }):wait()
 
-      let g:test#custom_strategies = {'vim-test-my-tmux-strategy': function('VimTestMyTmuxStrategy')}
-      let g:test#strategy = 'vim-test-my-tmux-strategy'
-      let g:vim_test_tmux_target = ":0.1"
-    ]], true)
+        vim.system({
+          "tmux", "send-keys", "-t",
+          vim.g.vim_test_tmux_target,
+          cmd,
+          "ENTER",
+        }):wait()
+
+        -- This version prints the output in color and also saves it to a file, to maybe be later used to generate a quickfix list
+        -- call system("tmux send-keys -t " . g:vim_test_tmux_target . " 'script --return --quiet -c \"" . a:cmd . "\" >&1 | tee testout' ENTER")
+      end
+    }
+
+    vim.g["test#strategy"] = "vim-test-my-tmux-strategy"
+    vim.g.vim_test_tmux_target = ":0.1"
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "*",
