@@ -59,7 +59,7 @@ mkSoftware name (
                 git -C "$left" add -A
                 git -C "$left" commit -q -m baseline --allow-empty # create parent commit
                 mv "$left/.git" "$right"
-                git -C "$right" add --intent-to-add -A # create current working copy
+                git -C "$right" add --intent-to-add --ignore-removal . # create current working copy
                 (cd "$right"; nvim .git/index)
                 git -C "$right" diff-index --quiet --cached HEAD && { echo "No changes done, aborting split."; exit 1; }
                 git -C "$right" commit -q -m split # create commit on top of parent including changes
