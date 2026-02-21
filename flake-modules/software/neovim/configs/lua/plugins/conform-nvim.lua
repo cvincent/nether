@@ -51,7 +51,8 @@ return {
       group = "Autoformat",
       callback = function(args)
         local ignore_filetypes = {}
-        if vim.tbl_contains(ignore_filetypes, vim.bo[args.buf].filetype) then
+        if vim.tbl_contains(ignore_filetypes, vim.bo[args.buf].filetype)
+            or vim.o.diff then
           return
         end
 
