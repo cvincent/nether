@@ -27,7 +27,11 @@ window#waybar {
 }
 
 .modules-left .module {
-  margin-right: 10px;
+  margin-right: 5px;
+}
+
+.modules-center {
+  margin: 0 5px;
 }
 
 .modules-left .module,
