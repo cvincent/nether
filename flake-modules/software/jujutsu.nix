@@ -1,90 +1,126 @@
 { name, mkSoftware, ... }:
 mkSoftware name (
-  { jujutsu, config, ... }:
   {
-    hm.programs.jujutsu = {
-      inherit (jujutsu) enable package;
+    jujutsu,
+    config,
+    pkgs,
+    ...
+  }:
+  {
+    nixos =
+      let
+        fzf-jj-change-ids = (
+          pkgs.writeShellApplication {
+            name = "fzf-jj-change-ids";
+            runtimeInputs = [
+              config.nether.software.jujutsu.package
+              config.nether.software.fzf.fzf-with-opts
+            ];
+            text = ''
+              template='
+                format_short_change_id(change_id) ++
+                " - " ++
+                if(self.empty(), empty_commit_marker ++ " ") ++
+                description.first_line() ++
+                " (" ++ commit_id.short() ++ ")|" ++
+                change_id.shortest() ++ "\n"
+              '
 
-      settings = {
-        "$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json";
+              jj log --no-graph --color=always -T "$template"|
+              fzf --ansi --height=50% --delimiter='|' --with-nth='{1}' --accept-nth='{2}'
+            '';
+          }
+        );
+      in
+      {
+        nether.software.contextual-completion.completionScripts.jj = fzf-jj-change-ids;
+      };
 
-        user = {
-          name = config.nether.me.fullName;
-          email = config.nether.me.email;
-        };
+    hm = {
+      programs.jujutsu = {
+        inherit (jujutsu) enable package;
 
-        colors = {
-          "diff token" = {
-            reverse = true;
-            underline = false;
+        settings = {
+          "$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json";
+
+          user = {
+            name = config.nether.me.fullName;
+            email = config.nether.me.email;
           };
-        };
 
-        git = {
-          private-commits = "private()";
-        };
+          colors = {
+            "diff token" = {
+              reverse = true;
+              underline = false;
+            };
+          };
 
-        revset-aliases = {
-          "trunk()" = "main@origin";
-          "closest_bookmark(to)" = "heads(::to & bookmarks())";
-          "closest_pushable(to)" = "heads(::to & ~description(exact:'') & (~empty() | merges()))";
-          "private()" = ''description(glob-i:"private:*") | description(glob-i:"wip:*")'';
-        };
+          git = {
+            private-commits = "private()";
+          };
 
-        aliases = {
-          tug = [
-            "bookmark"
-            "move"
-            "--from"
-            "closest_bookmark(@)"
-            "--to"
-            "closest_pushable(@)"
-          ];
-        };
+          revset-aliases = {
+            "trunk()" = "main@origin";
+            "closest_bookmark(to)" = "heads(::to & bookmarks())";
+            "closest_pushable(to)" = "heads(::to & ~description(exact:'') & (~empty() | merges()))";
+            "private()" = ''description(glob-i:"private:*") | description(glob-i:"wip:*")'';
+          };
 
-        ui = {
-          diff-editor = "neovim-fugitive";
-          merge-editor = "neovim-diffconflicts";
-        };
-
-        merge-tools = {
-          neovim-fugitive = {
-            program = "sh";
-            edit-args = [
-              "-c"
-              ''
-                set -eu
-                rm -f "$right/JJ-INSTRUCTIONS"
-                git -C "$left" init -q
-                git -C "$left" add -A
-                git -C "$left" commit -q -m baseline --allow-empty # create parent commit
-                mv "$left/.git" "$right"
-                git -C "$right" add --intent-to-add --ignore-removal . # create current working copy
-                (cd "$right"; nvim .git/index)
-                git -C "$right" diff-index --quiet --cached HEAD && { echo "No changes done, aborting split."; exit 1; }
-                git -C "$right" commit -q -m split # create commit on top of parent including changes
-                git -C "$right" restore . # undo changes in modified files
-                git -C "$right" reset .   # undo --intent-to-add
-                git -C "$right" clean -q -df # remove untracked files
-              ''
+          aliases = {
+            tug = [
+              "bookmark"
+              "move"
+              "--from"
+              "closest_bookmark(@)"
+              "--to"
+              "closest_pushable(@)"
             ];
           };
 
-          neovim-diffconflicts = {
-            program = "nvim";
+          ui = {
+            diff-editor = "neovim-fugitive";
+            merge-editor = "neovim-diffconflicts";
+          };
 
-            merge-args = [
-              "-c"
-              "let g:jj_diffconflicts_marker_length=$marker_length"
-              "-c"
-              "JJDiffConflicts!"
-              "$output"
-              "$base"
-              "$left"
-              "$right"
-            ];
+          merge-tools = {
+            neovim-fugitive = {
+              program = "sh";
+              edit-args = [
+                "-c"
+                ''
+                  set -eu
+                  rm -f "$right/JJ-INSTRUCTIONS"
+                  git -C "$left" init -q
+                  git -C "$left" add -A
+                  git -C "$left" commit -q -m baseline --allow-empty # create parent commit
+                  mv "$left/.git" "$right"
+                  git -C "$right" add --intent-to-add --ignore-removal . # create current working copy
+                  (cd "$right"; nvim .git/index)
+                  git -C "$right" diff-index --quiet --cached HEAD && { echo "No changes done, aborting split."; exit 1; }
+                  git -C "$right" commit -q -m split # create commit on top of parent including changes
+                  git -C "$right" restore . # undo changes in modified files
+                  git -C "$right" reset .   # undo --intent-to-add
+                  git -C "$right" clean -q -df # remove untracked files
+                ''
+              ];
+            };
 
-            merge-tool-edits-conflict-markers = true;
+            neovim-diffconflicts = {
+              program = "nvim";
+
+              merge-args = [
+                "-c"
+                "let g:jj_diffconflicts_marker_length=$marker_length"
+                "-c"
+                "JJDiffConflicts!"
+                "$output"
+                "$base"
+                "$left"
+                "$right"
+              ];
+
+              merge-tool-edits-conflict-markers = true;
+            };
           };
         };
       };
