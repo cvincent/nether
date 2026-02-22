@@ -7,7 +7,7 @@
   "spacing": 0, // Gaps between modules (4px)
 
   "modules-left": ["hyprland/workspaces", "mpris"],
-  "modules-center": ["hyprland/window", "hyprland/submap"],
+  "modules-center": ["hyprland/window", "privacy", "hyprland/submap"],
   "modules-right": [
     "idle_inhibitor",
     "network",
@@ -65,6 +65,26 @@
     "rewrite": {
       "(.*) - qutebrowser": "$1"
     }
+  },
+
+  "privacy": {
+    "icon-spacing": 16,
+    "icon-size": 16,
+    "transition-duration": 250,
+    "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": true,
+        "tooltip-icon-size": 16
+      },
+      {
+        "type": "audio-in",
+        "tooltip": true,
+        "tooltip-icon-size": 16
+      }
+    ],
+    "ignore-monitor": false,
+    "ignore": []
   },
 
   "idle_inhibitor": {
