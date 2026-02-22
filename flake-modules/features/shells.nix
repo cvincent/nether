@@ -25,6 +25,11 @@ mkFeature name (
         type = with lib.types; attrsOf str;
         default = { };
       };
+
+      binds = lib.mkOption {
+        type = with lib.types; attrsOf str;
+        default = { };
+      };
     };
 
     extra = {
