@@ -38,6 +38,7 @@ mkSoftware name (
         in
         [
           "--bind=${bind}"
+          "--reverse"
         ];
 
       colors.bg = lib.mkForce "-1";
