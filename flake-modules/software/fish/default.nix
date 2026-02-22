@@ -13,6 +13,7 @@ mkSoftware name (
     hm =
       let
         inherit (nether) dotfilesDirectory;
+        contextualCompletionFuncName = "fish-contextual-completion";
       in
       {
         stylix.targets.fish.enable = false;
@@ -91,6 +92,22 @@ mkSoftware name (
             end
           '';
 
+          binds = {
+            ${nether.shells.contextualCompletionKey} = {
+              command = contextualCompletionFuncName;
+              repaint = true;
+            };
+          }
+          // (
+            nether.shells.binds
+            |> lib.mapAttrs (
+              _: command: {
+                inherit command;
+                repaint = true;
+              }
+            )
+          );
+
           shellAliases = nether.shells.aliases;
 
           functions = {
@@ -122,6 +139,11 @@ mkSoftware name (
                 notify-send -i dialog-error -t 5000 -e 'NixOS Rebuild Failed'
               end
               aplay ${dotfilesDirectory}/resources/notification.wav 2> /dev/null
+            '';
+
+            ${contextualCompletionFuncName} = ''
+              set -l cmd (commandline -p | cut -d' ' -f1)
+              commandline -i (${lib.getExe nether.software.contextual-completion.package} $cmd)
             '';
           };
         };

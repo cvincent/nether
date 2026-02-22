@@ -30,6 +30,11 @@ mkFeature name (
         type = with lib.types; attrsOf str;
         default = { };
       };
+
+      contextualCompletionKey = lib.mkOption {
+        type = lib.types.str;
+        default = "ctrl-j";
+      };
     };
 
     extra = {
