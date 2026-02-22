@@ -16,9 +16,30 @@ mkSoftware name (
         type = lib.types.str;
         default = "hyprctl dispatch dpms off";
       };
+
       resumeCommand = lib.mkOption {
         type = lib.types.str;
         default = "hyprctl dispatch dpms on";
+      };
+
+      waybarWindowModule = {
+        signal = lib.mkOption {
+          type = lib.types.int;
+          default = 9;
+        };
+
+        script = lib.mkOption {
+          type = lib.types.package;
+          default = pkgs.writeShellApplication {
+            name = "waybar-window-module";
+            runtimeInputs = [
+              nether.software.jq.package
+              pkgs.jo
+              hyprland.package
+            ];
+            text = builtins.readFile ./waybar-window-module.bash;
+          };
+        };
       };
     };
 
@@ -195,6 +216,38 @@ mkSoftware name (
             KillSignal = "SIGINT";
             Restart = "on-failure";
             Slice = "background-graphical.slice";
+          };
+        };
+
+        systemd.user.services.hyprland-waybar-window-module = {
+          Install.WantedBy = [ "wayland-session@Hyprland.target" ];
+          Unit.After = [ "wayland-session@Hyprland.target" ];
+          Service = {
+            Type = "exec";
+            KillSignal = "SIGINT";
+            Restart = "on-failure";
+            Slice = "background-graphical.slice";
+            ExecStart = lib.getExe (
+              pkgs.writeShellApplication (
+                let
+                  signal = toString hyprland.waybarWindowModule.signal;
+                  waybar = lib.getExe nether.software.waybar.package;
+                in
+                {
+                  name = "hyprland-waybar-window-module-service";
+                  text = ''
+                    handle() {
+                      case $1 in
+                      activewindowv2*) pkill -RTMIN+${signal} -f ${waybar};;
+                      esac
+                    }
+
+                    hyprlandSocket="UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" 
+                    socat -U - "$hyprlandSocket" | while read -r line; do handle "$line"; done
+                  '';
+                }
+              )
+            );
           };
         };
       };

@@ -93,7 +93,17 @@ window#waybar {
   background: #4c566a;
 }
 
-window#waybar.empty #window {
+#custom-window {
+  opacity: 0.5;
+}
+
+#custom-window.focused {
+  opacity: 1;
+  background: @base03;
+  box-shadow: 0 3px 3px 0 @base07;
+}
+
+window#waybar.empty #custom-window {
   background: transparent;
   border-color: transparent;
 }

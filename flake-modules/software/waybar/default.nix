@@ -21,9 +21,12 @@ mkSoftware name (
       };
 
       xdg.configFile."waybar/config".text = builtins.toJSON {
-        "custom/mail" = {
-          "exec" = lib.getExe nether.desk.mailWaybarModule;
+        "custom/window" = {
+          signal = nether.software.hyprland.waybarWindowModule.signal;
+          exec = lib.getExe nether.software.hyprland.waybarWindowModule.script;
         };
+
+        "custom/mail".exec = lib.getExe nether.desk.mailWaybarModule;
 
         "include" = [
           "${nether.homeDirectory}/${hmConfig.xdg.configFile.${directSymlinkConfigPath}.target}"

@@ -7,7 +7,7 @@
   "spacing": 0, // Gaps between modules (4px)
 
   "modules-left": ["hyprland/workspaces", "mpris"],
-  "modules-center": ["hyprland/window", "privacy", "hyprland/submap"],
+  "modules-center": ["custom/window", "privacy", "hyprland/submap"],
   "modules-right": [
     "idle_inhibitor",
     "network",
@@ -57,7 +57,9 @@
     // "ignored-players": ["firefox"]
   },
 
-  "hyprland/window": {
+  "custom/window": {
+    "max-length": 200,
+    "return-type": "json",
     "hide-empty-text": true,
     "separate-outputs": true,
     "on-click": "hyprctl dispatch changegroupactive f",
