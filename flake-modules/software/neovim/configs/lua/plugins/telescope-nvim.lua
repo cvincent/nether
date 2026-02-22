@@ -119,6 +119,16 @@ return {
       vim.keymap.set("n", "<leader>fg", telescope.extensions.live_grep_args.live_grep_args)
       vim.keymap.set("n", "<leader>fG", live_grep_args_shortcuts.grep_word_under_cursor)
 
+      vim.keymap.set("n", "<leader>vff", function()
+        vim.cmd("vsplit")
+        telescope_builtin.find_files()
+      end)
+
+      vim.keymap.set("n", "<leader>sff", function()
+        vim.cmd("split")
+        telescope_builtin.find_files()
+      end)
+
       vim.keymap.set("n", "<leader>gc", telescope_builtin.git_branches)
 
       vim.keymap.set(
