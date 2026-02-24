@@ -256,6 +256,15 @@ mkFeature name (
       };
     };
 
+    calendars = {
+      options = {
+        basePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/calendars";
+        };
+      };
+    };
+
     nixos = {
       nether.incron.userTab =
         accountConfigs
@@ -278,6 +287,7 @@ mkFeature name (
       nether.backups.paths = {
         ${desk.mail.maildirBasePath}.deleteMissing = true;
         ${desk.mail.filtersBasePath}.deleteMissing = true;
+        ${desk.calendars.basePath}.deleteMissing = true;
       };
     };
 
@@ -313,6 +323,13 @@ mkFeature name (
               };
             }
           );
+      };
+
+      accounts.calendar = {
+        inherit (desk.calendars) basePath;
+        # We don't any calendar account as primary, because Home Manager uses
+        # the name of this attr to set the the khal default in a way we can't
+        # override.
       };
     };
   }
