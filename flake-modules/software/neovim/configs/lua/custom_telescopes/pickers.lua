@@ -8,13 +8,11 @@ local M = {}
 M.tmux_files = function(opts)
   opts = opts or {}
 
-  local command = "tmux list-panes -F '#{pane_id}' | " ..
-      "xargs -I {} tmux capture-pane -Jpt {} | " ..
+  local command = "tmux capture-pane -Jpt " .. vim.g.vim_test_tmux_target .. " | " ..
       "grep -Eio '(^| )[^/][a-z0-9/_.-]+[a-z][a-z0-9/_.-]+:[0-9]+' | " ..
       "sed 's/^[[:space:]]*//' | " ..
       [[sed 's/^\.\///' | ]] ..
-      "sort | " ..
-      "uniq"
+      "tac"
 
   local finder = finders.new_dynamic(
     {
