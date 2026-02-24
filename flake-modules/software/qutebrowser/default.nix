@@ -127,6 +127,8 @@ mkSoftware name (
 
               # Tabs
               D = "tab-close";
+              "<alt-d>" = "tab-close --next";
+              "<alt-shift-d>" = "tab-close --prev";
               U = "undo";
               "<right>" = "tab-next";
               "<left>" = "tab-prev";
@@ -134,7 +136,9 @@ mkSoftware name (
               "<ctrl-left>" = "tab-move -";
               x = "config-cycle tabs.position top right";
               "<space>ft" = "cmd-set-text -s :tab-select";
-              T = "tab-focus";
+              # [count]-<tab> to go directly to tab; <tab> alone to toggle
+              # previous; one bind work for both
+              "<tab>" = "tab-focus last";
               co = null; # Default closes all tabs except current; we've lost all our tabs to this multiple times
 
               # Easy esc in normal mode
