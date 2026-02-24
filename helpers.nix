@@ -171,8 +171,11 @@
                   "${featureName}" = thisConfig;
                   hmConfig = config.home-manager.users.${config.nether.username};
                   inherit (config) nether;
-                  inherit helpers;
                   inherit (config.home-manager.users.${config.nether.username}) hmOptions;
+
+                  helpers = helpers // {
+                    mkScript = helpers.mkScript pkgs;
+                  };
                 }
               )
             );
@@ -316,103 +319,114 @@
           }
         );
 
-        flake.homeModules."${featureName}" = moduleWithSystem (
-          systemArgs@{
-            pkgs,
-            pkgInputs,
-            inputs',
-            self',
-            system,
-          }:
-          homeModuleArgs@{
-            config,
-            osConfig,
-            osOptions,
-            options,
-            helpers,
-            inputs,
-            ...
-          }:
+        flake.homeModules."${featureName}" =
           let
-            hmConfig = config;
-            thisConfig = osConfig.nether."${featureName}";
-
-            featureDefFn = if builtins.isFunction featureDef then featureDef else (_: featureDef);
-
-            feature = featureDefFn (
-              systemArgs
-              // homeModuleArgs
-              // {
-                config = osConfig;
-                options = osOptions;
-                hmOptions = options;
-                "${featureName}" = thisConfig;
-                inherit (osConfig) nether;
-                inherit helpers hmConfig;
-              }
-            );
-
-            softwareNamespacesWithToplevel = getSoftwareNamespaces feature true;
+            flakeModuleHelpers = helpers;
           in
-          {
-            config = (lib.mkIf thisConfig.enable) (
-              lib.mkMerge (
-                [ ]
-                ++ (
-                  # For each software namespace, and each software definition
-                  # within them, if it's not a nether.software module, but it
-                  # has a package defined, add the it to home.packages.
-                  softwareNamespacesWithToplevel
-                  |> lib.mapAttrsToList (
-                    softwareNamespace: softwareDefs: {
-                      home.packages = lib.optionals (softwareNamespaceEnable thisConfig softwareNamespace) (
-                        softwareDefs
-                        |> filterSoftwareDefs
-                        |> lib.filterAttrs (
-                          softwareName: _:
-                          !(osOptions ? nether.software."${softwareName}")
-                          && ((softwareConfig thisConfig softwareNamespace softwareName) ? package)
-                        )
-                        |> lib.mapAttrsToList (
-                          softwareName: _:
-                          lib.optional (softwareEnable thisConfig softwareNamespace softwareName)
-                            (softwareConfig thisConfig softwareNamespace softwareName).package
-                        )
-                        |> lib.flatten
-                      );
-                    }
-                  )
-                )
-                ++ (
-                  # Include any hm configs from enabled software definitions
-                  softwareNamespacesWithToplevel
-                  |> lib.attrsets.mapAttrsToList (
-                    softwareNamespace: softwareDefs:
-                    softwareDefs
-                    |> filterSoftwareDefs
-                    |> lib.attrsets.mapAttrsToList (
-                      softwareName: softwareDef:
-                      lib.mkIf (
-                        (softwareNamespaceEnable thisConfig softwareNamespace)
-                        && (softwareEnable thisConfig softwareNamespace softwareName)
-                      ) (softwareDef.hm or { })
+          (moduleWithSystem (
+            systemArgs@{
+              pkgs,
+              pkgInputs,
+              inputs',
+              self',
+              system,
+            }:
+            homeModuleArgs@{
+              config,
+              osConfig,
+              osOptions,
+              options,
+              helpers,
+              inputs,
+              ...
+            }:
+            let
+              hmConfig = config;
+              thisConfig = osConfig.nether."${featureName}";
+
+              featureDefFn = if builtins.isFunction featureDef then featureDef else (_: featureDef);
+
+              feature = featureDefFn (
+                systemArgs
+                // homeModuleArgs
+                // {
+                  config = osConfig;
+                  options = osOptions;
+                  hmOptions = options;
+                  "${featureName}" = thisConfig;
+                  inherit (osConfig) nether;
+                  inherit hmConfig;
+
+                  helpers =
+                    flakeModuleHelpers
+                    // helpers
+                    // {
+                      mkScript = flakeModuleHelpers.mkScript pkgs;
+                    };
+                }
+              );
+
+              softwareNamespacesWithToplevel = getSoftwareNamespaces feature true;
+            in
+            {
+              config = (lib.mkIf thisConfig.enable) (
+                lib.mkMerge (
+                  [ ]
+                  ++ (
+                    # For each software namespace, and each software definition
+                    # within them, if it's not a nether.software module, but it
+                    # has a package defined, add the it to home.packages.
+                    softwareNamespacesWithToplevel
+                    |> lib.mapAttrsToList (
+                      softwareNamespace: softwareDefs: {
+                        home.packages = lib.optionals (softwareNamespaceEnable thisConfig softwareNamespace) (
+                          softwareDefs
+                          |> filterSoftwareDefs
+                          |> lib.filterAttrs (
+                            softwareName: _:
+                            !(osOptions ? nether.software."${softwareName}")
+                            && ((softwareConfig thisConfig softwareNamespace softwareName) ? package)
+                          )
+                          |> lib.mapAttrsToList (
+                            softwareName: _:
+                            lib.optional (softwareEnable thisConfig softwareNamespace softwareName)
+                              (softwareConfig thisConfig softwareNamespace softwareName).package
+                          )
+                          |> lib.flatten
+                        );
+                      }
                     )
                   )
-                  |> lib.flatten
-                )
-                ++ (
-                  # Include any hm configs from enabled software namespaces
-                  softwareNamespacesWithToplevel
-                  |> lib.mapAttrsToList (
-                    softwareNamespace: softwareDefs:
-                    lib.mkIf (softwareNamespaceEnable thisConfig softwareNamespace) (softwareDefs.hm or { })
+                  ++ (
+                    # Include any hm configs from enabled software definitions
+                    softwareNamespacesWithToplevel
+                    |> lib.attrsets.mapAttrsToList (
+                      softwareNamespace: softwareDefs:
+                      softwareDefs
+                      |> filterSoftwareDefs
+                      |> lib.attrsets.mapAttrsToList (
+                        softwareName: softwareDef:
+                        lib.mkIf (
+                          (softwareNamespaceEnable thisConfig softwareNamespace)
+                          && (softwareEnable thisConfig softwareNamespace softwareName)
+                        ) (softwareDef.hm or { })
+                      )
+                    )
+                    |> lib.flatten
                   )
+                  ++ (
+                    # Include any hm configs from enabled software namespaces
+                    softwareNamespacesWithToplevel
+                    |> lib.mapAttrsToList (
+                      softwareNamespace: softwareDefs:
+                      lib.mkIf (softwareNamespaceEnable thisConfig softwareNamespace) (softwareDefs.hm or { })
+                    )
+                  )
+                  ++ [ (feature.hm or { }) ]
                 )
-                ++ [ (feature.hm or { }) ]
-              )
-            );
-          }
-        );
+              );
+            }
+          ));
       };
 
     mkModuleDir =
@@ -698,6 +712,24 @@
         );
 
         andThen = func: val: func val;
+
+        mkScript = pkgs: basePath: name: attrs: {
+          inherit name;
+          value = lib.mkOption (
+            let
+              path = basePath + /${name}.bash;
+              runtimeInputs = attrs.runtimeInputs or [ ];
+              replaceVars = attrs.replaceVars or { };
+            in
+            {
+              type = lib.types.package;
+              default = pkgs.writeShellApplication {
+                inherit name runtimeInputs;
+                text = builtins.readFile (pkgs.replaceVars path replaceVars);
+              };
+            }
+          );
+        };
       };
     };
 
