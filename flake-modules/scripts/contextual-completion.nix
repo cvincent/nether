@@ -9,7 +9,7 @@ mkSoftware name (
   let
     cases =
       contextual-completion.completionScripts
-      |> lib.mapAttrsToList (cmd: scriptPackage: ''"${cmd}") ${lib.getExe scriptPackage};;'')
+      |> lib.mapAttrsToList (cmd: scriptPackage: ''"${cmd}") ${lib.getExe scriptPackage}'')
       |> builtins.concatStringsSep "\n";
 
     script = pkgs.writeShellApplication {
@@ -18,7 +18,7 @@ mkSoftware name (
         if contextual-completion.completionScripts != { } then
           ''
             case $1 in
-              ${cases}
+              ${cases} "$2";;
             esac
           ''
         else

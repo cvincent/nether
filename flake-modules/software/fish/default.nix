@@ -142,8 +142,9 @@ mkSoftware name (
             '';
 
             ${contextualCompletionFuncName} = ''
-              set -l cmd (commandline -p | cut -d' ' -f1)
-              commandline -i (${lib.getExe nether.software.contextual-completion.package} $cmd)
+              set -l line (commandline -p)
+              set -l cmd (echo "$line" | cut -d' ' -f1)
+              commandline -i (${lib.getExe nether.software.contextual-completion.package} "$cmd" "$line")
             '';
           };
         };
