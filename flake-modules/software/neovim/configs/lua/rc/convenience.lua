@@ -77,3 +77,8 @@ vim.keymap.set("v", ">", ">gv")
 -- Copy/paste
 vim.keymap.set("v", "<F13>", '"+y')
 -- vim.keymap.set("n", "<c-s-v>", '"+yp')
+
+-- Easily copy the path of the current file
+vim.keymap.set("n", "yp", function()
+  vim.fn.setreg("+", vim.fn.expandcmd("%"))
+end)
