@@ -65,5 +65,81 @@ return {
         vim.keymap.set("n", "<leader>w", ":wq<cr>", { buffer = true })
       end,
     })
+
+    if IsPluginInstalled("toggleterm.nvim") and IsPluginInstalled("vim-test") then
+      local jj_picker = require('toggleterm.terminal').Terminal:new({
+        cmd = NixToNvim.jj.fzf_commit_ids .. " jj --height=100% --expect=ctrl-a,ctrl-b " .. " > .fzf-result",
+        direction = "float",
+        float_opts = {
+          winblend = 15,
+          border = { "│", "", "", "", "", "", "│", "│" },
+          width = function()
+            return math.floor(vim.o.columns * 0.3)
+          end,
+          col = function()
+            return math.floor(vim.o.columns - vim.o.columns * 0.3)
+          end,
+          height = function()
+            local ui = vim.api.nvim_list_uis()[1]
+            return ui.height - 2
+          end,
+        },
+        on_exit = function()
+          vim.g.toggleterm_fzf_result = vim.fn.readfile(".fzf-result")
+          vim.fn.delete(".fzf-result")
+          vim.g.toggleterm_fzf_callback()
+        end
+      }) --:toggle()
+
+      local jj_cmd = function(subcmd, rest)
+        -- Need to call this as a function so we're sure vim.g.nvr_pipe is set
+        -- from the local .nvim.lua.
+        local editor = "nvr --servername " .. vim.g.nvr_pipe .. " -cc \":lua QuickFloatingEdit()\" --remote-wait"
+        return "EDITOR='" .. editor .. "' jj " .. subcmd .. " --tool git-index " .. rest
+      end
+
+      local jj_positional = function(subcmd)
+        return function()
+          local key = vim.g.toggleterm_fzf_result[1]
+          local change = vim.g.toggleterm_fzf_result[2]
+
+          if key == "" or key == "ctrl-a" then
+            TmuxTestPaneExec(jj_cmd(subcmd, "-A " .. change))
+          elseif key == "ctrl-b" then
+            TmuxTestPaneExec(jj_cmd(subcmd, "-B " .. change))
+          end
+        end
+      end
+
+      local jj_squash = function()
+        local key = vim.g.toggleterm_fzf_result[1]
+        local change = vim.g.toggleterm_fzf_result[2]
+        TmuxTestPaneExec(jj_cmd("squash", "-t " .. change))
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "fugitive",
+        callback = function()
+          vim.keymap.set("n", "<leader>jp", function()
+            vim.api.nvim_command("wincmd q")
+            vim.g.toggleterm_fzf_callback = jj_positional("split")
+            jj_picker:toggle()
+          end, { buffer = true })
+
+          -- Probably need to think about this one still
+          vim.keymap.set("n", "<leader>jr", function()
+            vim.api.nvim_command("wincmd q")
+            vim.g.toggleterm_fzf_callback = jj_positional("rebase")
+            jj_picker:toggle()
+          end, { buffer = true })
+
+          vim.keymap.set("n", "<leader>jq", function()
+            vim.api.nvim_command("wincmd q")
+            vim.g.toggleterm_fzf_callback = jj_squash
+            jj_picker:toggle()
+          end, { buffer = true })
+        end,
+      })
+    end
   end
 }
