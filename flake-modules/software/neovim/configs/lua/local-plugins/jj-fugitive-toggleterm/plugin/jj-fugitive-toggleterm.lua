@@ -25,3 +25,7 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_user_command("JJWindow", function()
   get_mod().open_global_window()
 end, {})
+
+vim.api.nvim_create_user_command("JJNewWindow", function()
+  get_mod().open_jj_new_window()
+end, {})

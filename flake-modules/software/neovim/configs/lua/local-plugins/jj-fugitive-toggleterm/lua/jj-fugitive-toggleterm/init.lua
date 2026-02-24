@@ -203,4 +203,21 @@ function M.open_global_window()
   })
 end
 
+function M.open_jj_new_window()
+  picker({
+    cmd = NixToNvim.jj.fzf_change_ids,
+    expected_keys = { "enter", "ctrl-a", "ctrl-b", "ctrl-d" },
+
+    callback = function(key, change_id)
+      if key == "" or key == "enter" or key == "ctrl-a" then
+        run(jj_cmd_toolless("new", "-A " .. change_id))
+      elseif key == "ctrl-b" then
+        run(jj_cmd_toolless("new", "-B " .. change_id))
+      elseif key == "ctrl-d" then
+        run(jj_cmd_toolless("new", "-d " .. change_id))
+      end
+    end,
+  })
+end
+
 return M
