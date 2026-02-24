@@ -52,6 +52,9 @@ vim.keymap.set("n", "<a-t>", ":tabnew<cr>")
 -- Alt-shift-t to open a new tab the other direction
 vim.keymap.set("n", "<a-s-t>", ":-tabnew<cr>")
 
+-- Close tab
+vim.keymap.set("n", "<leader>Q", ":tabclose<cr>")
+
 -- Navigate tabs with arrows
 vim.keymap.set("n", "<right>", ":tabnext<cr>")
 vim.keymap.set("n", "<left>", ":tabprev<cr>")
