@@ -121,14 +121,16 @@ return {
             picker({
               cmd = NixToNvim.jj.fzf_bookmarks,
               callback = function(_, bookmark)
-                tmux_exec(other_cmd(NixToNvim.jj.split_to_bookmark, bookmark))
+                tmux_exec(other_cmd(NixToNvim.jj.split_to_bookmark .. " split", bookmark))
               end,
             })
           end, { buffer = true })
 
-          -- TODO: jB which is like jS but prompts for a bookmark name... Or
-          -- maybe jS should just always do that?
-          -- vim.fn.input("Bookmark name: ")
+          vim.keymap.set("n", "<leader>jB", function()
+            vim.api.nvim_command("wincmd q")
+            local bookmark = vim.fn.input("New bookmark: ")
+            tmux_exec(other_cmd(NixToNvim.jj.split_to_bookmark .. " stack_split", bookmark))
+          end, { buffer = true })
 
           vim.keymap.set("n", "<leader>jq", function()
             vim.api.nvim_command("wincmd q")

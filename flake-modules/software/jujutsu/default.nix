@@ -50,7 +50,10 @@ mkSoftware name (
           })
 
           (mkJujutsuScript "jj-split-to-bookmark" {
-            runtimeInputs = [ jujutsu.package ];
+            runtimeInputs = with pkgs; [
+              coreutils
+              jujutsu.package
+            ];
           })
 
           (mkJujutsuScript "jj-split-to-absorb" {
