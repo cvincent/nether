@@ -3,6 +3,7 @@ mkSoftware name (
   {
     jujutsu,
     config,
+    pkgs,
     helpers,
     ...
   }:
@@ -15,8 +16,21 @@ mkSoftware name (
         builtins.listToAttrs [
           (mkJujutsuScript "fzf-completions" {
             runtimeInputs = [
+              pkgs.coreutils
               config.nether.software.jujutsu.package
               config.nether.software.fzf.fzf-with-opts
+            ];
+          })
+
+          (mkJujutsuScript "jj-split-to-bookmark" {
+            runtimeInputs = [
+              config.nether.software.jujutsu.package
+            ];
+          })
+
+          (mkJujutsuScript "jj-split-to-absorb" {
+            runtimeInputs = [
+              config.nether.software.jujutsu.package
             ];
           })
         ];

@@ -46,6 +46,8 @@ mkSoftware name (
           return {
             jj = {
               fzf_commit_ids = "${lib.getExe nether.software.jujutsu.scripts.fzf-completions}",
+              split_to_bookmark = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-bookmark}",
+              split_to_absorb = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-absorb}",
             },
           }
         '';
@@ -61,6 +63,7 @@ mkSoftware name (
           imagemagick
         ];
       }
+
       (lib.mkIf neovim.manPager {
         home.sessionVariables = {
           MANWIDTH = 80;
