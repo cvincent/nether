@@ -2,14 +2,19 @@ line="$1"
 shift 1
 
 subcmd=$(echo "$line" | cut -d' ' -f2)
+last_arg=$(echo "$line" | awk -F' ' '{print $NF}')
 
-# NOTE: We need a separate script for bookmark completions or to make the
-# contextual picker a little smarter, because we often do want change IDs in `jj
-# bookmark` commands.
+complete_bookmarks=1
+
+case "$last_arg" in
+bookmark | --bookmark | -b) ;;
+-*) complete_bookmarks=0 ;;
+*) complete_bookmarks=0 ;;
+esac
 
 if [[ "$subcmd" == "absorb" ]]; then
   jj-fzf-changed-files "$@"
-elif [[ "$subcmd" == "bookmark" ]]; then
+elif [[ "$subcmd" == "bookmark" && "$complete_bookmarks" == 1 ]]; then
   jj-fzf-bookmarks "$@"
 else
   jj-fzf-change-ids "$@"

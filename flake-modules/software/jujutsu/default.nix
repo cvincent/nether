@@ -38,8 +38,9 @@ mkSoftware name (
         in
         builtins.listToAttrs [
           (mkJujutsuScript "fzf-completions" {
-            runtimeInputs = [
-              pkgs.coreutils
+            runtimeInputs = with pkgs; [
+              coreutils
+              gawk
               jujutsu.package
               nether.software.fzf.fzf-with-opts
               jj-fzf-bookmarks.value.default
