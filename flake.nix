@@ -53,6 +53,8 @@
             otherInputs =
               self.inputs |> lib.filterAttrs (inputName: _: (builtins.match nixpkgsInputMatch inputName) == null);
 
+            pkgInputs = nixpkgsInputs // otherInputs;
+
             nixpkgsImportArgs = {
               inherit system;
               config.allowUnfree = true;
@@ -61,11 +63,12 @@
           {
             _module.args = {
               pkgs = import self.inputs.nixpkgs nixpkgsImportArgs;
-              pkgInputs = nixpkgsInputs // otherInputs;
+              inherit pkgInputs;
             };
 
             # TODO: Iterate over the packages directory
             packages.maildir-rank-addr = pkgs.callPackage ./packages/maildir-rank-addr.nix { };
+            packages.mime-email = pkgs.callPackage ./packages/mime-email.nix { };
             packages.peroxide = pkgs.callPackage ./packages/peroxide.nix { };
             packages.smartcalc-tui = pkgs.callPackage ./packages/smartcalc-tui.nix { };
 
