@@ -10,6 +10,8 @@ return {
       ruby = { "rubocop" },
       eruby = { "erb_lint", "htmlbeautifier" },
 
+      sh = { "shfmt" },
+
       sql = {
         "pg_format",
         prepend_args = { "--no-grouping" }

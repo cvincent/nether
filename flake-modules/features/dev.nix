@@ -48,10 +48,6 @@ mkFeature name (
         # TODO: This could maybe go in devShell
         nether.shells.aliases.be = "bundle exec ";
       })
-
-      (lib.mkIf dev.shell.enable {
-        environment.systemPackages = [ pkgs.shellcheck ];
-      })
     ];
 
     hm = lib.mkMerge [
@@ -63,6 +59,18 @@ mkFeature name (
       (lib.mkIf dev.c.enable {
         programs.man.generateCaches = true;
       })
+
+      {
+        home.packages =
+          [ ]
+          ++ lib.optionals dev.shell.enable (
+            with pkgs;
+            [
+              shellcheck
+              shfmt
+            ]
+          );
+      }
     ];
   }
 )
