@@ -92,7 +92,7 @@ mkFeature name (
 
     mailConfigFile =
       {
-        inherit (desk.mail) maildirBasePath filtersBasePath;
+        inherit (desk.mail) maildirBasePath filtersBasePath msmtpqFifoPath;
         inherit (pkgInputs.private-nethers.mail) displayOrder;
         inherit accountConfigs;
         mailCacheBasePath = desk.mail.cacheBasePath;
@@ -202,6 +202,11 @@ mkFeature name (
           type = lib.types.package;
           default = mailWaybarModuleScript;
         };
+
+        msmtpqFifoPath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/.local/state/.msmtpq-fifo";
+        };
       };
 
       aerc.config = {
@@ -243,6 +248,11 @@ mkFeature name (
           certPem = pkgInputs.private-nethers.mail.peroxide.certPem;
           keyPem = pkgInputs.private-nethers.mail.peroxide.keyPem;
         };
+      };
+
+      msmtp.config = {
+        inherit accountConfigs;
+        inherit (desk.mail) msmtpqFifoPath;
       };
     };
 
@@ -295,6 +305,12 @@ mkFeature name (
               passwordCommand = "echo ${accountConfig.imap.password}";
 
               imap = { inherit (accountConfig.imap) host port tls; };
+
+              smtp = {
+                inherit (accountConfig.smtp) host port;
+                authentication = "login";
+                tls.enable = accountConfig.smtp.scheme == "smtps+plain";
+              };
             }
           );
       };
