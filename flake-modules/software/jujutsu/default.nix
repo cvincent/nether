@@ -87,6 +87,14 @@ mkSoftware name (
               "--to"
               "closest_pushable(@)"
             ];
+
+            stack_split = [
+              "split"
+              "-A"
+              "trunk()"
+              "-B"
+              "megamerge"
+            ];
           };
 
           ui = {
