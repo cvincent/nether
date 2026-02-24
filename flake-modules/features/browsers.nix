@@ -6,9 +6,9 @@
 }:
 mkFeature name (
   {
-    nether,
     browsers,
     lib,
+    pkgInputs,
     ...
   }:
   (
@@ -23,7 +23,9 @@ mkFeature name (
         brave.config.commandLineArgs = browsers.chromiumArgs;
         chromium.config.commandLineArgs = browsers.chromiumArgs;
         firefox = { };
-        qutebrowser = { };
+        qutebrowser = {
+          package = pkgInputs.nixpkgs-qutebrowser.qutebrowser;
+        };
       }
     )
     |> lib.recursiveUpdate {

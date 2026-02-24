@@ -222,6 +222,9 @@
     # Emergency patch for Nix for CVE-2026-39860
     nixpkgs-nix.url = "github:NixOS/nixpkgs/release-25.11";
 
+    # Upgrade Qutebrowser independently
+    nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
+
     # Newer Python icalendar module for ical2jcal
     nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
 
