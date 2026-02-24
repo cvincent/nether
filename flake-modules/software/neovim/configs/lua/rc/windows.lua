@@ -58,8 +58,33 @@ vim.keymap.set("n", "<left>", ":tabprev<cr>")
 vim.keymap.set("n", "<c-right>", ":tabmove +1<cr>")
 vim.keymap.set("n", "<c-left>", ":tabmove -1<cr>")
 
--- Go to previous tab when closing a tab
+-- Keep track of previously focused tab
 local tabs_navigation_augroup = vim.api.nvim_create_augroup("tabs.navigation", {})
+vim.api.nvim_create_autocmd("TabLeave", {
+  group = tabs_navigation_augroup,
+  callback = function()
+    vim.g.prev_focused_tab = vim.fn.tabpagenr()
+  end
+})
+
+-- Go to tab number or alternate between this and previously focused tab
+vim.keymap.set("n", "<tab>", function()
+  local count = vim.v.count
+  if count > 0 then
+    vim.cmd(count .. "tabn")
+  else
+    vim.cmd(vim.g.prev_focused_tab .. "tabn")
+  end
+end)
+
+-- Fun fact: In most terminals, <tab> and <c-i> send the same key. But Kitty
+-- provides its custom keyboard protocol and NeoVim integrates with it, meaning
+-- in NeoVim they can be recognized as distinct keys. But you have to map both
+-- of them. Our <tab> mapping up there also changes the default behavior of
+-- <c-i>, so here we change it back and we can have both!
+vim.keymap.set("n", "<C-i>", "<C-i>")
+
+-- Go to previous tab when closing a tab
 vim.api.nvim_create_autocmd("TabClosed", {
   group = tabs_navigation_augroup,
   callback = function()
