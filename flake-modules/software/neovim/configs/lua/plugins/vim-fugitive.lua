@@ -123,8 +123,6 @@ return {
             picker({
               cmd = NixToNvim.jj.fzf_commit_ids .. " 'jj bookmark'",
               callback = function(_, bookmark)
-                -- TODO: When local and remote bookmark positions are different,
-                -- we see the same bookmark twice. Limit to local.
                 tmux_exec(other_cmd(NixToNvim.jj.split_to_bookmark, bookmark))
               end,
             })

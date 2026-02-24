@@ -13,6 +13,7 @@ if [[ "$subcmd" == "absorb" ]]; then
     fzf --height=75% "$@"
 elif [[ "$subcmd" == "bookmark" ]]; then
   jj bookmark list --ignore-working-copy -T 'self.name() ++ "\n"' |
+    uniq |
     fzf --height=75% "$@"
 else
   template='
