@@ -13,6 +13,10 @@ return {
     },
   },
 
+  cond = function()
+    return not vim.g.disable_lsps == "true"
+  end,
+
   init = function()
     local lspconfig = require("lspconfig")
 

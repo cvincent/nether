@@ -130,6 +130,8 @@ mkSoftware name (
               program = "nvim";
 
               merge-args = [
+                "--cmd"
+                "let g:disable_lsps='true'"
                 "-c"
                 "let g:jj_diffconflicts_marker_length=$marker_length"
                 "-c"
