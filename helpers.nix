@@ -467,8 +467,12 @@
       {
         moduleWithSystem,
         inputs,
+        helpers,
         ...
       }:
+      let
+        flakeModuleHelpers = helpers;
+      in
       {
         flake.nixosModules."software-${softwareName}" = moduleWithSystem (
           systemArgs@{
@@ -478,7 +482,7 @@
             self',
             system,
           }:
-          nixosModuleArgs@{ config, helpers, ... }:
+          nixosModuleArgs@{ config, ... }:
           let
             thisConfig = config.nether.software."${softwareName}";
 
@@ -492,8 +496,12 @@
                   "${softwareName}" = thisConfig;
                   hmConfig = config.home-manager.users.${config.nether.username};
                   inherit (config) nether;
-                  inherit inputs helpers;
+                  inherit inputs;
                   inherit (config.home-manager.users.${config.nether.username}) hmOptions;
+
+                  helpers = flakeModuleHelpers // {
+                    mkScript = flakeModuleHelpers.mkScript pkgs;
+                  };
                 }
               )
             );
