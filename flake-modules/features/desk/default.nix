@@ -176,8 +176,8 @@ mkFeature name (
     };
   in
   {
-    options = {
-      mail = {
+    mail = {
+      options = {
         configFilePath = lib.mkOption {
           type = lib.types.str;
           default = "${nether.homeDirectory}/.config/mail-config.json";
@@ -203,9 +203,7 @@ mkFeature name (
           default = mailWaybarModuleScript;
         };
       };
-    };
 
-    mail = {
       aerc.config = {
         inherit
           accountConfigs
