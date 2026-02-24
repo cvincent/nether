@@ -11,6 +11,10 @@ vim.keymap.set("n", "<c-h>", "<c-w>h", { silent = true, remap = true })
 vim.keymap.set("n", "<c-j>", "<c-w>j", { silent = true, remap = true })
 vim.keymap.set("n", "<c-k>", "<c-w>k", { silent = true, remap = true })
 vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true, remap = true })
+vim.keymap.set("n", "<a-h>", "<c-w>h", { silent = true, remap = true })
+vim.keymap.set("n", "<a-j>", "<c-w>j", { silent = true, remap = true })
+vim.keymap.set("n", "<a-k>", "<c-w>k", { silent = true, remap = true })
+vim.keymap.set("n", "<a-l>", "<c-w>l", { silent = true, remap = true })
 
 -- Focus floating window, if any
 function _G.focus_floating()
