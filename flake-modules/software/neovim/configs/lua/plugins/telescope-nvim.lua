@@ -113,27 +113,43 @@ return {
       local custom_telescopes_pickers = require("custom_telescopes.pickers")
       local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
 
-      vim.keymap.set("n", "<leader>fs", telescope_builtin.lsp_document_symbols)
-      vim.keymap.set("n", "<leader>ff", telescope_builtin.find_files)
-      vim.keymap.set("n", "<leader>fb", telescope_builtin.buffers)
-      vim.keymap.set("n", "<leader>fh", telescope_builtin.help_tags)
-      vim.keymap.set("n", "<leader>fe", telescope_builtin.symbols)
-      vim.keymap.set("n", "<leader>fk", telescope_builtin.keymaps)
-      vim.keymap.set("n", "<leader>fT", telescope_builtin.builtin)
-      vim.keymap.set("n", "<leader>ft", custom_telescopes_pickers.tmux_files)
+      local maps = {
+        fs = telescope_builtin.lsp_document_symbols,
+        ff = telescope_builtin.find_files,
+        fb = telescope_builtin.buffers,
+        fh = telescope_builtin.help_tags,
+        fe = telescope_builtin.symbols,
+        fk = telescope_builtin.keymaps,
+        fT = telescope_builtin.builtin,
+        ft = custom_telescopes_pickers.tmux_files,
+        fg = telescope.extensions.live_grep_args.live_grep_args,
+        fG = live_grep_args_shortcuts.grep_word_under_cursor,
+      }
 
-      vim.keymap.set("n", "<leader>fg", telescope.extensions.live_grep_args.live_grep_args)
-      vim.keymap.set("n", "<leader>fG", live_grep_args_shortcuts.grep_word_under_cursor)
+      local may_change_buffer = {
+        "ff", "fb", "fT", "ft", "fg", "fG"
+      }
 
-      vim.keymap.set("n", "<leader>vff", function()
-        vim.cmd("vsplit")
-        telescope_builtin.find_files()
-      end)
+      for map, func in pairs(maps) do
+        vim.keymap.set("n", "<leader>" .. map, func)
 
-      vim.keymap.set("n", "<leader>sff", function()
-        vim.cmd("split")
-        telescope_builtin.find_files()
-      end)
+        if vim.tbl_contains(may_change_buffer, map) then
+          vim.keymap.set("n", "<leader>v" .. map, function()
+            vim.cmd("vsplit")
+            func()
+          end)
+
+          vim.keymap.set("n", "<leader>s" .. map, function()
+            vim.cmd("split")
+            func()
+          end)
+
+          vim.keymap.set("n", "<leader>T" .. map, function()
+            vim.cmd("tabnew")
+            func()
+          end)
+        end
+      end
 
       vim.keymap.set("n", "<leader>gc", telescope_builtin.git_branches)
 
