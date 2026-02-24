@@ -6,6 +6,7 @@
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
   "conform.nvim": { "branch": "master", "commit": "f8929b32acb8712381621b42ef3b0219c3c41efd" },
   "delimitMate": { "branch": "master", "commit": "becbd2d353a2366171852387288ebb4b33a02487" },
+  "diffchar.vim": { "branch": "master", "commit": "14fc3fc79356d6b80462df8dbc8934f293145b9a" },
   "editable-term.nvim": { "branch": "master", "commit": "16ac164615d465fedbbb4918a4182731e1beb53b" },
   "fidget.nvim": { "branch": "main", "commit": "d9ba6b7bfe29b3119a610892af67602641da778e" },
   "footnote.nvim": { "branch": "main", "commit": "95c1f1ae48849e2a34ccb86a3d0aa5e6df9430f5" },

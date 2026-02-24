@@ -10,6 +10,9 @@ return {
 
     require("nord").set()
 
+    -- Highlight intra-line changes with diffchars.vim
+    vim.cmd("hi! DiffText guifg=" .. colors.nord0_gui .. " guibg=" .. colors.nord12_gui)
+
     vim.api.nvim_command("hi! Pmenu blend=15")
     vim.api.nvim_command("hi! Pmenu guibg=" .. colors.nord0_gui)
 
