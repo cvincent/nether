@@ -50,10 +50,6 @@ vim.keymap.set("c", "<m-bs>", "<c-w>")
 vim.keymap.set("c", "<c-bs>", "<c-w>")
 vim.keymap.set("t", "<c-bs>", "<a-bs>")
 
--- Fast ex commands
-vim.keymap.set("n", "<cr>", ":")
-vim.keymap.set("v", "<cr>", ":")
-
 -- Copy to end of line with Y
 vim.keymap.set("n", "Y", "y$")
 
