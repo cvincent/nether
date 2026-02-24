@@ -36,6 +36,7 @@ return {
 
       vim.keymap.set("n", "<c-=>", "40<c-w>+", { buffer = true })
       vim.keymap.set("n", "<c-->", "40<c-w>-", { buffer = true })
+      vim.keymap.set("n", "<leader>q", ":bd<cr>", { buffer = true, silent = true, })
     end
 
     vim.keymap.set("n", "<leader>gpl", function() pull_from_current_branch() end)
@@ -66,39 +67,67 @@ return {
       end,
     })
 
+    -- TODO: This is an awesome mess lol.
     if IsPluginInstalled("toggleterm.nvim") and IsPluginInstalled("vim-test") then
-      local jj_picker = require('toggleterm.terminal').Terminal:new({
-        cmd = NixToNvim.jj.fzf_commit_ids .. " jj --height=100% --expect=ctrl-a,ctrl-b " .. " > .fzf-result",
-        direction = "float",
-        float_opts = {
-          winblend = 15,
-          border = { "│", "", "", "", "", "", "│", "│" },
-          width = function()
-            return math.floor(vim.o.columns * 0.3)
-          end,
-          col = function()
-            return math.floor(vim.o.columns - vim.o.columns * 0.3)
-          end,
-          height = function()
-            local ui = vim.api.nvim_list_uis()[1]
-            return ui.height - 2
-          end,
-        },
-        on_exit = function()
-          vim.g.toggleterm_fzf_result = vim.fn.readfile(".fzf-result")
-          vim.fn.delete(".fzf-result")
-          vim.g.toggleterm_fzf_callback()
-        end
-      }) --:toggle()
+      -- TODO: We are here. We need an fzf picker for bookmarks, then to bind
+      -- <leader>jb to our new `jj-split-to-bookmark` command.
 
-      local jj_cmd = function(subcmd, rest)
-        -- Need to call this as a function so we're sure vim.g.nvr_pipe is set
-        -- from the local .nvim.lua.
-        local editor = "nvr --servername " .. vim.g.nvr_pipe .. " -cc \":lua QuickFloatingEdit()\" --remote-wait"
-        return "EDITOR='" .. editor .. "' jj " .. subcmd .. " --tool git-index " .. rest
+      local jj_picker = function(fzf_cmd)
+        return require('toggleterm.terminal').Terminal:new({
+          cmd = fzf_cmd .. " --height 100% > .fzf-result",
+          direction = "float",
+          float_opts = {
+            winblend = 15,
+            border = { "│", "", "", "", "", "", "│", "│" },
+            width = function()
+              return math.floor(vim.o.columns * 0.3)
+            end,
+            col = function()
+              return math.floor(vim.o.columns - vim.o.columns * 0.3)
+            end,
+            height = function()
+              local ui = vim.api.nvim_list_uis()[1]
+              return ui.height - 2
+            end,
+          },
+          on_exit = function()
+            vim.g.toggleterm_fzf_result = vim.fn.readfile(".fzf-result")
+            vim.fn.delete(".fzf-result")
+
+            if vim.g.toggleterm_fzf_callback then
+              vim.g.toggleterm_fzf_callback()
+            end
+          end
+        })
       end
 
-      local jj_positional = function(subcmd)
+      local jj_change_id_picker = jj_picker(
+        NixToNvim.jj.fzf_commit_ids .. " jj --expect=ctrl-a,ctrl-b,ctrl-d"
+      )
+
+      local jj_bookmark_picker = jj_picker(
+        NixToNvim.jj.fzf_commit_ids .. " 'jj bookmark'"
+      )
+
+      local jj_editor = function()
+        -- Need to call this as a function so we're sure vim.g.nvr_pipe is set
+        -- from the local .nvim.lua.
+
+        -- TODO: Probably wrap this editor in a command so our fish history
+        -- isn't so bad for it.
+        return "NVIM_SERVER=" .. vim.g.per_project.nvr_pipe .. " EDITOR='nvr --servername " ..
+            vim.g.per_project.nvr_pipe .. " -cc \":lua QuickFloatingEdit()\" --remote-wait' "
+      end
+
+      local jj_cmd = function(subcmd, rest)
+        return jj_editor() .. " jj " .. subcmd .. " --tool git-index " .. rest .. "; jj --no-pager"
+      end
+
+      local other_cmd = function(cmd, rest)
+        return jj_editor() .. cmd .. " " .. rest .. " --tool git-index; jj --no-pager"
+      end
+
+      local callback_jj_positional = function(subcmd)
         return function()
           local key = vim.g.toggleterm_fzf_result[1]
           local change = vim.g.toggleterm_fzf_result[2]
@@ -107,36 +136,77 @@ return {
             TmuxTestPaneExec(jj_cmd(subcmd, "-A " .. change))
           elseif key == "ctrl-b" then
             TmuxTestPaneExec(jj_cmd(subcmd, "-B " .. change))
+          elseif key == "ctrl-d" then
+            TmuxTestPaneExec(jj_cmd(subcmd, "-d " .. change))
           end
         end
       end
 
-      local jj_squash = function()
-        local key = vim.g.toggleterm_fzf_result[1]
-        local change = vim.g.toggleterm_fzf_result[2]
-        TmuxTestPaneExec(jj_cmd("squash", "-t " .. change))
+      local callback_jj_to_target = function(subcmd)
+        return function()
+          -- local key = vim.g.toggleterm_fzf_result[1]
+          local change = vim.g.toggleterm_fzf_result[2]
+          TmuxTestPaneExec(jj_cmd(subcmd, "-t " .. change))
+        end
+      end
+
+      local callback_other_cmd = function(cmd)
+        return function()
+          local arg = vim.g.toggleterm_fzf_result[1]
+          TmuxTestPaneExec(other_cmd(cmd, arg))
+        end
+      end
+
+      local jj_no_picker = function(subcmd)
+        TmuxTestPaneExec(jj_cmd(subcmd, ""))
+      end
+
+      local other_cmd_no_picker = function(subcmd)
+        TmuxTestPaneExec(other_cmd(subcmd, ""))
       end
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fugitive",
         callback = function()
-          vim.keymap.set("n", "<leader>jp", function()
+          vim.keymap.set("n", "<leader>J", function()
+            TmuxTestPaneExec("jj")
+          end, { buffer = true })
+
+          vim.keymap.set("n", "<leader>js", function()
             vim.api.nvim_command("wincmd q")
-            vim.g.toggleterm_fzf_callback = jj_positional("split")
-            jj_picker:toggle()
+            vim.g.toggleterm_fzf_callback = callback_jj_positional("split")
+            jj_change_id_picker:toggle()
+          end, { buffer = true })
+
+          vim.keymap.set("n", "<leader>jS", function()
+            vim.api.nvim_command("wincmd q")
+            jj_no_picker("stack_split")
+          end, { buffer = true })
+
+          vim.keymap.set("n", "<leader>ja", function()
+            vim.api.nvim_command("wincmd q")
+            other_cmd_no_picker(NixToNvim.jj.split_to_absorb)
+          end, { buffer = true })
+
+          vim.keymap.set("n", "<leader>jb", function()
+            vim.api.nvim_command("wincmd q")
+            vim.g.toggleterm_fzf_callback = callback_other_cmd(
+              NixToNvim.jj.split_to_bookmark
+            )
+            jj_bookmark_picker:toggle()
           end, { buffer = true })
 
           -- Probably need to think about this one still
           vim.keymap.set("n", "<leader>jr", function()
             vim.api.nvim_command("wincmd q")
-            vim.g.toggleterm_fzf_callback = jj_positional("rebase")
-            jj_picker:toggle()
+            vim.g.toggleterm_fzf_callback = callback_jj_positional("rebase")
+            jj_change_id_picker:toggle()
           end, { buffer = true })
 
           vim.keymap.set("n", "<leader>jq", function()
             vim.api.nvim_command("wincmd q")
-            vim.g.toggleterm_fzf_callback = jj_squash
-            jj_picker:toggle()
+            vim.g.toggleterm_fzf_callback = callback_jj_to_target("squash")
+            jj_change_id_picker:toggle()
           end, { buffer = true })
         end,
       })

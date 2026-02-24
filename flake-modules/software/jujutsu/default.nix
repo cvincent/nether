@@ -111,28 +111,9 @@ mkSoftware name (
           };
 
           merge-tools = {
-            neovim-fugitive = {
-              program = "sh";
-              edit-args = [
-                "-c"
-                ''
-                  set -euo pipefail
-                  rm -f "$right/JJ-INSTRUCTIONS"
-                  git -C "$left" init -q
-                  git -C "$left" add -A
-                  git -C "$left" commit -q -m baseline --allow-empty # create parent commit
-                  mv "$left/.git" "$right"
-                  git -C "$right" add --intent-to-add --ignore-removal . # create current working copy
-                  (cd "$right"; nvim .git/index)
-                  git -C "$right" diff-index --quiet --cached HEAD && { echo "No changes done, aborting split."; exit 1; }
-                  git -C "$right" commit -q -m split # create commit on top of parent including changes
-                  git -C "$right" restore . # undo changes in modified files
-                  git -C "$right" reset .   # undo --intent-to-add
-                  git -C "$right" clean -q -df # remove untracked files
-                ''
-              ];
-            };
-
+            # --tool git-index for split or squash to use whatever is currently
+            # staged in Git. This allows us to combine vim-fugitive's excellent
+            # UI for staging hunks with jj's awesome capabilities.
             git-index = {
               program = "sh";
               edit-args = [
@@ -174,23 +155,59 @@ mkSoftware name (
               ];
             };
 
+            # Use vim-fugitive for diffedit. Whatever is staged is kept. We
+            # previously also used this for split and squash, which we still
+            # can, but doing so changes the order of operations; we start the
+            # split or squash, and _then_ select hunks. It feels more natural to
+            # select hunks first.
+            neovim-fugitive = {
+              program = "sh";
+              edit-args = [
+                "-c"
+                ''
+                  set -euo pipefail
+                  rm -f "$right/JJ-INSTRUCTIONS"
+                  git -C "$left" init -q
+                  git -C "$left" add -A
+                  git -C "$left" commit -q -m baseline --allow-empty # create parent commit
+                  mv "$left/.git" "$right"
+                  git -C "$right" add --intent-to-add --ignore-removal . # create current working copy
+                  (cd "$right"; nvr --servername $NVIM_SERVER --remote-tab-wait .git/index)
+                  git -C "$right" diff-index --quiet --cached HEAD && { echo "No changes done, aborting split."; exit 1; }
+                  git -C "$right" commit -q -m split # create commit on top of parent including changes
+                  git -C "$right" restore . # undo changes in modified files
+                  git -C "$right" reset .   # undo --intent-to-add
+                  git -C "$right" clean -q -df # remove untracked files
+                ''
+              ];
+            };
+
+            # Use the jj-diffconflicts NeoVim plugin to resolve conflicts.
             neovim-diffconflicts = {
-              program = "nvim";
+              program = "sh";
+              merge-tool-edits-conflict-markers = true;
+
+              # TODO: This actually works! It just needs some refinement:
+              # - <leader>q should probably map to :bd!. This should end the resolve session
+              # without changes if I haven't written the buffer, and end it _with_ changes if
+              # I have written the buffer.
+              # - It should also close the companion "snapshot" view and the "history" tab.
 
               merge-args = [
-                "--cmd"
-                "let g:disable_lsps='true'"
                 "-c"
-                "let g:jj_diffconflicts_marker_length=$marker_length"
-                "-c"
-                "JJDiffConflicts!"
-                "$output"
-                "$base"
-                "$left"
-                "$right"
-              ];
+                ''
+                  nvr --servername $NVIM_SERVER \
+                    -cc ":tabnew $base | diffthis" \
+                    -c ":vsplit $left | diffthis" \
+                    -c ":vsplit $right | diffthis"
 
-              merge-tool-edits-conflict-markers = true;
+                  nvr --servername $NVIM_SERVER \
+                    -cc ":let g:jj_diffconflicts_marker_length=$marker_length" \
+                    -cc ":-tabnew" \
+                    -c :JJDiffConflicts \
+                    --remote-wait $output
+                ''
+              ];
             };
           };
 
