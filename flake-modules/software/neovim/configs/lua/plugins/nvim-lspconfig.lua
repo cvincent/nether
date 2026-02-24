@@ -56,36 +56,18 @@ return {
 
     lspconfig.nil_ls.setup({})
 
-    lspconfig.elixirls.setup({
-      cmd = { "elixir-ls" },
-      settings = {
-        dialyzerEnabled = true,
-        incrementalDialyzer = true,
-        suggestSpecs = true,
-        signatureAfterComplete = true,
-        enableTestLenses = true
-      },
-      on_attach = function(client)
-        -- client.server_capabilities.definitionProvider = false
-        client.server_capabilities.referencesProvider = false
-      end
-    })
 
-    lspconfig.nextls.setup({
-      cmd = { "nextls", "--stdio" },
-      init_options = {
-        extensions = {
-          credo = { enable = true }
-        },
-        experimental = {
-          completions = { enable = true }
-        }
-      },
-      on_attach = function(client)
-        client.server_capabilities.definitionProvider = false
-        -- client.server_capabilities.referencesProvider = false
-      end
-    })
+    require("lspconfig").lexical.setup {
+      cmd = { "expert", "--stdio" },
+      root_dir = function(fname)
+        return require("lspconfig")
+            .util
+            .root_pattern("mix.exs", ".git")(fname) or
+            vim.loop.cwd()
+      end,
+      filetypes = { "elixir", "eelixir", "heex" },
+      settings = {}
+    }
 
     lspconfig.ruby_lsp.setup({
       init_options = {
