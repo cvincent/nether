@@ -135,6 +135,34 @@ function M.fugitive_status_window_loaded()
   end, { buffer = true })
 end
 
+local rebase_picker = function(change_id)
+  local header = vim.system({
+    "jj", "log", "-r", change_id, "-GT",
+    '"Rebasing " ++ format_short_change_id_with_change_offset(self) ++ " " ++ self.description()'
+  }):wait().stdout
+
+  picker({
+    cmd = NixToNvim.jj.fzf_change_ids .. " --header='" .. header .. "'",
+    expected_keys = {
+      "enter",
+      "ctrl-a",
+      "ctrl-b",
+      "ctrl-d",
+    },
+    callback = function(rebase_key, rebase_to)
+      local cmd = "-r " .. change_id .. " "
+
+      if rebase_key == "" or rebase_key == "enter" or rebase_key == "ctrl-a" then
+        run(jj_cmd_toolless("rebase", cmd .. "-A " .. rebase_to))
+      elseif rebase_key == "ctrl-b" then
+        run(jj_cmd_toolless("rebase", cmd .. "-B " .. rebase_to))
+      elseif rebase_key == "ctrl-d" then
+        run(jj_cmd_toolless("rebase", cmd .. "-d " .. rebase_to))
+      end
+    end,
+  })
+end
+
 function M.open_global_window()
   picker({
     cmd = NixToNvim.jj.fzf_change_ids,
@@ -147,6 +175,7 @@ function M.open_global_window()
       "ctrl-u",
       "ctrl-alt-u",
       "ctrl-b",
+      "alt-r",
     },
 
     callback = function(key, change_id)
@@ -165,6 +194,10 @@ function M.open_global_window()
       elseif key == "ctrl-b" then
         local bookmark = vim.fn.input("New bookmark: ")
         run(jj_cmd_toolless("bookmark create " .. bookmark, "-r " .. change_id))
+      elseif key == "alt-r" then
+        vim.loop.new_timer():start(250, 0, vim.schedule_wrap(function()
+          rebase_picker(change_id)
+        end))
       end
     end,
   })
