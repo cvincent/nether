@@ -771,6 +771,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-khal": {
+      "locked": {
+        "lastModified": 1774390181,
+        "narHash": "sha256-P1s4Qf4MM5lXaYcJlOMZpAR+Ph7hIKTgLqLe2Za1cPQ=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7d0d42afb8ddbbc60e00294b5baed2ea0de0ca84",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "7d0d42afb8ddbbc60e00294b5baed2ea0de0ca84",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -1091,6 +1107,7 @@
         "nixpkgs-discord": "nixpkgs-discord",
         "nixpkgs-jj-fzf": "nixpkgs-jj-fzf",
         "nixpkgs-jujutsu": "nixpkgs-jujutsu",
+        "nixpkgs-khal": "nixpkgs-khal",
         "nixpkgs-nix": "nixpkgs-nix",
         "nixpkgs-pimsync": "nixpkgs-pimsync",
         "nixpkgs-python-icalendar": "nixpkgs-python-icalendar",

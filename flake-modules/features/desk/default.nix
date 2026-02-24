@@ -127,6 +127,7 @@ mkFeature name (
         inherit (pkgInputs.private-nethers.mail) displayOrder;
         inherit accountConfigs;
         mailCacheBasePath = desk.mail.cacheBasePath;
+        khalDbPath = desk.calendars.khal.dbPath;
       }
       |> builtins.toJSON
       |> builtins.toFile mailConfigFileName;
@@ -320,6 +321,12 @@ mkFeature name (
 
           description = "Names must not contain dashes due to vdirsyncer.";
         };
+      };
+
+      khal.config = {
+        inherit (pkgInputs.private-nethers.mail) defaultCalendar;
+        inherit (desk.calendars) readOnlyCalendars;
+        accountConfigs = accountConfigsForCalendar;
       };
 
       pimsync.config.accountConfigs = accountConfigsForCalendar;

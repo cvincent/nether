@@ -225,6 +225,9 @@
     # Later build of jj-fzf that actually works (0.37.0)
     nixpkgs-jj-fzf.url = "nixpkgs/nixos-unstable";
 
+    # Package changed for khal 0.14.0 which I forked from
+    nixpkgs-khal.url = "github:nixos/nixpkgs/7d0d42afb8ddbbc60e00294b5baed2ea0de0ca84";
+
     # Emergency patch for Nix for various CVEs
     nixpkgs-nix.url = "github:NixOS/nixpkgs?ref=pull/573623/head";
 

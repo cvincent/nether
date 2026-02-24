@@ -129,6 +129,19 @@
       enable = true;
 
       calendars.pimsync.package = pkgInputs.nixpkgs-pimsync.pimsync;
+
+      calendars = {
+        # Our fork of khal which uses integers intead of nondeterministic floats
+        # in its SQLite DB, so we can do deep integrations.
+        khal.package = pkgInputs.nixpkgs-khal.khal.overrideAttrs (prev: {
+          src = pkgs.fetchFromGitHub {
+            owner = "cvincent";
+            repo = "khal";
+            rev = "master";
+            hash = "sha256-86q91CeJKy5X7/zGCHZuFRCCr0rnBEQ+zv/pjD5tjgQ=";
+          };
+        });
+      };
     };
 
     flatpak.enable = true;
