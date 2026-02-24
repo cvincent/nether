@@ -43,6 +43,13 @@ return {
           end, { buffer = true })
         end
 
+        for _, open_style in ipairs(open_styles) do
+          local downcase = string.lower(open_style)
+          vim.keymap.set("n", "<leader>r" .. downcase .. "r", function()
+            vim.cmd("R" .. open_style)
+          end, { buffer = true })
+        end
+
         local open_or_generate_spec = function(open_style)
           local cmd = open_style .. "spec "
           local app_relative_path_for_spec = app_relative_path
