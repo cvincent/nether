@@ -228,6 +228,9 @@
     # Emergency patch for Nix for various CVEs
     nixpkgs-nix.url = "github:NixOS/nixpkgs?ref=pull/573623/head";
 
+    # Newer pimsync
+    nixpkgs-pimsync.url = "nixpkgs/nixos-unstable";
+
     # Upgrade Qutebrowser independently
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
 

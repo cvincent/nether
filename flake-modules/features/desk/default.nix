@@ -60,9 +60,18 @@ mkFeature name (
       lib.recursiveUpdate ((import ./personal-config.nix) nether.me.fullName) rec {
         email = pkgInputs.private-nethers.mail.personal.email;
         aliases = pkgInputs.private-nethers.mail.personal.aliases;
+
         imap = {
           username = email;
           password = pkgInputs.private-nethers.mail.personal.password;
+        };
+
+        calendar = {
+          inherit (pkgInputs.private-nethers.mail.personal.calendar) collections;
+
+          credentials = {
+            inherit (pkgInputs.private-nethers.mail.personal.calendar) username password;
+          };
         };
       }
     );
@@ -312,6 +321,8 @@ mkFeature name (
           description = "Names must not contain dashes due to vdirsyncer.";
         };
       };
+
+      pimsync.config.accountConfigs = accountConfigsForCalendar;
 
       vdirsyncer.config = {
         inherit (desk.calendars) readOnlyCalendars;

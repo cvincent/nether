@@ -127,6 +127,7 @@
 
     desk = {
       enable = true;
+
       calendars.pimsync.package = pkgInputs.nixpkgs-pimsync.pimsync;
     };
 
