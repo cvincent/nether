@@ -64,7 +64,7 @@ mkSoftware name (
                 name = "file-emails-${account}";
 
                 runtimeInputs = [
-                  nether.desk.email.aerc.package
+                  nether.desk.mail.aerc.package
                   nether.graphicalEnv.notifications.libnotify.package
                   pkgs.mblaze
                   pkgs.gnugrep

@@ -109,9 +109,9 @@ mkFeature name (
             name = "sync-email-${account}";
 
             runtimeInputs = [
-              desk.email.aerc.package
-              desk.email.imapfilter.package
-              desk.email.mbsync.package
+              desk.mail.aerc.package
+              desk.mail.imapfilter.package
+              desk.mail.mbsync.package
             ];
 
             text = ''
@@ -205,7 +205,7 @@ mkFeature name (
       };
     };
 
-    email = {
+    mail = {
       aerc.config = {
         inherit
           accountConfigs
@@ -268,8 +268,8 @@ mkFeature name (
         |> builtins.concatStringsSep "\n";
 
       nether.backups.paths = {
-        "${desk.mail.maildirBasePath}".deleteMissing = true;
-        "${desk.mail.filtersBasePath}".deleteMissing = true;
+        ${desk.mail.maildirBasePath}.deleteMissing = true;
+        ${desk.mail.filtersBasePath}.deleteMissing = true;
       };
     };
 
