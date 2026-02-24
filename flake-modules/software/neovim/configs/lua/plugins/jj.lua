@@ -20,7 +20,12 @@ return {
         -- instance can have multiple pipes, so...
         require("helpers.tmux-integration").tmux_exec_with_remote_editor(cmd)
       end
-    }
+    },
+
+    init = function()
+      vim.keymap.set("n", "<leader>jj", ":JJWindow<cr>")
+      vim.keymap.set("n", "<leader>jn", ":JJNewWindow<cr>")
+    end,
   },
 
   {

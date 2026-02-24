@@ -21,3 +21,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "fugitive",
   callback = function() get_mod().fugitive_status_window_loaded() end,
 })
+
+vim.api.nvim_create_user_command("JJWindow", function()
+  get_mod().open_global_window()
+end, {})

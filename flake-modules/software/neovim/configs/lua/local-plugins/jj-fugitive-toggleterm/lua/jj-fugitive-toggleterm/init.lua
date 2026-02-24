@@ -40,6 +40,10 @@ local jj_cmd = function(subcmd, rest)
   return "jj " .. subcmd .. " --tool git-index " .. rest .. "; jj --no-pager"
 end
 
+local jj_cmd_toolless = function(subcmd, rest)
+  return "jj " .. subcmd .. " " .. rest .. "; jj --no-pager"
+end
+
 local other_cmd = function(cmd, rest)
   return cmd .. " " .. rest .. " --tool git-index; jj --no-pager"
 end
@@ -129,6 +133,41 @@ function M.fugitive_status_window_loaded()
       end,
     })
   end, { buffer = true })
+end
+
+function M.open_global_window()
+  picker({
+    cmd = NixToNvim.jj.fzf_change_ids,
+
+    expected_keys = {
+      "enter",
+      "ctrl-e",
+      "ctrl-r",
+      "ctrl-d",
+      "ctrl-u",
+      "ctrl-alt-u",
+      "ctrl-b",
+    },
+
+    callback = function(key, change_id)
+      if key == "" or key == "enter" then
+        run(jj_cmd_toolless("edit", change_id))
+      elseif key == "ctrl-e" then
+        run(jj_cmd_toolless("diffedit", "-r " .. change_id))
+      elseif key == "ctrl-r" then
+        run(jj_cmd_toolless("resolve", "-r " .. change_id))
+      elseif key == "ctrl-d" then
+        run(jj_cmd_toolless("describe", change_id))
+      elseif key == "ctrl-u" then
+        run(jj_cmd_toolless("undo", ""))
+      elseif key == "ctrl-alt-u" then
+        run(jj_cmd_toolless("redo", ""))
+      elseif key == "ctrl-b" then
+        local bookmark = vim.fn.input("New bookmark: ")
+        run(jj_cmd_toolless("bookmark create " .. bookmark, "-r " .. change_id))
+      end
+    end,
+  })
 end
 
 return M
