@@ -4,6 +4,7 @@ mkFeature name (
     nether,
     media,
     pkgs,
+    pkgInputs,
     ...
   }:
   {
@@ -49,7 +50,10 @@ mkFeature name (
       playerctld = { };
       showmethekey = { };
 
-      spotify.nixos.nether.backups.paths."${nether.homeDirectory}/.config/spotify".deleteMissing = true;
+      spotify = {
+        package = pkgInputs.nixpkgs-spotify.spotify;
+        nixos.nether.backups.paths."${nether.homeDirectory}/.config/spotify".deleteMissing = true;
+      };
 
       yt-dlp.config = {
         settings = {

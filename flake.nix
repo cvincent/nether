@@ -225,6 +225,9 @@
     # Upgrade Qutebrowser independently
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
 
+    # Upgrade Spotify independently
+    nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
+
     # Newer Python icalendar module for ical2jcal
     nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
 
