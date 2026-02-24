@@ -961,11 +961,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1771816158,
-        "narHash": "sha256-PCdv9GWA1nd+mymDl8qt8J3ZN6t+nlxFzLenDjocO6E=",
+        "lastModified": 1776702582,
+        "narHash": "sha256-rtncGkOH/zciJ2/yt0z+koxizjU4C6C82+hCRvoccp4=",
         "ref": "main",
-        "rev": "51ba5bfdeddbd014806536dbc9b59a78a5a4aaac",
-        "revCount": 47,
+        "rev": "56e8cbd5ffe34ccf52e244e2b5aec8edc7327f9d",
+        "revCount": 49,
         "type": "git",
         "url": "ssh://git@github.com/cvincent/private-nethers.git"
       },
