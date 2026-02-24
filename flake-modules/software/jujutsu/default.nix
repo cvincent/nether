@@ -260,6 +260,15 @@ mkSoftware name (
                 )
               )
             '';
+
+            fzf = ''
+              format_short_change_id(change_id) ++ " " ++
+              if(self.empty(), empty_commit_marker ++ " ") ++
+              description.first_line() ++
+              " (" ++ commit_id.short() ++ ") " ++
+              self.bookmarks() ++ "|" ++
+              change_id.shortest() ++ "\n"
+            '';
           };
 
           templates = {
