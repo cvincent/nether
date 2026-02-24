@@ -44,6 +44,7 @@ mkSoftware name (
         type = lib.types.package;
         default = pkgs.writeShellApplication {
           name = "clear-count-unread-email-cache";
+          runtimeInputs = [ pkgs.coreutils ];
           text = "rm -f ${aerc.mailCacheBasePath}/*";
         };
       };
