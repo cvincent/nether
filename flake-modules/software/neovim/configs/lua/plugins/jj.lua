@@ -13,6 +13,9 @@ return {
       require("jj").setup({})
 
       local annotate = require("jj.annotate")
+      local file = require("jj.file")
+
+      local picker = require("toggleterm-fzf").picker
 
       -- By default the plugin puts our cursor in the split to the left when we
       -- close the sidebar. Let's fix it.
@@ -36,6 +39,55 @@ return {
 
         annotate.file()
       end, { desc = "JJ annotate file" })
+
+      vim.keymap.set("n", "<leader><c-a>", function()
+        local path = vim.fn.expand("%")
+
+        local key_to_split = {
+          enter = "",
+          ["ctrl-v"] = "wincmd v",
+          ["ctrl-s"] = "wincmd s",
+          ["ctrl-t"] = "tabnew %",
+          ["alt-v"] = "wincmd v",
+          ["alt-s"] = "wincmd s",
+          ["alt-t"] = "tabnew %",
+        }
+
+        picker({
+          cmd = NixToNvim.jj.fzf_file_change_ids .. " " .. path,
+
+          expected_keys = {
+            "enter",
+            "ctrl-v", "ctrl-s", "ctrl-t",
+            "alt-v", "alt-s", "alt-t",
+          },
+
+          callback = function(key, change_id)
+            local diff = key:match("^alt-") ~= nil
+
+            local setup_diff = function()
+              if diff then
+                vim.cmd.diffthis()
+                vim.cmd("set scrollbind")
+              end
+            end
+
+            vim.api.nvim_create_autocmd("BufEnter", {
+              pattern = path,
+              once = true,
+              callback = vim.schedule_wrap(function()
+                setup_diff()
+
+                vim.cmd(key_to_split[key])
+                file.open_target({ rev = change_id, path = path, })
+
+                -- Couldn't get an autocommand to trigger, but this works
+                vim.defer_fn(setup_diff, 10)
+              end),
+            })
+          end,
+        })
+      end)
     end,
   },
 

@@ -63,6 +63,13 @@ mkSoftware name (
           jj-fzf-bookmarks
           jj-fzf-change-ids
           jj-fzf-changed-files
+
+          (mkJujutsuScript "jj-fzf-file-change-ids" {
+            runtimeInputs = [
+              jujutsu.package
+              nether.software.fzf.fzf-with-opts
+            ];
+          })
         ];
     };
 
