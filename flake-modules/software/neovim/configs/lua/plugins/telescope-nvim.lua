@@ -31,6 +31,9 @@ return {
                 ["<c-down>"] = "cycle_history_next",
                 ["<c-up>"] = "cycle_history_prev",
 
+                ["<c-s>"] = "select_horizontal",
+                ["<c-x>"] = "nop",
+
                 ["<c-q>"] = function(prompt_bufnr)
                   local actions = telescope_actions
                   actions.smart_send_to_qflist(prompt_bufnr)
