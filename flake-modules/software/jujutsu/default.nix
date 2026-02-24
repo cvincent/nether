@@ -2,7 +2,7 @@
 mkSoftware name (
   {
     jujutsu,
-    config,
+    nether,
     pkgs,
     helpers,
     ...
@@ -17,21 +17,17 @@ mkSoftware name (
           (mkJujutsuScript "fzf-completions" {
             runtimeInputs = [
               pkgs.coreutils
-              config.nether.software.jujutsu.package
-              config.nether.software.fzf.fzf-with-opts
+              jujutsu.package
+              nether.software.fzf.fzf-with-opts
             ];
           })
 
           (mkJujutsuScript "jj-split-to-bookmark" {
-            runtimeInputs = [
-              config.nether.software.jujutsu.package
-            ];
+            runtimeInputs = [ jujutsu.package ];
           })
 
           (mkJujutsuScript "jj-split-to-absorb" {
-            runtimeInputs = [
-              config.nether.software.jujutsu.package
-            ];
+            runtimeInputs = [ jujutsu.package ];
           })
         ];
     };
@@ -48,8 +44,8 @@ mkSoftware name (
           "$schema" = "https://jj-vcs.github.io/jj/latest/config-schema.json";
 
           user = {
-            name = config.nether.me.fullName;
-            email = config.nether.me.email;
+            name = nether.me.fullName;
+            email = nether.me.email;
           };
 
           colors = {
