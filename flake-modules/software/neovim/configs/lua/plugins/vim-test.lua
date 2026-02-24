@@ -4,11 +4,11 @@ return {
   init = function()
     vim.g["test#custom_strategies"] = {
       ["vim-test-my-tmux-strategy"] = function(cmd)
-        for _ = 1, 2 do
+        for _ = 1, 5 do
           vim.system({
             "tmux", "send-keys", "-t",
             vim.g.vim_test_tmux_target,
-            "C-C"
+            "c-c"
           }):wait()
         end
 
@@ -17,6 +17,11 @@ return {
           vim.g.vim_test_tmux_target,
           cmd,
           vim.g.vim_test_args,
+        }):wait()
+
+        vim.system({
+          "tmux", "send-keys", "-t",
+          vim.g.vim_test_tmux_target,
           "ENTER",
         }):wait()
 
