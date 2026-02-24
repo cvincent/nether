@@ -1,6 +1,7 @@
 rec {
   primary = false;
   email = null;
+  color = "base09";
   aliases = [ ];
 
   imap = {

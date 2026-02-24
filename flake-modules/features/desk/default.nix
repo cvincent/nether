@@ -6,6 +6,7 @@ mkFeature name (
     pkgInputs,
     pkgs,
     lib,
+    config,
     ...
   }:
   let
@@ -48,6 +49,9 @@ mkFeature name (
             |> map ({ refName, ... }: refName);
         }
         // accountConfig
+        // {
+          color = config.lib.stylix.colors.${accountConfig.color};
+        }
       )
       |> lib.flip removeAttrs [ "folderLayout" ]
     );

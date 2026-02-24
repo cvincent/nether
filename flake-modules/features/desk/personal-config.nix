@@ -4,6 +4,8 @@ fullName: rec {
   name = "personal";
   displayName = "Personal";
 
+  color = "base12";
+
   signature = ''
     Thanks,
 
