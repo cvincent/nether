@@ -188,7 +188,7 @@ mkFeature name (
 
       filtersBasePath = lib.mkOption {
         type = lib.types.str;
-        default = "${nether.backups.mount.path}/imapfilter";
+        default = "${nether.homeDirectory}/.local/share/imapfilter";
       };
 
       mailCacheBasePath = lib.mkOption {
@@ -265,6 +265,7 @@ mkFeature name (
 
       nether.backups.paths = {
         "${desk.maildirBasePath}".deleteMissing = true;
+        "${desk.filtersBasePath}".deleteMissing = true;
       };
     };
 
