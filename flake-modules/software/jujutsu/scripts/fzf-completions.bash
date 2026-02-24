@@ -6,11 +6,11 @@ if [[ $(echo "$line" | cut -d' ' -f2) == "absorb" ]]; then
     fzf --height=75% "$@"
 else
   template='
-    format_short_change_id(change_id) ++
-    " - " ++
+    format_short_change_id(change_id) ++ " " ++
     if(self.empty(), empty_commit_marker ++ " ") ++
     description.first_line() ++
-    " (" ++ commit_id.short() ++ ")|" ++
+    " (" ++ commit_id.short() ++ ") " ++
+    self.bookmarks() ++ "|" ++
     change_id.shortest() ++ "\n"
   '
 
