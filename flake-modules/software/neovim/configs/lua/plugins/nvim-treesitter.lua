@@ -92,6 +92,14 @@ return {
     init = function()
       vim.wo.foldmethod = "expr"
       vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+      local show_ts_node = function()
+        vim.cmd("TSNodeUnderCursor")
+        vim.print(vim.treesitter.get_node():type())
+      end
+
+      vim.keymap.set("n", "<c-s-t>", show_ts_node)
+      vim.keymap.set("i", "<c-s-t>", show_ts_node)
     end
   },
 
