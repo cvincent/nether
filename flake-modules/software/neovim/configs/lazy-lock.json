@@ -48,6 +48,7 @@
   "telescope.nvim": { "branch": "master", "commit": "78857db9e8d819d3cc1a9a7bdc1d39d127a36495" },
   "undoquit.vim": { "branch": "main", "commit": "96935cae0c04ab9c7384afe1d2537ce883672e8c" },
   "vim-EnhancedJumps": { "branch": "master", "commit": "b81284dddf76c010c24452230f0a51fba4c71e37" },
+  "vim-UnconditionalPaste": { "branch": "master", "commit": "cb4e432bc281502eb0fe4cdbb6754b4b72b732c6" },
   "vim-abolish": { "branch": "master", "commit": "dcbfe065297d31823561ba787f51056c147aa682" },
   "vim-asterisk": { "branch": "master", "commit": "77e97061d6691637a034258cc415d98670698459" },
   "vim-coffee-script": { "branch": "master", "commit": "28421258a8dde5a50deafbfc19cd9873cacfaa79" },
