@@ -328,8 +328,6 @@ mkFeature name (
         scripts =
           let
             selectReplaceVars = (lib.attrsets.getAttrs |> lib.flip) {
-              mailConfigFilePath = desk.mail.configFilePath;
-              calendarCommonPath = lib.getExe desk.calendars.scripts.common;
               calendarsBasePath = desk.calendars.basePath;
             };
 

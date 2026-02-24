@@ -234,6 +234,9 @@
     # Newer pimsync
     nixpkgs-pimsync.url = "nixpkgs/nixos-unstable";
 
+    # Newer Python icalendar module for ical2jcal
+    nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
+
     # Upgrade Qutebrowser independently
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
 
@@ -242,9 +245,6 @@
 
     # Newer version of tmux-fingers
     nixpkgs-tmux-fingers.url = "nixpkgs/nixos-unstable";
-
-    # Newer Python icalendar module for ical2jcal
-    nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
 
     # Update Signal independently; old versions stop working on a schedule
     nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";

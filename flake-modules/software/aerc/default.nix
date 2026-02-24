@@ -5,7 +5,6 @@ mkSoftware name (
     lib,
     pkgs,
     nether,
-    hmConfig,
     ...
   }:
   let
