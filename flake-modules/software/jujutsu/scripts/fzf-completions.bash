@@ -1,6 +1,9 @@
-if [[ $(echo "$1" | cut -d' ' -f2) == "absorb" ]]; then
+line="$1"
+shift 1
+
+if [[ $(echo "$line" | cut -d' ' -f2) == "absorb" ]]; then
   jj diff --name-only |
-    fzf --height=75%
+    fzf --height=75% "$@"
 else
   template='
     format_short_change_id(change_id) ++
@@ -12,5 +15,5 @@ else
   '
 
   jj log --color=always -T "$template" |
-    fzf --ansi --height=50% --delimiter='|' --with-nth='{1}' --accept-nth='{2}'
+    fzf --ansi --height=50% --delimiter='|' --with-nth='{1}' --accept-nth='{2}' "$@"
 fi
