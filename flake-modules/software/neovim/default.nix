@@ -44,6 +44,9 @@ mkSoftware name (
 
         xdg.configFile."nix-to-nvim.lua".text = ''
           return {
+            lua = {
+              penlight = "${pkgs.lua5_1.withPackages (ps: [ ps.penlight ])}/share/lua/5.1/?.lua";
+            },
             jj = {
               fzf_commit_ids = "${lib.getExe nether.software.jujutsu.scripts.fzf-completions}",
               split_to_bookmark = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-bookmark}",
