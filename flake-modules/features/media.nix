@@ -24,7 +24,15 @@ mkFeature name (
           scripts = with pkgs.mpvScripts; [
             uosc
             thumbfast
+
+            (pkgs.callPackage ../../packages/mpv-delete-current-file.nix {
+              inherit (pkgs.mpvScripts) buildLua;
+            })
           ];
+
+          bindings = {
+            "Shift+D" = "script-message-to delete_current_file delete-file; playlist-next";
+          };
 
           scriptOpts = {
             thumbfast.network = true;

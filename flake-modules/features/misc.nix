@@ -24,6 +24,13 @@ mkFeature name (
       transmission_4-gtk.hm.xdg.mimeApps.defaultApplications."x-scheme-handler/magnet" =
         "userapp-transmission-gtk-VU41B3.desktop";
 
+      # NOTE: Useful on its own, but mainly installed as a dependency of
+      # mpv-delete-current-file. We eventually want to replace that package with
+      # a better script of our own. When we do, we should package it properly
+      # with trash-cli as a dependency (though we will probably keep it here
+      # too).
+      trash-cli = { };
+
       # TODO: Move these to a new gaming.nix feature, along with Steam
       ryubing = { };
       shadps4 = { };

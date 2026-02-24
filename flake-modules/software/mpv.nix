@@ -7,13 +7,14 @@ mkSoftware name (
     ...
   }:
   {
-    options = lib.getAttrs [ "config" "scripts" "scriptOpts" ] hmOptions.programs.mpv;
+    options = lib.getAttrs [ "config" "bindings" "scripts" "scriptOpts" ] hmOptions.programs.mpv;
 
     hm.programs.mpv = {
       inherit (mpv)
         enable
         package
         config
+        bindings
         scripts
         scriptOpts
         ;
