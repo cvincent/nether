@@ -69,7 +69,3 @@ vim.keymap.set("v", ">", ">gv")
 -- Copy/paste
 vim.keymap.set("v", "<F13>", '"+y')
 -- vim.keymap.set("n", "<c-s-v>", '"+yp')
-
--- Ignore jumplist on { and }
--- vim.keymap.set("n", "{", ":<c-u>execute 'keepjumps norm! ' . v:count1 . '{'<cr>", { silent = true })
--- vim.keymap.set("n", "}", ":<c-u>execute 'keepjumps norm! ' . v:count1 . '}'<cr>", { silent = true })
