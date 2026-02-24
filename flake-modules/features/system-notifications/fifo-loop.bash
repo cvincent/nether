@@ -12,7 +12,6 @@ fi
 
 while true; do
   while read -r line < "$fifo_path"; do
-    echo "$line"
     icon=$(echo "$line" | jq -r '.icon')
     title=$(echo "$line" | jq -r '.title')
     body=$(echo "$line" | jq -r '.body')

@@ -24,7 +24,6 @@ mkFeature name (
             nether.software.jq.package
             coreutils
             dbus
-            jo
           ];
           text = builtins.readFile (
             pkgs.replaceVars ./fifo-loop.bash {
