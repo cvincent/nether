@@ -22,6 +22,11 @@ vim.g.maplocalleader = " "
 require("lazy").setup("plugins", {
   rocks = { enabled = false },
   change_detection = { notify = false },
+  dev = {
+    path = "~/.config/nvim/lua/local-plugins",
+    patterns = {},
+    fallback = false,
+  },
 })
 
 if IsPluginInstalled("oil.nvim") then
