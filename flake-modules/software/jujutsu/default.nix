@@ -164,6 +164,16 @@ mkSoftware name (
               )
             '';
           };
+
+          templates = {
+            draft_commit_description = ''
+              concat(
+                builtin_draft_commit_description,
+                "\nJJ: ignore-rest\n",
+                diff.git(),
+              )
+            '';
+          };
         };
       };
     };
