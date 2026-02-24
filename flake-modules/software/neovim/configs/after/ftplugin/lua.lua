@@ -4,7 +4,7 @@ vim.keymap.set("n", "g==", ":.lua<cr>")
 -- TODO: Make this work in normal mode with motions
 vim.keymap.set("v", "g=", ":lua<cr>")
 
-local ts_utils = require("ts_utils")
+local ts_utils = require("helpers.ts_utils")
 
 vim.keymap.set("i", "<c-e>", function()
   if ts_utils.is_node_type(vim.treesitter.get_node(), { "table_constructor", "expression_list" }) then
