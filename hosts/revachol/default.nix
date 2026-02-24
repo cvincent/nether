@@ -106,6 +106,7 @@
       postgresql.enable = true;
       ruby.enable = true;
       shell.enable = true;
+      jj-fzf.package = inputs'.nixpkgs-jj-fzf.legacyPackages.jj-fzf;
     };
 
     # Note for the future on structure/organization, I wonder if these should be

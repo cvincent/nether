@@ -20,6 +20,7 @@ mkFeature name (
 
     toplevel = {
       jujutsu = { };
+      jj-fzf = { };
       tldr = { };
     };
 

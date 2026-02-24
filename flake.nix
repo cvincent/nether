@@ -209,6 +209,9 @@
     # Bitwig Studio 5.2.7
     nixpkgs-bitwig-studio.url = "github:nixos/nixpkgs/2d068ae5c6516b2d04562de50a58c682540de9bf";
 
+    # Later build of jj-fzf that actually works (0.37.0)
+    nixpkgs-jj-fzf.url = "nixpkgs/nixos-unstable";
+
     # Update Signal independently; old versions stop working on a schedule
     nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
   };
