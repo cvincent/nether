@@ -80,7 +80,7 @@ return {
       }
     })
 
-    lspconfig.rust_analyzer.setup({})
+    -- lspconfig.rust_analyzer.setup({})
 
     lspconfig.gleam.setup({})
 
