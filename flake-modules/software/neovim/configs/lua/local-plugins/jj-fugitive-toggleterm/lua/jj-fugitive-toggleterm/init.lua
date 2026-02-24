@@ -220,4 +220,9 @@ function M.open_jj_new_window()
   })
 end
 
+--- @param cmd command_args
+function M.arbitrary_command(cmd)
+  run(jj_cmd_toolless(cmd.args, ""))
+end
+
 return M

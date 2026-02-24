@@ -29,3 +29,7 @@ end, {})
 vim.api.nvim_create_user_command("JJNewWindow", function()
   get_mod().open_jj_new_window()
 end, {})
+
+vim.api.nvim_create_user_command("JJ", function(cmd)
+  get_mod().arbitrary_command(cmd)
+end, { nargs = "*", })

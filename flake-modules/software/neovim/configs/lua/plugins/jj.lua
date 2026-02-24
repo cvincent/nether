@@ -25,6 +25,10 @@ return {
     init = function()
       vim.keymap.set("n", "<leader>jj", ":JJWindow<cr>")
       vim.keymap.set("n", "<leader>jn", ":JJNewWindow<cr>")
+      vim.keymap.set("n", "<leader>jN", ":JJ new<cr>")
+      vim.keymap.set("n", "<leader>ju", ":JJ undo<cr>")
+      vim.keymap.set("n", "<leader>jU", ":JJ redo<cr>")
+      vim.keymap.set("n", "<leader>js", ":JJ status<cr>")
     end,
   },
 
