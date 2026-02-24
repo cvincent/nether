@@ -49,6 +49,8 @@ vim.keymap.set("n", "<c-w>l", function() jump_with_wrap("l", "h") end, { silent 
 
 -- Alt-t to open a new tab
 vim.keymap.set("n", "<a-t>", ":tabnew<cr>")
+-- Alt-shift-t to open a new tab the other direction
+vim.keymap.set("n", "<a-s-t>", ":-tabnew<cr>")
 
 -- Navigate tabs with arrows
 vim.keymap.set("n", "<right>", ":tabnext<cr>")
