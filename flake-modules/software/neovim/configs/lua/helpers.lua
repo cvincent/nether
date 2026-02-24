@@ -34,3 +34,35 @@ function TmuxTestPaneExec(cmd)
     cmd, "ENTER",
   }):wait()
 end
+
+function QuickFloatingEdit()
+  local ui = vim.api.nvim_list_uis()[1]
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  local quick_win = vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    row = ui.height * (1 / 6),
+    col = ui.width * (1 / 3),
+    width = math.floor(ui.width * (1 / 3)),
+    height = math.floor(ui.height * (2 / 3)),
+    border = "rounded",
+  })
+
+  vim.api.nvim_buf_attach(buf, false, {
+    on_lines = function()
+      vim.api.nvim_buf_detach(buf)
+      -- setup_buffer_keymaps(buf)
+    end
+  })
+
+  vim.api.nvim_command("set winblend=15")
+
+  vim.api.nvim_create_autocmd("BufEnter", {
+    once = true,
+    callback = function()
+      if vim.api.nvim_get_current_win() == quick_win then
+        vim.api.nvim_buf_set_keymap(buf, 'n', '<leader>q', ':bd<CR>', {})
+      end
+    end,
+  })
+end
