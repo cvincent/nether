@@ -68,7 +68,15 @@ mkSoftware name (
             "trunk()" = "main@origin";
             "closest_bookmark(to)" = "heads(::to & bookmarks())";
             "closest_pushable(to)" = "heads(::to & ~description(exact:'') & (~empty() | merges()))";
-            "private()" = ''description(glob-i:"private:*") | description(glob-i:"wip:*")'';
+
+            "private()" = ''
+              (
+                description(glob-i:"private:*") |
+                description(glob-i:"wip:*") |
+                description("wip\n") |
+                bookmarks("megamerge")
+              ) & mine()
+            '';
           };
 
           aliases = {
