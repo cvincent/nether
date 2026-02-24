@@ -108,7 +108,7 @@ return {
       )
 
       local jj_bookmark_picker = jj_picker(
-        NixToNvim.jj.fzf_commit_ids .. " 'jj bookmark'"
+        NixToNvim.jj.fzf_commit_ids .. " 'jj bookmark' --expect=enter"
       )
 
       local jj_editor = function()
@@ -146,16 +146,19 @@ return {
 
       local callback_jj_to_target = function(subcmd)
         return function()
-          -- local key = vim.g.toggleterm_fzf_result[1]
           local change = vim.g.toggleterm_fzf_result[2]
-          tmux_exec(jj_cmd(subcmd, "-t " .. change))
+          if change then
+            tmux_exec(jj_cmd(subcmd, "-t " .. change))
+          end
         end
       end
 
       local callback_other_cmd = function(cmd)
         return function()
-          local arg = vim.g.toggleterm_fzf_result[1]
-          tmux_exec(other_cmd(cmd, arg))
+          local bookmark = vim.g.toggleterm_fzf_result[2]
+          if bookmark then
+            tmux_exec(other_cmd(cmd, bookmark))
+          end
         end
       end
 
