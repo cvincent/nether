@@ -784,6 +784,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-signal-desktop": {
+      "locked": {
+        "lastModified": 1773734432,
+        "narHash": "sha256-IF5ppUWh6gHGHYDbtVUyhwy/i7D261P7fWD1bPefOsw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "cda48547b432e8d3b18b4180ba07473762ec8558",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1770197578,
@@ -939,6 +954,7 @@
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-bitwig-studio": "nixpkgs-bitwig-studio",
+        "nixpkgs-signal-desktop": "nixpkgs-signal-desktop",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "private-nethers": "private-nethers",
         "stylix": "stylix",

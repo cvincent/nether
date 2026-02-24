@@ -115,7 +115,12 @@
     backups.enable = true;
     bitwarden.enable = true;
     browsers.enable = true;
-    chat.enable = true;
+
+    chat = {
+      enable = true;
+      apps.signal-desktop.package = inputs'.nixpkgs-signal-desktop.legacyPackages.signal-desktop;
+    };
+
     desk.enable = true;
     flatpak.enable = true;
     git.enable = true;
