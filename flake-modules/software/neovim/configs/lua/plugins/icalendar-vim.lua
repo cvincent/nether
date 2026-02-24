@@ -1,0 +1,1 @@
+return { "chutzpah/icalendar.vim" }
