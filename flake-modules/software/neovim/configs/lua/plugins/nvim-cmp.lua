@@ -107,10 +107,14 @@ return {
         sources = cmp.config.sources(
           {
             { name = "nvim_px_to_rem" },
-            { name = "nvim_lsp" },
+            {
+              name = "nvim_lsp",
+              priority = 1000,
+            },
             { name = "luasnip" },
             {
               name = "buffer",
+              priority = 950,
               option = {
                 -- Complete from all visible buffers
                 get_bufnrs = function()
