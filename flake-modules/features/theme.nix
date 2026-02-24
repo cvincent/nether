@@ -15,13 +15,28 @@ mkFeature name (
         default = "nord";
       };
 
+      themeName = lib.mkOption {
+        type = lib.types.str;
+        default = config.lib.stylix.colors.scheme;
+      };
+
+      polarity = lib.mkOption {
+        type = lib.types.str;
+        default = "dark";
+      };
+
+      isDark = lib.mkOption {
+        type = lib.types.bool;
+        default = theme.polarity == "dark";
+      };
+
       stylix = lib.mkOption {
         type = lib.types.attrs;
         default = {
           enable = true;
           image = ../../resources/wallpapers/nord-irithyll.png;
           base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/${theme.theme}.yaml";
-          polarity = "dark";
+          polarity = theme.polarity;
 
           targets.fish.enable = false;
 
@@ -55,7 +70,7 @@ mkFeature name (
       dconf = {
         enable = true;
         settings = {
-          "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+          "org/gnome/desktop/interface".color-scheme = "prefer-${theme.polarity}";
           "org/gtk/settings/debug".enable-inspector-keybinding = true;
         };
       };
