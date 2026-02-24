@@ -10,11 +10,11 @@ subcmd=$(echo "$line" | cut -d' ' -f2)
 
 if [[ "$subcmd" == "absorb" ]]; then
   jj diff --ignore-working-copy --name-only |
-    fzf --height=75% "$@"
+    fzf --height=~50% "$@"
 elif [[ "$subcmd" == "bookmark" ]]; then
   jj bookmark list --ignore-working-copy -T 'self.name() ++ "\n"' |
     uniq |
-    fzf --height=75% "$@"
+    fzf --height=~50% "$@"
 else
   template='
     format_short_change_id(change_id) ++ " " ++
@@ -26,5 +26,5 @@ else
   '
 
   jj log --color=always --ignore-working-copy -T "$template" |
-    fzf --ansi --height=50% --delimiter='|' --with-nth='{1}' --accept-nth='{2}' "$@"
+    fzf --ansi --height=~50% --delimiter='|' --with-nth='{1}' --accept-nth='{2}' "$@"
 fi
