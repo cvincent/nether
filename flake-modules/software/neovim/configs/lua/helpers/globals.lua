@@ -1,3 +1,6 @@
+NvrPipe = "/tmp/neovim-" .. vim.system({ "uuidgen" }):wait().stdout:gsub("\n", "")
+pcall(vim.fn.serverstart, NvrPipe)
+
 function IsPluginInstalled(plugin)
   local plugin = require("lazy.core.config").plugins[plugin]
   return plugin and plugin._.installed

@@ -34,11 +34,9 @@ local tmux_exec_with_remote_editor_func = nil
 --- @param cmds elem_or_list
 M.tmux_exec_with_remote_editor = function(cmds)
   if not tmux_exec_with_remote_editor_func then
-    local nvr_pipe = vim.g.per_project.nvr_pipe
-
     tmux_exec_with_remote_editor_func = M.build_tmux_exec_func({
-      NVIM_SERVER = nvr_pipe,
-      EDITOR = NixToNvim.neovim.nvr_floating_edit .. " " .. nvr_pipe,
+      NVIM_SERVER = NvrPipe,
+      EDITOR = NixToNvim.neovim.nvr_floating_edit .. " " .. NvrPipe,
     })
   end
 
