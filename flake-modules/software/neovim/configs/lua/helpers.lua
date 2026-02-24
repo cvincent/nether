@@ -20,3 +20,17 @@ function CallPlugMapping(name)
 end
 
 NixToNvim = dofile(vim.fn.fnamemodify(vim.fn.stdpath("config"), ":h") .. "/nix-to-nvim.lua")
+
+function TmuxTestPaneExec(cmd)
+  vim.system({
+    "tmux", "send-keys", "-t",
+    vim.g.vim_test_tmux_target,
+    "C-c", "C-c",
+  }):wait()
+
+  vim.system({
+    "tmux", "send-keys", "-t",
+    vim.g.vim_test_tmux_target,
+    cmd, "ENTER",
+  }):wait()
+end
