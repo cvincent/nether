@@ -74,3 +74,6 @@ vim.opt.signcolumn = "yes"
 
 -- Disable maps for built-in mail filetype plugin
 vim.api.nvim_command("let no_mail_maps = 1")
+
+-- Jumplist behaves like a stack, and remembers scroll position
+vim.opt.jumpoptions = { "stack", "view" }
