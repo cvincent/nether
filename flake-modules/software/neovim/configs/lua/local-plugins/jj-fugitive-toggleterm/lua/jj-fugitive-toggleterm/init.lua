@@ -82,6 +82,26 @@ function M.fugitive_status_window_loaded()
     run(other_cmd(NixToNvim.jj.split_to_absorb, ""))
   end, { buffer = true })
 
+  vim.keymap.set("n", "<leader>jA", function()
+    vim.api.nvim_command("wincmd q")
+
+    local width = math.floor(vim.o.columns * 0.3)
+    local win_height = vim.api.nvim_list_uis()[1].height
+
+    require("toggleterm.terminal").Terminal:new({
+      cmd = "jj arrange",
+      direction = "float",
+      float_opts = {
+        winblend = vim.o.winblend,
+        border = "curved",
+        width = width,
+        col = width,
+        height = math.floor(win_height * 0.66),
+        row = math.floor(win_height * 0.33 / 2),
+      },
+    }):toggle()
+  end, { buffer = true })
+
   vim.keymap.set("n", "<leader>jb", function()
     vim.api.nvim_command("wincmd q")
 
