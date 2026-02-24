@@ -26,7 +26,7 @@ mkSoftware name (
           exec = lib.getExe nether.software.hyprland.waybarWindowModule.script;
         };
 
-        "custom/mail".exec = lib.getExe nether.desk.mailWaybarModule;
+        "custom/mail".exec = lib.getExe nether.desk.mail.waybarModule;
 
         "include" = [
           "${nether.homeDirectory}/${hmConfig.xdg.configFile.${directSymlinkConfigPath}.target}"

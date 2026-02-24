@@ -67,7 +67,7 @@ mkFeature name (
 
     accountConfigs = {
       personal = {
-        totalCountCachePath = "${desk.mailCacheBasePath}/personal";
+        totalCountCachePath = "${desk.mail.cacheBasePath}/personal";
       }
       // personalConfig;
     }
@@ -82,19 +82,20 @@ mkFeature name (
               username = email;
               password = accountOpts.password;
             };
-            totalCountCachePath = "${desk.mailCacheBasePath}/${account}";
+            totalCountCachePath = "${desk.mail.cacheBasePath}/${account}";
           };
         }
       )
     );
 
-    mailConfigFileName = baseNameOf desk.mailConfigFilePath;
+    mailConfigFileName = baseNameOf desk.mail.configFilePath;
 
     mailConfigFile =
       {
-        inherit (desk) maildirBasePath filtersBasePath mailCacheBasePath;
+        inherit (desk.mail) maildirBasePath filtersBasePath;
         inherit (pkgInputs.private-nethers.mail) displayOrder;
         inherit accountConfigs;
+        mailCacheBasePath = desk.mail.cacheBasePath;
       }
       |> builtins.toJSON
       |> builtins.toFile mailConfigFileName;
@@ -141,7 +142,7 @@ mkFeature name (
       ];
       text = builtins.readFile (
         pkgs.replaceVars ./count-unread-email.bash {
-          inherit (desk) mailConfigFilePath;
+          mailConfigFilePath = desk.mail.configFilePath;
         }
       );
     };
@@ -155,8 +156,8 @@ mkFeature name (
       ];
       text = builtins.readFile (
         pkgs.replaceVars ./notify-mail.bash {
-          inherit (desk) mailConfigFilePath;
           inherit (nether.systemNotifications) fifoPath;
+          mailConfigFilePath = desk.mail.configFilePath;
         }
       );
     };
@@ -169,36 +170,38 @@ mkFeature name (
       ];
       text = builtins.readFile (
         pkgs.replaceVars ./waybar-module.bash {
-          inherit (desk) mailConfigFilePath;
+          mailConfigFilePath = desk.mail.configFilePath;
         }
       );
     };
   in
   {
     options = {
-      mailConfigFilePath = lib.mkOption {
-        type = lib.types.str;
-        default = "${nether.homeDirectory}/.config/mail-config.json";
-      };
+      mail = {
+        configFilePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/.config/mail-config.json";
+        };
 
-      maildirBasePath = lib.mkOption {
-        type = lib.types.str;
-        default = "${nether.homeDirectory}/mail";
-      };
+        maildirBasePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/mail";
+        };
 
-      filtersBasePath = lib.mkOption {
-        type = lib.types.str;
-        default = "${nether.homeDirectory}/.local/share/imapfilter";
-      };
+        filtersBasePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/.local/share/imapfilter";
+        };
 
-      mailCacheBasePath = lib.mkOption {
-        type = lib.types.str;
-        default = "${nether.homeDirectory}/.cache/mail-cache";
-      };
+        cacheBasePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/.cache/mail-cache";
+        };
 
-      mailWaybarModule = lib.mkOption {
-        type = lib.types.package;
-        default = mailWaybarModuleScript;
+        waybarModule = lib.mkOption {
+          type = lib.types.package;
+          default = mailWaybarModuleScript;
+        };
       };
     };
 
@@ -209,11 +212,12 @@ mkFeature name (
           countUnreadEmailScript
           ;
 
-        inherit (desk) mailConfigFilePath mailCacheBasePath;
+        mailConfigFilePath = desk.mail.configFilePath;
+        mailCacheBasePath = desk.mail.cacheBasePath;
       };
 
       imapfilter.config = {
-        inherit (desk) mailConfigFilePath;
+        mailConfigFilePath = desk.mail.configFilePath;
 
         accounts =
           accountConfigs
@@ -254,7 +258,7 @@ mkFeature name (
             |> lib.filterAttrs (_: folder: (folder.notifyLevel or null) == "notify")
             |> lib.mapAttrsToList (
               _: folder:
-              "${desk.maildirBasePath}/${account}/${folder.imapPath}/new"
+              "${desk.mail.maildirBasePath}/${account}/${folder.imapPath}/new"
               |> builtins.replaceStrings [ " " ] [ "\\ " ]
             )
           )
@@ -264,8 +268,8 @@ mkFeature name (
         |> builtins.concatStringsSep "\n";
 
       nether.backups.paths = {
-        "${desk.maildirBasePath}".deleteMissing = true;
-        "${desk.filtersBasePath}".deleteMissing = true;
+        "${desk.mail.maildirBasePath}".deleteMissing = true;
+        "${desk.mail.filtersBasePath}".deleteMissing = true;
       };
     };
 
@@ -279,7 +283,7 @@ mkFeature name (
       xdg.configFile.${mailConfigFileName}.source = mailConfigFile;
 
       accounts.email = {
-        inherit (desk) maildirBasePath;
+        inherit (desk.mail) maildirBasePath;
 
         accounts =
           accountConfigs
