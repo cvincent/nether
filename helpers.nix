@@ -449,7 +449,7 @@
             |> builtins.readDir
             |> builtins.attrNames
             |> builtins.filter (f: !builtins.elem f excluded)
-            |> builtins.map (
+            |> map (
               module:
               flake-parts-lib.importApply (dir + "/${module}") (
                 applyArgs
