@@ -30,20 +30,19 @@
       |> lib.attrsets.filterAttrs (
         softwareNamespace: _:
         !(lib.lists.elem softwareNamespace (
-          (
-            [
-              "description"
-              "options"
-              "nixos"
-              "hm"
-            ]
-            ++ lib.optional (!includeToplevel) "toplevel"
-          )
+          [
+            "description"
+            "options"
+            "nixos"
+            "hm"
+          ]
+          ++ lib.optional (!includeToplevel) "toplevel"
         ))
       );
 
     mkSoftwareOptions =
       {
+        self',
         pkgs,
         options,
         softwareName,
@@ -210,6 +209,7 @@
                       softwareName: softwareDef:
                       mkSoftwareOptions {
                         inherit
+                          self'
                           pkgs
                           options
                           softwareName
@@ -230,6 +230,7 @@
                   softwareName: softwareDef:
                   mkSoftwareOptions {
                     inherit
+                      self'
                       pkgs
                       options
                       softwareName
