@@ -27,15 +27,25 @@ mkFeature name (
       nix = {
         package = null;
 
-        options.scripts = builtins.listToAttrs [
-          (helpers.mkScript ./. "nix-run-script" {
-            runtimeInputs = [ pkgs.nix ];
-            replaceVars = {
+        options.scripts = builtins.listToAttrs (
+          let
+            nixRunReplaceVars = {
               inherit (nether) dotfilesDirectory;
               inherit (nether.networking) hostname;
             };
-          })
-        ];
+          in
+          [
+            (helpers.mkScript ./. "nix-run-script" {
+              runtimeInputs = [ pkgs.nix ];
+              replaceVars = nixRunReplaceVars;
+            })
+
+            (helpers.mkScript ./. "nix-run-script-with-dbus" {
+              runtimeInputs = [ pkgs.nix ];
+              replaceVars = nixRunReplaceVars;
+            })
+          ]
+        );
 
         hm.home.packages = builtins.attrValues dev.nix.scripts;
       };
