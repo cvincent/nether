@@ -126,9 +126,12 @@ mkSoftware name (
               "<ctrl-u>" = "cmd-repeat 10 scroll up";
 
               # Tabs
+              "<alt-o>" = ":cmd-set-text -s :open -tr";
+
               D = "tab-close";
               "<alt-d>" = "tab-close --next";
               "<alt-shift-d>" = "tab-close --prev";
+
               U = "undo";
               "<right>" = "tab-next";
               "<left>" = "tab-prev";
