@@ -69,7 +69,9 @@ mkSoftware name (
               nvr_floating_edit = "${neovim.scripts.nvr-floating-edit.name}",
             },
             jj = {
-              fzf_commit_ids = "${lib.getExe nether.software.jujutsu.scripts.fzf-completions}",
+              fzf_bookmarks = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-bookmarks}",
+              fzf_change_ids = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-change-ids}",
+              fzf_changed_files = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-changed-files}",
               split_to_bookmark = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-bookmark}",
               split_to_absorb = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-absorb}",
             },

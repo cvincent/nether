@@ -72,8 +72,6 @@ return {
     local picker = require("toggleterm-fzf").picker
 
     if IsPluginInstalled("toggleterm.nvim") and IsPluginInstalled("vim-test") then
-      local fzf_change_ids = NixToNvim.jj.fzf_commit_ids .. " jj"
-
       local jj_cmd = function(subcmd, rest)
         return "jj " .. subcmd .. " --tool git-index " .. rest .. "; jj --no-pager"
       end
@@ -93,7 +91,7 @@ return {
             vim.api.nvim_command("wincmd q")
 
             picker({
-              cmd = fzf_change_ids,
+              cmd = NixToNvim.jj.fzf_change_ids,
               expected_keys = { "enter", "ctrl-a", "ctrl-b", "ctrl-d" },
               callback = function(key, change_id)
                 if key == "" or key == "enter" or key == "ctrl-a" then
@@ -121,7 +119,7 @@ return {
             vim.api.nvim_command("wincmd q")
 
             picker({
-              cmd = NixToNvim.jj.fzf_commit_ids .. " 'jj bookmark'",
+              cmd = NixToNvim.jj.fzf_bookmarks,
               callback = function(_, bookmark)
                 tmux_exec(other_cmd(NixToNvim.jj.split_to_bookmark, bookmark))
               end,
@@ -136,7 +134,7 @@ return {
             vim.api.nvim_command("wincmd q")
 
             picker({
-              cmd = fzf_change_ids,
+              cmd = NixToNvim.jj.fzf_change_ids,
               callback = function(_, change_id)
                 tmux_exec(jj_cmd("squash", "-t " .. change_id))
               end,
