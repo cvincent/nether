@@ -3,43 +3,28 @@ mkSoftware name (
   {
     jujutsu,
     config,
-    pkgs,
+    helpers,
     ...
   }:
   {
-    nixos =
-      let
-        fzf-jj-change-ids = (
-          pkgs.writeShellApplication {
-            name = "fzf-jj-change-ids";
+    options = {
+      scripts =
+        let
+          mkJujutsuScript = helpers.mkScript ./scripts;
+        in
+        builtins.listToAttrs [
+          (mkJujutsuScript "fzf-completions" {
             runtimeInputs = [
               config.nether.software.jujutsu.package
               config.nether.software.fzf.fzf-with-opts
             ];
-            text = ''
-              if [[ $(echo "$1" | cut -d' ' -f2) == "absorb" ]]; then
-                jj diff --name-only |
-                  fzf --height=75%
-              else
-                template='
-                  format_short_change_id(change_id) ++
-                  " - " ++
-                  if(self.empty(), empty_commit_marker ++ " ") ++
-                  description.first_line() ++
-                  " (" ++ commit_id.short() ++ ")|" ++
-                  change_id.shortest() ++ "\n"
-                '
+          })
+        ];
+    };
 
-                jj log --color=always -T "$template" |
-                  fzf --ansi --height=50% --delimiter='|' --with-nth='{1}' --accept-nth='{2}'
-              fi
-            '';
-          }
-        );
-      in
-      {
-        nether.software.contextual-completion.completionScripts.jj = fzf-jj-change-ids;
-      };
+    nixos = {
+      nether.software.contextual-completion.completionScripts.jj = jujutsu.scripts.fzf-completions;
+    };
 
     hm = {
       programs.jujutsu = {
