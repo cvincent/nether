@@ -7,6 +7,7 @@ mkFeature name (
     pkgs,
     lib,
     config,
+    helpers,
     ...
   }:
   let
@@ -127,6 +128,7 @@ mkFeature name (
         inherit (pkgInputs.private-nethers.mail) displayOrder;
         inherit accountConfigs;
         mailCacheBasePath = desk.mail.cacheBasePath;
+        calendarsBasePath = desk.calendars.basePath;
         khalDbPath = desk.calendars.khal.dbPath;
       }
       |> builtins.toJSON
@@ -249,6 +251,7 @@ mkFeature name (
 
         mailConfigFilePath = desk.mail.configFilePath;
         mailCacheBasePath = desk.mail.cacheBasePath;
+        rsvpScript = desk.calendars.scripts.rsvp-event-from-aerc;
       };
 
       imapfilter.config = {
@@ -321,6 +324,30 @@ mkFeature name (
 
           description = "Names must not contain dashes due to vdirsyncer.";
         };
+
+        scripts =
+          let
+            selectReplaceVars = (lib.attrsets.getAttrs |> lib.flip) {
+              mailConfigFilePath = desk.mail.configFilePath;
+              calendarCommonPath = lib.getExe desk.calendars.scripts.common;
+              calendarsBasePath = desk.calendars.basePath;
+            };
+
+            mkCalendarScript = helpers.mkScript ./calendar;
+          in
+          builtins.listToAttrs [
+            (mkCalendarScript "rsvp-event-from-aerc" {
+              runtimeInputs = [
+                pkgs.coreutils
+                pkgs.gnugrep
+                pkgs.mblaze
+                desk.calendars.khal.package
+                desk.mail.aerc.package
+                nether.software.fzf.fzf-with-opts
+              ];
+              replaceVars = selectReplaceVars [ "calendarsBasePath" ];
+            })
+          ];
       };
 
       khal.config = {
