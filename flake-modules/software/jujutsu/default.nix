@@ -187,24 +187,11 @@ mkSoftware name (
               program = "sh";
               merge-tool-edits-conflict-markers = true;
 
-              # TODO: This actually works! It just needs some refinement:
-              # - <leader>q should probably map to :bd!. This should end the resolve session
-              # without changes if I haven't written the buffer, and end it _with_ changes if
-              # I have written the buffer.
-              # - It should also close the companion "snapshot" view and the "history" tab.
-
               merge-args = [
                 "-c"
                 ''
                   nvr --servername $NVIM_SERVER \
-                    -cc ":tabnew $base | diffthis" \
-                    -c ":vsplit $left | diffthis" \
-                    -c ":vsplit $right | diffthis"
-
-                  nvr --servername $NVIM_SERVER \
-                    -cc ":let g:jj_diffconflicts_marker_length=$marker_length" \
-                    -cc ":-tabnew" \
-                    -c :JJDiffConflicts \
+                    -cc ":JJDiffconflictsNvr $marker_length $base $left $right $output" \
                     --remote-wait $output
                 ''
               ];
