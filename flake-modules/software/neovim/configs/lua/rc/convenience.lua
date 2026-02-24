@@ -57,6 +57,16 @@ vim.keymap.set("v", "<cr>", ":")
 -- Copy to end of line with Y
 vim.keymap.set("n", "Y", "y$")
 
+-- Easier than "+y
+vim.keymap.set("v", "<c-y>", '"+y')
+vim.keymap.set("n", "<c-y>", '"+y')
+vim.keymap.set("n", "<c-y><c-y>", '"+yy')
+
+-- Easier than "+p
+vim.keymap.set("v", "<c-p>", '"+p')
+vim.keymap.set("n", "<c-p>", '"+p')
+vim.keymap.set("n", "<c-s-p>", '"+<s-p>')
+
 -- More easily go to mark line *and* column
 vim.keymap.set("n", "'", "`")
 vim.keymap.set("n", "`", "'")
