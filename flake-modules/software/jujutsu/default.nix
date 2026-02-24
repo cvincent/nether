@@ -94,7 +94,7 @@ mkSoftware name (
               edit-args = [
                 "-c"
                 ''
-                  set -eu
+                  set -euo pipefail
                   rm -f "$right/JJ-INSTRUCTIONS"
                   git -C "$left" init -q
                   git -C "$left" add -A
@@ -107,6 +107,47 @@ mkSoftware name (
                   git -C "$right" restore . # undo changes in modified files
                   git -C "$right" reset .   # undo --intent-to-add
                   git -C "$right" clean -q -df # remove untracked files
+                ''
+              ];
+            };
+
+            git-index = {
+              program = "sh";
+              edit-args = [
+                "-c"
+                ''
+                  set -euo pipefail
+
+                  TEMP=$(mktemp -d)
+                  trap 'rm -rf -- "$TEMP"' EXIT
+
+                  LEFT="$left"
+                  RIGHT="$right"
+
+                  # Snapshot the index state into a tree. This strips intent-to-add index entries
+                  # which are treated as empty files by ls-files & restore. jj implicitly adds
+                  # intent-to-add index entries for new files.
+                  TREE="$(git write-tree)"
+
+                  # jj checks out a sparse working copy, limit to that sparse set.
+                  find -P "$LEFT" "$RIGHT" \( -type f -o -type l \) -printf '%P\0' |
+                    sort -zu >"$TEMP/sparse"
+
+                  # Every pathspec passed to git restore must be in $TREE
+                  git ls-tree -rz --name-only --full-tree "$TREE" |
+                    sort -zu |
+                    comm -z -12 "$TEMP/sparse" - >"$TEMP/restore"
+
+                  # Clear out $RIGHT, then restore $TREE state into it
+                  rm -r -- "$RIGHT"
+                  mkdir -- "$RIGHT"
+
+                  if [[ -s "$TEMP/restore" ]]; then
+                    git --literal-pathspecs --work-tree="$RIGHT" restore \
+                      --source="$TREE" \
+                      --pathspec-from-file="$TEMP/restore" \
+                      --pathspec-file-nul
+                  fi
                 ''
               ];
             };
