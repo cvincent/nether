@@ -25,6 +25,7 @@ mkSoftware name (
           interactiveShellInit = ''
             bind \cH backward-kill-word
             bind alt-backspace backward-kill-word
+            bind ctrl-d true
             set fish_color_search_match 888
 
             # Add OSC 133 support. Allows things like normal mode editing in
