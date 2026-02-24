@@ -26,6 +26,34 @@ mkFeature name (
       jj-fzf = { };
       tldr = { };
 
+      javascript = {
+        package = null;
+
+        hm =
+          let
+            oneWeek = 60 * 60 * 24 * 7;
+            npmrc = builtins.concatStringsSep "\n" [
+              "minimum-release-age=${toString oneWeek}"
+              "ignore-scripts=true"
+            ];
+          in
+          {
+            home.file.".npmrc".text = npmrc;
+
+            xdg.configFile = {
+              "pnpm/rc".text = npmrc;
+              "pnpm/config.yaml".text = "minimumReleaseAge: ${toString oneWeek}";
+
+              ".bunfig.toml".source = (pkgs.formats.toml { }).generate ".bunfig.toml" {
+                install = {
+                  ignoreScripts = true;
+                  minimumReleaseAge = oneWeek;
+                };
+              };
+            };
+          };
+      };
+
       nix = {
         package = null;
 
