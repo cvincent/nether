@@ -2,7 +2,7 @@ line="$1"
 shift 1
 
 if [[ $(echo "$line" | cut -d' ' -f2) == "absorb" ]]; then
-  jj diff --name-only |
+  jj diff --ignore-working-copy --name-only |
     fzf --height=75% "$@"
 else
   template='
@@ -14,6 +14,6 @@ else
     change_id.shortest() ++ "\n"
   '
 
-  jj log --color=always -T "$template" |
+  jj log --color=always --ignore-working-copy -T "$template" |
     fzf --ansi --height=50% --delimiter='|' --with-nth='{1}' --accept-nth='{2}' "$@"
 fi
