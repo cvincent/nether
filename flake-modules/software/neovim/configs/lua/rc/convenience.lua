@@ -62,6 +62,15 @@ vim.keymap.set("v", "<c-y>", '"+y')
 vim.keymap.set("n", "<c-y>", '"+y')
 vim.keymap.set("n", "<c-y><c-y>", '"+yy')
 
+-- Easily copy the path of the current file
+vim.keymap.set("n", "yp", function()
+  vim.fn.setreg(vim.v.register, vim.fn.expand("%"))
+end)
+
+vim.keymap.set("n", "<c-y>p", function()
+  vim.fn.setreg("+", vim.fn.expandcmd("%"))
+end)
+
 -- Easier than "+p
 vim.keymap.set("v", "<c-p>", '"+p')
 vim.keymap.set("n", "<c-p>", '"+p')
@@ -83,12 +92,3 @@ vim.keymap.set("n", "zh", "zszHhl")
 -- Reselect visual block after indentation change
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
-
--- Copy/paste
-vim.keymap.set("v", "<F13>", '"+y')
--- vim.keymap.set("n", "<c-s-v>", '"+yp')
-
--- Easily copy the path of the current file
-vim.keymap.set("n", "yp", function()
-  vim.fn.setreg("+", vim.fn.expandcmd("%"))
-end)
