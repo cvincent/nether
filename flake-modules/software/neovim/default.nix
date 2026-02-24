@@ -42,6 +42,14 @@ mkSoftware name (
       {
         xdg.configFile.nvim.source = helpers.directSymlink ./configs;
 
+        xdg.configFile."nix-to-nvim.lua".text = ''
+          return {
+            jj = {
+              fzf_commit_ids = "${lib.getExe nether.software.jujutsu.scripts.fzf-completions}",
+            },
+          }
+        '';
+
         home.packages = with pkgs; [
           # Treesitter wants a C compiler
           gcc
