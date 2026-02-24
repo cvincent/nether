@@ -2,6 +2,44 @@ return {
   "avm99963/vim-jjdescription",
 
   {
+    "nicolasgb/jj.nvim",
+    branch = "main",
+
+    dependencies = {
+      "toggleterm-fzf", -- Depended on by my config, not the plugin itself
+    },
+
+    config = function()
+      require("jj").setup({})
+
+      local annotate = require("jj.annotate")
+
+      -- By default the plugin puts our cursor in the split to the left when we
+      -- close the sidebar. Let's fix it.
+      local close_annotate_sidebar = function()
+        local sidebar_buf = vim.api.nvim_get_current_buf()
+        vim.cmd.wincmd("l")
+        vim.api.nvim_buf_delete(sidebar_buf, {})
+      end
+
+      vim.keymap.set("n", "<leader>ja", annotate.line, { desc = "JJ annotate line" })
+
+      vim.keymap.set("n", "<leader>jA", function()
+        vim.api.nvim_create_autocmd("BufEnter", {
+          pattern = "",
+          once = true,
+          callback = function()
+            vim.keymap.set("n", "q", close_annotate_sidebar, { buffer = true })
+            vim.keymap.set("n", "<leader>q", close_annotate_sidebar, { buffer = true })
+          end,
+        })
+
+        annotate.file()
+      end, { desc = "JJ annotate file" })
+    end,
+  },
+
+  {
     "jj-fugitive-toggleterm",
     dev = true,
 
