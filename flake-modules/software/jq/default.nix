@@ -4,16 +4,14 @@ mkSoftware name (
     jq,
     pkgs,
     config,
+    lib,
     ...
   }:
   {
-    hm = {
-      programs.jq = {
-        inherit (jq) enable package;
-      };
-
-      home.packages = [
-        (pkgs.writeShellApplication {
+    options.tools = {
+      jq-preview = lib.mkOption {
+        type = lib.types.package;
+        default = pkgs.writeShellApplication {
           name = "jq-preview";
 
           runtimeInputs = [
@@ -23,8 +21,16 @@ mkSoftware name (
           ];
 
           text = builtins.readFile ./jq-preview.bash;
-        })
-      ];
+        };
+      };
+    };
+
+    hm = {
+      programs.jq = {
+        inherit (jq) enable package;
+      };
+
+      home.packages = jq.tools |> builtins.attrValues;
     };
   }
 )
