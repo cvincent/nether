@@ -891,6 +891,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-tmux-fingers": {
+      "locked": {
+        "lastModified": 1778869304,
+        "narHash": "sha256-30sZNZoA1cqF5JNO9fVX+wgiQYjB7HJqqJ4ztCDeBZE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d233902339c02a9c334e7e593de68855ad26c4cb",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1770197578,
@@ -1053,6 +1068,7 @@
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",
         "nixpkgs-signal-desktop": "nixpkgs-signal-desktop",
         "nixpkgs-spotify": "nixpkgs-spotify",
+        "nixpkgs-tmux-fingers": "nixpkgs-tmux-fingers",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "private-nethers": "private-nethers",
         "stylix": "stylix",
