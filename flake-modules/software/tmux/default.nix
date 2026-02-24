@@ -59,6 +59,9 @@
             # Reload config
             bind r source-file "~/.config/tmux/tmux.conf"
 
+            bind-key C-f copy-mode
+            unbind-key [
+
             # Scroll relative to cursor like Vim zz, zt, and zb
             bind-key -T copy-mode-vi z switch-client -T my-scroll-keys
             bind-key -T my-scroll-keys z send -X scroll-middle
