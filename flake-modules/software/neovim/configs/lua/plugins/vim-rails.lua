@@ -88,35 +88,39 @@ return {
           end
         end
 
-        -- Make projection commands available for oil.nvim buffers
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "OilEnter",
-          callback = function()
-            if vim.fn["RailsDetect"](vim.fn.getcwd()) then
-              vim.fn["rails#buffer_setup"]()
-            end
-          end,
-        })
+        if vim.g.rails_aucmds_initialized == nil then
+          vim.g.rails_aucmds_initialized = true
 
-        -- Preserve scroll position when using projection commands.
-        -- This already works for normal jumplist and alternate file (<c-^>),
-        -- see `jumpoptions`, but vim-rails's custom navigation commands don't
-        -- respect it. Note, we will probably ultimately want this for
-        -- vim-projectionist projects as well.
-        vim.api.nvim_create_autocmd("BufLeave", {
-          pattern = "*",
-          callback = function()
-            vim.b.winview = vim.fn.winsaveview()
-          end,
-        })
-        vim.api.nvim_create_autocmd("BufEnter", {
-          pattern = "*",
-          callback = function()
-            if vim.b.winview then
-              vim.fn.winrestview(vim.b.winview)
-            end
-          end,
-        })
+          -- Make projection commands available for oil.nvim buffers
+          vim.api.nvim_create_autocmd("User", {
+            pattern = "OilEnter",
+            callback = function()
+              if vim.fn["RailsDetect"](vim.fn.getcwd()) then
+                vim.fn["rails#buffer_setup"]()
+              end
+            end,
+          })
+
+          -- Preserve scroll position when using projection commands.
+          -- This already works for normal jumplist and alternate file (<c-^>),
+          -- see `jumpoptions`, but vim-rails's custom navigation commands don't
+          -- respect it. Note, we will probably ultimately want this for
+          -- vim-projectionist projects as well.
+          -- vim.api.nvim_create_autocmd("BufLeave", {
+          --   pattern = "*",
+          --   callback = function()
+          --     vim.b.winview = vim.fn.winsaveview()
+          --   end,
+          -- })
+          -- vim.api.nvim_create_autocmd("BufEnter", {
+          --   pattern = "*",
+          --   callback = function()
+          --     if vim.b.winview then
+          --       vim.fn.winrestview(vim.b.winview)
+          --     end
+          --   end,
+          -- })
+        end
       end
     })
   end
