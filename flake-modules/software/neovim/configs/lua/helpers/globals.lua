@@ -21,7 +21,8 @@ end
 
 NixToNvim = dofile(vim.fn.fnamemodify(vim.fn.stdpath("config"), ":h") .. "/nix-to-nvim.lua")
 
-function QuickFloatingEdit()
+-- Keeping this global for the ease of the nvr-remote-edit script
+vim.api.nvim_create_user_command("RemoteFloatingEdit", function()
   local ui = vim.api.nvim_list_uis()[1]
   local buf = vim.api.nvim_create_buf(false, true)
 
@@ -51,4 +52,4 @@ function QuickFloatingEdit()
       end
     end,
   })
-end
+end, {})

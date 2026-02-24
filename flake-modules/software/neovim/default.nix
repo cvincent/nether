@@ -16,6 +16,9 @@ mkSoftware name (
     pkgs,
     ...
   }:
+  let
+    nvr = pkgs.neovim-remote;
+  in
   {
     options = {
       command = lib.mkOption {
@@ -28,6 +31,21 @@ mkSoftware name (
         default = false;
         description = "Use NeoVim as our man pager";
       };
+
+      nvr = lib.mkOption {
+        type = lib.types.package;
+        default = nvr;
+      };
+
+      scripts =
+        let
+          mkNeoVimScript = helpers.mkScript ./scripts;
+        in
+        builtins.listToAttrs [
+          (mkNeoVimScript "nvr-floating-edit" {
+            runtimeInputs = [ nvr ];
+          })
+        ];
     };
 
     nixos = {
@@ -47,6 +65,9 @@ mkSoftware name (
             lua = {
               penlight = "${pkgs.lua5_1.withPackages (ps: [ ps.penlight ])}/share/lua/5.1/?.lua";
             },
+            neovim = {
+              nvr_floating_edit = "${neovim.scripts.nvr-floating-edit.name}",
+            },
             jj = {
               fzf_commit_ids = "${lib.getExe nether.software.jujutsu.scripts.fzf-completions}",
               split_to_bookmark = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-bookmark}",
@@ -60,7 +81,8 @@ mkSoftware name (
           gcc
 
           # Programmatically control NeoVim
-          neovim-remote
+          nvr
+          neovim.scripts.nvr-floating-edit
 
           # Image support, needed for image.nvim
           imagemagick

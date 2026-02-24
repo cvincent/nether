@@ -18,4 +18,31 @@ M.tmux_exec = function(cmds)
   send_keys_and_enter(cmds)
 end
 
+--- @param env { [string]: string }
+M.build_tmux_exec_func = function(env)
+  local env_vars = vim.iter(env):map(function(k, v)
+    return k .. "='" .. v .. "'"
+  end):join(" ") .. " "
+
+  return function(cmds)
+    M.tmux_exec({ env_vars, cmds })
+  end
+end
+
+local tmux_exec_with_remote_editor_func = nil
+
+--- @param cmds elem_or_list
+M.tmux_exec_with_remote_editor = function(cmds)
+  if not tmux_exec_with_remote_editor_func then
+    local nvr_pipe = vim.g.per_project.nvr_pipe
+
+    tmux_exec_with_remote_editor_func = M.build_tmux_exec_func({
+      NVIM_SERVER = nvr_pipe,
+      EDITOR = NixToNvim.neovim.nvr_floating_edit .. " " .. nvr_pipe,
+    })
+  end
+
+  tmux_exec_with_remote_editor_func(cmds)
+end
+
 return M

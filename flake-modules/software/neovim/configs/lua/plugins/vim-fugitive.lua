@@ -68,28 +68,18 @@ return {
     })
 
     -- TODO: This is an awesome mess lol.
-    local tmux_exec = require("helpers.tmux-integration").tmux_exec
+    local tmux_exec = require("helpers.tmux-integration").tmux_exec_with_remote_editor
     local picker = require("toggleterm-fzf").picker
 
     if IsPluginInstalled("toggleterm.nvim") and IsPluginInstalled("vim-test") then
       local fzf_change_ids = NixToNvim.jj.fzf_commit_ids .. " jj"
 
-      local jj_editor = function()
-        -- Need to call this as a function so we're sure vim.g.nvr_pipe is set
-        -- from the local .nvim.lua.
-
-        -- TODO: Probably wrap this editor in a command so our fish history
-        -- isn't so bad for it.
-        return "NVIM_SERVER=" .. vim.g.per_project.nvr_pipe .. " EDITOR='nvr --servername " ..
-            vim.g.per_project.nvr_pipe .. " -cc \":lua QuickFloatingEdit()\" --remote-wait' "
-      end
-
       local jj_cmd = function(subcmd, rest)
-        return jj_editor() .. " jj " .. subcmd .. " --tool git-index " .. rest .. "; jj --no-pager"
+        return "jj " .. subcmd .. " --tool git-index " .. rest .. "; jj --no-pager"
       end
 
       local other_cmd = function(cmd, rest)
-        return jj_editor() .. cmd .. " " .. rest .. " --tool git-index; jj --no-pager"
+        return cmd .. " " .. rest .. " --tool git-index; jj --no-pager"
       end
 
       vim.api.nvim_create_autocmd("FileType", {
@@ -133,10 +123,16 @@ return {
             picker({
               cmd = NixToNvim.jj.fzf_commit_ids .. " 'jj bookmark'",
               callback = function(_, bookmark)
+                -- TODO: When local and remote bookmark positions are different,
+                -- we see the same bookmark twice. Limit to local.
                 tmux_exec(other_cmd(NixToNvim.jj.split_to_bookmark, bookmark))
               end,
             })
           end, { buffer = true })
+
+          -- TODO: jB which is like jS but prompts for a bookmark name... Or
+          -- maybe jS should just always do that?
+          -- vim.fn.input("Bookmark name: ")
 
           vim.keymap.set("n", "<leader>jq", function()
             vim.api.nvim_command("wincmd q")
