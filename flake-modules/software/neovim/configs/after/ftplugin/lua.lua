@@ -7,7 +7,7 @@ vim.keymap.set("v", "g=", ":lua<cr>")
 local ts_utils = require("ts_utils")
 
 vim.keymap.set("i", "<c-e>", function()
-  if ts_utils.find_node_ancestor({ "table_constructor" }, vim.treesitter.get_node()) then
+  if ts_utils.is_node_type(vim.treesitter.get_node(), { "table_constructor", "expression_list" }) then
     local keys = vim.api.nvim_replace_termcodes("<space>=<space>,<left>", true, true, true)
     vim.fn.feedkeys(keys)
   else
