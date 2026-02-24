@@ -1,4 +1,4 @@
-{ inputs', ... }:
+{ inputs', pkgInputs, ... }:
 { config, pkgs, ... }:
 {
   imports = [ ./hardware.nix ];
@@ -13,7 +13,7 @@
     nix = {
       enable = true;
       stateVersion = "25.11";
-      langPackage = inputs'.nixpkgs-nix.legacyPackages.nixVersions.nix_2_31;
+      langPackage = pkgInputs.nixpkgs-nix.nixVersions.nix_2_31;
     };
 
     hardware = {
@@ -42,15 +42,15 @@
       default.which = "neovim";
 
       neovim = {
-        package = inputs'.nixpkgs-unstable.legacyPackages.neovim;
+        package = pkgInputs.nixpkgs-unstable.neovim;
         manPager = true;
       };
 
-      formatters.nixfmt-rfc-style.package = inputs'.nixpkgs-unstable.legacyPackages.nixfmt-rfc-style;
+      formatters.nixfmt-rfc-style.package = pkgInputs.nixpkgs-unstable.nixfmt;
 
       lsps = {
         nil.package = inputs'.nil-ls.packages.nil;
-        nixd.package = inputs'.nixpkgs-unstable.legacyPackages.nixd;
+        nixd.package = pkgInputs.nixpkgs-unstable.nixd;
       };
     };
 
@@ -75,7 +75,7 @@
 
       notifications = {
         default.which = "swaync";
-        swaync.package = inputs'.nixpkgs-unstable.legacyPackages.swaynotificationcenter;
+        swaync.package = pkgInputs.nixpkgs-unstable.swaynotificationcenter;
       };
 
       wallpapers.default.which = "swww";
@@ -90,7 +90,7 @@
 
     media = {
       enable = true;
-      apps.yt-dlp.package = inputs'.nixpkgs-unstable.legacyPackages.yt-dlp.overrideAttrs {
+      apps.yt-dlp.package = pkgInputs.nixpkgs-unstable.yt-dlp.overrideAttrs {
         src = pkgs.fetchFromGitHub {
           owner = "yt-dlp";
           repo = "yt-dlp";
@@ -107,7 +107,7 @@
       postgresql.enable = true;
       ruby.enable = true;
       shell.enable = true;
-      jj-fzf.package = inputs'.nixpkgs-jj-fzf.legacyPackages.jj-fzf;
+      jj-fzf.package = pkgInputs.nixpkgs-jj-fzf.jj-fzf;
     };
 
     # Note for the future on structure/organization, I wonder if these should be
@@ -120,10 +120,14 @@
 
     chat = {
       enable = true;
-      apps.signal-desktop.package = inputs'.nixpkgs-signal-desktop.legacyPackages.signal-desktop;
+      apps.signal-desktop.package = pkgInputs.nixpkgs-signal-desktop.signal-desktop;
     };
 
-    desk.enable = true;
+    desk = {
+      enable = true;
+      calendars.pimsync.package = pkgInputs.nixpkgs-pimsync.pimsync;
+    };
+
     flatpak.enable = true;
     git.enable = true;
     homeAssistant.enable = true;
@@ -136,8 +140,8 @@
     misc = {
       enable = true;
       apps = {
-        ryubing.package = inputs'.nixpkgs-unstable.legacyPackages.ryubing;
-        shadps4.package = inputs'.nixpkgs-unstable.legacyPackages.shadps4;
+        ryubing.package = pkgInputs.nixpkgs-unstable.ryubing;
+        shadps4.package = pkgInputs.nixpkgs-unstable.shadps4;
       };
     };
 
@@ -154,7 +158,7 @@
 
     tmux = {
       enable = true;
-      package = inputs'.nixpkgs-unstable.legacyPackages.tmux;
+      package = pkgInputs.nixpkgs-unstable.tmux;
     };
 
     windowsVM.enable = true;
