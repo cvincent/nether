@@ -815,6 +815,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-python-icalendar": {
+      "locked": {
+        "lastModified": 1775894766,
+        "narHash": "sha256-fvNpItgV0TGTnAG3Z+l6emHpRfEoWAa8FXwfe8XAz4A=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7b3646091f413513dda7a3cdb0497de3e2db038e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "pull/493912/merge",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-signal-desktop": {
       "locked": {
         "lastModified": 1773734432,
@@ -987,6 +1003,7 @@
         "nixpkgs-bitwig-studio": "nixpkgs-bitwig-studio",
         "nixpkgs-jj-fzf": "nixpkgs-jj-fzf",
         "nixpkgs-nix": "nixpkgs-nix",
+        "nixpkgs-python-icalendar": "nixpkgs-python-icalendar",
         "nixpkgs-signal-desktop": "nixpkgs-signal-desktop",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "private-nethers": "private-nethers",

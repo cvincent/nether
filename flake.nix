@@ -66,6 +66,10 @@
               inherit pkgInputs;
             };
 
+            packages.ical2jcal =
+              pkgInputs.nixpkgs-python-icalendar.python3Packages.callPackage ./packages/ical2jcal.nix
+                { };
+
             # TODO: Iterate over the packages directory
             packages.maildir-rank-addr = pkgs.callPackage ./packages/maildir-rank-addr.nix { };
             packages.mime-email = pkgs.callPackage ./packages/mime-email.nix { };
@@ -217,6 +221,9 @@
 
     # Emergency patch for Nix for CVE-2026-39860
     nixpkgs-nix.url = "github:NixOS/nixpkgs/release-25.11";
+
+    # Newer Python icalendar module for ical2jcal
+    nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
 
     # Update Signal independently; old versions stop working on a schedule
     nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
