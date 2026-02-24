@@ -21,20 +21,6 @@ end
 
 NixToNvim = dofile(vim.fn.fnamemodify(vim.fn.stdpath("config"), ":h") .. "/nix-to-nvim.lua")
 
-function TmuxTestPaneExec(cmd)
-  vim.system({
-    "tmux", "send-keys", "-t",
-    vim.g.vim_test_tmux_target,
-    "C-c", "C-c",
-  }):wait()
-
-  vim.system({
-    "tmux", "send-keys", "-t",
-    vim.g.vim_test_tmux_target,
-    cmd, "ENTER",
-  }):wait()
-end
-
 function QuickFloatingEdit()
   local ui = vim.api.nvim_list_uis()[1]
   local buf = vim.api.nvim_create_buf(false, true)

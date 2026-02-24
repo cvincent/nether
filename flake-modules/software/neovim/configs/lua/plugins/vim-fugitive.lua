@@ -68,6 +68,8 @@ return {
     })
 
     -- TODO: This is an awesome mess lol.
+    local tmux_exec = require("helpers.tmux-integration").tmux_exec
+
     if IsPluginInstalled("toggleterm.nvim") and IsPluginInstalled("vim-test") then
       -- TODO: We are here. We need an fzf picker for bookmarks, then to bind
       -- <leader>jb to our new `jj-split-to-bookmark` command.
@@ -133,11 +135,11 @@ return {
           local change = vim.g.toggleterm_fzf_result[2]
 
           if key == "" or key == "ctrl-a" then
-            TmuxTestPaneExec(jj_cmd(subcmd, "-A " .. change))
+            tmux_exec(jj_cmd(subcmd, "-A " .. change))
           elseif key == "ctrl-b" then
-            TmuxTestPaneExec(jj_cmd(subcmd, "-B " .. change))
+            tmux_exec(jj_cmd(subcmd, "-B " .. change))
           elseif key == "ctrl-d" then
-            TmuxTestPaneExec(jj_cmd(subcmd, "-d " .. change))
+            tmux_exec(jj_cmd(subcmd, "-d " .. change))
           end
         end
       end
@@ -146,30 +148,30 @@ return {
         return function()
           -- local key = vim.g.toggleterm_fzf_result[1]
           local change = vim.g.toggleterm_fzf_result[2]
-          TmuxTestPaneExec(jj_cmd(subcmd, "-t " .. change))
+          tmux_exec(jj_cmd(subcmd, "-t " .. change))
         end
       end
 
       local callback_other_cmd = function(cmd)
         return function()
           local arg = vim.g.toggleterm_fzf_result[1]
-          TmuxTestPaneExec(other_cmd(cmd, arg))
+          tmux_exec(other_cmd(cmd, arg))
         end
       end
 
       local jj_no_picker = function(subcmd)
-        TmuxTestPaneExec(jj_cmd(subcmd, ""))
+        tmux_exec(jj_cmd(subcmd, ""))
       end
 
       local other_cmd_no_picker = function(subcmd)
-        TmuxTestPaneExec(other_cmd(subcmd, ""))
+        tmux_exec(other_cmd(subcmd, ""))
       end
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fugitive",
         callback = function()
           vim.keymap.set("n", "<leader>J", function()
-            TmuxTestPaneExec("jj")
+            tmux_exec("jj")
           end, { buffer = true })
 
           vim.keymap.set("n", "<leader>js", function()
