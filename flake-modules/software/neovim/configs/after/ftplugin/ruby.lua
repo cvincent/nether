@@ -5,3 +5,5 @@ vim.b.match_words =
     [[\<\%(else\|elsif\|ensure\|rescue\|when\)\>:\%(^\|[^.]\)\@<=\<end\>]]
 
 vim.cmd.runtime("lua/luasnips/ruby.lua")
+
+vim.o.regexpengine = 1
