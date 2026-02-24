@@ -5,6 +5,7 @@ mkFeature name (
     dev,
     lib,
     pkgs,
+    helpers,
     ...
   }:
   {
@@ -22,6 +23,22 @@ mkFeature name (
       jujutsu = { };
       jj-fzf = { };
       tldr = { };
+
+      nix = {
+        package = null;
+
+        options.scripts = builtins.listToAttrs [
+          (helpers.mkScript ./. "nix-run-script" {
+            runtimeInputs = [ pkgs.nix ];
+            replaceVars = {
+              inherit (nether) dotfilesDirectory;
+              inherit (nether.networking) hostname;
+            };
+          })
+        ];
+
+        hm.home.packages = builtins.attrValues dev.nix.scripts;
+      };
     };
 
     nixos = lib.mkMerge [
