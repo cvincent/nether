@@ -6,14 +6,18 @@ local jump_with_jumplist_threshold = function(key)
   return function()
     if vim.v.count > 10 then
       vim.cmd("norm! m'" .. vim.v.count .. key)
+    elseif vim.v.count == 1 then
+      vim.cmd("norm! " .. key)
     else
       vim.cmd("norm! " .. vim.v.count .. key)
     end
   end
 end
 
-vim.keymap.set("n", "j", jump_with_jumplist_threshold("j"))
-vim.keymap.set("n", "k", jump_with_jumplist_threshold("k"))
+-- TODO: This doesn't work very well actually. For some reason our norm! command
+-- also puts the cursor at the start of the line. Figure it out at some point.
+-- vim.keymap.set("n", "j", jump_with_jumplist_threshold("j"))
+-- vim.keymap.set("n", "k", jump_with_jumplist_threshold("k"))
 
 -- Ignore jumplist on { and }
 -- vim.keymap.set("n", "{", ":<c-u>execute 'keepjumps norm! ' . v:count1 . '{'<cr>", { silent = true })
