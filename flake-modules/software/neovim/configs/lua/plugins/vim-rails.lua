@@ -22,6 +22,11 @@ return {
           [[end]],
         },
       },
+
+      ["app/components/*_component.rb"] = {
+        command = "component",
+        template = { "class {camelcase|capitalize|colons}Component < ViewComponent::Base", "end" },
+      },
     }
 
     vim.api.nvim_create_autocmd("User", {
