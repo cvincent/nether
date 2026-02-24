@@ -16,6 +16,8 @@ if [[ "$subcmd" == "absorb" ]]; then
   jj-fzf-changed-files "$@"
 elif [[ "$subcmd" == "bookmark" && "$complete_bookmarks" == 1 ]]; then
   jj-fzf-bookmarks "$@"
+elif [[ "$subcmd" == "git" && "$complete_bookmarks" == 1 ]]; then
+  jj-fzf-bookmarks "$@"
 else
   jj-fzf-change-ids "$@"
 fi
