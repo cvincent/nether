@@ -6,6 +6,7 @@ mkFeature name (
     lib,
     pkgs,
     helpers,
+    pkgInputs,
     ...
   }:
   {
