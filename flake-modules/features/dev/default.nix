@@ -20,7 +20,9 @@ mkFeature name (
     };
 
     toplevel = {
-      jujutsu = { };
+      jujutsu = {
+        package = pkgInputs.nixpkgs-jujutsu.jujutsu;
+      };
       jj-fzf = { };
       tldr = { };
 

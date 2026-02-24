@@ -742,6 +742,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-jujutsu": {
+      "locked": {
+        "lastModified": 1777268161,
+        "narHash": "sha256-bxrdOn8SCOv8tN4JbTF/TXq7kjo9ag4M+C8yzzIRYbE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1c3fe55ad329cbcb28471bb30f05c9827f724c76",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1765674936,
@@ -1032,6 +1047,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-bitwig-studio": "nixpkgs-bitwig-studio",
         "nixpkgs-jj-fzf": "nixpkgs-jj-fzf",
+        "nixpkgs-jujutsu": "nixpkgs-jujutsu",
         "nixpkgs-nix": "nixpkgs-nix",
         "nixpkgs-python-icalendar": "nixpkgs-python-icalendar",
         "nixpkgs-qutebrowser": "nixpkgs-qutebrowser",

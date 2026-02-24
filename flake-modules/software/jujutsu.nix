@@ -159,8 +159,8 @@ mkSoftware name (
                   ),
                   concat(
                     separate(" ",
-                      format_short_change_id_with_hidden_and_divergent_info(commit),
-                      format_short_signature_oneline(commit.author()),
+                      format_short_change_id_with_change_offset(commit),
+                      if(commit.mine(), "", format_short_signature_oneline(commit.author())),
                       if(commit.conflict(), label("conflict", "conflict")),
                       if(config("ui.show-cryptographic-signatures").as_boolean(),
                         format_short_cryptographic_signature(commit.signature())),
@@ -172,7 +172,7 @@ mkSoftware name (
                       commit.bookmarks(),
                       commit.tags(),
                       commit.working_copies(),
-                      if(commit.git_head(), label("git_head", "git_head()")),
+                      if(commit.contained_in("first_parent(@)"), label("git_head", "git_head()")),
                     ) ++ "\n",
                   ),
                 )
