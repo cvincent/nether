@@ -12,6 +12,29 @@ mkSoftware name (
       scripts =
         let
           mkJujutsuScript = helpers.mkScript ./scripts;
+
+          # These are defined here because fzf-completions needs to pass them
+          # into runtimeInputs.
+          jj-fzf-bookmarks = mkJujutsuScript "jj-fzf-bookmarks" {
+            runtimeInputs = [
+              jujutsu.package
+              nether.software.fzf.fzf-with-opts
+            ];
+          };
+
+          jj-fzf-change-ids = mkJujutsuScript "jj-fzf-change-ids" {
+            runtimeInputs = [
+              jujutsu.package
+              nether.software.fzf.fzf-with-opts
+            ];
+          };
+
+          jj-fzf-changed-files = mkJujutsuScript "jj-fzf-changed-files" {
+            runtimeInputs = [
+              jujutsu.package
+              nether.software.fzf.fzf-with-opts
+            ];
+          };
         in
         builtins.listToAttrs [
           (mkJujutsuScript "fzf-completions" {
@@ -19,6 +42,9 @@ mkSoftware name (
               pkgs.coreutils
               jujutsu.package
               nether.software.fzf.fzf-with-opts
+              jj-fzf-bookmarks.value.default
+              jj-fzf-change-ids.value.default
+              jj-fzf-changed-files.value.default
             ];
           })
 
@@ -29,6 +55,10 @@ mkSoftware name (
           (mkJujutsuScript "jj-split-to-absorb" {
             runtimeInputs = [ jujutsu.package ];
           })
+
+          jj-fzf-bookmarks
+          jj-fzf-change-ids
+          jj-fzf-changed-files
         ];
     };
 
