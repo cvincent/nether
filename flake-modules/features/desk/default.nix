@@ -82,15 +82,33 @@ mkFeature name (
           name = account;
           value = lib.recursiveUpdate gmailBaseConfig rec {
             inherit (accountOpts) email signature displayName;
+            totalCountCachePath = "${desk.mail.cacheBasePath}/${account}";
+
             imap = {
               username = email;
               password = accountOpts.password;
             };
-            totalCountCachePath = "${desk.mail.cacheBasePath}/${account}";
+
+            calendar.credentials = {
+              inherit (accountOpts.calendar) clientId clientSecret;
+            };
           };
         }
       )
     );
+
+    # Because vdirsyncer chokes on "-", we need
+    # accounts.calendar.accounts.<name> to use "_" instead.
+    accountConfigsForCalendar =
+      accountConfigs
+      |> lib.mapAttrs' (
+        account: accountConfig: {
+          name = builtins.replaceStrings [ "-" ] [ "_" ] account;
+          value = accountConfig // {
+            name = account;
+          };
+        }
+      );
 
     mailConfigFileName = baseNameOf desk.mail.configFilePath;
 
@@ -266,6 +284,38 @@ mkFeature name (
           type = lib.types.str;
           default = "${nether.homeDirectory}/calendars";
         };
+
+        readOnlyCalendars = lib.mkOption {
+          type = lib.types.attrsOf (
+            lib.types.submodule {
+              options = {
+                url = lib.mkOption {
+                  type = lib.types.str;
+                  description = "URL to sync from via HTTP.";
+                };
+                color = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Color to pull from Stylix";
+                  default = "base00";
+                };
+              };
+            }
+          );
+
+          default = {
+            us_holidays = {
+              url = "https://p24-calendars.icloud.com/holiday/US_en.ics";
+              color = config.lib.stylix.colors.base0E;
+            };
+          };
+
+          description = "Names must not contain dashes due to vdirsyncer.";
+        };
+      };
+
+      vdirsyncer.config = {
+        inherit (desk.calendars) readOnlyCalendars;
+        accountConfigs = accountConfigsForCalendar;
       };
     };
 

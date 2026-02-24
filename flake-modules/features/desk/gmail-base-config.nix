@@ -104,4 +104,6 @@ rec {
       imapPath = "${foldersPrefix}/${localName}";
     }
   ];
+
+  calendar.type = "google_calendar";
 }
