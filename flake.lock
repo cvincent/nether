@@ -799,6 +799,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-nix": {
+      "locked": {
+        "lastModified": 1775606036,
+        "narHash": "sha256-bTNdwrVuX3+0Ierq+iWBHBT1wRorkyGL7MvWHwBgKyw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4dd7d46ccff57ff2373b9999ccff381f0f95ad6f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-signal-desktop": {
       "locked": {
         "lastModified": 1773734432,
@@ -970,6 +986,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-bitwig-studio": "nixpkgs-bitwig-studio",
         "nixpkgs-jj-fzf": "nixpkgs-jj-fzf",
+        "nixpkgs-nix": "nixpkgs-nix",
         "nixpkgs-signal-desktop": "nixpkgs-signal-desktop",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "private-nethers": "private-nethers",

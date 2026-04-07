@@ -212,6 +212,9 @@
     # Later build of jj-fzf that actually works (0.37.0)
     nixpkgs-jj-fzf.url = "nixpkgs/nixos-unstable";
 
+    # Emergency patch for Nix for CVE-2026-39860
+    nixpkgs-nix.url = "github:NixOS/nixpkgs/release-25.11";
+
     # Update Signal independently; old versions stop working on a schedule
     nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
   };

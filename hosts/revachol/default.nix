@@ -13,6 +13,7 @@
     nix = {
       enable = true;
       stateVersion = "25.11";
+      langPackage = inputs'.nixpkgs-nix.legacyPackages.nixVersions.nix_2_31;
     };
 
     hardware = {

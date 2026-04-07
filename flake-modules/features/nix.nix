@@ -5,17 +5,27 @@ mkFeature name (
     nix,
     lib,
     inputs,
+    inputs',
     ...
   }:
   {
-    options.stateVersion = lib.mkOption {
-      type = lib.types.str;
+    options = {
+      stateVersion = lib.mkOption {
+        type = lib.types.str;
+      };
+
+      langPackage = lib.mkOption {
+        type = lib.types.package;
+        default = inputs'.nixpkgs.legacyPackages.nix;
+      };
     };
 
     nixos = {
       system.stateVersion = nix.stateVersion;
 
       nix = {
+        package = nix.langPackage;
+
         nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
         settings = {
