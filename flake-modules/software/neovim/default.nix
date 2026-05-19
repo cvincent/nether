@@ -57,6 +57,7 @@ mkSoftware name (
         home.sessionVariables = {
           MANWIDTH = 80;
           MANPAGER = "${lib.getExe neovim.package} +Man! -c ZenMode";
+          MANOPT = "--nj --nh";
         };
       })
     ];

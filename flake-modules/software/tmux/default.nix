@@ -24,18 +24,54 @@
   );
 
   flake.homeModules."${name}" = moduleWithSystem (
-    { pkgs }:
+    { pkgs, pkgInputs }:
     { osConfig, ... }:
     let
-      tmux-safekill = pkgs.tmuxPlugins.mkTmuxPlugin {
+      tmux-easymotion = pkgs.tmuxPlugins.mkTmuxPlugin rec {
+        pluginName = "easymotion";
+        version = "v1.2.2";
+        src = pkgs.fetchFromGitHub {
+          owner = "ddzero2c";
+          repo = "tmux-easymotion";
+          rev = version;
+          sha256 = "sha256-3Yn8/W13Zr7HzUdRlsjBS+/WtoG0JsyTEWKePhny9bI=";
+        };
+
+        buildInputs = [ pkgs.python3 ];
+        postInstall = "patchShebangs easymotion.py";
+      };
+
+      tmux-safekill = pkgs.tmuxPlugins.mkTmuxPlugin rec {
         pluginName = "safekill";
         version = "master";
         src = pkgs.fetchFromGitHub {
           owner = "cvincent";
           repo = "tmux-safekill";
-          rev = "master";
+          rev = version;
           sha256 = "sha256-xAf9IZ7OLzsv7ywvM5csFhkoMdRGOfWDrwc0yrXu1hw=";
         };
+      };
+
+      tmux-smooth-scroll = pkgs.tmuxPlugins.mkTmuxPlugin rec {
+        pluginName = "smooth-scroll";
+        rtpFilePath = "smooth-scroll.tmux";
+        version = "e7f0b489d28f85e5a4e90d1aae335ac390159657";
+        src = pkgs.fetchFromGitHub {
+          owner = "azorng";
+          repo = "tmux-smooth-scroll";
+          rev = version;
+          sha256 = "sha256-2oDwVMuuu6gnaKqaqUjTdJ4nMuvOIt04W5SipxHBxQY=";
+        };
+
+        buildInputs = [ pkgs.perl ];
+        postInstall = "patchShebangs src/animator.pl";
+
+        extraConfig = ''
+          # Lower = faster
+          set -g @smooth-scroll-speed 25
+          set -g @smooth-scroll-easing linear
+          set -g @smooth-scroll-exit-copy-mode-at-bottom false
+        '';
       };
     in
     {
@@ -44,7 +80,40 @@
           inherit (osConfig.nether.tmux) enable package;
 
           tmuxinator = { inherit (osConfig.nether.tmux.tmuxinator) enable; };
-          plugins = [ tmux-safekill ];
+
+          plugins = [
+            {
+              plugin = tmux-easymotion;
+              extraConfig = ''
+                # Not sure which I prefer!
+                # TODO: Would be nice to match the style of tmux-fingers, which
+                # I prefer, but it's not configurable.
+                set -g @easymotion-s j
+                set -g @easymotion-s2 C-j
+                set -g @easymotion-hints 'asdfghjkl;'
+              '';
+            }
+
+            {
+              plugin = pkgInputs.nixpkgs-tmux-fingers.tmuxPlugins.fingers;
+              extraConfig = ''
+                set -g @fingers-enable-bindings 0
+                set -g @fingers-keyboard-layout qwerty-homerow
+
+                # Match Nix hashes, of course
+                set -g @fingers-pattern-0 'sha256-.{43}='
+
+                bind-key space run -b "#{@fingers-cli} start #{pane_id}"
+                # Just to see the difference from tmux-easymotion. This one is
+                # limited to the focused pane and wrapped text messes it up. I
+                # might like it better though if that were fixed.
+                # bind-key C-j run -b "#{@fingers-cli} start #{pane_id} --mode jump"
+              '';
+            }
+
+            tmux-safekill
+            tmux-smooth-scroll
+          ];
 
           shell = osConfig.nether.shells.default.path;
           prefix = "C-f";
@@ -58,6 +127,9 @@
           extraConfig = ''
             # Reload config
             bind r source-file "~/.config/tmux/tmux.conf"
+
+            bind-key C-f copy-mode
+            unbind-key [
 
             # Scroll relative to cursor like Vim zz, zt, and zb
             bind-key -T copy-mode-vi z switch-client -T my-scroll-keys
