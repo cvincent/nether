@@ -1,49 +1,61 @@
 return {
   "stevearc/conform.nvim",
-  opts = {
-    formatters_by_ft = {
-      javascript = { "prettier" },
-      typescript = { "prettier" },
+  opts = function()
+    local opts = {
+      formatters_by_ft = {
+        javascript = { "prettier" },
+        typescript = { "prettier" },
 
-      nix = { "nixfmt" },
+        nix = { "nixfmt" },
 
-      ruby = { "rubocop" },
-      eruby = { "erb_lint", "htmlbeautifier" },
+        ruby = { "rubocop" },
+        eruby = { "erb_lint", "htmlbeautifier" },
 
-      sh = { "shfmt" },
+        sh = { "shfmt" },
 
-      sql = {
-        "pg_format",
-        prepend_args = { "--no-grouping" }
-      },
-    },
-
-    formatters = {
-      erb_lint = {
-        command = "erb_lint",
-        stdin = false,
-        args = { "--autocorrect", "--fail-level", "F", "$FILENAME" },
-        async = true,
-      },
-
-      htmlbeautifier = { prepend_args = { "-b1" } },
-
-      rubocop = {
-        args = {
-          "--server",
-          "-a",
-          "-f",
-          "quiet",
-          "--force-exclusion",
-          "--except",
-          "Lint/UselessAssignment,Lint/LiteralAsCondition,Style/EmptyElse",
-          "--stderr",
-          "--stdin",
-          "$FILENAME",
+        sql = {
+          "pg_format",
+          prepend_args = { "--no-grouping" }
         },
       },
+
+      formatters = {
+        erb_lint = {
+          command = "erb_lint",
+          stdin = false,
+          args = { "--autocorrect", "--fail-level", "F", "$FILENAME" },
+          async = true,
+        },
+
+        htmlbeautifier = { prepend_args = { "-b1" } },
+
+        rubocop = {},
+      }
     }
-  },
+
+    local ignore_rubocop_fixes = table.concat({
+      "Lint/LiteralAsCondition",
+      "Lint/UselessAssignment",
+      "Lint/Void",
+      "Style/EmptyElse",
+      "Style/RedundantBegin",
+    }, ",")
+
+    opts.formatters.rubocop.args = {
+      "--server",
+      "-a",
+      "-f",
+      "quiet",
+      "--force-exclusion",
+      "--except",
+      ignore_rubocop_fixes,
+      "--stderr",
+      "--stdin",
+      "$FILENAME",
+    }
+
+    return opts
+  end,
 
   init = function()
     vim.api.nvim_create_augroup("Autoformat", { clear = true })
