@@ -216,6 +216,9 @@
     # Bitwig Studio 5.2.7
     nixpkgs-bitwig-studio.url = "github:nixos/nixpkgs/2d068ae5c6516b2d04562de50a58c682540de9bf";
 
+    # Upgrade Discord independently
+    nixpkgs-discord.url = "nixpkgs/nixos-unstable";
+
     # Upgrade Jujutsu independently
     nixpkgs-jujutsu.url = "nixpkgs/nixos-unstable";
 

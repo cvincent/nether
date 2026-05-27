@@ -727,6 +727,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-discord": {
+      "locked": {
+        "lastModified": 1779560665,
+        "narHash": "sha256-tpyBcxPpcQb8ukyNF7DoCwfSY3VPsxHoYwj00Cayv5o=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "64c08a7ca051951c8eae34e3e3cb1e202fe36786",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-jj-fzf": {
       "locked": {
         "lastModified": 1774106199,
@@ -1061,6 +1076,7 @@
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-bitwig-studio": "nixpkgs-bitwig-studio",
+        "nixpkgs-discord": "nixpkgs-discord",
         "nixpkgs-jj-fzf": "nixpkgs-jj-fzf",
         "nixpkgs-jujutsu": "nixpkgs-jujutsu",
         "nixpkgs-nix": "nixpkgs-nix",

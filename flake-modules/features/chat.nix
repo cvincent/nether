@@ -1,6 +1,6 @@
 { name, mkFeature, ... }:
 mkFeature name (
-  { nether, ... }:
+  { nether, pkgInputs, ... }:
   {
     description = "The many chat apps of the Internet";
 
@@ -12,8 +12,15 @@ mkFeature name (
       in
       {
         bluebubbles = withBackupPath ".local/share/app.bluebubbles.BlueBubbles";
-        discord-canary = withBackupPath ".config/discordcanary";
-        discord = withBackupPath ".config/discord";
+
+        discord-canary = (withBackupPath ".config/discordcanary") // {
+          package = pkgInputs.nixpkgs-discord.discord-canary;
+        };
+
+        discord = (withBackupPath ".config/discord") // {
+          package = pkgInputs.nixpkgs-discord.discord;
+        };
+
         signal-desktop = withBackupPath ".config/Signal";
         slack = withBackupPath ".config/Slack";
         element-desktop = { };
