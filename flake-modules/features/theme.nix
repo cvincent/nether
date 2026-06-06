@@ -65,6 +65,8 @@ mkFeature name (
     nixos = { inherit (theme) stylix; };
 
     hm = {
+      home.packages = [ pkgs.sound-theme-freedesktop ];
+
       stylix.targets.waybar.enable = false;
 
       dconf = {

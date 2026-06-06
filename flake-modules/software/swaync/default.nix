@@ -4,10 +4,35 @@ mkSoftware name (
     swaync,
     lib,
     pkgs,
+    helpers,
     ...
   }:
   {
     package = pkgs.swaynotificationcenter;
+
+    options = {
+      scripts = builtins.listToAttrs (
+        let
+          mkSwayncScript = helpers.mkScript ./scripts;
+        in
+        [
+          (mkSwayncScript "swaync-start" {
+            runtimeInputs = [
+              pkgs.coreutils
+              swaync.package
+            ];
+          })
+
+          (mkSwayncScript "swaync-play-sound" {
+            runtimeInputs = with pkgs; [
+              findutils
+              libcanberra-gtk3
+              swaync.package
+            ];
+          })
+        ]
+      );
+    };
 
     hm = {
       services.swaync = {
@@ -42,7 +67,14 @@ mkSoftware name (
           hide-on-clear = false;
           hide-on-action = true;
           script-fail-notify = true;
-          scripts = { };
+
+          scripts = {
+            catch-all = {
+              app-name = ".*";
+              exec = lib.getExe swaync.scripts.swaync-play-sound;
+            };
+          };
+
           notification-visibility = { };
           widgets = [
             "inhibitors"
@@ -75,6 +107,10 @@ mkSoftware name (
           };
         };
       };
+
+      systemd.user.services.swaync.Service.ExecStart = lib.mkForce (
+        toString (lib.getExe swaync.scripts.swaync-start)
+      );
     };
   }
 )
