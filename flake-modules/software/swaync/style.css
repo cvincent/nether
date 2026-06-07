@@ -45,6 +45,10 @@ box.notification-content {
   background: none;
 }
 
+box.notification-content image.image {
+  border-radius: 0;
+}
+
 .control-center .text-button,
 flowboxchild>button.text-button {
   background-color: @base01;
