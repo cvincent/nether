@@ -66,7 +66,9 @@ return {
       callback = function(args)
         local ignore_filetypes = {}
         if vim.tbl_contains(ignore_filetypes, vim.bo[args.buf].filetype)
-            or vim.o.diff then
+            or vim.o.diff
+            or vim.api.nvim_buf_get_name(0):match("^/tmp/")
+        then
           return
         end
 
