@@ -15,5 +15,7 @@ return {
       CallPlugMapping("VSurround")
       vim.cmd("normal gv")
     end)
+
+    vim.keymap.del("s", "S")
   end
 }
