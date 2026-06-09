@@ -4,12 +4,25 @@ return {
   enabled = true,
   build = "make install_jsregexp",
 
-  opts = {
-    store_selection_keys = "<Tab>",
-    enable_autosnippets = true,
-    region_check_events = "CursorMoved, InsertLeave",
-    update_events = "TextChanged,TextChangedI",
-  },
+  opts = function()
+    return {
+      ft_func = function()
+        local from_buf = vim.split(vim.bo.filetype, ".", { plain = true })
+        local from_cursor_pos = require("luasnip.extras.filetype_functions")
+            .from_cursor_pos()
+
+        if from_buf == { "eruby" } and from_cursor_pos == { "html" } then
+          return { "eruby" }
+        else
+          return from_buf
+        end
+      end,
+      store_selection_keys = "<Tab>",
+      enable_autosnippets = true,
+      region_check_events = { "CursorMoved", "CursorHold", "InsertEnter" },
+      update_events = { "TextChanged", "TextChangedI" },
+    }
+  end,
 
   init = function()
     local ls = require("luasnip")
