@@ -7,10 +7,37 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
 
     config = function()
+      -- TODO: The following is imperative, and anyways install_info won't work
+      -- when we eventually upgrade to NeoVim 0.12 and switch nvim-treesitter to
+      -- the `main` branch. This is temporary just to get things working.
+      -- Ultimately we'll probably do this stuff in nvf or whatever we end up
+      -- using.
+      require("nvim-treesitter.parsers").get_parser_configs().heex.install_info = {
+        url = "~/src/tree-sitter-heex",
+        files = { "src/parser.c", "src/scanner.c" },
+      }
+
+      -- TODO: Put this in its own file.
+      vim.treesitter.query.set("heex", "injections", [[
+        (directive
+          [ (partial_expression_value) (ending_expression_value) ] @injection.content
+          (#set! injection.language "elixir")
+          (#set! injection.include-children)
+          (#set! injection.combined))
+        ((directive (expression_value) @injection.content) (#set! injection.language "elixir"))
+        (expression (expression_value) @injection.content (#set! injection.language "elixir"))
+        ((comment) @injection.content (#set! injection.language "comment"))
+
+        ((tag (start_tag (tag_name) @_tag) (raw_text) @injection.content)
+          (#eq? @_tag "script") (#set! injection.language "javascript"))
+        ((tag (start_tag (tag_name) @_tag) (raw_text) @injection.content)
+          (#eq? @_tag "style")  (#set! injection.language "css"))
+      ]])
+
       local opts = {
         auto_install = true,
 
-        ensure_installed = { "elixir", "heex" },
+        ensure_installed = { "elixir" },
 
         highlight = {
           enable = true,
