@@ -172,6 +172,7 @@ function M.open_global_window()
       "ctrl-e",
       "ctrl-r",
       "ctrl-d",
+      "ctrl-a",
       "ctrl-u",
       "ctrl-alt-u",
       "ctrl-b",
@@ -187,6 +188,8 @@ function M.open_global_window()
         run(jj_cmd_toolless("resolve", "-r " .. change_id))
       elseif key == "ctrl-d" then
         run(jj_cmd_toolless("describe", change_id))
+      elseif key == "ctrl-a" then
+        run(jj_cmd_toolless("abandon", change_id))
       elseif key == "ctrl-u" then
         run(jj_cmd_toolless("undo", ""))
       elseif key == "ctrl-alt-u" then
