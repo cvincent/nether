@@ -47,6 +47,9 @@ return {
       pattern = "Rails",
       group = augroup,
       callback = function()
+        -- I don't know why this gets unset
+        vim.api.nvim_set_keymap("n", "gf", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = false, silent = true, })
+
         local path = vim.api.nvim_eval("rails#buffer().relative()")
         local type = vim.api.nvim_eval("rails#buffer().type_name()")
 
