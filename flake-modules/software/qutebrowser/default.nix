@@ -44,8 +44,10 @@ mkSoftware name (
             # needs a copy of it:
             # cp -R ~/.local/share/qutebrowser/qtwebengine_dictionaries ~/.local/qutebrowsers/personal/qtwebengine_dictionaries
             # Ideally, we would put the dictionary in nether.backups.paths, then
-            # each time we create a Qutebrowser instance, symlink that instance's
-            # spelling dictionary back to the main one.
+            # each time we create a Qutebrowser instance, symlink that
+            # instance's spelling dictionary back to the main one.
+            # It would be similarly nice to figure out a similar system for the
+            # adblock lists.
             spellcheck.languages = [ "en-US" ];
             input.media_keys = false;
 
