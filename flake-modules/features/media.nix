@@ -20,6 +20,8 @@ mkFeature name (
             fullscreen = false;
             hwdec = "auto";
             save-position-on-quit = true;
+            reset-on-next-file = "volume,ab-loop-a,ab-loop-b";
+            watch-later-options = "volume,ab-loop-a,ab-loop-b,start";
           };
 
           scripts = with pkgs.mpvScripts; [
