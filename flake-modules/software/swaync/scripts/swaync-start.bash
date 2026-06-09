@@ -1,3 +1,3 @@
 cache_dir="$XDG_CACHE_HOME/swaync-play-sound"
-rm "$cache_dir"/*
+rm "$cache_dir"/* || true
 swaync
