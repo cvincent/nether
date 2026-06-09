@@ -147,6 +147,7 @@
                         # causes infinite recursion
                         inputs.xremap-flake.homeManagerModules.default
                         inputs.ha-notifier.homeManagerModules.default
+                        inputs.vdir-calendar-notifier.homeModules.default
 
                         helpers.homeModule
                       ];
@@ -171,6 +172,8 @@
     nixpkgs.url = "nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+
+    vdir-calendar-notifier.url = "git+https://tangled.org/machinesareforpeople.com/vdir-calendar-notifier";
 
     # Private repo with private flake inputs
     # TODO: Set this in an option one time so anywhere can access it via config

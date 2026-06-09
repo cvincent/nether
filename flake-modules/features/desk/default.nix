@@ -356,6 +356,8 @@ mkFeature name (
 
       pimsync.config.accountConfigs = accountConfigsForCalendar;
 
+      vdir-calendar-notifier.enable = true;
+
       vdirsyncer.config = {
         inherit (desk.calendars) readOnlyCalendars;
         accountConfigs = accountConfigsForCalendar;
