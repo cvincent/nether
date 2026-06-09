@@ -36,6 +36,11 @@ return {
         command = "stimuluscontroller",
         template = { "class {camelcase|capitalize|colons}Controller extends Stimulus.Controller {", "}", "", "application.register(\"{hyphenate}\", {camelcase|capitalize|colons}Controller);" },
       },
+
+      ["app/lib/*.rb"] = {
+        command = "applib",
+        template = { "class {camelcase|capitalize|colons}", "end" },
+      },
     }
 
     vim.api.nvim_create_autocmd("User", {
