@@ -11,8 +11,5 @@ return {
 
     vim.keymap.set("n", "<leader><c-o>", "<plug>EnhancedJumpsRemoteOlder")
     vim.keymap.set("n", "<leader><c-i>", "<plug>EnhancedJumpsRemoteNewer")
-
-    vim.keymap.set("n", "g;", "<plug>EnhancedJumpsFarFallbackChangeOlder")
-    vim.keymap.set("n", "g,", "<plug>EnhancedJumpsFarFallbackChangeNewer")
   end,
 }
