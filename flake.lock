@@ -1378,11 +1378,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1783910002,
-        "narHash": "sha256-JJl2wQevDIb+lY8hvfuLqpQi6sB99TRUEhSt1FTupJY=",
+        "lastModified": 1784248832,
+        "narHash": "sha256-5DemP9lrUHog/0xAaKQQoQhZdDbrbn3dzPEohZT9wGA=",
         "ref": "refs/heads/main",
-        "rev": "85aceea30bb906cb3dbcaa82644b8abb650b04c1",
-        "revCount": 35,
+        "rev": "84f502b4e2a1e23f9ee16fa8bc873c511ca3efb5",
+        "revCount": 39,
         "type": "git",
         "url": "https://tangled.org/machinesareforpeople.com/vdir-calendar-notifier"
       },
