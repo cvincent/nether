@@ -10,6 +10,14 @@ mkSoftware name (
       icon = "stock_appointment-reminder";
       sound = "complete";
       urgency = "critical";
+
+      editButton = true;
+
+      snoozes = [
+        "PT5M"
+        "-PT1M"
+        "-PT5M"
+      ];
     };
   }
 )
