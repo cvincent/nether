@@ -16,6 +16,9 @@ mkSoftware name (
     pkgs,
     ...
   }:
+  let
+    nvr = pkgs.neovim-remote;
+  in
   {
     options = {
       command = lib.mkOption {
@@ -28,6 +31,21 @@ mkSoftware name (
         default = false;
         description = "Use NeoVim as our man pager";
       };
+
+      nvr = lib.mkOption {
+        type = lib.types.package;
+        default = nvr;
+      };
+
+      scripts =
+        let
+          mkNeoVimScript = helpers.mkScript ./scripts;
+        in
+        builtins.listToAttrs [
+          (mkNeoVimScript "nvr-floating-edit" {
+            runtimeInputs = [ nvr ];
+          })
+        ];
     };
 
     nixos = {
@@ -42,17 +60,38 @@ mkSoftware name (
       {
         xdg.configFile.nvim.source = helpers.directSymlink ./configs;
 
+        xdg.configFile."nix-to-nvim.lua".text = ''
+          return {
+            lua = {
+              penlight = "${pkgs.lua5_1.withPackages (ps: [ ps.penlight ])}/share/lua/5.1/?.lua";
+            },
+            neovim = {
+              nvr_floating_edit = "${neovim.scripts.nvr-floating-edit.name}",
+            },
+            jj = {
+              fzf_bookmarks = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-bookmarks}",
+              fzf_change_ids = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-change-ids}",
+              fzf_changed_files = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-changed-files}",
+              fzf_file_change_ids = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-file-change-ids}",
+              split_to_bookmark = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-bookmark}",
+              split_to_absorb = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-absorb}",
+            },
+          }
+        '';
+
         home.packages = with pkgs; [
           # Treesitter wants a C compiler
           gcc
 
           # Programmatically control NeoVim
-          neovim-remote
+          nvr
+          neovim.scripts.nvr-floating-edit
 
           # Image support, needed for image.nvim
           imagemagick
         ];
       }
+
       (lib.mkIf neovim.manPager {
         home.sessionVariables = {
           MANWIDTH = 80;

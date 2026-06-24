@@ -27,7 +27,10 @@
           userName = osConfig.nether.me.fullName;
           userEmail = osConfig.nether.me.email;
 
-          ignores = [ "Session.vim" ];
+          ignores = [
+            "Session.vim"
+            ".fzf-result"
+          ];
 
           extraConfig = lib.attrsets.recursiveUpdate {
             init.defaultBranch = "main";

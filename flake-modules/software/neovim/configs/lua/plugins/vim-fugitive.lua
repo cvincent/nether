@@ -36,6 +36,7 @@ return {
 
       vim.keymap.set("n", "<c-=>", "40<c-w>+", { buffer = true })
       vim.keymap.set("n", "<c-->", "40<c-w>-", { buffer = true })
+      vim.keymap.set("n", "<leader>q", ":bd<cr>", { buffer = true, silent = true, })
     end
 
     vim.keymap.set("n", "<leader>gpl", function() pull_from_current_branch() end)

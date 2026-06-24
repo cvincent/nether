@@ -16,7 +16,7 @@ local fmta = require("luasnip.extras.fmt").fmta
 local conds = require("luasnip.extras.conditions")
 local conds_expand = require("luasnip.extras.conditions.expand")
 
-local find_node_ancestor = require("ts_utils").find_node_ancestor
+local find_node_ancestor = require("helpers.ts_utils").find_node_ancestor
 
 local vars_query = vim.treesitter.query.parse("ruby", [[
   ;query

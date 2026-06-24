@@ -1,4 +1,5 @@
-require("helpers")
+require("helpers.globals")
+package.path = package.path .. ";" .. NixToNvim.lua.penlight
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
