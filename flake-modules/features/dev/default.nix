@@ -28,6 +28,26 @@ mkFeature name (
       jj-fzf = { };
       tldr = { };
 
+      elixir = {
+        package = null;
+
+        # TODO: This would be nice to generalize, the ability to remap keys
+        # based on the current shell from any Nix module. Also, this ability to
+        # see what's running in a pane should be useful for replacing safekill
+        # with something that actually works.
+        hm.programs.tmux.extraConfig = ''
+          bind-key -n C-d if-shell \
+            "ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE 'beam.smp'" \
+            "send-keys C-c" \
+            "send-keys C-d"
+
+          bind-key -n C-c if-shell \
+            "ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE 'beam.smp'" \
+            "send-keys '#iex:break' ENTER" \
+            "send-keys C-c"
+        '';
+      };
+
       javascript = {
         package = null;
 
