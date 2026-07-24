@@ -82,6 +82,10 @@ return {
               i = { ["<cr>"] = telescope_actions.git_switch_branch }
             },
           },
+
+          lsp_document_symbols = {
+            symbol_width = 0.75,
+          },
         },
 
         extensions = {
