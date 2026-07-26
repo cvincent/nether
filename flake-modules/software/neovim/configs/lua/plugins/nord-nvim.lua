@@ -55,5 +55,13 @@ return {
 
     -- Don't grey out unused code
     vim.cmd("hi! link DiagnosticUnnecessary None")
+
+    local query = [[
+      (tag
+        (name) @comment.todo.comment
+        (#set! "priority" 130))
+    ]]
+
+    vim.treesitter.query.set("comment", "highlights", query)
   end
 }
