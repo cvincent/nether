@@ -16,7 +16,25 @@ return {
   init = function()
     local lspconfig = require("lspconfig")
 
-    lspconfig.lua_ls.setup({})
+    lspconfig.lua_ls.setup({
+      settings = {
+        Lua = {
+          runtime = {
+            version = "LuaJIT",
+            path = vim.split(package.path, ";"),
+          },
+          workspace = {
+            library = {
+              vim.env.VIMRUNTIME,
+              "${3rd}/busted/library",
+              "${3rd}/luassert/library"
+            },
+          },
+          telemetry = { enable = false },
+        },
+      },
+    })
+
     lspconfig.cssls.setup({})
     -- lspconfig.tailwindcss.setup({})
     lspconfig.ts_ls.setup({})

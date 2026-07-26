@@ -1,0 +1,10 @@
+{
+  "flake-modules/software/neovim/configs/lua/*.lua": {
+    "alternate": "flake-modules/software/neovim/configs/lua/spec/{}_spec.lua",
+    "type": "src"
+  },
+  "flake-modules/software/neovim/configs/lua/spec/*_spec.lua": {
+    "alternate": "flake-modules/software/neovim/configs/lua/{}.lua",
+    "type": "src"
+  }
+}
