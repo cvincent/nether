@@ -76,6 +76,11 @@ vim.keymap.set("v", "<c-p>", '"+p')
 vim.keymap.set("n", "<c-p>", '"+p')
 vim.keymap.set("n", "<c-s-p>", '"+<s-p>')
 
+-- Easier than "0p
+vim.keymap.set("v", "<a-p>", '"0p')
+vim.keymap.set("n", "<a-p>", '"0p')
+vim.keymap.set("n", "<a-s-p>", '"0<s-p>')
+
 -- More easily go to mark line *and* column
 vim.keymap.set("n", "'", "`")
 vim.keymap.set("n", "`", "'")
