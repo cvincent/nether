@@ -8,6 +8,7 @@ options.timeout = 120
 options.subscribe = true
 options.certificates = false
 options.starttls = false
+options.limit = 10
 
 local file = require("pl.file")
 local pretty = require("pl.pretty")
