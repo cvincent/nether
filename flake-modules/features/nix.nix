@@ -20,6 +20,10 @@ mkFeature name (
       };
     };
 
+    utilities = {
+      nurl = { };
+    };
+
     nixos = {
       system.stateVersion = nix.stateVersion;
 

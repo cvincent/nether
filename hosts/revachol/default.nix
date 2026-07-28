@@ -14,6 +14,7 @@
       enable = true;
       stateVersion = "25.11";
       langPackage = pkgInputs.nixpkgs-nix.nixVersions.nix_2_31;
+      utilities.nurl.enable = true;
     };
 
     hardware = {
