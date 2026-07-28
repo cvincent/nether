@@ -94,8 +94,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "yt-dlp";
           repo = "yt-dlp";
-          rev = "2026.06.09";
-          hash = "sha256-ykqTDPzKKIWRGSQmw2esCRKyYqDZKXRYDeba888tkDU=";
+          rev = "2026.08.19";
+          hash = "sha256-BM5ZeGTmHq+1xH6G/zsuCtjLgYgfRA11ya0zIHK5p4g=";
         };
       };
     };
