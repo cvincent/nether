@@ -220,7 +220,7 @@
     nixpkgs-discord.url = "nixpkgs/nixos-unstable";
 
     # Upgrade Jujutsu independently
-    nixpkgs-jujutsu.url = "nixpkgs/nixos-unstable";
+    nixpkgs-jujutsu.url = "nixpkgs/nixpkgs-unstable";
 
     # Later build of jj-fzf that actually works (0.37.0)
     nixpkgs-jj-fzf.url = "nixpkgs/nixos-unstable";

@@ -10,8 +10,6 @@
 --   to :RemoteFloatingEdit to edit change descriptions in the same NeoVim
 --   instance.
 -- - Our custom jj stack_split alias.
--- - Our custom jj-split-to-absorb and jj-split-to-bookmark commands, which
---   currently come from the NixToNvim global.
 
 -- So it would be quite a lot. For myself, I would like to get all of these
 -- dependencies grouped into a single Nix module, when I eventually transition
@@ -83,7 +81,7 @@ function M.fugitive_status_window_loaded()
 
   vim.keymap.set("n", "<leader>ja", function()
     vim.api.nvim_command("wincmd q")
-    run(other_cmd(NixToNvim.jj.split_to_absorb, ""))
+    run(jj_cmd("absorb", "-i"))
   end, { buffer = true })
 
   vim.keymap.set("n", "<leader>jA", function()

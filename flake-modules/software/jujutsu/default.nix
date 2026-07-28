@@ -56,10 +56,6 @@ mkSoftware name (
             ];
           })
 
-          (mkJujutsuScript "jj-split-to-absorb" {
-            runtimeInputs = [ jujutsu.package ];
-          })
-
           jj-fzf-bookmarks
           jj-fzf-change-ids
           jj-fzf-changed-files

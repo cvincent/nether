@@ -74,7 +74,6 @@ mkSoftware name (
               fzf_changed_files = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-changed-files}",
               fzf_file_change_ids = "${lib.getExe nether.software.jujutsu.scripts.jj-fzf-file-change-ids}",
               split_to_bookmark = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-bookmark}",
-              split_to_absorb = "${lib.getExe nether.software.jujutsu.scripts.jj-split-to-absorb}",
             },
           }
         '';
