@@ -184,6 +184,7 @@ mkSoftware name (
           searchEngines = {
             DEFAULT = "https://kagi.com/search?q={}";
             am = "https://www.amazon.com/s?k={}";
+            ao = "https://www.amazon.com/your-orders/search?search={}";
             yt = "https://www.youtube.com/results?search_query={}";
           }
           // inputs.private-nethers.qutebrowser.searchEngines;
