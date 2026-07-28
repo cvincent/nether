@@ -163,6 +163,25 @@ local rebase_picker = function(change_id)
   })
 end
 
+local squash_picker = function(change_id)
+  local header = vim.system({
+    "jj", "log", "-r", change_id, "-GT",
+    '"Squashing " ++ format_short_change_id_with_change_offset(self) ++ " " ++ self.description()'
+  }):wait().stdout
+
+  picker({
+    cmd = NixToNvim.jj.fzf_change_ids .. " --header='" .. header .. "'",
+    expected_keys = { "enter", },
+    callback = function(squash_key, squash_to)
+      local cmd = "-f " .. change_id .. " "
+
+      if squash_key == "" or squash_key == "enter" then
+        run(jj_cmd_toolless("squash", cmd .. "-t " .. squash_to))
+      end
+    end,
+  })
+end
+
 function M.open_global_window()
   picker({
     cmd = NixToNvim.jj.fzf_change_ids,
@@ -178,6 +197,7 @@ function M.open_global_window()
       "ctrl-alt-u",
       "ctrl-b",
       "alt-r",
+      "alt-q",
     },
 
     callback = function(key, change_id)
@@ -203,6 +223,10 @@ function M.open_global_window()
       elseif key == "alt-r" then
         vim.loop.new_timer():start(250, 0, vim.schedule_wrap(function()
           rebase_picker(change_id)
+        end))
+      elseif key == "alt-q" then
+        vim.loop.new_timer():start(250, 0, vim.schedule_wrap(function()
+          squash_picker(change_id)
         end))
       end
     end,
