@@ -3,6 +3,8 @@ return {
   opts = function()
     local opts = {
       formatters_by_ft = {
+        elixir = { "mix_format" },
+
         javascript = { "prettier" },
         typescript = { "prettier" },
 
@@ -28,6 +30,11 @@ return {
         },
 
         htmlbeautifier = { prepend_args = { "-b1" } },
+
+        mix_format = {
+          command = "mix",
+          args = { "format", "-" },
+        },
 
         rubocop = {},
       }
