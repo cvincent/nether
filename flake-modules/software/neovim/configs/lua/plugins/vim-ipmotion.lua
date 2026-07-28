@@ -1,4 +1,7 @@
 return {
+  -- Improved paragraph motion. Lines containing only whitespace become targets
+  -- for `{` and `}`. Can skip over folds.
+
   "justinmk/vim-ipmotion",
 
   init = function()
