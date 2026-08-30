@@ -128,6 +128,15 @@ mkSoftware name (
               "-B"
               "megamerge"
             ];
+
+            restack = [
+              "rebase"
+              "--onto"
+              "trunk()"
+              "--source"
+              "roots(trunk()..) & mutable()"
+              "--simplify-parents"
+            ];
           };
 
           ui = {
