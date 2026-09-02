@@ -100,6 +100,7 @@ mkSoftware name (
             "trunk()" = "main@origin";
             "closest_bookmark(to)" = "heads(::to & bookmarks())";
             "closest_pushable(to)" = "heads(::to & ~description(exact:'') & (~empty() | merges()))";
+            "context(r, num)" = "ancestors(r, num) | descendants(r, num)";
 
             "private()" = ''
               (
