@@ -32,6 +32,12 @@ mkFeature name (
       trash-cli = { };
 
       # TODO: Move these to a new gaming.nix feature, along with Steam
+      retroarch.config = {
+        cores = {
+          snes9x.enable = true;
+        };
+      };
+
       ryubing = { };
       shadps4 = { };
 
