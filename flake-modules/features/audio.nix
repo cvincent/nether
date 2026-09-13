@@ -31,6 +31,28 @@ mkFeature name (
         alsa.enable = true;
         alsa.support32Bit = true;
         pulse.enable = true;
+
+        extraConfig.pipewire."10-loopback-sink" = {
+          "context.modules" = [
+            {
+              name = "libpipewire-module-loopback";
+              args = {
+                "node.description" = "Loopback Sink";
+                "node.name" = "loopback-sink";
+                "capture.props" = {
+                  "media.class" = "Audio/Sink";
+                  "audio.position" = "FL,FR";
+                };
+                "playback.props" = {
+                  "node.name" = "loopback-sink.output";
+                  "audio.position" = "FL,FR";
+                  "target.object" = "default";
+                  "node.passive" = true;
+                };
+              };
+            }
+          ];
+        };
       };
 
       security.rtkit.enable = audio.rtkit.enable;
