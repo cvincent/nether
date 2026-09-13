@@ -225,8 +225,8 @@
     # Later build of jj-fzf that actually works (0.37.0)
     nixpkgs-jj-fzf.url = "nixpkgs/nixos-unstable";
 
-    # Emergency patch for Nix for CVE-2026-39860
-    nixpkgs-nix.url = "github:NixOS/nixpkgs/release-25.11";
+    # Emergency patch for Nix for various CVEs
+    nixpkgs-nix.url = "github:NixOS/nixpkgs?ref=pull/573623/head";
 
     # Upgrade Qutebrowser independently
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
