@@ -30,6 +30,8 @@ local mail_config = cjson.decode(file.read(mail_config_file_path))
 local account_config = mail_config.accountConfigs[account_name]
 
 local all_ref_names = tablex.keys(account_config.folders)
+table.sort(all_ref_names)
+
 local filters_base_path = mail_config.filtersBasePath .. "/" .. account_name
 local screened_out_folder = account_config.folders.screened_out.imapPath;
 local spam_folder = account_config.folders.spam.imapPath;
