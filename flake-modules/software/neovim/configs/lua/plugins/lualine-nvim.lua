@@ -27,7 +27,17 @@ return {
         },
       },
       lualine_x = {},
-      lualine_y = { "diagnostics" },
+      lualine_y = {
+        {
+          "diagnostics",
+          symbols = {
+            error = DiagnosticsIcons.error .. " ",
+            warn = DiagnosticsIcons.warn .. " ",
+            info = DiagnosticsIcons.info .. " ",
+            hint = DiagnosticsIcons.hint .. " ",
+          },
+        }
+      },
       lualine_z = { "location" },
     },
 

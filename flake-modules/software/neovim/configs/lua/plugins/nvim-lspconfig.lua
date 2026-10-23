@@ -85,10 +85,10 @@ return {
       virtual_lines = false,
       signs = {
         text = {
-          [vim.diagnostic.severity.ERROR] = "",
-          [vim.diagnostic.severity.WARN] = "",
-          [vim.diagnostic.severity.INFO] = "",
-          [vim.diagnostic.severity.HINT] = "󱜹",
+          [vim.diagnostic.severity.ERROR] = DiagnosticsIcons.error,
+          [vim.diagnostic.severity.WARN] = DiagnosticsIcons.warn,
+          [vim.diagnostic.severity.INFO] = DiagnosticsIcons.info,
+          [vim.diagnostic.severity.HINT] = DiagnosticsIcons.hint,
         },
       },
     }

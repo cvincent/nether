@@ -56,3 +56,10 @@ vim.api.nvim_create_user_command("RemoteFloatingEdit", function()
     end,
   })
 end, {})
+
+DiagnosticsIcons = {
+  error = "",
+  warn = "",
+  info = "",
+  hint = "󱜹",
+}
