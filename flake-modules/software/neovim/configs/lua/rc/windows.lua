@@ -63,14 +63,8 @@ vim.keymap.set("n", "<left>", ":tabprev<cr>")
 vim.keymap.set("n", "<c-right>", ":tabmove +1<cr>")
 vim.keymap.set("n", "<c-left>", ":tabmove -1<cr>")
 
--- Keep track of previously focused tab
-local tabs_navigation_augroup = vim.api.nvim_create_augroup("tabs.navigation", {})
-vim.api.nvim_create_autocmd("TabLeave", {
-  group = tabs_navigation_augroup,
-  callback = function()
-    vim.g.prev_focused_tab = vim.fn.tabpagenr()
-  end
-})
+-- Return to previously focused tab when closing a tab
+vim.o.tabclose = "uselast"
 
 -- Go to tab number or alternate between this and previously focused tab
 vim.keymap.set("n", "<tab>", function()
@@ -78,7 +72,9 @@ vim.keymap.set("n", "<tab>", function()
   if count > 0 then
     vim.cmd(count .. "tabn")
   else
-    vim.cmd(vim.g.prev_focused_tab .. "tabn")
+    -- NOTE: Fails if the previously accessed tab was closed. Would be nice to
+    -- do something sensible like access the nearest tab to the closed one.
+    vim.cmd("tabn #")
   end
 end)
 
@@ -88,14 +84,6 @@ end)
 -- of them. Our <tab> mapping up there also changes the default behavior of
 -- <c-i>, so here we change it back and we can have both!
 vim.keymap.set("n", "<C-i>", "<C-i>")
-
--- Go to previous tab when closing a tab
-vim.api.nvim_create_autocmd("TabClosed", {
-  group = tabs_navigation_augroup,
-  callback = function()
-    vim.cmd("tabprevious")
-  end
-})
 
 _G.tab_focus = {}
 
