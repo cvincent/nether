@@ -219,28 +219,28 @@
     # Upgrade Discord independently
     nixpkgs-discord.url = "nixpkgs/nixos-unstable";
 
-    # Upgrade Jujutsu independently
-    nixpkgs-jujutsu.url = "nixpkgs/nixpkgs-unstable";
-
     # Later build of jj-fzf that actually works (0.37.0)
     nixpkgs-jj-fzf.url = "nixpkgs/nixos-unstable";
+
+    # Upgrade Jujutsu independently
+    nixpkgs-jujutsu.url = "nixpkgs/nixpkgs-unstable";
 
     # Emergency patch for Nix for various CVEs
     nixpkgs-nix.url = "github:NixOS/nixpkgs?ref=pull/573623/head";
 
+    # Newer Python icalendar module for ical2jcal
+    nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
+
     # Upgrade Qutebrowser independently
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
+
+    # Update Signal independently; old versions stop working on a schedule
+    nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
 
     # Upgrade Spotify independently
     nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
 
     # Newer version of tmux-fingers
     nixpkgs-tmux-fingers.url = "nixpkgs/nixos-unstable";
-
-    # Newer Python icalendar module for ical2jcal
-    nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
-
-    # Update Signal independently; old versions stop working on a schedule
-    nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
   };
 }
