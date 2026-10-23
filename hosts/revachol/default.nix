@@ -103,7 +103,11 @@
 
     dev = {
       enable = true;
-      jj-fzf.package = pkgInputs.nixpkgs-jj-fzf.jj-fzf;
+
+      jujutsu = {
+        jj-fzf.package = pkgInputs.nixpkgs-jj-fzf.jj-fzf;
+        jujutsu.package = pkgInputs.nixpkgs-jujutsu.jujutsu;
+      };
     };
 
     # Note for the future on structure/organization, I wonder if these should be

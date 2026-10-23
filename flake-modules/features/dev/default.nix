@@ -5,19 +5,10 @@ mkFeature name (
     dev,
     pkgs,
     helpers,
-    pkgInputs,
     ...
   }:
   {
-    toplevel = {
-      delta = { };
-
-      jj-fzf = { };
-
-      jujutsu.package = pkgInputs.nixpkgs-jujutsu.jujutsu;
-
-      tldr = { };
-    };
+    toplevel.tldr = { };
 
     beam = {
       hm.home.sessionVariables.ERL_AFLAGS = "-kernel shell_history enabled";
@@ -78,6 +69,12 @@ mkFeature name (
             };
           };
         };
+    };
+
+    jujutsu = {
+      delta = { };
+      jujutsu = { };
+      jj-fzf = { };
     };
 
     nix = {
