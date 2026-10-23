@@ -103,12 +103,6 @@
 
     dev = {
       enable = true;
-      beam.enable = true;
-      c.enable = true;
-      elixir.enable = true;
-      postgresql.enable = true;
-      ruby.enable = true;
-      shell.enable = true;
       jj-fzf.package = pkgInputs.nixpkgs-jj-fzf.jj-fzf;
     };
 
