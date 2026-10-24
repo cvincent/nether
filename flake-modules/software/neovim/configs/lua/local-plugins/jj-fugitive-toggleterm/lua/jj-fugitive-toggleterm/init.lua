@@ -185,7 +185,7 @@ local squash_picker = function(change_id)
       local cmd = "-f " .. change_id .. " "
 
       if squash_key == "" or squash_key == "enter" then
-        run(jj_cmd_toolless("squash", cmd .. "-t " .. squash_to))
+        run(jj_cmd_toolless("squash", cmd .. "-it " .. squash_to))
       end
     end,
   })
