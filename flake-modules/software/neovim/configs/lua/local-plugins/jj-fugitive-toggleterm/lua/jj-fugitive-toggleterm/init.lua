@@ -147,7 +147,7 @@ end
 local rebase_picker = function(change_id)
   local header = vim.system({
     "jj", "log", "-r", change_id, "-GT",
-    '"Rebasing " ++ format_short_change_id_with_change_offset(self) ++ " " ++ self.description()'
+    '"Rebasing " ++ format_short_change_id_with_change_offset(self) ++ " " ++ self.description().first_line()'
   }):wait().stdout
 
   picker({
@@ -175,7 +175,7 @@ end
 local squash_picker = function(change_id)
   local header = vim.system({
     "jj", "log", "-r", change_id, "-GT",
-    '"Squashing " ++ format_short_change_id_with_change_offset(self) ++ " " ++ self.description()'
+    '"Squashing " ++ format_short_change_id_with_change_offset(self) ++ " " ++ self.description().first_line()'
   }):wait().stdout
 
   picker({
