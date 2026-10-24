@@ -66,10 +66,6 @@
               inherit pkgInputs;
             };
 
-            packages.ical2jcal =
-              pkgInputs.nixpkgs-python-icalendar.python3Packages.callPackage ./packages/ical2jcal.nix
-                { };
-
             # TODO: Iterate over the packages directory
             packages.maildir-rank-addr = pkgs.callPackage ./packages/maildir-rank-addr.nix { };
             packages.mime-email = pkgs.callPackage ./packages/mime-email.nix { };
@@ -233,9 +229,6 @@
 
     # Newer pimsync
     nixpkgs-pimsync.url = "nixpkgs/nixos-unstable";
-
-    # Newer Python icalendar module for ical2jcal
-    nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
 
     # Upgrade Qutebrowser independently
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
