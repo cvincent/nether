@@ -131,6 +131,17 @@ function M.fugitive_status_window_loaded()
       end,
     })
   end, { buffer = true })
+
+  vim.api.nvim_exec_autocmds("User", {
+    pattern = "JJFugitiveToggletermFugitiveStatusLoaded",
+    data = {
+      picker = picker,
+      run = run,
+      jj_cmd = jj_cmd,
+      jj_cmd_toolless = jj_cmd_toolless,
+      other_cmd = other_cmd,
+    },
+  })
 end
 
 local rebase_picker = function(change_id)
