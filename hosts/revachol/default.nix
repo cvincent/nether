@@ -1,4 +1,4 @@
-{ inputs', pkgInputs, ... }:
+{ pkgInputs, ... }:
 { config, pkgs, ... }:
 {
   imports = [ ./hardware.nix ];
@@ -50,7 +50,7 @@
       formatters.nixfmt-rfc-style.package = pkgInputs.nixpkgs-unstable.nixfmt;
 
       lsps = {
-        nil.package = inputs'.nil-ls.packages.nil;
+        nil.package = pkgInputs.nil-ls.packages.nil;
         nixd.package = pkgInputs.nixpkgs-unstable.nixd;
       };
     };
@@ -63,7 +63,7 @@
 
       compositor = {
         default.which = "hyprland";
-        hyprland.package = inputs'.hyprland.packages.hyprland;
+        hyprland.package = pkgInputs.hyprland.packages.hyprland;
 
         # niri = {
         #   enable = false;

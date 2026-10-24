@@ -39,26 +39,23 @@
           let
             nixpkgsInputMatch = "^nixpkgs-.*";
 
-            nixpkgsInputs =
-              self.inputs
-              |> lib.filterAttrs (inputName: _: (builtins.match nixpkgsInputMatch inputName) != null)
-              |> lib.mapAttrs (
-                _: input:
-                import input {
-                  inherit system;
-                  config.allowUnfree = true;
-                }
-              );
-
-            otherInputs =
-              self.inputs |> lib.filterAttrs (inputName: _: (builtins.match nixpkgsInputMatch inputName) == null);
-
-            pkgInputs = nixpkgsInputs // otherInputs;
-
             nixpkgsImportArgs = {
               inherit system;
               config.allowUnfree = true;
             };
+
+            nixpkgsInputs =
+              (self.inputs // { nixpkgs-hyprland = inputs.hyprland.inputs.nixpkgs; })
+              |> lib.filterAttrs (inputName: _: (builtins.match nixpkgsInputMatch inputName) != null)
+              |> lib.mapAttrs (_: input: import input nixpkgsImportArgs);
+
+            otherInputs =
+              inputs'
+              |> lib.filterAttrs (
+                inputName: _: inputName != "nixpkgs" && (builtins.match nixpkgsInputMatch inputName) == null
+              );
+
+            pkgInputs = nixpkgsInputs // otherInputs // { private-nethers = inputs.private-nethers; };
           in
           {
             _module.args = {

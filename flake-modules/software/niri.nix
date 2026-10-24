@@ -5,7 +5,7 @@ mkSoftware name (
     niri,
     lib,
     pkgs,
-    inputs',
+    pkgInputs,
     inputs,
     ...
   }:
@@ -169,7 +169,7 @@ mkSoftware name (
 
       #   xwayland-satellite = {
       #     enable = true;
-      #     path = lib.getExe inputs'.niri.packages.xwayland-satellite-unstable;
+      #     path = lib.getExe pkgInputs.niri.packages.xwayland-satellite-unstable;
       #   };
 
       #   input = {

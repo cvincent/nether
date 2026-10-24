@@ -7,7 +7,6 @@ mkSoftware name (
     lib,
     pkgs,
     pkgInputs,
-    system,
     ...
   }:
   {
@@ -63,8 +62,7 @@ mkSoftware name (
 
       programs.hyprland = {
         inherit (hyprland) enable package;
-        portalPackage =
-          pkgInputs.hyprland.inputs.nixpkgs.legacyPackages.${system}.xdg-desktop-portal-hyprland;
+        portalPackage = pkgInputs.hyprland.packages.xdg-desktop-portal-hyprland;
         withUWSM = true;
       };
 
@@ -105,14 +103,10 @@ mkSoftware name (
         })
       ];
 
-      hardware.graphics =
-        let
-          hyprlandNixpkgs = pkgInputs.hyprland.inputs.nixpkgs.legacyPackages.${system};
-        in
-        {
-          package = hyprlandNixpkgs.mesa;
-          package32 = hyprlandNixpkgs.pkgsi686Linux.mesa;
-        };
+      hardware.graphics = {
+        package = pkgInputs.nixpkgs-hyprland.mesa;
+        package32 = pkgInputs.nixpkgs-hyprland.pkgsi686Linux.mesa;
+      };
     };
 
     hm =

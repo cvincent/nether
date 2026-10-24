@@ -5,7 +5,7 @@ mkFeature name (
     nix,
     lib,
     inputs,
-    inputs',
+    pkgInputs,
     ...
   }:
   {
@@ -16,7 +16,7 @@ mkFeature name (
 
       langPackage = lib.mkOption {
         type = lib.types.package;
-        default = inputs'.nixpkgs.legacyPackages.nix;
+        default = pkgInputs.nixpkgs.legacyPackages.nix;
       };
     };
 
