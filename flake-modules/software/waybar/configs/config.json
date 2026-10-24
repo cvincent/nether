@@ -165,7 +165,7 @@
   },
 
   "custom/mail": {
-    "format": " {text}",
+    "format": " {text}",
     "return-type": "json",
     "interval": 2
   },
