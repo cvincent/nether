@@ -58,57 +58,45 @@ mkSoftware name (
             aerc = {
               enable = true;
 
-              extraAccounts =
-                let
-                  encodedEmail = pkgs.lib.strings.escapeURL accountConfig.email;
-                  encodedPassword = pkgs.lib.strings.escapeURL accountConfig.imap.password;
-                in
-                {
-                  outgoing =
-                    let
-                      inherit (accountConfig.smtp) scheme host;
-                      port = toString accountConfig.smtp.port;
-                    in
-                    "${scheme}://${encodedEmail}:${encodedPassword}@${host}:${port}";
+              extraAccounts = {
+                original-to-header = "To";
 
-                  original-to-header = "To";
+                default = accountConfig.folders.important.localName;
 
-                  default = accountConfig.folders.important.localName;
+                folders = accountConfig.foldersOrder;
+                folders-sort = accountConfig.foldersOrder;
 
-                  folders = accountConfig.foldersOrder;
-                  folders-sort = accountConfig.foldersOrder;
-
-                  folder-map = builtins.toFile "${account}-folder-map" (
-                    accountConfig.folders
-                    |> lib.mapAttrsToList (_: { localName, imapPath, ... }: ''"${localName}" = "${imapPath}"'')
-                    |> builtins.concatStringsSep "\n"
-                  );
-
-                  archive = accountConfig.folders.archive.localName;
-                  postpone = accountConfig.folders.drafts.localName;
-
-                  signature-file = builtins.toFile "${account}-sig" accountConfig.signature;
-
-                  # No-op, but allows us to run `:check-mail`, which forces aerc to refresh its counts
-                  check-mail-cmd = "echo check";
-                  check-mail = "1s";
-
-                  # TODO: Still need to figure out address-book-cmd using
-                  # HM-based config... We should also set our aliases, which are
-                  # private.
-                }
-                // (if accountConfig.smtp.copyTo then { copy-to = accountConfig.folders.sent.localName; } else { })
-                // (
-                  if builtins.length accountConfig.aliases == 0 then
-                    { }
-                  else
-                    {
-                      aliases =
-                        accountConfig.aliases
-                        |> (map (email: ''"${nether.me.fullName}" <${email}>''))
-                        |> (builtins.concatStringsSep ",");
-                    }
+                folder-map = builtins.toFile "${account}-folder-map" (
+                  accountConfig.folders
+                  |> lib.mapAttrsToList (_: { localName, imapPath, ... }: ''"${localName}" = "${imapPath}"'')
+                  |> builtins.concatStringsSep "\n"
                 );
+
+                archive = accountConfig.folders.archive.localName;
+                postpone = accountConfig.folders.drafts.localName;
+
+                signature-file = builtins.toFile "${account}-sig" accountConfig.signature;
+
+                # No-op, but allows us to run `:check-mail`, which forces aerc to refresh its counts
+                check-mail-cmd = "echo check";
+                check-mail = "1s";
+
+                # TODO: Still need to figure out address-book-cmd using
+                # HM-based config... We should also set our aliases, which are
+                # private.
+              }
+              // (if accountConfig.smtp.copyTo then { copy-to = accountConfig.folders.sent.localName; } else { })
+              // (
+                if builtins.length accountConfig.aliases == 0 then
+                  { }
+                else
+                  {
+                    aliases =
+                      accountConfig.aliases
+                      |> (map (email: ''"${nether.me.fullName}" <${email}>''))
+                      |> (builtins.concatStringsSep ",");
+                  }
+              );
             };
           }
         );
