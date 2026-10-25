@@ -25,6 +25,21 @@ mkSoftware name (
       readOnlyCalendars = lib.mkOption {
         type = lib.types.attrsOf lib.types.attrs;
       };
+
+      formats = lib.mkOption {
+        type = lib.types.attrsOf lib.types.str;
+        default =
+          let
+            dateFormat = "%-m/%-d";
+            longDateFormat = "${dateFormat}/%Y";
+            timeFormat = "%-I:%M%P";
+          in
+          rec {
+            inherit dateFormat longDateFormat timeFormat;
+            dateTimeFormat = "${dateFormat} ${timeFormat}";
+            longDateTimeFormat = "${longDateFormat} ${timeFormat}";
+          };
+      };
     };
 
     nixos.nether.backups.paths.${khal.dbPath}.deleteMissing = true;
@@ -70,13 +85,14 @@ mkSoftware name (
           sqlite.path = khal.dbPath;
         };
 
-        locale = {
-          dateformat = "%-m/%-d";
-          longdateformat = "%-m/%-d/%Y";
-          datetimeformat = "%-m/%-d %-I:%M%P";
-          longdatetimeformat = "%-m/%-d/%Y %-I:%M%P";
-          timeformat = "%-I:%M%P";
-        };
+        locale =
+          khal.formats
+          |> lib.mapAttrs' (
+            name: value: {
+              name = lib.toLower name;
+              inherit value;
+            }
+          );
       };
     };
   }
