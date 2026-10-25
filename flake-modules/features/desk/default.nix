@@ -381,6 +381,15 @@ mkFeature name (
       };
     };
 
+    contacts = {
+      options = {
+        basePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/contacts";
+        };
+      };
+    };
+
     nixos = {
       nether.incron.userTab =
         accountConfigs
@@ -404,6 +413,7 @@ mkFeature name (
         ${desk.mail.maildirBasePath}.deleteMissing = true;
         ${desk.mail.filtersBasePath}.deleteMissing = true;
         ${desk.calendars.basePath}.deleteMissing = true;
+        ${desk.contacts.basePath}.deleteMissing = true;
       };
     };
 
@@ -446,6 +456,10 @@ mkFeature name (
         # We don't any calendar account as primary, because Home Manager uses
         # the name of this attr to set the the khal default in a way we can't
         # override.
+      };
+
+      accounts.contact = {
+        inherit (desk.contacts) basePath;
       };
     };
   }

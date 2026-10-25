@@ -77,6 +77,28 @@ mkSoftware name (
           )
         );
 
+      accounts.contact.accounts =
+        vdirsyncer.accountConfigs
+        |> lib.filterAttrs (_: accountConfig: accountConfig.calendar.type == "icloud")
+        |> builtins.mapAttrs (
+          account: accountConfig: {
+            remote = {
+              type = "carddav";
+              url = "https://contacts.icloud.com/";
+              userName = accountConfig.calendar.credentials.username;
+              passwordCommand = [
+                "echo"
+                accountConfig.calendar.credentials.password
+              ];
+            };
+
+            vdirsyncer = {
+              enable = true;
+              collections = [ "card" ];
+            };
+          }
+        );
+
       programs.vdirsyncer = {
         inherit (vdirsyncer) enable package;
       };
