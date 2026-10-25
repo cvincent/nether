@@ -388,6 +388,8 @@ mkFeature name (
           default = "${nether.homeDirectory}/contacts";
         };
       };
+
+      khard.config.accountConfigs = accountConfigsForCalendar;
     };
 
     nixos = {
