@@ -6,6 +6,9 @@ vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+vim.keymap.set("n", "<c-w>V", "<Cmd>leftabove vsplit<CR>")
+vim.keymap.set("n", "<c-w>S", "<Cmd>aboveleft split<CR>")
+
 -- Easy split navigation
 vim.keymap.set("n", "<c-h>", "<c-w>h", { silent = true, remap = true })
 vim.keymap.set("n", "<c-j>", "<c-w>j", { silent = true, remap = true })
