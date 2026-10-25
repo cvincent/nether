@@ -329,6 +329,9 @@ mkFeature name (
           let
             selectReplaceVars = (lib.attrsets.getAttrs |> lib.flip) {
               calendarsBasePath = desk.calendars.basePath;
+              inherit (nether.software.khal.formats) longDateTimeFormat;
+              inherit (nether.timeAndLocale) timezone;
+              inherit (config.environment.variables) TZDIR;
             };
 
             mkCalendarScript = helpers.mkScript ./calendar;
@@ -344,6 +347,20 @@ mkFeature name (
                 nether.software.fzf.fzf-with-opts
               ];
               replaceVars = selectReplaceVars [ "calendarsBasePath" ];
+            })
+
+            (mkCalendarScript "waybar-module" {
+              runtimeInputs = [
+                pkgs.coreutils
+                pkgs.gnused
+                pkgs.jo
+                desk.calendars.khal.package
+              ];
+              replaceVars = selectReplaceVars [
+                "longDateTimeFormat"
+                "timezone"
+                "TZDIR"
+              ];
             })
           ];
       };
