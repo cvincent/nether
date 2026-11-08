@@ -1,6 +1,7 @@
 rec {
   primary = false;
   email = null;
+  color = "base09";
   aliases = [ ];
 
   imap = {
@@ -103,4 +104,6 @@ rec {
       imapPath = "${foldersPrefix}/${localName}";
     }
   ];
+
+  calendar.type = "google_calendar";
 }

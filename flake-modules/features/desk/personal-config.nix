@@ -4,6 +4,8 @@ fullName: rec {
   name = "personal";
   displayName = "Personal";
 
+  color = "base12";
+
   signature = ''
     Thanks,
 
@@ -28,8 +30,8 @@ fullName: rec {
     # NOTE: ProtonMail generally has shit handling of multipart messages.
     # Seemingly it destroys the text part on incoming messages, and also
     # destroys the HTML part on outgoing messages. Furthermore, ProtonMail
-    # strips out format=flowed. We really ought to just switch E2EE for
-    # email is an impossible farce anyways.
+    # strips out format=flowed. We really ought to just switch; E2EE for email
+    # is an impossible farce anyways.
     htmlMultipart = false;
   };
 
@@ -119,4 +121,6 @@ fullName: rec {
       imapPath = localName;
     }
   ];
+
+  calendar.type = "icloud";
 }

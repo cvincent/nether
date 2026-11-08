@@ -39,36 +39,29 @@
           let
             nixpkgsInputMatch = "^nixpkgs-.*";
 
-            nixpkgsInputs =
-              self.inputs
-              |> lib.filterAttrs (inputName: _: (builtins.match nixpkgsInputMatch inputName) != null)
-              |> lib.mapAttrs (
-                _: input:
-                import input {
-                  inherit system;
-                  config.allowUnfree = true;
-                }
-              );
-
-            otherInputs =
-              self.inputs |> lib.filterAttrs (inputName: _: (builtins.match nixpkgsInputMatch inputName) == null);
-
-            pkgInputs = nixpkgsInputs // otherInputs;
-
             nixpkgsImportArgs = {
               inherit system;
               config.allowUnfree = true;
             };
+
+            nixpkgsInputs =
+              (self.inputs // { nixpkgs-hyprland = inputs.hyprland.inputs.nixpkgs; })
+              |> lib.filterAttrs (inputName: _: (builtins.match nixpkgsInputMatch inputName) != null)
+              |> lib.mapAttrs (_: input: import input nixpkgsImportArgs);
+
+            otherInputs =
+              inputs'
+              |> lib.filterAttrs (
+                inputName: _: inputName != "nixpkgs" && (builtins.match nixpkgsInputMatch inputName) == null
+              );
+
+            pkgInputs = nixpkgsInputs // otherInputs // { private-nethers = inputs.private-nethers; };
           in
           {
             _module.args = {
               pkgs = import self.inputs.nixpkgs nixpkgsImportArgs;
               inherit pkgInputs;
             };
-
-            packages.ical2jcal =
-              pkgInputs.nixpkgs-python-icalendar.python3Packages.callPackage ./packages/ical2jcal.nix
-                { };
 
             # TODO: Iterate over the packages directory
             packages.maildir-rank-addr = pkgs.callPackage ./packages/maildir-rank-addr.nix { };
@@ -151,6 +144,7 @@
                         # causes infinite recursion
                         inputs.xremap-flake.homeManagerModules.default
                         inputs.ha-notifier.homeManagerModules.default
+                        inputs.vdir-calendar-notifier.homeModules.default
 
                         helpers.homeModule
                       ];
@@ -175,6 +169,8 @@
     nixpkgs.url = "nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.4.1";
+
+    vdir-calendar-notifier.url = "git+https://tangled.org/machinesareforpeople.com/vdir-calendar-notifier";
 
     # Private repo with private flake inputs
     # TODO: Set this in an option one time so anywhere can access it via config
@@ -225,22 +221,25 @@
     # Later build of jj-fzf that actually works (0.37.0)
     nixpkgs-jj-fzf.url = "nixpkgs/nixos-unstable";
 
+    # Package changed for khal 0.14.0 which I forked from
+    nixpkgs-khal.url = "github:nixos/nixpkgs/7d0d42afb8ddbbc60e00294b5baed2ea0de0ca84";
+
     # Emergency patch for Nix for various CVEs
     nixpkgs-nix.url = "github:NixOS/nixpkgs?ref=pull/573623/head";
 
+    # Newer pimsync
+    nixpkgs-pimsync.url = "nixpkgs/nixos-unstable";
+
     # Upgrade Qutebrowser independently
     nixpkgs-qutebrowser.url = "nixpkgs/nixos-unstable";
+
+    # Update Signal independently; old versions stop working on a schedule
+    nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
 
     # Upgrade Spotify independently
     nixpkgs-spotify.url = "nixpkgs/nixos-unstable";
 
     # Newer version of tmux-fingers
     nixpkgs-tmux-fingers.url = "nixpkgs/nixos-unstable";
-
-    # Newer Python icalendar module for ical2jcal
-    nixpkgs-python-icalendar.url = "github:NixOS/nixpkgs?ref=pull/493912/merge";
-
-    # Update Signal independently; old versions stop working on a schedule
-    nixpkgs-signal-desktop.url = "nixpkgs/nixos-unstable";
   };
 }

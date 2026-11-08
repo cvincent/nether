@@ -1,4 +1,4 @@
-{ inputs', pkgInputs, ... }:
+{ pkgInputs, ... }:
 { config, pkgs, ... }:
 {
   imports = [ ./hardware.nix ];
@@ -50,7 +50,7 @@
       formatters.nixfmt-rfc-style.package = pkgInputs.nixpkgs-unstable.nixfmt;
 
       lsps = {
-        nil.package = inputs'.nil-ls.packages.nil;
+        nil.package = pkgInputs.nil-ls.packages.nil;
         nixd.package = pkgInputs.nixpkgs-unstable.nixd;
       };
     };
@@ -63,7 +63,7 @@
 
       compositor = {
         default.which = "hyprland";
-        hyprland.package = inputs'.hyprland.packages.hyprland;
+        hyprland.package = pkgInputs.hyprland.packages.hyprland;
 
         # niri = {
         #   enable = false;
@@ -103,13 +103,11 @@
 
     dev = {
       enable = true;
-      beam.enable = true;
-      c.enable = true;
-      elixir.enable = true;
-      postgresql.enable = true;
-      ruby.enable = true;
-      shell.enable = true;
-      jj-fzf.package = pkgInputs.nixpkgs-jj-fzf.jj-fzf;
+
+      jujutsu = {
+        jj-fzf.package = pkgInputs.nixpkgs-jj-fzf.jj-fzf;
+        jujutsu.package = pkgInputs.nixpkgs-jujutsu.jujutsu;
+      };
     };
 
     # Note for the future on structure/organization, I wonder if these should be
@@ -127,7 +125,21 @@
 
     desk = {
       enable = true;
+
       calendars.pimsync.package = pkgInputs.nixpkgs-pimsync.pimsync;
+
+      calendars = {
+        # Our fork of khal which uses integers intead of nondeterministic floats
+        # in its SQLite DB, so we can do deep integrations.
+        khal.package = pkgInputs.nixpkgs-khal.khal.overrideAttrs (prev: {
+          src = pkgs.fetchFromGitHub {
+            owner = "cvincent";
+            repo = "khal";
+            rev = "master";
+            hash = "sha256-86q91CeJKy5X7/zGCHZuFRCCr0rnBEQ+zv/pjD5tjgQ=";
+          };
+        });
+      };
     };
 
     flatpak.enable = true;

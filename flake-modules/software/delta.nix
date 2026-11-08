@@ -4,7 +4,6 @@ mkSoftware name (
   {
     hm.programs.delta = {
       inherit (delta) enable package;
-      enableJujutsuIntegration = true;
 
       options = {
         dark = nether.theme.isDark;

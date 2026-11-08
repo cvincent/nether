@@ -6,6 +6,8 @@ mkFeature name (
     pkgInputs,
     pkgs,
     lib,
+    config,
+    helpers,
     ...
   }:
   let
@@ -48,6 +50,9 @@ mkFeature name (
             |> map ({ refName, ... }: refName);
         }
         // accountConfig
+        // {
+          color = config.lib.stylix.colors.${accountConfig.color};
+        }
       )
       |> lib.flip removeAttrs [ "folderLayout" ]
     );
@@ -56,9 +61,18 @@ mkFeature name (
       lib.recursiveUpdate ((import ./personal-config.nix) nether.me.fullName) rec {
         email = pkgInputs.private-nethers.mail.personal.email;
         aliases = pkgInputs.private-nethers.mail.personal.aliases;
+
         imap = {
           username = email;
           password = pkgInputs.private-nethers.mail.personal.password;
+        };
+
+        calendar = {
+          inherit (pkgInputs.private-nethers.mail.personal.calendar) collections;
+
+          credentials = {
+            inherit (pkgInputs.private-nethers.mail.personal.calendar) username password;
+          };
         };
       }
     );
@@ -78,24 +92,44 @@ mkFeature name (
           name = account;
           value = lib.recursiveUpdate gmailBaseConfig rec {
             inherit (accountOpts) email signature displayName;
+            totalCountCachePath = "${desk.mail.cacheBasePath}/${account}";
+
             imap = {
               username = email;
               password = accountOpts.password;
             };
-            totalCountCachePath = "${desk.mail.cacheBasePath}/${account}";
+
+            calendar.credentials = {
+              inherit (accountOpts.calendar) clientId clientSecret;
+            };
           };
         }
       )
     );
 
+    # Because vdirsyncer chokes on "-", we need
+    # accounts.calendar.accounts.<name> to use "_" instead.
+    accountConfigsForCalendar =
+      accountConfigs
+      |> lib.mapAttrs' (
+        account: accountConfig: {
+          name = builtins.replaceStrings [ "-" ] [ "_" ] account;
+          value = accountConfig // {
+            name = account;
+          };
+        }
+      );
+
     mailConfigFileName = baseNameOf desk.mail.configFilePath;
 
     mailConfigFile =
       {
-        inherit (desk.mail) maildirBasePath filtersBasePath;
+        inherit (desk.mail) maildirBasePath filtersBasePath msmtpqFifoPath;
         inherit (pkgInputs.private-nethers.mail) displayOrder;
         inherit accountConfigs;
         mailCacheBasePath = desk.mail.cacheBasePath;
+        calendarsBasePath = desk.calendars.basePath;
+        khalDbPath = desk.calendars.khal.dbPath;
       }
       |> builtins.toJSON
       |> builtins.toFile mailConfigFileName;
@@ -202,6 +236,11 @@ mkFeature name (
           type = lib.types.package;
           default = mailWaybarModuleScript;
         };
+
+        msmtpqFifoPath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/.local/state/.msmtpq-fifo";
+        };
       };
 
       aerc.config = {
@@ -212,6 +251,7 @@ mkFeature name (
 
         mailConfigFilePath = desk.mail.configFilePath;
         mailCacheBasePath = desk.mail.cacheBasePath;
+        rsvpScript = desk.calendars.scripts.rsvp-event-from-aerc;
       };
 
       imapfilter.config = {
@@ -244,6 +284,112 @@ mkFeature name (
           keyPem = pkgInputs.private-nethers.mail.peroxide.keyPem;
         };
       };
+
+      msmtp.config = {
+        inherit accountConfigs;
+        inherit (desk.mail) msmtpqFifoPath;
+      };
+    };
+
+    calendars = {
+      options = {
+        basePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/calendars";
+        };
+
+        readOnlyCalendars = lib.mkOption {
+          type = lib.types.attrsOf (
+            lib.types.submodule {
+              options = {
+                url = lib.mkOption {
+                  type = lib.types.str;
+                  description = "URL to sync from via HTTP.";
+                };
+                color = lib.mkOption {
+                  type = lib.types.str;
+                  description = "Color to pull from Stylix";
+                  default = "base00";
+                };
+              };
+            }
+          );
+
+          default = {
+            us_holidays = {
+              url = "https://p24-calendars.icloud.com/holiday/US_en.ics";
+              color = config.lib.stylix.colors.base0E;
+            };
+          };
+
+          description = "Names must not contain dashes due to vdirsyncer.";
+        };
+
+        scripts =
+          let
+            selectReplaceVars = (lib.attrsets.getAttrs |> lib.flip) {
+              calendarsBasePath = desk.calendars.basePath;
+              inherit (nether.software.khal.formats) longDateTimeFormat;
+              inherit (nether.timeAndLocale) timezone;
+              inherit (config.environment.variables) TZDIR;
+            };
+
+            mkCalendarScript = helpers.mkScript ./calendar;
+          in
+          builtins.listToAttrs [
+            (mkCalendarScript "rsvp-event-from-aerc" {
+              runtimeInputs = [
+                pkgs.coreutils
+                pkgs.gnugrep
+                pkgs.mblaze
+                desk.calendars.khal.package
+                desk.mail.aerc.package
+                nether.software.fzf.fzf-with-opts
+              ];
+              replaceVars = selectReplaceVars [ "calendarsBasePath" ];
+            })
+
+            (mkCalendarScript "waybar-module" {
+              runtimeInputs = [
+                pkgs.coreutils
+                pkgs.gnused
+                pkgs.jo
+                desk.calendars.khal.package
+              ];
+              replaceVars = selectReplaceVars [
+                "longDateTimeFormat"
+                "timezone"
+                "TZDIR"
+              ];
+            })
+          ];
+      };
+
+      khal.config = {
+        inherit (pkgInputs.private-nethers.mail) defaultCalendar;
+        inherit (desk.calendars) readOnlyCalendars;
+        accountConfigs = accountConfigsForCalendar;
+      };
+
+      pimsync.config.accountConfigs = accountConfigsForCalendar;
+
+      vdir-calendar-notifier.enable = true;
+
+      vdirsyncer.config = {
+        inherit (desk.calendars) readOnlyCalendars;
+        accountConfigs = accountConfigsForCalendar;
+      };
+    };
+
+    contacts = {
+      options = {
+        basePath = lib.mkOption {
+          type = lib.types.str;
+          default = "${nether.homeDirectory}/contacts";
+        };
+      };
+
+      khard.config.accountConfigs = accountConfigsForCalendar;
     };
 
     nixos = {
@@ -268,6 +414,8 @@ mkFeature name (
       nether.backups.paths = {
         ${desk.mail.maildirBasePath}.deleteMissing = true;
         ${desk.mail.filtersBasePath}.deleteMissing = true;
+        ${desk.calendars.basePath}.deleteMissing = true;
+        ${desk.contacts.basePath}.deleteMissing = true;
       };
     };
 
@@ -295,8 +443,25 @@ mkFeature name (
               passwordCommand = "echo ${accountConfig.imap.password}";
 
               imap = { inherit (accountConfig.imap) host port tls; };
+
+              smtp = {
+                inherit (accountConfig.smtp) host port;
+                authentication = "login";
+                tls.enable = accountConfig.smtp.scheme == "smtps+plain";
+              };
             }
           );
+      };
+
+      accounts.calendar = {
+        inherit (desk.calendars) basePath;
+        # We don't any calendar account as primary, because Home Manager uses
+        # the name of this attr to set the the khal default in a way we can't
+        # override.
+      };
+
+      accounts.contact = {
+        inherit (desk.contacts) basePath;
       };
     };
   }

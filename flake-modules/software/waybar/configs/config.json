@@ -18,6 +18,7 @@
     "clock",
     "custom/weather",
     "custom/mail",
+    "custom/calendar",
     "tray",
     "custom/notification"
   ],
@@ -165,9 +166,16 @@
   },
 
   "custom/mail": {
-    "format": " {text}",
+    "format": " {text}",
     "return-type": "json",
+    "escape": true,
     "interval": 2
+  },
+
+  "custom/calendar": {
+    "format": " {text}",
+    "return-type": "json",
+    "interval": 60
   },
 
   "tray": {

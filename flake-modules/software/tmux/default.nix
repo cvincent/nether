@@ -140,6 +140,7 @@
             # Clipboard setup
             set -s copy-command 'wl-copy'
             bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel 'wl-copy'
+            bind-key -T copy-mode-vi C-y send -X copy-pipe 'wl-copy'
             # v like Vim visual mode
             bind-key -T copy-mode-vi v send -X begin-selection
             bind-key -T copy-mode-vi C-v send -X rectangle-toggle

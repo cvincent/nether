@@ -27,6 +27,7 @@ mkSoftware name (
         };
 
         "custom/mail".exec = lib.getExe nether.desk.mail.waybarModule;
+        "custom/calendar".exec = lib.getExe nether.desk.calendars.scripts.waybar-module;
 
         "include" = [
           "${nether.homeDirectory}/${hmConfig.xdg.configFile.${directSymlinkConfigPath}.target}"

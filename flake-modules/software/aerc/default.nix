@@ -5,7 +5,6 @@ mkSoftware name (
     lib,
     pkgs,
     nether,
-    hmConfig,
     ...
   }:
   let
@@ -48,6 +47,8 @@ mkSoftware name (
           text = "rm -f ${aerc.mailCacheBasePath}/*";
         };
       };
+
+      rsvpScript = lib.mkOption { type = lib.types.package; };
     };
 
     hm = {
@@ -58,57 +59,45 @@ mkSoftware name (
             aerc = {
               enable = true;
 
-              extraAccounts =
-                let
-                  encodedEmail = pkgs.lib.strings.escapeURL accountConfig.email;
-                  encodedPassword = pkgs.lib.strings.escapeURL accountConfig.imap.password;
-                in
-                {
-                  outgoing =
-                    let
-                      inherit (accountConfig.smtp) scheme host;
-                      port = toString accountConfig.smtp.port;
-                    in
-                    "${scheme}://${encodedEmail}:${encodedPassword}@${host}:${port}";
+              extraAccounts = {
+                original-to-header = "To";
 
-                  original-to-header = "To";
+                default = accountConfig.folders.important.localName;
 
-                  default = accountConfig.folders.important.localName;
+                folders = accountConfig.foldersOrder;
+                folders-sort = accountConfig.foldersOrder;
 
-                  folders = accountConfig.foldersOrder;
-                  folders-sort = accountConfig.foldersOrder;
-
-                  folder-map = builtins.toFile "${account}-folder-map" (
-                    accountConfig.folders
-                    |> lib.mapAttrsToList (_: { localName, imapPath, ... }: ''"${localName}" = "${imapPath}"'')
-                    |> builtins.concatStringsSep "\n"
-                  );
-
-                  archive = accountConfig.folders.archive.localName;
-                  postpone = accountConfig.folders.drafts.localName;
-
-                  signature-file = builtins.toFile "${account}-sig" accountConfig.signature;
-
-                  # No-op, but allows us to run `:check-mail`, which forces aerc to refresh its counts
-                  check-mail-cmd = "echo check";
-                  check-mail = "1s";
-
-                  # TODO: Still need to figure out address-book-cmd using
-                  # HM-based config... We should also set our aliases, which are
-                  # private.
-                }
-                // (if accountConfig.smtp.copyTo then { copy-to = accountConfig.folders.sent.localName; } else { })
-                // (
-                  if builtins.length accountConfig.aliases == 0 then
-                    { }
-                  else
-                    {
-                      aliases =
-                        accountConfig.aliases
-                        |> (map (email: ''"${nether.me.fullName}" <${email}>''))
-                        |> (builtins.concatStringsSep ",");
-                    }
+                folder-map = builtins.toFile "${account}-folder-map" (
+                  accountConfig.folders
+                  |> lib.mapAttrsToList (_: { localName, imapPath, ... }: ''"${localName}" = "${imapPath}"'')
+                  |> builtins.concatStringsSep "\n"
                 );
+
+                archive = accountConfig.folders.archive.localName;
+                postpone = accountConfig.folders.drafts.localName;
+
+                signature-file = builtins.toFile "${account}-sig" accountConfig.signature;
+
+                # No-op, but allows us to run `:check-mail`, which forces aerc to refresh its counts
+                check-mail-cmd = "echo check";
+                check-mail = "1s";
+
+                # TODO: Still need to figure out address-book-cmd using
+                # HM-based config... We should also set our aliases, which are
+                # private.
+              }
+              // (if accountConfig.smtp.copyTo then { copy-to = accountConfig.folders.sent.localName; } else { })
+              // (
+                if builtins.length accountConfig.aliases == 0 then
+                  { }
+                else
+                  {
+                    aliases =
+                      accountConfig.aliases
+                      |> (map (email: ''"${nether.me.fullName}" <${email}>''))
+                      |> (builtins.concatStringsSep ",");
+                  }
+              );
             };
           }
         );
@@ -259,6 +248,7 @@ mkSoftware name (
               "text/html" = lib.getExe pkgs.html2text;
               ".headers" = "colorize";
               "text/calendar" = "calendar";
+              "application/ics" = "calendar";
               "application/pdf" =
                 "${lib.getExe' pkgs.poppler-utils "pdftotext"} - -l 10 -nopgbrk -q  - | fmt -w 72";
             };
@@ -283,6 +273,30 @@ mkSoftware name (
 
         extraBinds =
           let
+            inviteCommand =
+              account: accountConfig:
+              if accountConfig.calendar.type != "google_calendar" then
+                let
+                  script = "${lib.getExe aerc.rsvpScript} ${account}";
+                in
+                [
+                  ":choose"
+                  "-o a accept ':menu -c \"${script} accept\" :pipe -bm ${script} accept'"
+                  "-o m maybe ':menu -c \"${script} maybe\" :pipe -bm ${script} maybe'"
+                  "-o d decline 'decline -s'"
+                  "<enter>"
+                ]
+                |> builtins.concatStringsSep " "
+              else
+                [
+                  ":choose"
+                  "-o a accept 'accept -s'"
+                  "-o m maybe 'accept-tentative -s'"
+                  "-o d decline 'decline -s'"
+                  "<enter>"
+                ]
+                |> builtins.concatStringsSep " ";
+
             perAccountBinds =
               (
                 aerc.accountConfigs
@@ -296,6 +310,7 @@ mkSoftware name (
                     value = {
                       F = ":menu -d -t 'File sender(s)' :pipe -bm ${fileScriptPath}<enter>";
                       D = ":read<enter>:remark<enter>:move ${accountConfig.folders.trash.localName}<enter>";
+                      i = (inviteCommand account accountConfig);
                     };
                   }
                 )
@@ -310,6 +325,7 @@ mkSoftware name (
                       # configs reset it
                       "$ex" = "<a-;>";
                       "<a-o>" = ":open qutebrowser-open ${account}<enter>";
+                      "<a-i>" = (inviteCommand account accountConfig);
                     };
                   }
                 )
